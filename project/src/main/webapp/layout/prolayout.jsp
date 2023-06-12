@@ -107,6 +107,9 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
     </div>
   </div>
   <hr>
+  		<div class="w3-panel">
+			<sitemesh:write property="body" />
+		</div>
   
   <!-- Footer -->
   <footer class="w3-row-padding w3-padding-32">

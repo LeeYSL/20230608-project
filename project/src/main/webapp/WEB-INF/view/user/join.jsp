@@ -13,9 +13,9 @@
 		</div>
 	</div>
 	<div class="join_insert">
-		<form:form modelAttribute="user" method="post" action="update">
+		<form:form modelAttribute="user" method="post" action="join">
 			<div class="join_title">
-				<b>개인정보</b>
+				<b>개인정보</b> 
 				입력
 			</div>
 			<table>
