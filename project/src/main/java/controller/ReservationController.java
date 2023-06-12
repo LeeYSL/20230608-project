@@ -1,17 +1,17 @@
 package controller;
 
-
 import org.springframework.stereotype.Controller;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller
-@RequestMapping("user")
-public class UserController {
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
-	@RequestMapping("join")
-	public ModelAndView join() {
+@Controller
+@RequestMapping("reservation")
+public class ReservationController {
+	
+	@RequestMapping("myList")
+	public ModelAndView myList() {
 		ModelAndView mav = new ModelAndView();
 		return mav;
 	}

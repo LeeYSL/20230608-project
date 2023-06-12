@@ -75,6 +75,8 @@ CREATE TABLE reservation
 	reg_date datetime,
 	confirm int NOT NULL,
 	rest_num int NOT NULL,
+	phone_no varchar(100) NOT NULL,
+	rsrvt_name varchar(100),
 	PRIMARY KEY (num),
 	UNIQUE (user_id)
 );
