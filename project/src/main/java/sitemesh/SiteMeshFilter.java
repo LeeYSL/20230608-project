@@ -36,9 +36,9 @@ public class SiteMeshFilter extends ConfigurableSiteMeshFilter {
 
 	@Override
 	protected void applyCustomConfiguration(SiteMeshFilterBuilder builder) {
-		builder.addDecoratorPath("/*", "/layout/prolayout.jsp")
-		.addExcludedPath("/user/id*")
-		.addExcludedPath("/user/pw*")
+		builder.addDecoratorPath("/*", "/layout/mainlayout.jsp")
+		.addExcludedPath("/user/join*")
+		.addExcludedPath("/user/agree*")
 		.addExcludedPath("/ajax/*");
 		
 	}
