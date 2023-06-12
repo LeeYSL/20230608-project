@@ -30,7 +30,7 @@
 						<input type="checkbox" name="join_agree" value="yes">
 						" 위 내용에 동의합니다."
 					</label>
-				</div>
+				</div> 
 			</div>
 		</form>
 	</div>

@@ -18,7 +18,7 @@
 				<b>개인정보</b> 
 				입력
 			</div>
-			<table>
+			<table> 
 			 <tr>
 			 	<th>아이디</th>
 			 	<td>
