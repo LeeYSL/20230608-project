@@ -18,7 +18,7 @@ public class Reservation {
 	private int confirm;
 	private int rervtNum;
 	private String phoneNo;
-	private String rsrvtName;
+
 	
 
 }

@@ -5,12 +5,12 @@ import java.util.Date;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
 
 @Setter
 @Getter
