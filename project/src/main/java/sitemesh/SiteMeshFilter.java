@@ -40,6 +40,7 @@ public class SiteMeshFilter extends ConfigurableSiteMeshFilter {
 		.addExcludedPath("/user/join*")
 		.addExcludedPath("/user/agree*")
 		.addExcludedPath("/reservation/myList*")
+		.addExcludedPath("/restaurant/restaurantadd*")
 		.addExcludedPath("/ajax/*");
 		
 	}
