@@ -9,7 +9,6 @@ DROP TABLE IF EXISTS menu;
 DROP TABLE IF EXISTS review;
 DROP TABLE IF EXISTS reservation;
 DROP TABLE IF EXISTS restaurant;
-DROP TABLE IF EXISTS owner;
 DROP TABLE IF EXISTS user;
 
 
@@ -59,7 +58,9 @@ CREATE TABLE dayoff
 	Sat varchar(50),
 	Sun varchar(50),
 	holiday varchar(50),
-	PRIMARY KEY (rest_num)
+	user_id varchar(15) NOT NULL,
+	PRIMARY KEY (rest_num, user_id),
+	UNIQUE (user_id)
 );
 
 
@@ -69,15 +70,8 @@ CREATE TABLE menu
 	rest_num int NOT NULL,
 	menu_name varchar(100),
 	price int,
-	PRIMARY KEY (seq, rest_num)
-);
-
-
-CREATE TABLE owner
-(
-	rest_num int NOT NULL,
 	user_id varchar(15) NOT NULL,
-	PRIMARY KEY (rest_num),
+	PRIMARY KEY (seq, rest_num, user_id),
 	UNIQUE (user_id)
 );
 
@@ -85,7 +79,6 @@ CREATE TABLE owner
 CREATE TABLE reservation
 (
 	num int NOT NULL,
-	user_id varchar(15) NOT NULL,
 	rest_num int NOT NULL,
 	rsrvt_date varchar(100) NOT NULL,
 	people int NOT NULL,
@@ -93,6 +86,7 @@ CREATE TABLE reservation
 	confirm int NOT NULL,
 	phone_no varchar(100) NOT NULL,
 	rsrvt_name varchar(100),
+	user_id varchar(15) NOT NULL,
 	PRIMARY KEY (num),
 	UNIQUE (user_id)
 );
@@ -108,7 +102,7 @@ CREATE TABLE restaurant
 	address varchar(100) NOT NULL,
 	license_num int(12) NOT NULL,
 	picture varchar(100),
-	PRIMARY KEY (rest_num),
+	PRIMARY KEY (rest_num, user_id),
 	UNIQUE (user_id),
 	UNIQUE (license_num)
 );
@@ -126,7 +120,9 @@ CREATE TABLE review
 	grp_step int,
 	grp_level int,
 	grp int,
-	PRIMARY KEY (num, seq)
+	user_id varchar(15) NOT NULL,
+	PRIMARY KEY (num, seq),
+	UNIQUE (user_id)
 );
 
 
@@ -160,14 +156,6 @@ ALTER TABLE comment
 ;
 
 
-ALTER TABLE restaurant
-	ADD FOREIGN KEY (rest_num)
-	REFERENCES owner (rest_num)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
-;
-
-
 ALTER TABLE review
 	ADD FOREIGN KEY (num)
 	REFERENCES reservation (num)
@@ -177,32 +165,24 @@ ALTER TABLE review
 
 
 ALTER TABLE dayoff
-	ADD FOREIGN KEY (rest_num)
-	REFERENCES restaurant (rest_num)
+	ADD FOREIGN KEY (rest_num, user_id)
+	REFERENCES restaurant (rest_num, user_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
 ALTER TABLE menu
-	ADD FOREIGN KEY (rest_num)
-	REFERENCES restaurant (rest_num)
+	ADD FOREIGN KEY (rest_num, user_id)
+	REFERENCES restaurant (rest_num, user_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
 ALTER TABLE reservation
-	ADD FOREIGN KEY (rest_num)
-	REFERENCES restaurant (rest_num)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
-;
-
-
-ALTER TABLE review
-	ADD FOREIGN KEY (rest_num)
-	REFERENCES restaurant (rest_num)
+	ADD FOREIGN KEY (rest_num, user_id)
+	REFERENCES restaurant (rest_num, user_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
@@ -217,22 +197,6 @@ ALTER TABLE border
 
 
 ALTER TABLE comment
-	ADD FOREIGN KEY (user_id)
-	REFERENCES user (user_id)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
-;
-
-
-ALTER TABLE owner
-	ADD FOREIGN KEY (user_id)
-	REFERENCES user (user_id)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
-;
-
-
-ALTER TABLE reservation
 	ADD FOREIGN KEY (user_id)
 	REFERENCES user (user_id)
 	ON UPDATE RESTRICT

@@ -22,4 +22,11 @@ public class ShopService {
 		
 	}
 
+
+
+	public void restauinsert(@Valid Restaurant restaurant) {
+		restaurantDao.insert(restaurant);
+		
+	}
+
 }
