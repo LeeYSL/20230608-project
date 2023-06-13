@@ -78,12 +78,21 @@ td {
 			 </tr>
 			 <tr>
 			 	<td>
-			 		<form:password path="pw" placeholder="비밀번호" />
+			 		<form:input path="pw" placeholder="비밀번호" />
 			 		<font color="red">
 						<form:errors path="pw" />
 					</font>
 			 	</td>
 			 </tr>
+			 <tr>
+			 	<td>
+			 		<form:input path="nickname" placeholder="별명" />
+			 		<font color="red">
+						<form:errors path="nickname" />
+					</font>
+			 	</td>
+			 </tr>
+			 <%--
 			  <tr>
 			 	<td>
 				 	<form:input path="pw" placeholder="비밀번호 확인" />
@@ -92,6 +101,7 @@ td {
 					</font>
 			 	</td>
 			 </tr>
+			  --%>
 			 <tr>
 			 	<td>
 			 		<form:input path="name" placeholder="이름" />

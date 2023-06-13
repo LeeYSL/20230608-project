@@ -47,7 +47,7 @@ public class UserController {
 			 * password : SHA-512 해쉬값 변경
 			 */
 		
-	//		user.setPw(pwHash(user.getPw()));
+			user.setPw(pwHash(user.getPw()));
 
 			service.userInsert(user);	//db에 insert
 			mav.addObject("user",user);

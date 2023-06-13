@@ -8,7 +8,7 @@ import logic.User;
 
 public interface UserMapper {
 
-	@Insert("insert into userId, pw, nickname, name, birthday, address, email, tel, batch "
-			+ " values (#{userid}, #{pw}, #{nickname}, #{name}, #{birthday}, #{address}, #{email}, #{tel}, #{batch})")
+	@Insert("insert into user (user_Id, pw, nickname, name, birthday, address, email, tel, batch) "
+			+ " values (#{userId}, #{pw}, #{nickname}, #{name}, #{birthday}, #{address}, #{email}, #{tel}, #{batch})")
 	void insert(@Valid User user);
 }

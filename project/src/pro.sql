@@ -4,6 +4,7 @@ SET SESSION FOREIGN_KEY_CHECKS=0;
 
 DROP TABLE IF EXISTS comment;
 DROP TABLE IF EXISTS border;
+DROP TABLE IF EXISTS dayoff;
 DROP TABLE IF EXISTS menu;
 DROP TABLE IF EXISTS review;
 DROP TABLE IF EXISTS reservation;
@@ -18,18 +19,18 @@ DROP TABLE IF EXISTS user;
 
 CREATE TABLE border
 (
+	num int NOT NULL,
+	user_id varchar(15) NOT NULL,
 	title varchar(200) NOT NULL,
 	content varchar(2000) NOT NULL,
 	file1 varchar(200),
 	reg_date datetime,
 	read_cnt int,
-	num int NOT NULL,
 	board_id int,
 	grp int,
 	grp_level int,
 	grp_step int,
 	comm_cnt int,
-	user_id varchar(15) NOT NULL,
 	PRIMARY KEY (num),
 	UNIQUE (user_id)
 );
@@ -37,13 +38,28 @@ CREATE TABLE border
 
 CREATE TABLE comment
 (
-	seq int NOT NULL,
-	date datetime,
 	num int NOT NULL,
-	content varchar(100),
+	seq int NOT NULL,
 	user_id varchar(15) NOT NULL,
-	PRIMARY KEY (seq, num),
+	date datetime,
+	content varchar(100),
+	PRIMARY KEY (num, seq),
 	UNIQUE (user_id)
+);
+
+
+CREATE TABLE dayoff
+(
+	rest_num int NOT NULL,
+	Mon varchar(50),
+	Tue varchar(50),
+	Wed varchar(50),
+	Thur varchar(50),
+	Fir varchar(50),
+	Sat varchar(50),
+	Sun varchar(50),
+	holiday varchar(50),
+	PRIMARY KEY (rest_num)
 );
 
 
@@ -70,11 +86,11 @@ CREATE TABLE reservation
 (
 	num int NOT NULL,
 	user_id varchar(15) NOT NULL,
+	rest_num int NOT NULL,
 	rsrvt_date varchar(100) NOT NULL,
 	people int NOT NULL,
 	reg_date datetime,
 	confirm int NOT NULL,
-	rest_num int NOT NULL,
 	phone_no varchar(100) NOT NULL,
 	rsrvt_name varchar(100),
 	PRIMARY KEY (num),
@@ -84,6 +100,7 @@ CREATE TABLE reservation
 
 CREATE TABLE restaurant
 (
+	rest_num int NOT NULL,
 	user_id varchar(15) NOT NULL,
 	tel int NOT NULL,
 	license varchar(50) NOT NULL,
@@ -91,7 +108,6 @@ CREATE TABLE restaurant
 	address varchar(100) NOT NULL,
 	license_num int(12) NOT NULL,
 	picture varchar(100),
-	rest_num int NOT NULL,
 	PRIMARY KEY (rest_num),
 	UNIQUE (user_id),
 	UNIQUE (license_num)
@@ -100,17 +116,17 @@ CREATE TABLE restaurant
 
 CREATE TABLE review
 (
+	num int NOT NULL,
 	seq int NOT NULL,
+	rest_num int NOT NULL,
 	date datetime,
 	point int,
 	photo varchar(100),
-	rest_num int NOT NULL,
-	num int NOT NULL,
 	content varchar(100),
 	grp_step int,
 	grp_level int,
 	grp int,
-	PRIMARY KEY (seq, num)
+	PRIMARY KEY (num, seq)
 );
 
 
@@ -124,7 +140,7 @@ CREATE TABLE user
 	nickname varchar(40) NOT NULL,
 	batch int(1) NOT NULL,
 	email varchar(40) NOT NULL,
-	tel int NOT NULL,
+	tel int(11) NOT NULL,
 	PRIMARY KEY (user_id),
 	UNIQUE (user_id),
 	UNIQUE (nickname),
@@ -155,6 +171,14 @@ ALTER TABLE restaurant
 ALTER TABLE review
 	ADD FOREIGN KEY (num)
 	REFERENCES reservation (num)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE dayoff
+	ADD FOREIGN KEY (rest_num)
+	REFERENCES restaurant (rest_num)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
