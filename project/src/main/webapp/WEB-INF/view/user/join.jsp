@@ -78,7 +78,7 @@ td {
 			 </tr>
 			 <tr>
 			 	<td>
-			 		<form:input path="pw" placeholder="비밀번호" />
+			 		<form:password path="pw" placeholder="비밀번호" />
 			 		<font color="red">
 						<form:errors path="pw" />
 					</font>
@@ -86,9 +86,9 @@ td {
 			 </tr>
 			  <tr>
 			 	<td>
-				 	<form:input path="pw1" placeholder="비밀번호 확인" />
+				 	<form:input path="pw" placeholder="비밀번호 확인" />
 				 	<font color="red">
-						<form:errors path="pw1" />
+						<form:errors path="pw" />
 					</font>
 			 	</td>
 			 </tr>

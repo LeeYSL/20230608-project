@@ -3,6 +3,8 @@ package dao;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -17,7 +19,7 @@ public class UserDao {
 	private Map<String,Object> param = new HashMap<>();
 	private Class<UserMapper> cls = UserMapper.class;
 	
-	public void insert(User user) {
+	public void insert(@Valid User user) {
 		template.getMapper(cls).insert(user);
 		
 		
