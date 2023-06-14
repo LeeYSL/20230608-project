@@ -25,4 +25,8 @@ public class UserDao {
 		
 	}
 
+	public User selectOne(String userId) {
+		return template.getMapper(cls).selectOne(userId);
+	}
+
 }

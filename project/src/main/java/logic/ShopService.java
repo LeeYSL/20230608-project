@@ -29,4 +29,10 @@ public class ShopService {
 		
 	}
 
+
+
+	public User selectOne(String userId) {
+		return userDao.selectOne(userId); 
+	}
+
 }

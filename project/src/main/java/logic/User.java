@@ -20,7 +20,7 @@ public class User {
 			message="영문 소문자가 적어도 1개 이상씩 포함 6~12자")
 	private String userId;
 	@Pattern(regexp="(?=.[0-9])(?=.*[a-z])(?=\\S+$).{8,16}",
-			message="영문 소문자와 숫자 적어도 1개 이상씩 포함 8~16자")
+			message="영문와 숫자 1개 이상씩 포함 8~16자")
 	private String pw;
 	private String nickname;
 	private String name;

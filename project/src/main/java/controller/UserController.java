@@ -3,6 +3,7 @@ package controller;
  
 import java.security.NoSuchAlgorithmException;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import exception.LoginException;
 import logic.ShopService;
 import logic.User;
 import util.CipherUtil;
@@ -69,5 +71,39 @@ public class UserController {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	@PostMapping("login")
+	public ModelAndView login(User user, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		User dbUser = service.selectOne(user.getUserId());
+		if(dbUser == null) {
+			throw new LoginException("아이디 오류입니다.","login");
+		}
+		if(pwHash(user.getPw()).equals(dbUser.getPw())) {
+			session.setAttribute("loginUser", dbUser);
+			mav.setViewName("redirect:userinfo?userId="+user.getUserId());
+		} else {
+			throw new LoginException("비밀번호 오류입니다.", "login");
+		}
+		return mav;
+	}
+	@RequestMapping("info")
+	public ModelAndView userinfo(String userId, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+/*왜안되는지.
+		user = (User)session.getAttribute("loginUser");		
+		mav.addObject("user",user);
+		System.out.println(user);
+		mav.setViewName("redirect:userintro?userId="+user.getUserId());
+		return mav;
+*/
+		User user = service.selectOne(userId);
+		mav.addObject("user",user);
+		return mav;
+	}
+	@PostMapping("delete")
+	public String delete () {
+		
+		return "login";
 	}
 }
