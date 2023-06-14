@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/view/jspHeader.jsp" %>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -27,8 +30,14 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 <div class="w3-top">
   <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
     <div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">&#9776;</div>
-    <div class="w3-right w3-padding-16">Mail</div>
-    <div class="w3-center w3-padding-16">My Food</div>
+    <c:if test="${empty sessionScope.login}">
+    	<div class="w3-right w3-padding-16"><a href="/project/user/login">Login</a></div>
+	</c:if>
+	<c:if test="${!empty sessionScope.login}">
+		<div class="w3-right w3-padding-16"><a href="{path}/user/userinfo">${sessionScope.login}님</a></div>
+		<div class="w3-right w3-padding-16"><a href="{path}/user/Logout">Logout</a></div>
+	</c:if>	
+    <div class="w3-center w3-padding-16">왜안나오지</div>
   </div>
 </div>
   
@@ -43,10 +52,10 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
       <p>Just me, myself and I, exploring the universe of unknownment. I have a heart of love and an interest of lorem ipsum and mauris neque quam blog. I want to share my world with you. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
     </div>
   </div>
-  <hr>
    <div class="w3-panel">
   <sitemesh:write property="body" />
   </div> 
+  <hr>
   
   
   <!-- Footer -->
