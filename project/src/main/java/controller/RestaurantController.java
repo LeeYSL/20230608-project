@@ -45,7 +45,7 @@ public class RestaurantController {
 					
 		}
 		try {
-			restaurant.setUserId("test1");
+			restaurant.setUserId("test03");
 			restaurant.setRestNum(1);
 			service.restauinsert(restaurant);
 			mav.addObject("restaurant",restaurant);
