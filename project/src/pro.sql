@@ -129,7 +129,7 @@ CREATE TABLE review
 CREATE TABLE user
 (
 	user_id varchar(15) NOT NULL,
-	pw varchar(20) NOT NULL,
+	pw varchar(200) NOT NULL,
 	name varchar(15) NOT NULL,
 	address varchar(50) NOT NULL,
 	birthday date NOT NULL,

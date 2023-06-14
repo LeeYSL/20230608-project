@@ -35,7 +35,7 @@ public class RestaurantController {
 	  
 	@PostMapping("restaurantadd")
 	public ModelAndView restaurantAdd(@Valid Restaurant restaurant, BindingResult bresult) throws Exception {
-		System.out.println("??????");
+
 		ModelAndView mav = new ModelAndView();
 		if (bresult.hasErrors()) {
 			mav.getModel().putAll(bresult.getModel());
