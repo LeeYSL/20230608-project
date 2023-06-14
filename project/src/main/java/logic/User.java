@@ -29,6 +29,7 @@ public class User {
 	private String address;
 	@Email(message="이메일 형식으로 입력하세요.")
 	private String email;
+	
 	private int tel;
 	private int batch;
 }

@@ -97,7 +97,6 @@ CREATE TABLE restaurant
 	rest_num int NOT NULL,
 	user_id varchar(15) NOT NULL,
 	tel int NOT NULL,
-	license varchar(50) NOT NULL,
 	name varchar(40) NOT NULL,
 	address varchar(100) NOT NULL,
 	license_num int(12) NOT NULL,

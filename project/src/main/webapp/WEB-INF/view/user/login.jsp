@@ -14,7 +14,7 @@
 					<input type="text" name="userId" placeholder="아이디">
 				</div>
 				<div>
-					<input type="text" name="pw" placeholder="비밀번호">
+					<input type="text" name="pw" placeholder="비밀번호는 8자~16자">
 				</div>
 			</div>
 			<div>
