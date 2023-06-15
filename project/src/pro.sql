@@ -3,7 +3,7 @@ SET SESSION FOREIGN_KEY_CHECKS=0;
 /* Drop Tables */
 
 DROP TABLE IF EXISTS comment;
-DROP TABLE IF EXISTS border;
+DROP TABLE IF EXISTS board;
 DROP TABLE IF EXISTS dayoff;
 DROP TABLE IF EXISTS menu;
 DROP TABLE IF EXISTS review;
@@ -16,7 +16,7 @@ DROP TABLE IF EXISTS user;
 
 /* Create Tables */
 
-CREATE TABLE border
+CREATE TABLE board
 (
 	num int NOT NULL,
 	user_id varchar(15) NOT NULL,
@@ -135,7 +135,7 @@ CREATE TABLE user
 	nickname varchar(40) NOT NULL,
 	batch int(1) NOT NULL,
 	email varchar(40) NOT NULL,
-	tel int(11) NOT NULL,
+	tel varchar(13) NOT NULL,
 	PRIMARY KEY (user_id),
 	UNIQUE (user_id),
 	UNIQUE (nickname),
@@ -149,7 +149,7 @@ CREATE TABLE user
 
 ALTER TABLE comment
 	ADD FOREIGN KEY (num)
-	REFERENCES border (num)
+	REFERENCES board (num)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
@@ -187,7 +187,7 @@ ALTER TABLE reservation
 ;
 
 
-ALTER TABLE border
+ALTER TABLE board
 	ADD FOREIGN KEY (user_id)
 	REFERENCES user (user_id)
 	ON UPDATE RESTRICT

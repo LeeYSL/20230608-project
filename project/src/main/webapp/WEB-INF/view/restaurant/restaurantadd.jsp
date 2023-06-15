@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>가게 등록</title>
 </head>
 <body>
 	<h2>가게 등록</h2>

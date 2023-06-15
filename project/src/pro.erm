@@ -12,7 +12,7 @@
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
 	<x>0</x>
-	<y>83</y>
+	<y>-24</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -135,7 +135,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2023-06-08 16:43:37</creation_date>
-			<updated_date>2023-06-14 17:42:39</updated_date>
+			<updated_date>2023-06-15 16:13:22</updated_date>
 			<model_property>
 				<name>프로젝트명</name>
 				<value></value>
@@ -958,22 +958,6 @@
 		</word>
 		<word>
 			<id>49</id>
-			<length>11</length>
-			<decimal>null</decimal>
-			<array>false</array>
-			<array_dimension>null</array_dimension>
-			<unsigned>false</unsigned>
-			<zerofill>false</zerofill>
-			<binary>false</binary>
-			<args></args>
-			<char_semantics>false</char_semantics>
-			<description></description>
-			<logical_name>전화번호</logical_name>
-			<physical_name>tel</physical_name>
-			<type>int(n)</type>
-		</word>
-		<word>
-			<id>50</id>
 			<length>null</length>
 			<decimal>null</decimal>
 			<array>false</array>
@@ -987,6 +971,22 @@
 			<logical_name>전화번호</logical_name>
 			<physical_name>tel</physical_name>
 			<type>integer</type>
+		</word>
+		<word>
+			<id>50</id>
+			<length>13</length>
+			<decimal>null</decimal>
+			<array>false</array>
+			<array_dimension>null</array_dimension>
+			<unsigned>false</unsigned>
+			<zerofill>false</zerofill>
+			<binary>false</binary>
+			<args></args>
+			<char_semantics>false</char_semantics>
+			<description></description>
+			<logical_name>전화번호</logical_name>
+			<physical_name>tel</physical_name>
+			<type>varchar(n)</type>
 		</word>
 		<word>
 			<id>51</id>
@@ -1109,7 +1109,7 @@
 					<referenced_complex_unique_key>null</referenced_complex_unique_key>
 				</relation>
 			</connections>
-			<physical_name>border</physical_name>
+			<physical_name>board</physical_name>
 			<logical_name>게시판</logical_name>
 			<description></description>
 			<constraint></constraint>
@@ -1415,7 +1415,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>18</word_id>
+					<word_id>17</word_id>
 					<id>9</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -2250,7 +2250,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>50</word_id>
+					<word_id>49</word_id>
 					<id>29</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -2938,13 +2938,13 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>49</word_id>
+					<word_id>50</word_id>
 					<id>47</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
 					<physical_name></physical_name>
-					<type>int(n)</type>
+					<type>varchar(n)</type>
 					<constraint></constraint>
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>
@@ -3649,7 +3649,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>17</word_id>
+					<word_id>18</word_id>
 					<id>65</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
