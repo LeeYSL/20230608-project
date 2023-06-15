@@ -83,6 +83,7 @@ public class UserController {
 			session.setAttribute("loginUser", dbUser);
 			session.getAttribute("loginUser");
 			System.out.println(session.getAttribute("loginUser"));
+			
 			mav.setViewName("redirect:userinfo?userId="+user.getUserId());
 		} else {
 			throw new LoginException("비밀번호 오류입니다.", "login");

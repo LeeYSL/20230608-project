@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true" scanPeriod="30 seconds">
+	<!-- 콘솔 출력 설정 -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>
+				[%date{HH:mm:ss.SSS, Asia/Seoul}][%-5level][%logger] - %msg%n
+				<!-- 서울시간으로 출력 -->
+			</pattern>
+		</encoder>
+	</appender>
+	<!-- File 출력 설정 -->
+	<appender name="rolling" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>d:/log/shop1.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<!-- fileNamePattern : 파일위치 지정 -->
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>5kb</maxFileSize>
+				<!--  5kb씩 파일 분리 -->
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxHistory>30</maxHistory>
+			<!-- 30일 분량. 총 3GB까지 저장 -->
+      		<totalSizeCap>3gb</totalSizeCap>
+		</rollingPolicy>
+		<encoder>
+			<pattern>
+				[%date{HH:mm:ss.SSS, Asia/Seoul}][%-5level][%logger][%file:%line] - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	<!-- 
+		1. OFF : 로그 출력 안함
+		2. ERROR : 오류 메세지 출력
+		3. WARN : 경고 메세지 출력
+		4. INFO : 일반 정보 메세지 출력
+		5. DEBUG : 상세 정보(디버깅)
+		6. TRACE : 경로 추적하여 Debug 보다 더 상세한 메세지 출력 
+	
+	 -->
+	 <!-- controller 패키지를 INFO 단계 로그 메세지 처리 -->
+	<logger name="controller"          level="INFO" />
+	<logger name="org.springframework" level="OFF" />
+	<logger name="log4jdbc"            level="OFF" />
+	<logger name="jdbc.sqlonly"        level="INFO" /> <!-- SQL 출력 -->
+	<logger name="jdbc.sqltiming"      level="OFF" /> <!-- SQL 실행 시간 출력 -->
+	<logger name="jdbc.resultsettable" level="OFF" /> <!-- select 결과 출력 -->
+	<logger name="jdbc.audit"          level="OFF" /> <!-- JDBC 호출 정보(resultset) -->
+	<logger name="jdbc.resultset"      level="OFF" /> <!-- JDBC 호출 정보 -->
+	<logger name="jdbc.connection"     level="OFF" />
+	
+	<root level="INFO"> 
+	<!-- root level 기본값 디버그 -->
+		<appender-ref ref="console" />
+		<!-- 콘솔 설정 추가 -->
+		<appender-ref ref="rolling" />
+		<!-- 파일 설정 추가 -->
+	</root>
+</configuration>

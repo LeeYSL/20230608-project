@@ -30,6 +30,6 @@ public class User {
 	@Email(message="이메일 형식으로 입력하세요.")
 	private String email;
 	
-	private int tel;
+	private String tel;
 	private int batch;
 }
