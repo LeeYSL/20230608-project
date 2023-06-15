@@ -78,12 +78,12 @@ td {
 						<td>${user.tel}</td>
 					</tr>
 					<tr>
-						<td>생년월일</td>
-						<td>${user.birthday}</td>
+						<td>주소</td>
+						<td>${user.address}</td>
 					</tr>
 					<tr>
-						<td>주소</td>
-						<td><fmt:formatDate value="${user.address}" pattern="yyyy-MM-dd" /></td>
+						<td>생년월일</td>
+						<td><fmt:formatDate value="${user.birthday}" pattern="yyyy-MM-dd" /></td>
 					</tr>
 				</table>
 			

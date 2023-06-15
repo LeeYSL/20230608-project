@@ -82,7 +82,7 @@ public class UserController {
 		if(pwHash(user.getPw()).equals(dbUser.getPw())) {
 			session.setAttribute("loginUser", dbUser);
 			session.getAttribute("loginUser");
-			System.out.println(session.getAttribute("loginUser"));
+			System.out.println("loginuser : " +session.getAttribute("loginUser"));
 			
 			mav.setViewName("redirect:userinfo?userId="+user.getUserId());
 		} else {
@@ -90,16 +90,19 @@ public class UserController {
 		}
 		return mav;
 	}
-	@RequestMapping("info")
+	@RequestMapping("userinfo")
 	public ModelAndView userinfo(String userId, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-/*왜안되는지.
-		user = (User)session.getAttribute("loginUser");		
-		mav.addObject("user",user);
-		System.out.println(user);
-		mav.setViewName("redirect:userintro?userId="+user.getUserId());
-		return mav;
-*/
+
+//		user = (User)session.getAttribute("loginUser");	
+//		System.out.println("loginuser info : " +session.getAttribute("loginUser"));
+//		System.out.println(user);
+//		mav.addObject("user",user);
+//		System.out.println(user);
+//		mav.setViewName("redirect:userintro?userId="+user.getUserId());
+//		return mav;
+		
+		System.out.println(userId);
 		User user = service.selectOne(userId);
 		mav.addObject("user",user);
 		return mav;
