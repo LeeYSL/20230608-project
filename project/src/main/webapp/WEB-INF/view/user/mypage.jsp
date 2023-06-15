@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
+<body>  
 	<div>
 		<div class="mypage-top">
 			<div class="프로필쪽">
