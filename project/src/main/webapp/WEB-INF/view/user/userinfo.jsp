@@ -87,10 +87,20 @@ td {
 						<td><fmt:formatDate value="${user.birthday}" pattern="yyyy-MM-dd" /></td>
 					</tr>
 				</table>
-			
+				<div>
+					<div>
+					<a href="update?userId=${user.userId}">
+						<button type="button">회원정보 수정</button>
+					</a>
+					</div>
+					<div>
+					<a href="delete?userId=${user.userId}">
+						<button type="button">회원탈퇴</button>
+					</a>
+					</div>
+				</div>			
 		</div>
 	</div>
-
-
 </body>
+
 </html>

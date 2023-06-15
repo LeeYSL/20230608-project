@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import dao.BoardDao;
 import dao.RestaurantDao;
 import dao.UserDao;
 
@@ -14,6 +15,8 @@ public class ShopService {
 	private UserDao userDao;
 	@Autowired
 	private RestaurantDao restaurantDao;
+	@Autowired
+	private BoardDao boardDao;
 	
 
 
@@ -33,6 +36,20 @@ public class ShopService {
 
 	public User selectOne(String userId) {
 		return userDao.selectOne(userId); 
+	}
+
+
+
+	public void update(@Valid User user) {
+		userDao.update(user);
+		
+	}
+
+
+
+	public void delete(String userId) {
+		userDao.delete(userId);
+		
 	}
 
 }

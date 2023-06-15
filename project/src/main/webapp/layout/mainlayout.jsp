@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/view/jspHeader.jsp" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -24,18 +25,20 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
   class="w3-bar-item w3-button">Close Menu</a>
   <a href="#food" onclick="w3_close()" class="w3-bar-item w3-button">Food</a>
   <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">About</a>
+  <a href="/project/user/userinfo?userId=${sessionScope.loginUser.userId}" onclick="w3_close()" class="w3-bar-item w3-button">MyPage</a>
 </nav>
 
 <!-- Top menu -->
 <div class="w3-top">
   <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
     <div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">&#9776;</div>
-    <c:if test="${empty sessionScope.login}">
+    <c:if test="${sessionScope.loginUser == null}">
     	<div class="w3-right w3-padding-16"><a href="/project/user/login">Login</a></div>
 	</c:if>
-	<c:if test="${!empty sessionScope.login}">
-		<div class="w3-right w3-padding-16"><a href="{path}/user/userinfo">${sessionScope.login}님</a></div>
-		<div class="w3-right w3-padding-16"><a href="{path}/user/Logout">Logout</a></div>
+	<c:if test="${sessionScope.loginUser != null}">
+		<div class="w3-right w3-padding-16"><a href="/project/user/logout">Logout</a></div>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<div class="w3-right w3-padding-16"><a href="/project/user/userinfo?userId=${sessionScope.loginUser.userId}">${sessionScope.loginUser.nickname}님</a></div>
 	</c:if>	
     <div class="w3-center w3-padding-16">왜안나오지</div>
   </div>

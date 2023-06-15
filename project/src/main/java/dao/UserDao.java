@@ -29,4 +29,14 @@ public class UserDao {
 		return template.getMapper(cls).selectOne(userId);
 	}
 
+	public void update(@Valid User user) {
+		template.getMapper(cls).update(user);
+		
+	}
+
+	public void delete(String userId) {
+		template.getMapper(cls).delete(userId);
+		
+	}
+
 }

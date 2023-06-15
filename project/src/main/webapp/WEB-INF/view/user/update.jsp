@@ -51,11 +51,11 @@ td {
 <div class="side">
 	<div class="page">
 		<div class="join_top">
-			<span class="txt">내 회원정보</span>
+			<span class="txt">회원정보 수정</span>
 		</div>
 	</div>
 	<div class="join_insert">
-		<form:form modelAttribute="user" method="post" action="join">
+		<form:form modelAttribute="user" method="post" action="update">
 			<spring:hasBindErrors name="user">
 				<font color="red">
 					<c:forEach items="${errors.globalErrors}" var="error">
@@ -65,13 +65,13 @@ td {
 			</spring:hasBindErrors>
 		
 			<div class="join_title">
-				<b>개인정보</b> 
-				입력
+				회원정보<b>수정</b> 
+				수정
 			</div>
 			<table class="join_table"> 
 			 <tr>
 			 	<td>
-			 		<form:input path="userId" placeholder="아이디" />
+			 		<form:input path="userId" readonly="true"/>
 			 		<font color="red">
 						<form:errors path="userId" />
 					</font>
@@ -79,7 +79,7 @@ td {
 			 </tr>
 			 <tr>
 			 	<td>
-			 		<form:input path="pw" placeholder="비밀번호" />
+			 		<form:input path="pw" placeholder="비밀번호"/>
 			 		<font color="red">
 						<form:errors path="pw" />
 					</font>
@@ -93,19 +93,9 @@ td {
 					</font>
 			 	</td>
 			 </tr>
-			 <%--
-			  <tr>
-			 	<td>
-				 	<form:input path="pw" placeholder="비밀번호 확인" />
-				 	<font color="red">
-						<form:errors path="pw" />
-					</font>
-			 	</td>
-			 </tr>
-			  --%>
 			 <tr>
 			 	<td>
-			 		<form:input path="name" placeholder="이름" />
+			 		<form:input path="name" readonly="true" />
 			 		<font color="red">
 						<form:errors path="name" />
 					</font>
@@ -113,7 +103,7 @@ td {
 			 </tr>
 			 <tr>
 			 	<td>
-			 		<form:input path="birthday" placeholder="생년월일" />
+			 		<form:input path="birthday" readonly="true" />
 			 		<font color="red">
 						<form:errors path="birthday" />
 					</font>
@@ -138,6 +128,10 @@ td {
 			 <tr>
 			 	<td>
 			 		<select name="address">
+			 		<c:if test="${user.address != null && user.address != ''}">
+			 			<option >${user.address}</option>
+			 		</c:if>
+			 			<option value="">===주소===</option>	
 			 			<option>강남구</option>
 			 			<option>강동구</option>
 			 			<option>강북구</option>
@@ -163,22 +157,18 @@ td {
 			 			<option>종로구</option>
 			 			<option>중구</option>
 			 			<option>중랑구</option>			 			
-			 		</select>
-			 		
+			 		</select>			 		
 			 	</td>
 			 </tr>			 			 
 			</table>
-			 <input type="hidden" name="batch" value="1">
+			 <input type="hidden" name="batch" value="${user.batch}">
 			
 			<hr>
-
-			
-			
-			
+	
 			<div class="bottom_btn"> 
 				<div>
-					<button type="button">취소</button>
-					<button type="submit">회원가입</button>
+					<a href="mypage?userId=${user.userId}"><button type="button">취소</button></a>
+					<button type="submit">수정</button>
 				</div>
 			</div>
 		</form:form>
