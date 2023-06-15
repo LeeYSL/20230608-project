@@ -76,14 +76,13 @@ public class UserController {
 	public ModelAndView login(User user, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		User dbUser = service.selectOne(user.getUserId());
+		System.out.println("dbUser : " +dbUser);
 		if(dbUser == null) {
 			throw new LoginException("아이디 오류입니다.","login");
 		}
 		if(pwHash(user.getPw()).equals(dbUser.getPw())) {
 			session.setAttribute("loginUser", dbUser);
-			session.getAttribute("loginUser");
 			System.out.println("loginuser : " +session.getAttribute("loginUser"));
-			
 			mav.setViewName("redirect:userinfo?userId="+user.getUserId());
 		} else {
 			throw new LoginException("비밀번호 오류입니다.", "login");

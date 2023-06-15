@@ -68,6 +68,7 @@ td {
 					<tr>
 						<td>닉네임</td>
 						<td>${user.nickname}</td>
+						
 					</tr>
 					<tr>
 						<td>이름</td>

@@ -4,8 +4,17 @@
   <configuration>
     <settings>
     <!-- null 허용: getFileUrl() 리턴 값 : null 인 경우도 허용 -->
-      <setting name="jdbcTypeForNull" value="VARCHAR"/>
+      <setting name="jdbcTypeForNull" value="VARCHAR"/> 
+    
+    <setting name="mapUnderscoreToCamelCase" value="true" />
+
+
     </settings>
+
+
+
+    
+    
     <!-- sql 구문을 저장하고 있는 패키지 설정. : interface의 패키지 -->
     <mappers>
       <package name="dao.mapper"/>
