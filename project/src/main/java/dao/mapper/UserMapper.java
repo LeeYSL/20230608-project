@@ -12,7 +12,7 @@ public interface UserMapper {
 	@Insert("insert into user (user_id, pw, nickname, name, birthday, address, email, tel, batch) "
 			+ " values (#{userId}, #{pw}, #{nickname}, #{name}, #{birthday}, #{address}, #{email}, #{tel}, #{batch})")
 	void insert(@Valid User user);
-
+  
 	@Select("select * from user where user_id=#{userId}")
 	User selectOne(String userId);
 }

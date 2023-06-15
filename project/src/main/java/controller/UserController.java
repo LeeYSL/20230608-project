@@ -71,7 +71,7 @@ public class UserController {
 			e.printStackTrace();
 		}
 		return null;
-	}
+	}    
 	@PostMapping("login")
 	public ModelAndView login(User user, HttpSession session) {
 		ModelAndView mav = new ModelAndView();

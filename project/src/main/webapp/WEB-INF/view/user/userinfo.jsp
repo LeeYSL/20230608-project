@@ -57,7 +57,7 @@ td {
 		<div class="join_insert">
 			
 				<table>
-					<tr>
+					<tr>  
 						<td>아이디</td>
 						<td>${user.userId}</td>
 					</tr>
