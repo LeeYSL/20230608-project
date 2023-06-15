@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -106,9 +107,70 @@ public class UserController {
 		mav.addObject("user",user);
 		return mav;
 	}
-	@PostMapping("delete")
-	public String delete () {
+	
+	@PostMapping("update")
+	public ModelAndView update (@Valid User user, BindingResult bresult, String userId, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		if(bresult.hasErrors()) {
+			mav.getModel().putAll(bresult.getModel());
+			//reject 메서드 : global error에 추가
+			bresult.reject("error.input.check");
+			mav.setViewName("redirect:update?userId="+user.getUserId());
+			return mav;
+		}
+		User loginUser = (User)session.getAttribute("loginUser");		
+		if(!pwHash(user.getPw()).equals(loginUser.getPw())) {
+			mav.getModel().putAll(bresult.getModel());
+			bresult.reject("error.input.pw");
+			mav.setViewName("redirect:update?userId="+user.getUserId());
+			return mav;
+		}
+		try {
+			user.setPw(pwHash(user.getPw()));
+			service.update(user);
+			if(user.getUserId() == loginUser.getUserId()) {
+				session.setAttribute("loginUser", user);
+			}
+			mav.setViewName("redirect:mypage?userid="+user.getUserId());
+		} catch (Exception e) {
+			e.printStackTrace();
+			mav.getModel().putAll(bresult.getModel());
+			bresult.reject("error.input.update");
+			mav.setViewName("redirect:update?userId="+user.getUserId());
+			return mav;
+			
+		}
 		
-		return "login";
+		return mav;
+	}
+	@GetMapping("update")
+	public ModelAndView userupdate (String userId) {
+		ModelAndView mav = new ModelAndView();
+		User user =service.selectOne(userId);
+		mav.addObject("user", user);
+		return mav;
+	}
+	
+	
+	@PostMapping("delete")
+	public String delete (User user, String userId, String pw, HttpSession session) {
+		User loginUser = (User)session.getAttribute("loginUser");
+		if(!pwHash(user.getPw()).equals(loginUser.getPw())) {
+			throw new LoginException("비밀번호를 확인해 주세요.","delete?userId="+userId);
+		}
+		try {
+		service.delete(userId);		
+		session.invalidate();
+		return "redirect:login";
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new LoginException("탈퇴 실패","userinfo?userId="+userId);
+			
+		}
+	}
+	@RequestMapping("logout")
+	public String logout (String userId, HttpSession session) {
+		session.invalidate();
+		return "redirect:login";
 	}
 }
