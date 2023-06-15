@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import dao.mapper.RestaurantMapper;
+import logic.Dayoff;
 import logic.Restaurant;
 
 
@@ -23,10 +24,10 @@ public class RestaurantDao {
 	
 	public void insert(@Valid Restaurant restaurant) {
 		template.getMapper(cls).insert(restaurant);
-		
-		
 	}
 	
-	
+	public void insertDayoff(@Valid Dayoff dayoff) {
+		template.getMapper(cls).insertDayoff(dayoff);
+	}
 
 }

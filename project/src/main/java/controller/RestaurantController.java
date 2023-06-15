@@ -1,5 +1,6 @@
 package controller;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
+import logic.Dayoff;
 import logic.Restaurant;
 import logic.ShopService;
+import logic.User;
 import lombok.val;
 
 @Controller
@@ -34,7 +37,7 @@ public class RestaurantController {
 	
 	  
 	@PostMapping("restaurantadd")
-	public ModelAndView restaurantAdd(@Valid Restaurant restaurant, BindingResult bresult) throws Exception {
+	public ModelAndView restaurantAdd(@Valid Restaurant restaurant, BindingResult bresult,HttpSession session) throws Exception {
 
 		ModelAndView mav = new ModelAndView();
 		if (bresult.hasErrors()) {
@@ -45,9 +48,16 @@ public class RestaurantController {
 					
 		}
 		try {
-			restaurant.setUserId("test03");
+			User user = (User)session.getAttribute("loginUser"); 
+			restaurant.setUserId(user.getUserId());
 			restaurant.setRestNum(1);
+			//가게정보 저장
 			service.restauinsert(restaurant);
+			
+			restaurant.getDayoff().setRestNum(1);
+			restaurant.getDayoff().setUserId(user.getUserId());
+			//휴무일 저장
+			service.dayoffInsert(restaurant.getDayoff());
 			mav.addObject("restaurant",restaurant);
 			
 		}catch (Exception e) {

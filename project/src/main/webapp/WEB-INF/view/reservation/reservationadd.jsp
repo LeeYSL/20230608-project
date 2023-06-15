@@ -4,59 +4,124 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <meta charset="UTF-8">
 <title>예약 페이지</title>
+<script>
+	$(function() {
+		$("#datepicker").datepicker();
+	});
+
+	$.datepicker.setDefaults({
+		dateFormat : 'yymmdd',
+		prevText : '이전 달',
+		nextText : '다음 달',
+		monthNames : [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월',
+				'10월', '11월', '12월' ],
+		monthNamesShort : [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월',
+				'9월', '10월', '11월', '12월' ],
+		dayNames : [ '일', '월', '화', '수', '목', '금', '토' ],
+		dayNamesShort : [ '일', '월', '화', '수', '목', '금', '토' ],
+		dayNamesMin : [ '일', '월', '화', '수', '목', '금', '토' ],
+		showMonthAfterYear : true,
+		yearSuffix : '년'
+	});
+</script>
+<style type="text/css">
+.side {
+	margin: 0% 25% 0% 25%;
+	height: 100%;
+	text-align: center;
+	display: block;
+}
+
+.page {
+	border: 1px gray solid;
+	height: 10%;
+	display: block;
+}
+
+.txt {
+	font-size: 200%;
+}
+
+.join_insert {
+	height: 90%;
+	border: 1px gray solid;
+	text-align: center;
+	display: block;
+}
+
+table {
+	border: 1px gray solid;
+	width: 90%;
+	margin: 5%;
+}
+
+th {
+	width: 20%;
+}
+
+
+</style>
 </head>
 <body>
-	<h2>${restaurant.name}</h2>
-	<div>예약 창입니다.</div>
-	<form:form modelAttribute="reservation" method="post"
-		action="reservationadd">
-		<spring:hasBindErrors name="reservation">
-			<font color="red"> <c:forEach items="${errors.globalErrors}"
-					var="error">
-					<spring:message code="${error.code}" />
-					<br>
-				</c:forEach>
-			</font>
-		</spring:hasBindErrors>
-		<table>
-		  <tr>
-		  	<td>
-			 		<form:input path="rsrvtName" placeholder="예약자 이름" />
-			 		  <font color="red">
-						  <form:errors path="rsrvtName" />
-					  </font>
-			 	</td>
-			 </tr>
-			 <tr>
-			   <td>
-			 	<form:input path="phoneNo" placeholder="전화번호" />
-			 		 <font color="red">
-						 <form:errors path="phoneNo" />
-					 </font>
-			   </td>
-			 </tr>
-			 <tr>
-			   <td>
-			 	  <form:input path="people" placeholder="인원수" />
-			 		  <font color="red">
-						  <form:errors path="people" />
-					  </font>
-			   </td>
-			  </tr>
-			  <tr>
-			   <td>
-			 	  <form:input path="rsrvtDate" placeholder="예약날짜" />
-			 		  <font color="red">
-						  <form:errors path="rsrvtDate" />
-					  </font>
-			   </td>
-			  </tr>
-		</table>
-
-
-
-	</form:form>
+	<div class="side">
+		<div class="page">
+			<div>
+				<div class="txt">예약 창입니다.</div>
+			</div>
+		</div>
+		<div class="join_insert">
+			<form:form modelAttribute="reservation" method="post"
+				action="reservationadd">
+				<spring:hasBindErrors name="reservation">
+					<font color="red"> <c:forEach items="${errors.globalErrors}"
+							var="error">
+							<spring:message code="${error.code}" />
+							<br>
+						</c:forEach>
+					</font>
+				</spring:hasBindErrors>
+				<div class="join_title">
+					<h2>${restaurant.name}</h2>
+				</div>
+				<table class="join_table">
+					<tr>
+						<td><form:input path="rsrvtName" placeholder="예약자 이름" /> <font
+							color="red"> <form:errors path="rsrvtName" />
+						</font></td>
+					</tr>
+					<tr>
+						<td><form:input path="phoneNo" placeholder="전화번호" /> <font
+							color="red"> <form:errors path="phoneNo" />
+						</font></td>
+					</tr>
+					<tr>
+						<td><form:input path="people" placeholder="인원수" /> <font
+							color="red"> <form:errors path="people" />
+						</font></td>
+					</tr>
+					<tr>
+						<td><form:input id="datepicker" path="rsrvtDate"
+								placeholder="예약날짜" /> <font color="red"> <form:errors
+									path="rsrvtDate" />
+						</font></td>
+					</tr>
+					<tr>
+						<td><form:input path="rsrvtTime" placeholder="예약시간" /> <font
+							color="red"> <form:errors path="rsrvtTime" />
+						</font></td>
+					</tr>
+				</table>
+				<input type="submit" value="예약" name="add">
+				<input type="button" value="취소" name="add">
+			</form:form>
+		</div>
+	</div>
 </body>
 </html>

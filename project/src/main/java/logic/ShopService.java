@@ -26,10 +26,11 @@ public class ShopService {
 
 	public void restauinsert(@Valid Restaurant restaurant) {
 		restaurantDao.insert(restaurant);
-		
 	}
 
-
+	public void dayoffInsert(@Valid Dayoff dayoff) {
+		restaurantDao.insertDayoff(dayoff);
+	}
 
 	public User selectOne(String userId) {
 		return userDao.selectOne(userId); 

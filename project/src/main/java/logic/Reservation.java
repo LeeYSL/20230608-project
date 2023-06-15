@@ -16,6 +16,7 @@ public class Reservation {
 	private int num;  // 예약번호
 	private int rervtNum; //가게번호
 	private String rsrvtDate; //예약날짜
+	private String rsrvtTime; //예약시간
 	private int people; //인원수
 	private Date regDate; //현재시간
 	private String userId; //아이디
