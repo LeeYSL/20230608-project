@@ -12,10 +12,7 @@ import lombok.ToString;
 @ToString
 
 public class Restaurant {
-	
-	
-
-	private String userId;
+    private String userId;
     @NotNull(message="전화번호를 입력하세요.")
 	private int tel;
     @NotEmpty(message="이름을 입력하세요")
