@@ -14,8 +14,8 @@ public interface RestaurantMapper {
 			+ " values (#{restNum}, #{userId}, #{tel}, #{licenseNum}, #{name} ,#{address}, #{picture},#{maxpeople},#{open},#{close})")
 	void insert(@Valid Restaurant restaurant);
 	
-	@Insert("insert into dayoff (rest_num, user_id, Mon, Tue, Wed, Thur, Fri, Sat, Sun, holiday) "
-			+ " values (#{restNum}, #{userId}, #{mon}, #{tue},#{wed}, #{thur},#{fri},#{sat},#{sun},#{holiday})")
+	@Insert("insert into dayoff (rest_num, Mon, Tue, Wed, Thur, Fri, Sat, Sun, holiday) "
+			+ " values (#{restNum}, #{mon}, #{tue},#{wed}, #{thur},#{fri},#{sat},#{sun},#{holiday})")
 	void insertDayoff(@Valid Dayoff dayoff);
 
 }

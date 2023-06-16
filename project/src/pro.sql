@@ -2,7 +2,6 @@ SET SESSION FOREIGN_KEY_CHECKS=0;
 
 /* Drop Tables */
 
-DROP TABLE IF EXISTS border;
 DROP TABLE IF EXISTS comment;
 DROP TABLE IF EXISTS board;
 DROP TABLE IF EXISTS dayoff;
@@ -55,13 +54,11 @@ CREATE TABLE dayoff
 	Tue varchar(50),
 	Wed varchar(50),
 	Thur varchar(50),
-	Fir varchar(50),
+	Fri varchar(50),
 	Sat varchar(50),
 	Sun varchar(50),
 	holiday varchar(50),
-	user_id varchar(15) NOT NULL,
-	PRIMARY KEY (rest_num, user_id),
-	UNIQUE (user_id)
+	PRIMARY KEY (rest_num)
 );
 
 
@@ -71,9 +68,7 @@ CREATE TABLE menu
 	rest_num int NOT NULL,
 	menu_name varchar(100),
 	price int,
-	user_id varchar(15) NOT NULL,
-	PRIMARY KEY (seq, rest_num, user_id),
-	UNIQUE (user_id)
+	PRIMARY KEY (seq, rest_num)
 );
 
 
@@ -87,9 +82,8 @@ CREATE TABLE reservation
 	confirm int NOT NULL,
 	phone_no varchar(100) NOT NULL,
 	rsrvt_name varchar(100),
-	user_id varchar(15) NOT NULL,
-	PRIMARY KEY (num),
-	UNIQUE (user_id)
+	user_id varchar(100) NOT NULL,
+	PRIMARY KEY (num)
 );
 
 
@@ -102,8 +96,10 @@ CREATE TABLE restaurant
 	address varchar(100) NOT NULL,
 	license_num int(12) NOT NULL,
 	picture varchar(100),
-	PRIMARY KEY (rest_num, user_id),
-	UNIQUE (user_id),
+	maxpeople int NOT NULL,
+	open varchar(100),
+	close varchar(100),
+	PRIMARY KEY (rest_num),
 	UNIQUE (license_num)
 );
 
@@ -165,24 +161,24 @@ ALTER TABLE review
 
 
 ALTER TABLE dayoff
-	ADD FOREIGN KEY (rest_num, user_id)
-	REFERENCES restaurant (rest_num, user_id)
+	ADD FOREIGN KEY (rest_num)
+	REFERENCES restaurant (rest_num)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
 ALTER TABLE menu
-	ADD FOREIGN KEY (rest_num, user_id)
-	REFERENCES restaurant (rest_num, user_id)
+	ADD FOREIGN KEY (rest_num)
+	REFERENCES restaurant (rest_num)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
 ALTER TABLE reservation
-	ADD FOREIGN KEY (rest_num, user_id)
-	REFERENCES restaurant (rest_num, user_id)
+	ADD FOREIGN KEY (rest_num)
+	REFERENCES restaurant (rest_num)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;

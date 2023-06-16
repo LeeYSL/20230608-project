@@ -118,7 +118,7 @@ th {
 						</font></td>
 					</tr>
 				</table>
-				<input type="submit" value="예약" name="add">
+				<input type="submit" value="예약" name="add"> <!-- 예약 상세 페이지로 이동하긴 -->
 				<input type="button" value="취소" name="add">
 			</form:form>
 		</div>

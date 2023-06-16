@@ -14,7 +14,7 @@ import lombok.ToString;
 @ToString
 public class Reservation {
 	private int num;  // 예약번호
-	private int rervtNum; //가게번호
+	private int restNum; //가게번호
 	private String rsrvtDate; //예약날짜
 	private String rsrvtTime; //예약시간
 	private int people; //인원수

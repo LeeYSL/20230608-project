@@ -27,9 +27,8 @@
 				</font></td>
 			</tr>
 			<tr>
-				<td><form:input path="picture" placeholder="가게사진" /> <font
-					color="red"> <form:errors path="picture" />
-				</font>
+				<td>
+				<input type="file" name="picture" >
 				</td>
 			</tr>
 			<tr>
@@ -101,6 +100,7 @@
 		</table>
 		<br>
 		<td><input type="submit" value="등록" name="add"></td>
+		<input type="button" value="취소" name="add">
 	</form:form>
 </body>
 </html>
