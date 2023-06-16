@@ -102,8 +102,15 @@ th {
 						</font></td>
 					</tr>
 					<tr>
-						<td><form:input path="people" placeholder="인원수" /> <font
-							color="red"> <form:errors path="people" />
+					<td><form:select style="width:200" path="people">
+			             <option value="">===예약인원===</option>
+			             <option value="1">1명</option>
+			             <option value="2">2명</option>
+			             <option value="3">3명</option>
+			             <option value="4">4명</option>
+					</form:select>
+						<font  color="red"> 
+						   <form:errors path="people" />
 						</font></td>
 					</tr>
 					<tr>
