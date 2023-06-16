@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import dao.mapper.BoardMapper;
 import dao.mapper.UserMapper;
 import logic.User;
 
@@ -18,6 +19,8 @@ public class UserDao {
 	private SqlSessionTemplate template;
 	private Map<String,Object> param = new HashMap<>();
 	private Class<UserMapper> cls = UserMapper.class;
+	private Class<BoardMapper> bcls = BoardMapper.class;
+	
 	
 	public void insert(@Valid User user) {
 		template.getMapper(cls).insert(user);
