@@ -19,7 +19,7 @@ public class UserDao {
 	private SqlSessionTemplate template;
 	private Map<String,Object> param = new HashMap<>();
 	private Class<UserMapper> cls = UserMapper.class;
-	private Class<BoardMapper> bcls = BoardMapper.class;
+	
 	
 	
 	public void insert(@Valid User user) {

@@ -147,6 +147,7 @@ public class UserController {
 	public ModelAndView userupdate (String userId) {
 		ModelAndView mav = new ModelAndView();
 		User user =userservice.selectOne(userId);
+		user.setPw(null);
 		mav.addObject("user", user);
 		return mav;
 	}

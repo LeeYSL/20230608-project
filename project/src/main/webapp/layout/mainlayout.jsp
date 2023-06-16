@@ -32,10 +32,10 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 <div class="w3-top">
   <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
     <div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">&#9776;</div>
-    <c:if test="${sessionScope.loginUser == null}">
+    <c:if test="${empty sessionScope.loginUser}">
     	<div class="w3-right w3-padding-16"><a href="/project/user/login">Login</a></div>
 	</c:if>
-	<c:if test="${sessionScope.loginUser != null}">
+	<c:if test="${!empty sessionScope.loginUser}">
 		<div class="w3-right w3-padding-16"><a href="/project/user/logout">Logout</a></div>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<div class="w3-right w3-padding-16"><a href="/project/user/userinfo?userId=${sessionScope.loginUser.userId}">${sessionScope.loginUser.nickname}님</a></div>

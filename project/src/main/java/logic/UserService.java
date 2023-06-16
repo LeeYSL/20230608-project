@@ -41,4 +41,10 @@ public class UserService {
 	}
 
 
+	public void write(@Valid Board board) {
+		boardDao.write(board);
+		
+	}
+
+
 }
