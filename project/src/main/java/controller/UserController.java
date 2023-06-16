@@ -16,15 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import exception.LoginException;
-import logic.ShopService;
 import logic.User;
+import logic.UserService;
 import util.CipherUtil;
 
 @Controller
 @RequestMapping("user")
 public class UserController {
 	@Autowired
-	private ShopService service;
+	private UserService userservice;
 	@Autowired
 	private CipherUtil util;
 	
@@ -52,7 +52,7 @@ public class UserController {
 		
 			user.setPw(pwHash(user.getPw()));
 
-			service.userInsert(user);	//db에 insert
+			userservice.userInsert(user);	//db에 insert
 			mav.addObject("user",user);
 		}catch(DataIntegrityViolationException e) {
 	//DataIntegrityViolationException : db에서 중복 key 오류시 발생되는 예외 객체
@@ -76,7 +76,7 @@ public class UserController {
 	@PostMapping("login")
 	public ModelAndView login(User user, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		User dbUser = service.selectOne(user.getUserId());
+		User dbUser = userservice.selectOne(user.getUserId());
 		System.out.println("dbUser : " +dbUser);
 		if(dbUser == null) {
 			throw new LoginException("아이디 오류입니다.","login");
@@ -103,7 +103,7 @@ public class UserController {
 //		return mav;
 		
 		System.out.println(userId);
-		User user = service.selectOne(userId);
+		User user = userservice.selectOne(userId);
 		mav.addObject("user",user);
 		return mav;
 	}
@@ -127,7 +127,7 @@ public class UserController {
 		}
 		try {
 			user.setPw(pwHash(user.getPw()));
-			service.update(user);
+			userservice.update(user);
 			if(user.getUserId() == loginUser.getUserId()) {
 				session.setAttribute("loginUser", user);
 			}
@@ -146,7 +146,7 @@ public class UserController {
 	@GetMapping("update")
 	public ModelAndView userupdate (String userId) {
 		ModelAndView mav = new ModelAndView();
-		User user =service.selectOne(userId);
+		User user =userservice.selectOne(userId);
 		mav.addObject("user", user);
 		return mav;
 	}
@@ -159,7 +159,7 @@ public class UserController {
 			throw new LoginException("비밀번호를 확인해 주세요.","delete?userId="+userId);
 		}
 		try {
-		service.delete(userId);		
+			userservice.delete(userId);		
 		session.invalidate();
 		return "redirect:login";
 		} catch (Exception e) {
