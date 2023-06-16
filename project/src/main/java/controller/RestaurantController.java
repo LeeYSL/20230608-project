@@ -19,7 +19,7 @@ import logic.Restaurant;
 import logic.User;
 
 @Controller
-@RequestMapping("restaurant")
+@RequestMapping("restaurant") 
 public class RestaurantController {
 	  
 		@Autowired
