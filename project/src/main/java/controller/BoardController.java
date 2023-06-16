@@ -8,13 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-
-import logic.User;
+import logic.Board;
 import logic.UserService;
 import util.CipherUtil;
 
 @Controller
-@RequestMapping("user")
+@RequestMapping("board")
 public class BoardController {
 	@Autowired
 	private UserService userservice;
@@ -25,7 +24,7 @@ public class BoardController {
 	@RequestMapping("*")
 	public ModelAndView join() {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject(new User());
+		mav.addObject(new Board());
 		return mav;
 	}
 
