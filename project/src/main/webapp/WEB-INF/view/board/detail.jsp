@@ -46,7 +46,7 @@ a {
 						</div>
 					</div>
 
-						<form:form modelAttribute="board" action="write" enctype="multipart/form-data" name="f">							
+						<form:form modelAttribute="board" action="update" enctype="multipart/form-data" name="f">							
 							<table class="w3-table-all">
 								<tr>
 									<th>제목</th>
@@ -70,20 +70,31 @@ a {
 								<tr>
 									<th>첨부파일</th>
 									<td>
-										<input type="file" name="file1"  class="w3-input" /> 
+										<c:if test="${!empty board.fileurl}">
+											<a href="file/${board.fileurl}">${board.fileurl}</a>
+										</c:if>
 									</td>
 								</tr>
 						</table>
-						<input type="hidden" name="userId" value="${sessionScope.loginUser.userId}">			
 							<hr>
 							<div>
 								<div>
 									<a href="list?boardId=${boardId}">
-										<button type="button" class="w3-button w3-white w3-border w3-border-orange w3-round-large">취소</button>
+										<button type="button" class="w3-button w3-white w3-border w3-border-orange w3-round-large">답변</button>
 									</a>
 									&nbsp;	&nbsp;	&nbsp;	&nbsp;
-									<button type="submit" class="w3-button w3-white w3-border w3-border-orange w3-round-large">등록</button>
-
+									<a href="update?num=${num}">
+										<button type="button" class="w3-button w3-white w3-border w3-border-orange w3-round-large">수정</button>
+									</a>
+									&nbsp;	&nbsp;	&nbsp;	&nbsp;
+									<a href="delete?num=${num}">
+										<button type="button" class="w3-button w3-white w3-border w3-border-orange w3-round-large">삭제</button>
+									</a>
+									&nbsp;	&nbsp;	&nbsp;	&nbsp;
+									<a href="list?boardId=${boardId}">
+										<button type="button" class="w3-button w3-white w3-border w3-border-orange w3-round-large">목록</button>
+									</a>
+									&nbsp;	&nbsp;	&nbsp;	&nbsp;																		
 								</div>
 							</div>
 						</form:form>

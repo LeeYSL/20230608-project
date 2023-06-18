@@ -2,6 +2,7 @@ package controller;
 
  
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -45,19 +46,28 @@ public class UserController {
 			bresult.reject("error.input.check");
 			return mav;
 		}
+		User dbUser = userservice.selectOne(user.getUserId());
 		try {
 			/*
 			 * password : SHA-512 해쉬값 변경
 			 */
-		
+			if(dbUser != null) {
+				mav.getModel().putAll(bresult.getModel());
+				bresult.reject("error.duplicate.userId");
+				return mav;
+			}
+			if(!user.getPw().equals(user.getPw1())) {
+				mav.getModel().putAll(bresult.getModel());
+				bresult.reject("error.pw.check"); //global 오류 등록
+				return mav;
+			}
 			user.setPw(pwHash(user.getPw()));
-
 			userservice.userInsert(user);	//db에 insert
 			mav.addObject("user",user);
 		}catch(DataIntegrityViolationException e) {
 	//DataIntegrityViolationException : db에서 중복 key 오류시 발생되는 예외 객체
 			e.printStackTrace();
-			bresult.reject("error.duplicate.user"); //global 오류 등록
+			bresult.reject("error.pw.check"); //global 오류 등록
 			mav.getModel().putAll(bresult.getModel());
 			return mav;
 		}
@@ -154,24 +164,35 @@ public class UserController {
 	
 	
 	@PostMapping("delete")
-	public String delete (User user, String userId, String pw, HttpSession session) {
-		User loginUser = (User)session.getAttribute("loginUser");
-		if(!pwHash(user.getPw()).equals(loginUser.getPw())) {
-			throw new LoginException("비밀번호를 확인해 주세요.","delete?userId="+userId);
-		}
+	public String delete (String userId, String pw, String pw1, HttpSession session) {
+		User loginUser = (User)session.getAttribute("loginUser");		
+
 		try {
-			userservice.delete(userId);		
-		session.invalidate();
-		return "redirect:login";
+			if(pw.equals(pw1) || (loginUser.getPw() == pwHash(pw))) {
+				System.out.println("loginUser.getUserId()"+loginUser.getUserId());
+				userservice.delete(loginUser.getUserId());			
+				session.invalidate();
+				System.out.println("loginUser.getUserId()"+loginUser.getUserId());
+
+				return "redirect:login";
+			}else {
+				throw new LoginException("비밀번호가 일치하지 않습니다.","delete?userId="+loginUser.getUserId());			
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw new LoginException("탈퇴 실패","userinfo?userId="+userId);
-			
+			throw new LoginException("탈퇴 실패","userinfo?userId="+loginUser.getUserId());
 		}
 	}
 	@RequestMapping("logout")
 	public String logout (String userId, HttpSession session) {
 		session.invalidate();
 		return "redirect:login";
+	}
+	
+	@RequestMapping("list")
+	public ModelAndView list (HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		List<User> list = userservice.list();  
+		mav.addObject("list",list);
+		return mav;
 	}
 }

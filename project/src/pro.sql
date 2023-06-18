@@ -30,8 +30,7 @@ CREATE TABLE board
 	grp_level int,
 	grp_step int,
 	comm_cnt int,
-	PRIMARY KEY (num),
-	UNIQUE (user_id)
+	PRIMARY KEY (num)
 );
 
 
@@ -42,8 +41,7 @@ CREATE TABLE comment
 	user_id varchar(15) NOT NULL,
 	date datetime,
 	content varchar(100),
-	PRIMARY KEY (num, seq),
-	UNIQUE (user_id)
+	PRIMARY KEY (num, seq)
 );
 
 
