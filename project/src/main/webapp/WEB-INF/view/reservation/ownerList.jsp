@@ -9,8 +9,6 @@
 </head>
 <body>
 	<h2>예약 리스트</h2>
-	<form:form modelAttribute="reservation" method="post"
-		action="confirm">
 		<table>
 			<tr>
 
@@ -22,7 +20,7 @@
 				<th>예약 인원</th>
 				<th>예약 상태</th>
 			</tr>
-			<c:forEach items="${reservation}" var="rsrvt">
+			<c:forEach items="${rsrvtList}" var="rsrvt"> <!--reservation 객체를 만들어서 rstvt라는 이름에 넣고 필요한 요소들을 뽑아온다.  -->
 				<tr>
 					<td align="center">${rsrvt.num}</td>
 					<td align="center">${rsrvt.rsrvtName}</td>
@@ -31,15 +29,14 @@
 					<td align="center">${rsrvt.rsrvtTime}</td>
 					<td align="center">${rsrvt.people}</td>
 					<td align="center">${rsrvt.confirm}</td>
-					<td><form:select path="confirm">
+					<td><select>
 							<option value="1">승인 대기</option>
 							<option value="2">승인</option>
-							<option value="1">거절</option>
-						</form:select></td>
+							<option value="3">거절</option>
+						</select></td>
 					<td><input type="submit" value="확정" name="confirm"></td>
 				</tr>
 			</c:forEach>
 		</table>
-	</form:form>
 </body>
 </html>

@@ -1,5 +1,7 @@
 package logic;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,4 +32,11 @@ public class ReservationSerivce {
 		reservationDao.bookinsert(reservation);
 		
 	}
+	
+	public List<Reservation> rsrvtList() {
+		return reservationDao.list();
+		
+	}
+
+
 }
