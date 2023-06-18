@@ -22,80 +22,71 @@
 		</spring:hasBindErrors>
 		<table>
 			<tr>
-				<td><form:input path="name" placeholder="상호명" /> <font
-					color="red"> <form:errors path="name" />
-				</font></td>
+				<td><form:input path="name" placeholder="상호명" /> </td>
+				<td><font color="red"> <form:errors path="name" /></font></td>
+			</tr>
+			<tr>
+				<td><input style="width:185" type="file" name="picture" ></td>
 			</tr>
 			<tr>
 				<td>
-				<input type="file" name="picture" >
+					<form:select path="open">
+						<option value="0">여는 시간</option>
+						<c:forEach var="i"  begin="1" end="24">
+        					<option value="${i}">${i>9?i:'0'}${i>9?'':i}:00</option>
+    					</c:forEach>
+    				</form:select>
 				</td>
-			</tr>
-			<tr>
-				<td>
-					<form:input path="open" placeholder="여는시간" /> 
-					<font color="red"> <form:errors path="open" /></font>
-				</td>
+				<td><font color="red"> <form:errors path="open" /></font></td>
 	        </tr>
 	        <tr>			
-				<td><form:input path="close" placeholder="닫는시간" /> <font
-					color="red"> <form:errors path="close" />
-				</font></td>
+				<td>
+					<form:select path="close">
+						<option value="0">닫는 시간</option>
+						<c:forEach var="i"  begin="1" end="24">
+        					<option value="${i}">${i>9?i:'0'}${i>9?'':i}:00</option>
+    					</c:forEach>
+    				</form:select>
+				</td>
+				<td><font color="red"> <form:errors path="close" /></font></td>
 			</tr>
 			<tr>
-				<td><form:input path="tel" placeholder="전화번호" /> <font
-					color="red"> <form:errors path="tel" />
-				</font></td>
+				<td><form:input path="tel" placeholder="전화번호" /> </td>
+				<td><font color="red"> <form:errors path="tel" /></font></td>
 			</tr>
 			<tr>
-				<td><form:input path="maxpeople" placeholder="최대인원수" /> <font
-					color="red"> <form:errors path="maxpeople" />
-				</font></td>
+				<td>
+					<form:select path="maxpeople">
+			             <option value="0" >===최대 예약 인원 수===</option>
+			             <option value="1">1명</option>
+			             <option value="2">2명</option>
+			             <option value="3">3명</option>
+			             <option value="4">4명</option>
+					</form:select>
+				</td>
+				<td><font color="red"> <form:errors path="maxpeople" /></font></td>
 			</tr>
 			<tr>
 			<tr>
-				<td><form:input path="address" placeholder="주소" /> <font
-					color="red"> <form:errors path="address" />
-				</font></td>
+				<td><form:input path="address" placeholder="주소" /> </td>
+				<td><font color="red"> <form:errors path="address" /></font></td>
 			</tr>
 			<tr>
-				<td><form:input path="licenseNum" placeholder="사업자번호" /> <font
-					color="red"> <form:errors path="licenseNum" />
-				</font></td>
+				<td><form:input path="licenseNum" placeholder="사업자번호" /> </td>
+				<td><font color="red"> <form:errors path="licenseNum" /></font></td>
 			</tr>
+		</table>
+		<table>
 			<tr>
 				<td><form:checkbox path="dayoff.mon" value="Y"/>월요일
-                <font
-					color="red"> <form:errors path="dayoff.mon"  />
-				</font></td>
-				<td><form:checkbox path="dayoff.tue" value="Y"/>화요일
-                <font
-					color="red"> <form:errors path="dayoff.tue" />
-				</font></td>
-				<td><form:checkbox path="dayoff.wed" value="Y"/>수요일
-                <font
-					color="red"> <form:errors path="dayoff.wed" />
-				</font></td>
-				<td><form:checkbox path="dayoff.thur" value="Y"/>목요일
-                <font
-					color="red"> <form:errors path="dayoff.thur" />
-				</font></td>
-				<td><form:checkbox path="dayoff.fri" value="Y"/>금요일
-                <font
-					color="red"> <form:errors path="dayoff.fri" />
-				</font></td>
-				<td><form:checkbox path="dayoff.sat" value="Y"/>토요일
-                <font
-					color="red"> <form:errors path="dayoff.sat" />
-				</font></td>
-				<td><form:checkbox path="dayoff.sun" value="Y"/>일요일
-                <font
-					color="red"> <form:errors path="dayoff.sun" />
-				</font></td>
-				<td><form:checkbox path="dayoff.holiday" value="Y"/>공휴일
-                <font
-					color="red"> <form:errors path="dayoff.holiday" />
-				</font></td>
+					<form:checkbox path="dayoff.tue" value="Y"/>화요일
+					<form:checkbox path="dayoff.wed" value="Y"/>수요일
+					<form:checkbox path="dayoff.thur" value="Y"/>목요일
+					<form:checkbox path="dayoff.fri" value="Y"/>금요일
+					<form:checkbox path="dayoff.sat" value="Y"/>토요일
+					<form:checkbox path="dayoff.sun" value="Y"/>일요일
+					<form:checkbox path="dayoff.holiday" value="Y"/>공휴일
+				</td>
 			</tr>
 		</table>
 		<br>
