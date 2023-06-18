@@ -12,7 +12,7 @@
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
 	<x>0</x>
-	<y>-24</y>
+	<y>199</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -135,7 +135,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2023-06-08 16:43:37</creation_date>
-			<updated_date>2023-06-16 17:16:53</updated_date>
+			<updated_date>2023-06-18 23:28:16</updated_date>
 			<model_property>
 				<name>프로젝트명</name>
 				<value></value>
@@ -1006,7 +1006,7 @@
 		</word>
 		<word>
 			<id>52</id>
-			<length>null</length>
+			<length>13</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -1018,11 +1018,11 @@
 			<description></description>
 			<logical_name>전화번호</logical_name>
 			<physical_name>tel</physical_name>
-			<type>integer</type>
+			<type>varchar(n)</type>
 		</word>
 		<word>
 			<id>53</id>
-			<length>13</length>
+			<length>100</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -1606,7 +1606,7 @@
 			<connections>
 				<relation>
 					<id>1</id>
-					<source>0</source>
+					<source>5</source>
 					<target>1</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -1628,7 +1628,7 @@
 				</relation>
 				<relation>
 					<id>2</id>
-					<source>5</source>
+					<source>0</source>
 					<target>1</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -1659,7 +1659,7 @@
 				<normal_column>
 					<id>12</id>
 					<referenced_column>0</referenced_column>
-					<relation>1</relation>
+					<relation>2</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -1726,7 +1726,7 @@
 				<normal_column>
 					<id>14</id>
 					<referenced_column>42</referenced_column>
-					<relation>2</relation>
+					<relation>1</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -2536,13 +2536,13 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>52</word_id>
+					<word_id>53</word_id>
 					<id>34</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
 					<physical_name></physical_name>
-					<type>integer</type>
+					<type>varchar(n)</type>
 					<constraint></constraint>
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>
@@ -3099,7 +3099,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>53</word_id>
+					<word_id>52</word_id>
 					<id>50</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
