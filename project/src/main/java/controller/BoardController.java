@@ -59,7 +59,7 @@ public class BoardController {
 		return mav;
 	}
 	@RequestMapping("list")
-	public ModelAndView list(String boardId, HttpSession session) {
+	public ModelAndView blist(String boardId, HttpSession session) {
 		ModelAndView mav =new ModelAndView();
 		List<Board> blist = userservice.blist(boardId);
 		mav.addObject("blist", blist);

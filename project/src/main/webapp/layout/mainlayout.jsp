@@ -27,7 +27,8 @@ a {text-decoration: none;}
   <a href="#food" onclick="w3_close()" class="w3-bar-item w3-button">Food</a>
   <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">About</a>
   <a href="/project/user/mypage?userId=${sessionScope.loginUser.userId}" onclick="w3_close()" class="w3-bar-item w3-button">MyPage</a>
-   <a href="/project/board/list?boardId=${board.boardId}" onclick="w3_close()" class="w3-bar-item w3-button">Board</a>
+   <a href="/project/board/list?boardId=1" onclick="w3_close()" class="w3-bar-item w3-button">공지사항</a>
+      <a href="/project/board/list?boardId=2" onclick="w3_close()" class="w3-bar-item w3-button">QNA</a>
 </nav>
 
 <!-- Top menu -->

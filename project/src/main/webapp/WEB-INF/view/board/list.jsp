@@ -75,16 +75,16 @@ a {
 				<th>좋아요</th>
 			</tr>
 			
-			<c:forEach var="board" items="${boardlist}">
+			<c:forEach var="board" items="${blist}">
 				<tr>
 					<td>
 						${board.num}
 					</td>
 					<td>
-						${board.nickname}
+						${board.title}
 					</td>
 					<td>
-						${user.nickname}
+						${board.userId}
 					</td>
 					<td>
 						${board.regDate}
