@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -40,6 +41,10 @@ public class UserDao {
 	public void delete(String userId) {
 		template.getMapper(cls).delete(userId);
 		
+	}
+
+	public List<User> list() {
+		return template.getMapper(cls).list();
 	}
 
 }

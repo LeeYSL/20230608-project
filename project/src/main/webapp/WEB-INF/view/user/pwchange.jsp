@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/view/jspHeader.jsp"%>
+<%-- /project/src/main/webapp/WEB-INF/view/user/userinfo.jsp --%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원 탈퇴</title>
+<title>Insert title here</title>
 <style type="text/css">
 .page {
 
@@ -24,8 +25,9 @@ td {
 a {
 	text-decoration: none;
 }
-</style>
 
+
+</style>
 </head>
 <body>
 	<div class="w3-container w3-padding-32 w3-center">
@@ -35,10 +37,11 @@ a {
 				<div class="side">
 					<div class="page">
 						<div class="join_top">
-							<span class="txt">회원탈퇴</span>
+							<span class="txt">비밀번호 수정</span>
 						</div>
 					</div>
-						<form:form modelAttribute="user" method="post" action="delete">
+
+						<form:form modelAttribute="user" method="post" action="pwchange">
 							<spring:hasBindErrors name="user">
 								<font color="red"> 
 									<c:forEach items="${errors.globalErrors}" var="error">
@@ -59,9 +62,17 @@ a {
 								</tr>
 								<tr>
 									<td>
-										<form:input path="pw1" class="w3-input" placeholder="비밀번호 재확인" /> 
+										<form:input path="pw1" class="w3-input" placeholder="변경할 비밀번호" /> 
 										<font color="red"> 
 											<form:errors path="pw1" />
+										</font>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<form:input path="pw2" class="w3-input" placeholder="변경할 비밀번호 재확인" /> 
+										<font color="red"> 
+											<form:errors path="pw2" />
 										</font>
 									</td>
 								</tr>
@@ -74,7 +85,7 @@ a {
 											class="w3-button w3-white w3-border w3-border-orange w3-round-large">취소</button>
 									</a>
 									<button type="submit"
-										class="w3-button w3-white w3-border w3-border-orange w3-round-large">탈퇴하기</button>
+										class="w3-button w3-white w3-border w3-border-orange w3-round-large">수정</button>
 								</div>
 							</div>
 						</form:form>
@@ -82,5 +93,7 @@ a {
 			</div>
 		</div>
 	</div>
+
+
 </body>
 </html>

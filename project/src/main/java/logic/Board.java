@@ -2,10 +2,12 @@ package logic;
 
 import java.util.Date;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Getter;
-import lombok.Setter; 
+import lombok.Setter;
 import lombok.ToString;
 @Setter
 @Getter
@@ -13,14 +15,15 @@ import lombok.ToString;
 public class Board {
 	private int num;
 	private String userId;
-	@NotNull(message="제목은 필수입니다.")
+	@NotEmpty(message="제목은 필수입니다.")
 	private String title;
-	@NotNull(message="내용은 필수입니다.")
+	@NotEmpty(message="내용은 필수입니다.")
 	private String content;
-	private String file1;
+	private MultipartFile file1;
+	private String fileurl;
 	private Date regDate;
 	private int readCnt;
-	private int boardId;
+	private String boardId;
 	private int grp;
 	private int grpLevel;
 	private int grpStep;

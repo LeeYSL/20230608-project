@@ -1,5 +1,7 @@
 package dao.mapper;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.apache.ibatis.annotations.Delete;
@@ -23,4 +25,7 @@ public interface UserMapper {
 
 	@Delete("delete from user where user_id=#{userId}")
 	void delete(String userId);
+
+	@Select("select * from user")
+	List<User> list();
 }
