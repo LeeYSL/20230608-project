@@ -11,26 +11,6 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <meta charset="UTF-8">
 <title>예약 페이지</title>
-<script>
-	$(function() {
-		$("#datepicker").datepicker();
-	});
-
-	$.datepicker.setDefaults({
-		dateFormat : 'yymmdd',
-		prevText : '이전 달',
-		nextText : '다음 달',
-		monthNames : [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월',
-				'10월', '11월', '12월' ],
-		monthNamesShort : [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월',
-				'9월', '10월', '11월', '12월' ],
-		dayNames : [ '일', '월', '화', '수', '목', '금', '토' ],
-		dayNamesShort : [ '일', '월', '화', '수', '목', '금', '토' ],
-		dayNamesMin : [ '일', '월', '화', '수', '목', '금', '토' ],
-		showMonthAfterYear : true,
-		yearSuffix : '년'
-	});
-</script>
 <style type="text/css">
 .side {
 	margin: 0% 25% 0% 25%;
@@ -65,9 +45,37 @@ table {
 th {
 	width: 20%;
 }
-
-
 </style>
+
+<script>
+	//예약날짜에 달력 세팅
+	$(function() {
+		$("#datepicker").datepicker({minDate:"+1d"});
+	});
+
+	$.datepicker.setDefaults({
+		dateFormat : 'yymmdd',
+		prevText : '이전 달',
+		nextText : '다음 달',
+		monthNames : [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월',
+				'10월', '11월', '12월' ],
+		monthNamesShort : [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월',
+				'9월', '10월', '11월', '12월' ],
+		dayNames : [ '일', '월', '화', '수', '목', '금', '토' ],
+		dayNamesShort : [ '일', '월', '화', '수', '목', '금', '토' ],
+		dayNamesMin : [ '일', '월', '화', '수', '목', '금', '토' ],
+		showMonthAfterYear : true,
+		yearSuffix : '년'
+	});
+	
+	//예약 버튼 눌렀을 때 예약날짜 + 예약시간 합쳐줌
+	function setDate() {
+		const date = $('#datepicker');
+		const beforeVal = date.val();
+		date.val(beforeVal + $('#rsrvtTime').val());
+	}
+</script>
+
 </head>
 <body>
 	<div class="side">
@@ -78,7 +86,7 @@ th {
 		</div>
 		<div class="join_insert">
 			<form:form modelAttribute="reservation" method="post"
-				action="reservationadd">
+				onsubmit="return setDate()" action="reservationadd">
 				<spring:hasBindErrors name="reservation">
 					<font color="red"> <c:forEach items="${errors.globalErrors}"
 							var="error">
@@ -102,15 +110,13 @@ th {
 						</font></td>
 					</tr>
 					<tr>
-					<td><form:select style="width:200" path="people">
-			             <option value="">===예약인원===</option>
-			             <option value="1">1명</option>
-			             <option value="2">2명</option>
-			             <option value="3">3명</option>
-			             <option value="4">4명</option>
-					</form:select>
-						<font  color="red"> 
-						   <form:errors path="people" />
+						<td><form:select style="width:200" path="people">
+								<option value="0">===예약인원===</option>
+								<option value="1">1명</option>
+								<option value="2">2명</option>
+								<option value="3">3명</option>
+								<option value="4">4명</option>
+							</form:select> <font color="red"> <form:errors path="people" />
 						</font></td>
 					</tr>
 					<tr>
@@ -120,12 +126,19 @@ th {
 						</font></td>
 					</tr>
 					<tr>
-						<td><form:input path="rsrvtTime" placeholder="예약시간" /> <font
-							color="red"> <form:errors path="rsrvtTime" />
+						<td>
+							<form:select id="rsrvtTime" path="rsrvtTime">
+								<option value="">예약 시간</option>
+								<c:forEach var="i" begin="1" end="24">
+									<option value="${i}">${i>9?i:'0'}${i>9?'':i}:00</option>
+								</c:forEach>
+							</form:select>
+							<font color="red"> <form:errors path="rsrvtTime" />
 						</font></td>
 					</tr>
 				</table>
-				<input type="submit" value="예약" name="add"> <!-- 예약 상세 페이지로 이동하긴 -->
+				<input type="submit" value="예약" name="add">
+				<!-- 예약 상세 페이지로 이동하긴 -->
 				<input type="button" value="취소" name="add">
 			</form:form>
 		</div>

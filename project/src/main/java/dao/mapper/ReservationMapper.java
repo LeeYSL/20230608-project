@@ -13,8 +13,8 @@ public interface ReservationMapper {
    
 	 @Insert("insert into reservation(num, rest_num, rsrvt_date, people, reg_date, confirm, "
 			  + " phone_no,rsrvt_name,user_id ) "
-			  + " values (#{num},#{restNum},#{rsrvtDate},#{people},now(),#{confirm},#{phoneNo},#{rsrvtName},#{userId})")
-	void bookinsert(@Valid Reservation reservation);
+			  + " values ((SELECT NVL(MAX(num), 0) + 1 FROM reservation A),#{restNum},#{rsrvtDate},#{people},now(),#{confirm},#{phoneNo},#{rsrvtName},#{userId})")
+	void bookInsert(@Valid Reservation reservation);
 
 	 @Select("select * from reservation order by num desc")
 	 

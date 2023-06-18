@@ -24,8 +24,8 @@ public class ReservationDao {
 	
 	
 
-	public void bookinsert(@Valid Reservation reservation) {
-		template.getMapper(cls).bookinsert(reservation);
+	public void bookInsert(@Valid Reservation reservation) {
+		template.getMapper(cls).bookInsert(reservation);
 	}
 
 	public List<Reservation> list() {
