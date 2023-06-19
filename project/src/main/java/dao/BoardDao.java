@@ -23,10 +23,6 @@ private Class<BoardMapper> cls = BoardMapper.class;
 
 
 
-public List<Board> blist(String boardId) {
-	return template.getMapper(cls).blist(boardId);
-}
-
 public int maxNum() {
 	return template.getMapper(cls).maxNum();
 }
@@ -44,6 +40,21 @@ public void addReadcnt(Integer num) {
 	param.clear();
 	param.put("num", num);
 	template.getMapper(cls).addReadcnt(num);
+	
+}
+
+public List<Board> boardlist(String boardId) {
+	param.clear();
+	param.put("boardId", boardId);
+	return template.getMapper(cls).boardlist(boardId);
+}
+
+public void update(@Valid Board board) {
+	 template.getMapper(cls).update(board);	
+}
+
+public void delete(Integer num) {
+	template.getMapper(cls).delete(num);
 	
 }
 

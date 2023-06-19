@@ -20,7 +20,7 @@
 th {
 	background-color: #ff8400;
 	color: white;
-	width:10%;
+	width:20%;
 	text-align: center;
 	
 }
@@ -37,17 +37,18 @@ a {
 </head>
 <body>
 	<div class="w3-container w3-padding-32 w3-center">
-		<div style="display: block; margin: auto; width: 900px; height: 100%;">
+		<div
+			style="display: block; margin: auto; width: 800px; height: 100%;">
 			<div class="w3-padding-32">
-
 				<div class="side">
 					<div class="page">
 						<div class="join_top">
-							<span class="txt">${boardName} 글쓰기</span>
+							<span class="txt">${boardName} 수정</span>
 						</div>
 					</div>
 
-						<form:form modelAttribute="board" action="write" enctype="multipart/form-data" name="f">							
+						<form:form modelAttribute="board" action="update" enctype="multipart/form-data" name="f">
+						<form:hidden path="num" />							
 							<table class="w3-table-all">
 								<tr>
 									<th>제목</th>
@@ -79,11 +80,11 @@ a {
 							<hr>
 							<div>
 								<div>
-									<a href="list?boardId=${board.boardId}">
+									<a href="list">
 										<button type="button" class="w3-button w3-white w3-border w3-border-orange w3-round-large">취소</button>
 									</a>
 									&nbsp;	&nbsp;	&nbsp;	&nbsp;
-									<button type="submit" class="w3-button w3-white w3-border w3-border-orange w3-round-large">등록</button>
+									<button type="submit" class="w3-button w3-white w3-border w3-border-orange w3-round-large">수정</button>
 
 								</div>
 							</div>
@@ -91,7 +92,7 @@ a {
 				</div>
 			</div>
 		</div>
-</div>
+	</div>
 
 
 </body>

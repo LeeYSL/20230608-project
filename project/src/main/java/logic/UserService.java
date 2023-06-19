@@ -40,6 +40,7 @@ public class UserService {
 
 
 
+
 	public void delete(String userId) {
 		userDao.delete(userId);
 		
@@ -52,10 +53,6 @@ public class UserService {
 		return userDao.list();
 	}
 
-
-	public List<Board> blist(String boardId) {
-		return boardDao.blist(boardId);
-	}
 
 
 	public void write(@Valid Board board, HttpSession session) {
@@ -94,6 +91,30 @@ public class UserService {
 
 	public void addReadcnt(Integer num) {
 		boardDao.addReadcnt(num);
+		
+	}
+
+
+	public List<Board> boardlist(String boardId) {
+		return boardDao.boardlist(boardId);
+	}
+
+
+
+
+
+	public void update(@Valid Board board, HttpSession session) {
+		if(board.getFile1() != null && !board.getFile1().isEmpty()) {
+			String path = session.getServletContext().getRealPath("/") + "board/file/";
+			this.uploadFileCreate(board.getFile1(), path);  
+			board.setFileurl(board.getFile1().getOriginalFilename());
+		}
+		boardDao.update(board);
+	}
+
+
+	public void delete(Integer num) {
+		boardDao.delete(num);
 		
 	}
 

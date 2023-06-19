@@ -42,31 +42,22 @@ a {
 				<div class="side">
 					<div class="page">
 						<div class="join_top">
-							<span class="txt">${boardId} 글쓰기</span>
+							<span class="txt">${boardName}</span>
 						</div>
-					</div>
-
-						<form:form modelAttribute="board" action="update" enctype="multipart/form-data" name="f">							
+					</div>					
 							<table class="w3-table-all">
 								<tr>
 									<th>제목</th>
 									<td>									
-										<form:input path="title"  class="w3-input" /> 
-										<font color="red"> 
-											<form:errors path="title" />
-										</font>
+										${board.title}
 									</td>
 								</tr>
 								<tr>
 									<th>내용</th>
 									<td>
-										<form:textarea path="content" cols="20" rows="20" class="w3-input"/> 
-										<font color="red"> 
-											<form:errors path="content" />
-										</font>
+										${board.content}
 									</td>
 								</tr>
-						<%--	<script>CKEDITOR.replace("content",{filebrowserImageUploadUrl : "imgupload"})</script>  --%>
 								<tr>
 									<th>첨부파일</th>
 									<td>
@@ -76,28 +67,73 @@ a {
 									</td>
 								</tr>
 						</table>
-							<hr>
+						<br>		
 							<div>
 								<div>
-									<a href="list?boardId=${boardId}">
+									<a href="reply?num=${board.num}">
 										<button type="button" class="w3-button w3-white w3-border w3-border-orange w3-round-large">답변</button>
 									</a>
+									<c:if test="${sessionScope.loginUser.userId == board.userId }">
 									&nbsp;	&nbsp;	&nbsp;	&nbsp;
-									<a href="update?num=${num}">
+									<a href="update?num=${board.num}">
 										<button type="button" class="w3-button w3-white w3-border w3-border-orange w3-round-large">수정</button>
 									</a>
 									&nbsp;	&nbsp;	&nbsp;	&nbsp;
-									<a href="delete?num=${num}">
+									<a href="delete?num=${board.num}">
 										<button type="button" class="w3-button w3-white w3-border w3-border-orange w3-round-large">삭제</button>
 									</a>
+									</c:if>
 									&nbsp;	&nbsp;	&nbsp;	&nbsp;
-									<a href="list?boardId=${boardId}">
+									<a href="list?boardId=${board.boardId}">
 										<button type="button" class="w3-button w3-white w3-border w3-border-orange w3-round-large">목록</button>
 									</a>
 									&nbsp;	&nbsp;	&nbsp;	&nbsp;																		
 								</div>
 							</div>
-						</form:form>
+							<hr>	
+							<form:form modelAttribute="comment"  method="post" action="comment">
+								<div>
+								<table>
+									<tr>
+										<td>
+											<form:textarea path="content" cols="20" row="10" class="w3-input" placeholder="댓글" />
+											<font color="red">
+												<form:errors path="content" />
+											</font>
+											<input type="hidden" name="wirter" value="${sessionScope.loginUser.userId}">
+											<input type="hidden" name="num" value="${param.num}">
+										</td>
+										<td>
+											<button type="submit">댓글 등록</button>
+										</td>
+									</tr>
+								</table>
+								</div>
+							</form:form>
+							<hr>
+							<div>
+								<table class="w3-table-all">
+									<tr>
+										<td>
+											${comm.userId}
+										</td>
+										<td>
+											${comm.content}
+										</td>
+										<td>
+											${comm.date}
+										</td>
+										<c:if test="${sessionScope.loginUser.userId == comm.writer}">
+											<td>
+												<a href="delete?num=${comm.num}?seq=${comm.seq}">
+													<button type="button">삭제</button>
+												</a>
+											</td>
+										</c:if>
+									</tr>
+								</table>
+							</div>
+										
 				</div>
 			</div>
 		</div>
