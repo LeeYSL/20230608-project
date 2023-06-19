@@ -8,7 +8,7 @@
 <title>사장 로그인 예약 목록</title>
 </head>
 <body>
-	<h2>예약 리스트</h2>
+	<h2>예약 목록</h2>
 		<table>
 			<tr>
 
@@ -21,7 +21,7 @@
 				<th>예약 상태</th>
 			</tr>
 			<c:forEach items="${rsrvtList}" var="rsrvt"> <!--reservation 객체를 만들어서 rstvt라는 이름에 넣고 필요한 요소들을 뽑아온다.  -->
-				<tr>
+				<tr> 
 					<td align="center">${rsrvt.num}</td>
 					<td align="center">${rsrvt.rsrvtName}</td>
 					<td align="center">${rsrvt.phoneNo}</td>
