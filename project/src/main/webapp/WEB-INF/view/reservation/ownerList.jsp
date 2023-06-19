@@ -8,7 +8,7 @@
 <title>사장 로그인 예약 목록</title>
 </head>
 <body>
-	<h2>예약 리스트</h2>
+	<h2>예약 목록</h2>
 		<table>
 			<tr>
 
