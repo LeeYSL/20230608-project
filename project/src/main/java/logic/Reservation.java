@@ -6,6 +6,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+import ch.qos.logback.classic.spi.STEUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -29,7 +30,7 @@ public class Reservation {
 	private String phoneNo; //전화번호
     @NotEmpty(message="이름을 입력하세요")
 	private String rsrvtName; //예약자 이름
-
+    private String restPhoneNo; // 가게 전화번호
 	
 
 }

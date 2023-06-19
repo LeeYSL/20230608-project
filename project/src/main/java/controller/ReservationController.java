@@ -1,8 +1,12 @@
 package controller;
 
+import java.net.http.HttpRequest;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.Session;
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -13,10 +17,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.servlet.ModelAndView;
 
 import logic.Reservation;
 import logic.ReservationService;
+import logic.Restaurant;
 import logic.User;
 
 @Controller
@@ -29,12 +35,6 @@ public class ReservationController {
 	public ModelAndView add() {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(new Reservation());
-		return mav;
-	}
-
-	@RequestMapping("myList")
-	public ModelAndView myList() {
-		ModelAndView mav = new ModelAndView();
 		return mav;
 	}
 
@@ -53,24 +53,64 @@ public class ReservationController {
 		try {
 			User user = (User) session.getAttribute("loginUser");
 			reservation.setUserId(user.getUserId());
-			reservation.setRestNum(1); // 가게번호
-			reservation.setConfirm(1); // 확정여부-예약대기(1)로 고정
+			reservation.setRestNum(2); // 가게번호
+			// reservation.setConfirm(1); // 확정여부-예약대기(1)로 고정
 			service.bookinsert(reservation);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		mav.setViewName("redirect:list");
+		mav.setViewName("redirect:myList");
 		return mav;
 
 	}
 
-	@RequestMapping("ownerList")
-	public ModelAndView ownerList(@RequestParam Map<String, Object> param, HttpSession session) { // key,value 둘 다
-																									// map으로 전달해라
+	@RequestMapping("myList")
+	public ModelAndView myList(@RequestParam Map<String, Object> param, HttpSession session) { // key,value 둘 다 // map으로
+																								// 전달해라
 		ModelAndView mav = new ModelAndView();
 
-		List<Reservation> rsrvtList = service.rsrvtList(); // reservation에 있는 정보를 list로 저장
+		User user = (User) session.getAttribute("loginUser");
+
+//		if(user != null && user.getUserId().equals(ownerList(param, session))){
+
+		List<Reservation> rsrvtList = service.myList(user.getUserId()); // reservation에 있는 정보를 list로 저장, 로그인 되어 있는 id를
+																		// 가지고 리스트를 조회하러가라
 		mav.addObject("rsrvtList", rsrvtList); // jsp에서 items="${rsrvtList} 랑 이름 맞춰줘야 됨
+//		}
+
 		return mav;
+	}
+
+	@RequestMapping("ownerList") 
+	public ModelAndView ownerList(@RequestParam Map<String, Object> param, HttpSession session) {
+	  	ModelAndView mav = new ModelAndView();
+	
+		  
+		  User user = (User)session.getAttribute("loginUser");
+		
+		  List<Reservation> rsrvtList = service.ownerList(user.getUserId()); 
+		  mav.addObject("rsrvtList",rsrvtList);
+	
+	      return mav;
+	}
+
+	@RequestMapping("myListInfo") 
+	public ModelAndView myListInfo(@Valid Reservation reservation, BindingResult bresult,HttpSession session,int num) {
+		ModelAndView mav = new ModelAndView();
+				
+		User user = (User)session.getAttribute("loginUser");
+		
+		if (bresult.hasErrors()) {
+			mav.getModel().putAll(bresult.getModel());
+			bresult.reject("error.input.reservation");
+			return mav;
+		}
+		if(user.getUserId() != null) {
+//			Reservation reservation2  = service.selectOne(num); 이렇게 해서 reservation2로 보내줘도 됨
+			service.myListUpdate(reservation);
+		    mav.addObject("rsrvt",service.selectOne(num));
+			mav.setViewName("redirect:myList");
+		}
+	return mav;
 	}
 }

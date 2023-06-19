@@ -8,29 +8,37 @@
 <title>내 예약 목록</title>
 </head>
 <body>
-	<h2>예약 목록</h2>
-	<table>
-		<tr>
-			<th>예약 번호</th>
-			<th>예약자 성함</th>
-			<th>예약자 전화번호</th>
-			<th>예약 날짜</th>
-			<th>예약 시간</th>
-			<th>예약 인원</th>
-		 	<th>예약 상태</th>
-		</tr>
-		<tr>
+	<form action="myList">
+		<h2>예약 목록</h2>
+		<table>
+			<tr>
+				<th>예약자 성함</th>
+				<th>예약자 전화번호</th>
+				<th>예약 날짜</th>
+				<th>예약 시간</th>
+				<th>예약 인원</th>
+				<th>예약 상태</th>
+			</tr>
 			<c:forEach items="${rsrvtList}" var="rsrvt">
-				<td align="center">${rsrvt.num}</td>
-				<td align="center">${rsrvt.rsrvtName}</td>
-				<td align="center">${rsrvt.phoneNo}</td>
-				<td align="center">${rsrvt.rsrvtDate}</td>
-				<td align="center">${rsrvt.rsrvtTime}</td>
-				<td align="center">${rsrvt.people}</td>
-				<td align="center">${rsrvt.confirm}</td>
-				
+				<tr>
+					<td align="center">${rsrvt.rsrvtName}</td>
+					<td align="center">${rsrvt.phoneNo}</td>
+					<td align="center">${rsrvt.rsrvtDate}</td>
+					<td align="center">${rsrvt.rsrvtTime}</td>
+					<td align="center">${rsrvt.people}</td>
+					<td>
+					<select>
+						<option value="2">확인</option>
+						<option value="3">예약 취소</option>
+					</select>
+					<input type="hidden" ${rsrvt.confirm}>
+					 <input type="hidden" ${rsrvt.userId}>
+					 <td><input type="hidden" ${rsrvt.num}></td>
+					</td>
+					<td><input type="submit" value="확정" name="confirm"></td>
+				</tr>
 			</c:forEach>
-		</tr>
-	</table>
+		</table>
+	</form>
 </body>
 </html>

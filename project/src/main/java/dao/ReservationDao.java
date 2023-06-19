@@ -11,6 +11,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import controller.RestaurantController;
 import dao.mapper.ReservationMapper;
 import logic.Reservation;
 
@@ -28,9 +29,28 @@ public class ReservationDao {
 		template.getMapper(cls).bookInsert(reservation);
 	}
 
-	public List<Reservation> list() {
+	public List<Reservation> myList(String userId) {
 		param.clear();
-		return template.getMapper(cls).rsrvtselect(); //내가 담아 놓은 걸 가져가야 되니까 매개변수에 param
+		return template.getMapper(cls).myListSelect(userId); //내가 담아 놓은 걸 가져가야 되니까 매개변수에 param
 	}
+
+	public List<Reservation> ownerList(String userId) {
+		param.clear();
+		return template.getMapper(cls).ownerListSelect(userId);
+	}
+
+	public Reservation selectOne(int num) {
+		return template.getMapper(cls).selectOne(num);
+	}
+
+	public void myListUpdate(@Valid Reservation reservation) {
+		param.clear();
+		param.put("rsrvtName",reservation.getRsrvtName());
+		param.put("phoneNo", reservation.getPhoneNo());
+	    template.getMapper(cls).myListUpdate(reservation);
+		
+	}
+
+	
 
 }

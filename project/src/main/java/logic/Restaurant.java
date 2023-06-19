@@ -29,6 +29,7 @@ public class Restaurant {
 	private String open;
 	private String close;
 	private Dayoff dayoff;
+    private String restPhoneNo; // 가게 전화번호
 	
 
 }

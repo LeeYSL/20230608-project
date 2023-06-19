@@ -33,10 +33,26 @@ public class ReservationService {
 		
 	}
 	
-	public List<Reservation> rsrvtList() {
-		return reservationDao.list();
+	public List<Reservation> myList(String userId) {
+		return reservationDao.myList(userId);
 		
 	}
 
+	public List<Reservation> ownerList(String userId) {
+	     return reservationDao.ownerList(userId);
+		
+		
+	}
+
+	public Reservation selectOne(int num) {
+		return reservationDao.selectOne(num);
+		
+		
+	}
+
+	public void myListUpdate(@Valid Reservation reservation) {
+		 reservationDao.myListUpdate(reservation);
+		
+	}
 
 }

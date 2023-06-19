@@ -61,7 +61,7 @@ public class RestaurantController {
 			 e.printStackTrace();
 			 
 		}
-		mav.setViewName("redirect:list");
+		mav.setViewName("/reservation/myList");
 		return mav;
 	}
 
