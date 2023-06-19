@@ -120,7 +120,7 @@ th {
 						</font></td>
 					</tr>
 					<tr>
-						<td><form:input id="datepicker" path="rsrvtDate"
+						<td><form:input id="datepicker" path="rsrvtDate" autocomplete='off'
 								placeholder="예약날짜" /> <font color="red"> <form:errors
 									path="rsrvtDate" />
 						</font></td>
@@ -137,7 +137,7 @@ th {
 						</font></td>
 					</tr>
 				</table>
-				<input type="submit" value="예약" name="add">
+				<input type="submit" value="예약 및 예약금 결제" name="add">
 				<!-- 예약 상세 페이지로 이동하긴 -->
 				<input type="button" value="취소" name="add">
 			</form:form>

@@ -25,6 +25,14 @@
 		console.log(del);
 		$(del).parent().parent().remove();
 	}
+	
+	//메뉴 목록을 List에 담음
+	function setMenuList() {
+		$('#menuTable tbody tr').each(function (index, item) {
+		     console.log(item);
+		     console.log(index);
+		});
+	}
 </script>
 </head>
 <body>
@@ -133,6 +141,8 @@
 			</tr>
 			</tbody>
 		</table>
+		<button type="button" name="test" onclick="setMenuList();">테스트</button>
+		<input type="hidden" name="menuList" />
 		<br>
 		<td><input type="submit" value="등록" name="add"></td>
 		<input type="button" value="취소" name="add">
