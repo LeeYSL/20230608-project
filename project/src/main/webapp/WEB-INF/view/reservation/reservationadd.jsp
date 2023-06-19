@@ -130,7 +130,7 @@ th {
 							<form:select id="rsrvtTime" path="rsrvtTime">
 								<option value="">예약 시간</option>
 								<c:forEach var="i" begin="1" end="24">
-									<option value="${i}">${i>9?i:'0'}${i>9?'':i}:00</option>
+									<option value="${i>9?i:'0'}${i>9?'':i}">${i>9?i:'0'}${i>9?'':i}:00</option>
 								</c:forEach>
 							</form:select>
 							<font color="red"> <form:errors path="rsrvtTime" />
