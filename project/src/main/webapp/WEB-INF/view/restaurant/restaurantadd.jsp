@@ -4,8 +4,28 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <meta charset="UTF-8">
 <title>가게 등록</title>
+<script>
+	//메뉴 추가 버튼 눌렀을 때 테이블에 row 추가.
+	function addRow() {
+		let insertTr = "<tr>";
+    	  insertTr += "<td><input style='width:180' type='text' id='menu' placeholder='메뉴 이름'/></td>";
+		  insertTr += "<td><input style='width:100' type='text' placeholder='가격'/></td>";
+		  insertTr += "<td><button type='button' name='btnDel' onclick='deleteRow(this);'>삭제</button></td>";
+		  insertTr += "</tr>";
+		    
+		  $('#menuTable tbody:last').append(insertTr);
+	}
+	
+	//메뉴 삭제 버튼 눌렀을 때 해당 row 삭제.
+	function deleteRow(del) {
+		console.log(del);
+		$(del).parent().parent().remove();
+	}
+</script>
 </head>
 <body>
 	<h2>가게 등록</h2>
@@ -33,7 +53,7 @@
 					<form:select path="open">
 						<option value="0">여는 시간</option>
 						<c:forEach var="i"  begin="1" end="24">
-        					<option value="${i}">${i>9?i:'0'}${i>9?'':i}:00</option>
+        					<option value="${i>9?i:'0'}${i>9?'':i}">${i>9?i:'0'}${i>9?'':i}:00</option>
     					</c:forEach>
     				</form:select>
 				</td>
@@ -44,7 +64,7 @@
 					<form:select path="close">
 						<option value="0">닫는 시간</option>
 						<c:forEach var="i"  begin="1" end="24">
-        					<option value="${i}">${i>9?i:'0'}${i>9?'':i}:00</option>
+        					<option value="${i>9?i:'0'}${i>9?'':i}">${i>9?i:'0'}${i>9?'':i}:00</option>
     					</c:forEach>
     				</form:select>
 				</td>
@@ -76,9 +96,15 @@
 				<td><font color="red"> <form:errors path="licenseNum" /></font></td>
 			</tr>
 		</table>
-		<table>
+		<br>
+		<!--휴무일 선택  -->
+		<table style="border-collapse: collapse">
 			<tr>
-				<td><form:checkbox path="dayoff.mon" value="Y"/>월요일
+				<td colspan="8" style="text-align: center; border: 1px solid black;">휴무일 선택</td>
+			</tr>
+			<tr>
+				<td style="text-align: center; border: 1px solid black;">
+					<form:checkbox path="dayoff.mon" value="Y"/>월요일
 					<form:checkbox path="dayoff.tue" value="Y"/>화요일
 					<form:checkbox path="dayoff.wed" value="Y"/>수요일
 					<form:checkbox path="dayoff.thur" value="Y"/>목요일
@@ -88,6 +114,24 @@
 					<form:checkbox path="dayoff.holiday" value="Y"/>공휴일
 				</td>
 			</tr>
+		</table>
+		<!--메뉴 등록  -->
+		<table id="menuTable">
+			<tr>
+				<td colspan="3" style="text-align: center;">메뉴 등록</td>
+			</tr>
+			<tr>
+				<td style="width:180">메뉴 이름</td>
+				<td style="width:100">가격</td>
+				<td><button type="button" id="btnAdd" onclick="addRow();">추가</button></td>
+			</tr>
+			<tbody>
+			<tr>
+				<td><input style="width:180" type="text" id="menu" placeholder="메뉴 이름"/></td>
+				<td><input style="width:100" type="text" placeholder="가격"/></td>
+				<td><button type="button" name="btnDel" onclick="deleteRow(this);">삭제</button></td>
+			</tr>
+			</tbody>
 		</table>
 		<br>
 		<td><input type="submit" value="등록" name="add"></td>
