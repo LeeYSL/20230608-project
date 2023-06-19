@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 
-import logic.ReservationSerivce;
+import logic.ReservationService;
 import logic.Restaurant;
 import logic.User;
 
@@ -23,7 +23,7 @@ import logic.User;
 public class RestaurantController {
 	  
 		@Autowired
-		private ReservationSerivce service;
+		private ReservationService service;
 	  
 	  @GetMapping("*") 
 	  public ModelAndView add() {

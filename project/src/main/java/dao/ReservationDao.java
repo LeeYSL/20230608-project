@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -23,10 +24,13 @@ public class ReservationDao {
 	
 	
 
-	public void bookinsert(@Valid Reservation reservation) {
-		template.getMapper(cls).bookinsert(reservation);
-		
-		
+	public void bookInsert(@Valid Reservation reservation) {
+		template.getMapper(cls).bookInsert(reservation);
+	}
+
+	public List<Reservation> list() {
+		param.clear();
+		return template.getMapper(cls).rsrvtselect(); //내가 담아 놓은 걸 가져가야 되니까 매개변수에 param
 	}
 
 }

@@ -3,6 +3,7 @@ error.input.check=입력 정보를 확인하세요.
 error.duplicate.user=중복된 아이디 입니다.
 
 error.input.restaurant=가게 등록 정보 입력 오류입니다.
+error.input.reservation=예약 정보 입력 오류입니다.
 error.input.pw=비밀번호 오류입니다.
 error.input.update=회원정보 수정 실패
 error.pw.check=비밀번호가 일치하지 않습니다.
