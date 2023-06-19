@@ -11,7 +11,7 @@ import dao.ReservationDao;
 import dao.RestaurantDao;
 
 @Service
-public class ReservationSerivce {
+public class ReservationService {
 	
 	@Autowired
 	private RestaurantDao restaurantDao;
@@ -29,7 +29,7 @@ public class ReservationSerivce {
 	}
 
 	public void bookinsert(@Valid Reservation reservation) {
-		reservationDao.bookinsert(reservation);
+		reservationDao.bookInsert(reservation);
 		
 	}
 	
