@@ -92,36 +92,37 @@ public class ReservationController {
 	      return mav;
 	}
   
-	@PostMapping("myListInfo") 
-	public ModelAndView myListInfo(@Valid Reservation reservation, BindingResult bresult,HttpSession session,Integer num) {
-		ModelAndView mav = new ModelAndView();
-				
-		User user = (User)session.getAttribute("loginUser");
-		
-		
-		if (bresult.hasErrors()) {
-			mav.getModel().putAll(bresult.getModel());
-			bresult.reject("error.input.reservation");
-			return mav;
-		}
-		if(user.getUserId() != null) {
-			System.out.println("1"+user.getUserId());
-			Reservation reservation2  = service.selectOne(num); // 이렇게 해서 reservation2로 보내줘도 됨
-			service.selectOne(num);
-			service.myListUpdate(reservation);
-		    mav.addObject("rsrvt",reservation2);
-		    System.out.println("2"+reservation2.getNum());
-			mav.setViewName("redirect:myListInfo?id="+reservation2.getNum());
-		
-		}
-	return mav;
-	}
+//	@PostMapping("myListInfo") 
+//	public ModelAndView myListInfo(@Valid Reservation reservation, BindingResult bresult,HttpSession session,Integer num) {
+//		ModelAndView mav = new ModelAndView();
+//				
+//		User user = (User)session.getAttribute("loginUser");
+//		
+//		
+//		if (bresult.hasErrors()) {
+//			mav.getModel().putAll(bresult.getModel());
+//			bresult.reject("error.input.reservation");
+//			return mav;
+//		}
+//		if(user.getUserId() != null) {
+//			System.out.println("1"+user.getUserId());
+//			Reservation reservation2  = service.selectOne(num); // 이렇게 해서 reservation2로 보내줘도 됨
+//			service.selectOne(num);
+//			service.myListUpdate(reservation);
+//		    mav.addObject("rsrvt",reservation2);
+//		    System.out.println("2"+reservation2.getNum());
+//			mav.setViewName("redirect:myListInfo?id="+reservation2.getNum());
+//		
+//		}
+//	return mav;
+//	}
 	  @GetMapping("myListInfo")
   	public ModelAndView myListInfo (Integer num,Reservation reservatio) {
   	ModelAndView mav = new ModelAndView();
   	Reservation reservation2  = service.selectOne(num);
+  	//reservation2.setNum(1);
   	mav.addObject("rsrvt",reservation2);
-  	mav.setViewName("redirect:myListInfo?id="+reservation2.getNum());
+  //	mav.setViewName("redirect:myListInfo?id="+reservation2.getNum());
   	return mav;
   }
   
