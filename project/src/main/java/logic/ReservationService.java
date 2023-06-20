@@ -44,7 +44,7 @@ public class ReservationService {
 		
 	}
 
-	public Reservation selectOne(int num) {
+	public Reservation selectOne(Integer num) {
 		return reservationDao.selectOne(num);
 		
 		

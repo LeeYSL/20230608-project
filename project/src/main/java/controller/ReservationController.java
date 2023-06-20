@@ -1,12 +1,10 @@
 package controller;
 
-import java.net.http.HttpRequest;
+
 import java.util.List;
 import java.util.Map;
 
-import javax.mail.Session;
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
-import javax.servlet.http.HttpServletRequest;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -17,12 +15,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.annotation.SessionScope;
+
 import org.springframework.web.servlet.ModelAndView;
 
 import logic.Reservation;
 import logic.ReservationService;
-import logic.Restaurant;
+
 import logic.User;
 
 @Controller
@@ -93,12 +91,13 @@ public class ReservationController {
 	
 	      return mav;
 	}
-
-	@RequestMapping("myListInfo") 
-	public ModelAndView myListInfo(@Valid Reservation reservation, BindingResult bresult,HttpSession session,int num) {
+  
+	@PostMapping("myListInfo") 
+	public ModelAndView myListInfo(@Valid Reservation reservation, BindingResult bresult,HttpSession session,Integer num) {
 		ModelAndView mav = new ModelAndView();
 				
 		User user = (User)session.getAttribute("loginUser");
+		
 		
 		if (bresult.hasErrors()) {
 			mav.getModel().putAll(bresult.getModel());
@@ -106,11 +105,24 @@ public class ReservationController {
 			return mav;
 		}
 		if(user.getUserId() != null) {
-//			Reservation reservation2  = service.selectOne(num); 이렇게 해서 reservation2로 보내줘도 됨
+			System.out.println("1"+user.getUserId());
+			Reservation reservation2  = service.selectOne(num); // 이렇게 해서 reservation2로 보내줘도 됨
+			service.selectOne(num);
 			service.myListUpdate(reservation);
-		    mav.addObject("rsrvt",service.selectOne(num));
-			mav.setViewName("redirect:myList");
+		    mav.addObject("rsrvt",reservation2);
+		    System.out.println("2"+reservation2.getNum());
+			mav.setViewName("redirect:myListInfo?id="+reservation2.getNum());
+		
 		}
 	return mav;
 	}
+	  @GetMapping("myListInfo")
+  	public ModelAndView myListInfo (Integer num,Reservation reservatio) {
+  	ModelAndView mav = new ModelAndView();
+  	Reservation reservation2  = service.selectOne(num);
+  	mav.addObject("rsrvt",reservation2);
+  	mav.setViewName("redirect:myListInfo?id="+reservation2.getNum());
+  	return mav;
+  }
+  
 }

@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import logic.Reservation;
 
@@ -37,11 +38,13 @@ public interface ReservationMapper {
 			+ " FROM reservation A "
 			+ " JOIN restaurant B "
 			+ "  ON A.rest_num = B.rest_num "
- d			+ " WHERE A.num =#{num}"
+ 		    + " WHERE A.num =#{num}"
 			+ " ORDER BY reg_date")
 	Reservation selectOne(int num);
 
+    @Update("updat reservation set rsrvt_name=#{rsrvtNmae},phone_no=#{phoneNo} ")
 	void myListUpdate(@Valid Reservation reservation);
 
+	
 }
 
