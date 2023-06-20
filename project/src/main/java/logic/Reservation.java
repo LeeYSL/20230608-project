@@ -31,6 +31,7 @@ public class Reservation {
     @NotEmpty(message="이름을 입력하세요")
 	private String rsrvtName; //예약자 이름
     private String restPhoneNo; // 가게 전화번호
+    private String name; // 가게 이름
 	
 
 }

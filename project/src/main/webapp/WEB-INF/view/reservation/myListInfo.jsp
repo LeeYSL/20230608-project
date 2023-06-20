@@ -35,11 +35,11 @@
 			</tr>
 			<tr>
 				<td>예약 날짜</td>
-				<td align="center">${rsrvt.restDate}</td>
+				<td align="center">${rsrvt.rsrvtDate}</td>
 			</tr>
 			<tr>
 				<td>예약 시간</td>
-				<td align="center">${rsrvt.restTime}</td>
+				<td align="center">${rsrvt.rsrvtTime}</td>
 			</tr>
 			<tr>
 				<td><input type="submit" value="수정 완료" name="update">

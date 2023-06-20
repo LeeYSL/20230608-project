@@ -24,7 +24,7 @@ public interface ReservationMapper {
 			+ " WHERE A.user_id =#{userId}"
 			+ " ORDER BY reg_date")
 	List<Reservation> myListSelect(String userId);
-
+ 
 	@Select(" SELECT LEFT(A.rsrvt_date,8) AS rsrvt_date, RIGHT(A.reg_date,2) AS rsrvt_time, A.num, A.user_id, A.rsrvt_name, "
 	 		+ "	 A.phone_no,A.people,A.confirm,B.rest_num, B.name "
 	 		+ "	  FROM reservation A "
