@@ -15,7 +15,7 @@ import lombok.ToString;
 public class Restaurant {
     private String userId;
     @NotEmpty(message="전화번호를 입력하세요.")
-	private String tel;
+    private String restPhoneNo; // 가게 전화번호
     @NotEmpty(message="이름을 입력하세요")
 	private String name;
     @NotEmpty(message="가게 주소를 입력하세요")
@@ -29,7 +29,6 @@ public class Restaurant {
 	private String open;
 	private String close;
 	private Dayoff dayoff;
-    private String restPhoneNo; // 가게 전화번호
-	
+    private String tel;
 
 }

@@ -47,11 +47,15 @@ public class RestaurantController {
 		try {
 			User user = (User)session.getAttribute("loginUser"); 
 			restaurant.setUserId(user.getUserId());
-			restaurant.setRestNum(1);
+		    
+			//rest_num 저장?
+			 int num =service.maxSelect().getRestNum();
+			restaurant.setRestNum(num);
 			//가게정보 저장
 			service.restauinsert(restaurant);
 			
-			restaurant.getDayoff().setRestNum(1);
+		    
+			restaurant.getDayoff().setRestNum(num);
 			restaurant.getDayoff().setUserId(user.getUserId());
 			//휴무일 저장
 			service.dayoffInsert(restaurant.getDayoff());

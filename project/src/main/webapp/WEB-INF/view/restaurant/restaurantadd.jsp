@@ -79,8 +79,8 @@
 				<td><font color="red"> <form:errors path="close" /></font></td>
 			</tr>
 			<tr>
-				<td><form:input path="tel" placeholder="전화번호" /> </td>
-				<td><font color="red"> <form:errors path="tel" /></font></td>
+				<td><form:input path="restPhoneNo" placeholder="전화번호" /> </td>
+				<td><font color="red"> <form:errors path="restPhoneNo" /></font></td>
 			</tr>
 			<tr>
 				<td>

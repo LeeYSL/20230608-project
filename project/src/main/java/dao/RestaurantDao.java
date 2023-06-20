@@ -29,5 +29,8 @@ public class RestaurantDao {
 	public void insertDayoff(@Valid Dayoff dayoff) {
 		template.getMapper(cls).insertDayoff(dayoff);
 	}
+	public Restaurant maxSelect() {
+		return template.getMapper(cls).maxSelect();
+	}
 
 }

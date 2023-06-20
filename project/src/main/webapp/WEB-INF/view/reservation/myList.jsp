@@ -34,11 +34,14 @@
 					<input type="hidden" ${rsrvt.confirm}>
 					 <input type="hidden" ${rsrvt.userId}>
 					 <td><input type="hidden" ${rsrvt.num}></td>
-					</td>
 					<td><input type="submit" value="확정" name="confirm"></td>
+					<td>
+					    <a href="myListInfo?num=${rsrvt.num}">
+					      <input type="button" value="상세보기">
+					    </a>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>
 	</form>
-</body>
-</html>
+</body> 　

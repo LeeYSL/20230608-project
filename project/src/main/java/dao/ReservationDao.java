@@ -45,7 +45,11 @@ public class ReservationDao {
 
 	public void myListUpdate(@Valid Reservation reservation) {
 		param.clear();
+	//	param.put("name",reservation.getName());
+	//	param.put("restPhoneNo",reservation.getRestPhoneNo());
 		param.put("rsrvtName",reservation.getRsrvtName());
+	//	param.put("rsrvtDate",reservation.getRsrvtDate());
+	//	param.put("rsrvtTime",reservation.getRsrvtTime());
 		param.put("phoneNo", reservation.getPhoneNo());
 	    template.getMapper(cls).myListUpdate(reservation);
 		

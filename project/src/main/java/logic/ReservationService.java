@@ -54,5 +54,8 @@ public class ReservationService {
 		 reservationDao.myListUpdate(reservation);
 		
 	}
+	public Restaurant maxSelect() {
+		return restaurantDao.maxSelect();
+	}
 
 }

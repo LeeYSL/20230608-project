@@ -10,18 +10,14 @@
 <body>
 	<form:form modelAttribute="reservation" method="post"
 		action="myListInfo">
-		<c:forEach items="${errors.globalErrors}" var="error">
-			<spring:message code="${error.code}" />
-			<br>
-		</c:forEach>
 		<table>
 			<tr>
 				<td>가게이름</td>
-				<td align="center">${rsrvt.name}</td>
+				<td align="center"><form:input path="name" value="${rsrvt.name}" disabled="true"/></td>
 			</tr>
 			<tr>
 				<td>가게 전화번호</td>
-				<td align="center">${rsrvt.restPhoneNo}</td>
+				<td align="center"><form:input path="restPhoneNo" value="${rsrvt.restPhoneNo}" disabled="true"/></td>
 			</tr>
 			<tr>
 				<td>예약자 이름</td>
@@ -34,12 +30,16 @@
 				<td><font color="red"><form:errors path="phoneNo" /></font></td>
 			</tr>
 			<tr>
+				<td>인원 수</td>
+				<td align="center"><form:input path="people" value="${rsrvt.people}" disabled="true"/></td>
+			</tr>
+			<tr>
 				<td>예약 날짜</td>
-				<td align="center">${rsrvt.rsrvtDate}</td>
+				<td align="center"><form:input path="rsrvtDate" value="${rsrvt.rsrvtDate}" disabled="true"/></td>
 			</tr>
 			<tr>
 				<td>예약 시간</td>
-				<td align="center">${rsrvt.rsrvtTime}</td>
+				<td align="center"><form:input path="rsrvtTime" value="${rsrvt.rsrvtTime}" disabled="true"/></td>
 			</tr>
 			<tr>
 				<td><input type="submit" value="수정 완료" name="update">
@@ -47,6 +47,7 @@
 				</td>
 			</tr>
 		</table>
+		<input type="hidden" name="num" value="${rsrvt.num}"/>
 	</form:form>
 </body>
 </html>

@@ -6,16 +6,23 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
 import logic.Dayoff;
+import logic.Reservation;
 import logic.Restaurant;
 
 public interface RestaurantMapper {
   
-	@Insert("insert into restaurant (rest_num, user_id, tel, license_num, name, address, picture, maxpeople,open,close ) "
-			+ " values (#{restNum}, #{userId}, #{tel}, #{licenseNum}, #{name} ,#{address}, #{picture},#{maxpeople},#{open},#{close})")
+	@Insert("insert into restaurant (rest_num, user_id, license_num, name, address, picture, maxpeople,open,close, rest_phoneNo ) "
+			+ " values (#{restNum}, #{userId}, #{licenseNum}, #{name} ,#{address}, #{picture},#{maxpeople},#{open},#{close},#{restPhoneNo})")
 	void insert(@Valid Restaurant restaurant);
 	
 	@Insert("insert into dayoff (rest_num, Mon, Tue, Wed, Thur, Fri, Sat, Sun, holiday) "
 			+ " values (#{restNum}, #{mon}, #{tue},#{wed}, #{thur},#{fri},#{sat},#{sun},#{holiday})")
 	void insertDayoff(@Valid Dayoff dayoff);
+
+
+	
+	@Select("SELECT NVL(MAX(rest_num),0) + 1 as rest_num FROM restaurant ")
+	Restaurant maxSelect();
+	
 
 }

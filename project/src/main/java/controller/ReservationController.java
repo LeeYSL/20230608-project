@@ -1,9 +1,7 @@
 package controller;
 
-
 import java.util.List;
 import java.util.Map;
-
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -40,7 +38,6 @@ public class ReservationController {
 	public ModelAndView reservation(@Valid Reservation reservation, BindingResult bresult, HttpSession session)
 			throws Exception {
 		ModelAndView mav = new ModelAndView();
-		System.out.println("????");
 		if (bresult.hasErrors()) {
 			System.out.println("error");
 			mav.getModel().putAll(bresult.getModel());
@@ -79,51 +76,44 @@ public class ReservationController {
 		return mav;
 	}
 
-	@RequestMapping("ownerList") 
+	@RequestMapping("ownerList")
 	public ModelAndView ownerList(@RequestParam Map<String, Object> param, HttpSession session) {
-	  	ModelAndView mav = new ModelAndView();
-	
-		  
-		  User user = (User)session.getAttribute("loginUser");
-		
-		  List<Reservation> rsrvtList = service.ownerList(user.getUserId()); 
-		  mav.addObject("rsrvtList",rsrvtList);
-	
-	      return mav;
+		ModelAndView mav = new ModelAndView();
+
+		User user = (User) session.getAttribute("loginUser");
+
+		List<Reservation> rsrvtList = service.ownerList(user.getUserId());
+		mav.addObject("rsrvtList", rsrvtList);
+
+		return mav;
 	}
-  
-//	@PostMapping("myListInfo") 
-//	public ModelAndView myListInfo(@Valid Reservation reservation, BindingResult bresult,HttpSession session,Integer num) {
-//		ModelAndView mav = new ModelAndView();
-//				
-//		User user = (User)session.getAttribute("loginUser");
-//		
-//		
-//		if (bresult.hasErrors()) {
-//			mav.getModel().putAll(bresult.getModel());
-//			bresult.reject("error.input.reservation");
-//			return mav;
-//		}
-//		if(user.getUserId() != null) {
-//			System.out.println("1"+user.getUserId());
-//			Reservation reservation2  = service.selectOne(num); // 이렇게 해서 reservation2로 보내줘도 됨
-//			service.selectOne(num);
-//			service.myListUpdate(reservation);
-//		    mav.addObject("rsrvt",reservation2);
-//		    System.out.println("2"+reservation2.getNum());
-//			mav.setViewName("redirect:myListInfo?id="+reservation2.getNum());
-//		
-//		}
-//	return mav;
-//	}
-	  @GetMapping("myListInfo")
-  	public ModelAndView myListInfo (Integer num,Reservation reservatio) {
-  	ModelAndView mav = new ModelAndView();
-  	Reservation reservation2  = service.selectOne(num);
-  	//reservation2.setNum(1);
-  	mav.addObject("rsrvt",reservation2);
-  //	mav.setViewName("redirect:myListInfo?id="+reservation2.getNum());
-  	return mav;
-  }
-  
+
+	// 예약상세페이지 수정
+	@PostMapping("myListInfo")
+	public ModelAndView myListInfo(@Valid Reservation reservation, BindingResult bresult, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		User user = (User) session.getAttribute("loginUser");
+
+		// post인 경우엔 form에서 보낸 객체를 사용해야함.
+		int num = reservation.getNum();
+
+		if (user.getUserId() != null) {
+			service.myListUpdate(reservation);
+			mav.setViewName("redirect:myListInfo?num=" + num);
+	//		mav.setViewName("myList");
+		}
+		return mav;
+	}
+
+	// 예약 상세페이지로 이동
+	@GetMapping("myListInfo")
+	public ModelAndView Info(Integer num, Reservation reservatio) {
+		// http://localhost:8080/project/reservation/myListInfo?num=3
+		System.out.println("!!!");
+		ModelAndView mav = new ModelAndView();
+		Reservation reservation2 = service.selectOne(num);
+		mav.addObject("rsrvt", reservation2);
+		return mav;
+	}
+
 }
