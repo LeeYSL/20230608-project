@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import dao.BoardDao;
+import dao.CommentDao;
 import dao.UserDao;
 
 @Service
@@ -19,6 +20,8 @@ public class UserService {
 	private UserDao userDao;
 	@Autowired
 	private BoardDao boardDao;
+	@Autowired
+	private CommentDao commDao;
 	
 
 	public void userInsert(@Valid User user) {
@@ -116,6 +119,23 @@ public class UserService {
 	public void delete(Integer num) {
 		boardDao.delete(num);
 		
+	}
+
+
+	public List<Comment> commlist(Integer num) {
+		
+		return commDao.commlist(num);
+	}
+
+
+	public void commInsert(@Valid Comment comm) {
+		commDao.commInsert(comm);
+		
+	}
+
+
+	public int commmaxseq(int num) {
+		return commDao.commmaxseq(num);
 	}
 
 

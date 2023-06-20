@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import exception.LoginException;
 import logic.Board;
+import logic.Comment;
 import logic.UserService;
 import util.CipherUtil;
 
@@ -100,7 +101,14 @@ public class BoardController {
 			mav.addObject("boardName","Notice");
 		else if (board.getBoardId().equals("2")) 
 			mav.addObject("boardName","QnA");
+		
+		List<Comment> commlist = userservice.commlist(num);
+		mav.addObject("commlist",commlist);
+		Comment comm = new Comment();
+		comm.setNum(num);
+		mav.addObject("comment",comm);
 		return mav;
+
 	}
 	
 	
@@ -146,8 +154,27 @@ public class BoardController {
 			e.printStackTrace();
 			throw new LoginException("삭제 실패","detail?num="+num);
 		}
+
+	}
+	@RequestMapping("comment")
+	public ModelAndView comment(@Valid Comment comm, BindingResult bresult) {
+		ModelAndView mav = new ModelAndView("board/detail");
 		
+		if(bresult.hasErrors()) {
+			mav.getModel().putAll(bresult.getModel());
+			return mav;
+		}
 		
+		int seq = userservice.commmaxseq(comm.getNum());
+		comm.setSeq(++seq);
+		userservice.commInsert(comm);
+		mav.setViewName("redirect:detail?num="+comm.getNum());
+		return mav;
+	}
+	@RequestMapping("commdelete")
+	public String commdelete(Comment comm) {
+		Comment dbcomm = userservice.selectOne
+		userservice.commdelete();
 	}
 	 
 }

@@ -96,15 +96,15 @@ a {
 								<table>
 									<tr>
 										<td>
-											<form:textarea path="content" cols="20" row="10" class="w3-input" placeholder="댓글" />
+											<form:textarea path="content" cols="100" row="10" class="w3-input" placeholder="댓글" />
 											<font color="red">
 												<form:errors path="content" />
 											</font>
-											<input type="hidden" name="wirter" value="${sessionScope.loginUser.userId}">
+											<input type="hidden" name="userId" value="${sessionScope.loginUser.userId}">
 											<input type="hidden" name="num" value="${param.num}">
 										</td>
 										<td>
-											<button type="submit">댓글 등록</button>
+											<button type="submit" class="w3-button w3-white w3-border w3-border-orange w3-round-large"">댓글 등록</button>
 										</td>
 									</tr>
 								</table>
@@ -113,6 +113,7 @@ a {
 							<hr>
 							<div>
 								<table class="w3-table-all">
+									<c:forEach var="comm" items="${commlist}">
 									<tr>
 										<td>
 											${comm.userId}
@@ -123,14 +124,15 @@ a {
 										<td>
 											${comm.date}
 										</td>
-										<c:if test="${sessionScope.loginUser.userId == comm.writer}">
+										<c:if test="${sessionScope.loginUser.userId == comm.userId}">
 											<td>
-												<a href="delete?num=${comm.num}?seq=${comm.seq}">
-													<button type="button">삭제</button>
+												<a href="javascript:document.commdelete?num=${comm.num}?seq=${comm.seq}.submit()">
+													<button type="button" class="w3-button w3-white w3-border w3-border-orange w3-round-large">삭제</button>
 												</a>
 											</td>
 										</c:if>
 									</tr>
+									</c:forEach>
 								</table>
 							</div>
 										
