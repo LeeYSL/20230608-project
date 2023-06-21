@@ -37,7 +37,7 @@ a {
 </head>
 <body>
 	<div class="w3-container w3-padding-32 w3-center">
-		<div style="display: block; margin: auto; width: 900px; height: 100%;">
+		<div style="display: block; margin: auto; width: 1100px; height: 100%;">
 			<div class="w3-padding-32">
 				<div class="side">
 					<div class="page">
@@ -112,6 +112,7 @@ a {
 							</form:form>
 							<hr>
 							<div>
+								<form action="commdelete" method="post">
 								<table class="w3-table-all">
 									<c:forEach var="comm" items="${commlist}">
 									<tr>
@@ -122,11 +123,17 @@ a {
 											${comm.content}
 										</td>
 										<td>
-											${comm.date}
+											<fmt:formatDate value="${comm.date}" pattern="yyyyMMdd" var="cdate"/>
+												<c:if test="${cdate == today}">
+													<fmt:formatDate value="${comm.date}" pattern="HH:mm:ss" />												
+												</c:if>
+												<c:if test="${cdate != today}">
+													<fmt:formatDate value="${comm.date}" pattern="yyyy-MM-dd" />
+												</c:if>
 										</td>
 										<c:if test="${sessionScope.loginUser.userId == comm.userId}">
 											<td>
-												<a href="javascript:document.commdelete?num=${comm.num}?seq=${comm.seq}.submit()">
+												<a href="commdelete?num=${comm.num}&seq=${comm.seq}">
 													<button type="button" class="w3-button w3-white w3-border w3-border-orange w3-round-large">삭제</button>
 												</a>
 											</td>
@@ -134,6 +141,7 @@ a {
 									</tr>
 									</c:forEach>
 								</table>
+									</form>
 							</div>
 										
 				</div>

@@ -98,14 +98,6 @@ public class UserService {
 	}
 
 
-	public List<Board> boardlist(String boardId) {
-		return boardDao.boardlist(boardId);
-	}
-
-
-
-
-
 	public void update(@Valid Board board, HttpSession session) {
 		if(board.getFile1() != null && !board.getFile1().isEmpty()) {
 			String path = session.getServletContext().getRealPath("/") + "board/file/";
@@ -136,6 +128,22 @@ public class UserService {
 
 	public int commmaxseq(int num) {
 		return commDao.commmaxseq(num);
+	}
+
+
+	public void commdelete(int num, int seq) {
+		commDao.commdelete(num,seq);
+		
+	}
+
+
+	public int boardcount(String boardId, String type, String searchcontent) {
+		return boardDao.boardcount(boardId,type,searchcontent);
+	}
+
+
+	public List<Board> boardlist(String boardId, int limit, Integer pageNum, String type, String searchcontent) {
+		return boardDao.boardlist(boardId, limit, pageNum, type, searchcontent);
 	}
 
 

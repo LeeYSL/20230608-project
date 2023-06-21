@@ -38,7 +38,7 @@ a {
 <body>
 	<div class="w3-container w3-padding-32 w3-center">
 		<div
-			style="display: block; margin: auto; width: 800px; height: 100%;">
+			style="display: block; margin: auto; width: 1100px; height: 100%;">
 			<div class="w3-padding-32">
 				<div class="side">
 					<div class="page">

@@ -43,11 +43,6 @@ public void addReadcnt(Integer num) {
 	
 }
 
-public List<Board> boardlist(String boardId) {
-	param.clear();
-	param.put("boardId", boardId);
-	return template.getMapper(cls).boardlist(boardId);
-}
 
 public void update(@Valid Board board) {
 	 template.getMapper(cls).update(board);	
@@ -56,6 +51,24 @@ public void update(@Valid Board board) {
 public void delete(Integer num) {
 	template.getMapper(cls).delete(num);
 	
+}
+
+public List<Board> boardlist(String boardId, int limit, Integer pageNum, String type, String searchcontent) {
+	param.clear();
+	param.put("boardId", boardId);
+	param.put("limit", limit);
+	param.put("startrow",(pageNum-1) * limit);
+	param.put("type", type);
+	param.put("searchcontent", searchcontent);
+	return template.getMapper(cls).boardlist(param);
+}
+
+public int boardcount(String boardId, String type, String searchcontent) {
+	param.clear();
+	param.put("boardId", boardId);
+	param.put("type", type);
+	param.put("searchcontent", searchcontent);
+	return template.getMapper(cls).boardcount(param);
 }
 
 

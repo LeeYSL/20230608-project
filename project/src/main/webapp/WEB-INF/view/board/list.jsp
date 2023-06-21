@@ -34,7 +34,7 @@ a {
 </head>
 <body>
 	<div class="w3-container w3-padding-32 w3-center">
-		<div style="display: block; margin: auto; width: 900px; height: 100%;">
+		<div style="display: block; margin: auto; width: 1100px; height: 100%;">
 			<div class="w3-padding-32">
 				<div class="side">
 					<div class="page">
@@ -58,7 +58,7 @@ a {
 							</td>
 							<td width="60%">
 								<div>
-									<input type="text" class="w3-input">
+									<input type="text" name="searchcontent" class="w3-input">
 								</div>
 							</td>
 							<td width="10%">
@@ -73,29 +73,58 @@ a {
 				<br>
 				<div>
 					<table class="w3-table-all">
-						<tr>
-							<th></th>
-							<th>제목</th>
-							<th>작성자</th>
-							<th>작성일</th>
-							<th>조회수</th>
-							<th>좋아요</th>
+						<tr height="10%">
+							<th width="10%"></th>
+							<th width="50%">제목</th>
+							<th width="10%">작성자</th>
+							<th width="10%">작성일</th>
+							<th width="10%">조회수</th>
+							<th width="10%">좋아요</th>
 						</tr>
 
 						<c:forEach var="board" items="${boardlist}">
-							<tr>
+							<tr height="10%">
 								<td>${board.num}</td>
 								<td><a href="detail?num=${board.num}"> ${board.title} </a>
 								</td>
 								<td>${board.userId}</td>
-								<td>${board.regDate}</td>
+								
+								<td>
+									<fmt:formatDate value="${board.regDate}" pattern="yyyyMMdd" var="rdate" />
+										<c:if test="${today == rdate}">
+											<fmt:formatDate value="${board.regDate}" pattern="HH:mm:ss" />
+										</c:if>
+										<c:if test ="${today != rdate}">
+											<fmt:formatDate value="${board.regDate}" pattern="yyyy-MM-dd" />
+										</c:if>
+								</td>
 								<td>${board.readCnt}</td>
 								<td>좋아요 넣기</td>
 							</tr>
 						</c:forEach>
+						<tr>
+							<td colspan="6" class="w3-center">
+								<c:if test="${pageNum > 1}">
+									<a href="javascript:listpage('${pageNum -1}')">[이전]</a>
+								</c:if>
+								<c:if test="${pageNum <= 1}">[이전]</c:if>
+								<c:forEach var="a" begin="${startpage}" end="${endpage}">
+									<c:if test="${a == pageNum}">[${a}]</c:if>
+									<c:if test="${a!= pageNum}">
+										<a href="javascript:listpage('${a}')">[${a}]</a>
+									</c:if>
+								</c:forEach>
+								<c:if test="${pageNum < maxpage}">
+									<a href="javascript:listpage('${pageNum +1}')">[다음]</a>
+								</c:if>
+								<c:if test="${pageNum >= maxpage}">[다음]</c:if>
+							</td>
+						</tr>
 					</table>
+					
 				</div>
 				<div>
+				<br>
 					<a href="write">
 						<button
 							class="w3-button w3-white w3-border w3-border-orange w3-round-large w3-right">글쓰기</button>

@@ -72,8 +72,8 @@ public class MvcConfig implements WebMvcConfigurer {
 		ser.setExceptionMappings(pr);
 		return ser;
 	}
-	//@Override
-	//인터셉터 관련 된 설정
+//	@Override
+/////	인터셉터 관련 된 설정
 //	public void addInterceptors(InterceptorRegistry registry) {
 //		registry.addInterceptor(new BoardInterceptor())
 //		.addPathPatterns("/board/write")

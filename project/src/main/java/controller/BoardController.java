@@ -1,6 +1,7 @@
 package controller;
 
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,104 +30,129 @@ public class BoardController {
 	private UserService userservice;
 	@Autowired
 	private CipherUtil util;
-	
-	
+
 	@RequestMapping("*")
 	public ModelAndView join() {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject(new Board());
 		return mav;
 	}
-	
+
 	@PostMapping("write")
-	public ModelAndView write(@Valid Board board, BindingResult bresult , HttpSession session) {
-		ModelAndView mav = new ModelAndView();	
-		if(bresult.hasErrors()) {
+	public ModelAndView write(@Valid Board board, BindingResult bresult, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		if (bresult.hasErrors()) {
 			mav.getModel().putAll(bresult.getModel());
 			return mav;
 		}
-		String boardId = (String)session.getAttribute("boardId"); //형변환 왜 해줘야하는지
-		System.out.println("boardId write="+boardId);
-		if(boardId == null) {
-			boardId="1";
+		String boardId = (String) session.getAttribute("boardId"); // 형변환 왜 해줘야하는지
+		System.out.println("boardId write=" + boardId);
+		if (boardId == null) {
+			boardId = "1";
 		}
-		System.out.println("boardId write null="+boardId);
+		System.out.println("boardId write null=" + boardId);
 		board.setBoardId(boardId);
 		try {
-			mav.addObject("boardId",boardId);
-			userservice.write(board,session);
+			mav.addObject("boardId", boardId);
+			userservice.write(board, session);
 			mav.setViewName("redirect:list");
 		} catch (Exception e) {
 			e.printStackTrace();
-			mav.setViewName("redirect:write?boardId="+boardId);
+			mav.setViewName("redirect:write?boardId=" + boardId);
 		}
 		return mav;
 	}
+
 	@RequestMapping("list")
-	public ModelAndView list(@RequestParam Map<String,String> param, HttpSession session) {
-//		ModelAndView mav =new ModelAndView();
-//		String boardId = (String)session.getAttribute("boardId");
-//		board.setBoardId(boardId);
-//		System.out.println("boardId list="+boardId);
-//		List<Board> blist = userservice.blist(boardId);
-//		mav.addObject("blist", blist);
-//		return mav;
+	public ModelAndView list(@RequestParam Map<String, String> param, HttpSession session) {
+		Integer pageNum = null; // 왜 ...int 가 아니고 Integer...
+		if (param.get("pageNum") != null)
+			pageNum = Integer.parseInt(param.get("pageNum"));
+		String type = param.get("type");
+		String searchcontent = param.get("searchcontent");
 		String boardId = param.get("boardId");
-		ModelAndView mav =  new ModelAndView();
-		if(boardId == null || boardId.equals("")) {
+
+		ModelAndView mav = new ModelAndView();
+		if (pageNum == null || pageNum.toString().equals("")) {
+			pageNum = 1;
+		}
+		if (boardId == null || boardId.equals("")) {
 			boardId = "1";
 		}
 		session.setAttribute("boardId", boardId);
-	
-	String boardName=null;
-	switch(boardId) {
-		case "1" : boardName = "Notice"; break;
-		case "2" : boardName = "QnA"; break;
+
+		if (type == null || type.trim().equals("") || searchcontent == null || searchcontent.trim().equals("")) {
+			type = null;
+			searchcontent = null;
 		}
-	List<Board> boardlist = userservice.boardlist(boardId);
-	mav.addObject("boardId","boardId");
-	mav.addObject("boardName", boardName);
-	mav.addObject("boardlist",boardlist);
-	return mav;
+
+		String boardName = null;
+		switch (boardId) {
+		case "1":
+			boardName = "Notice";
+			break;
+		case "2":
+			boardName = "QnA";
+			break;
+		}
+		int limit = 10;
+		int listcount = userservice.boardcount(boardId, type, searchcontent);
+		List<Board> boardlist = userservice.boardlist(boardId, limit, pageNum, type, searchcontent);
+		int maxpage = (int) ((double) listcount / limit + 0.95);
+		int startpage = (int) ((pageNum / 10.0 + 0.9) - 1) * 10 + 1;
+		int endpage = startpage + 9;
+		if (endpage > maxpage) {
+			maxpage = endpage;
+		}
+		int boardno = listcount - (pageNum - 1) * limit;
+		String today = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		mav.addObject("boardId", boardId);
+		mav.addObject("boardName", boardName);
+		mav.addObject("boardlist", boardlist);
+		mav.addObject("pageNum", pageNum);
+		mav.addObject("maxpage", maxpage);
+		mav.addObject("startpage", startpage);
+		mav.addObject("endpage", endpage);
+		mav.addObject("listcount", listcount);
+		mav.addObject("boardno", boardno);
+		mav.addObject("today", today);
+		return mav;
 	}
-	
-	
+
 	@GetMapping("detail")
 	public ModelAndView detail(Integer num) {
 		ModelAndView mav = new ModelAndView();
 		Board board = userservice.detail(num);
 		userservice.addReadcnt(num);
-		mav.addObject("board",board);
-		if(board.getBoardId() == null|| board.getBoardId().equals("1")) 
-			mav.addObject("boardName","Notice");
-		else if (board.getBoardId().equals("2")) 
-			mav.addObject("boardName","QnA");
-		
+		mav.addObject("board", board);
+		if (board.getBoardId() == null || board.getBoardId().equals("1"))
+			mav.addObject("boardName", "Notice");
+		else if (board.getBoardId().equals("2"))
+			mav.addObject("boardName", "QnA");
+
 		List<Comment> commlist = userservice.commlist(num);
-		mav.addObject("commlist",commlist);
+		mav.addObject("commlist", commlist);
 		Comment comm = new Comment();
 		comm.setNum(num);
-		mav.addObject("comment",comm);
+		mav.addObject("comment", comm);
 		return mav;
 
 	}
-	
-	
-	
+
 	@GetMapping("update")
 	public ModelAndView boardupdate(Integer num, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		String boardId = (String)session.getAttribute("boardId");
+		String boardId = (String) session.getAttribute("boardId");
 		Board board = userservice.detail(num);
-		mav.addObject("board",board);
+		mav.addObject("board", board);
 		if (boardId == null || boardId.equals("1")) {
-			mav.addObject("boardName","Notice");
+			mav.addObject("boardName", "Notice");
 		} else if (boardId == null || boardId.equals("2")) {
-			mav.addObject("boardName","QnA");
+			mav.addObject("boardName", "QnA");
 		}
 		return mav;
-		}
-	
+	}
+
 	@PostMapping("update")
 	public ModelAndView update(@Valid Board board, BindingResult bresult, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
@@ -134,47 +160,51 @@ public class BoardController {
 			mav.getModel().putAll(bresult.getModel());
 			return mav;
 		}
-		 try {
-			userservice.update(board,session);
-	//		System.out.println("1:"+board.getNum());
-			mav.setViewName("redirect:detail?num="+board.getNum());
-		}catch (Exception e) {
+		try {
+			userservice.update(board, session);
+			// System.out.println("1:"+board.getNum());
+			mav.setViewName("redirect:detail?num=" + board.getNum());
+		} catch (Exception e) {
 			e.printStackTrace();
 
-			throw new LoginException("수정 실패","update?num="+board.getNum());
+			throw new LoginException("수정 실패", "update?num=" + board.getNum());
 		}
 		return mav;
 	}
+
 	@RequestMapping("delete")
 	public String delete(Integer num) {
-		try{
+		try {
 			userservice.delete(num);
 			return "redirect:list";
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new LoginException("삭제 실패","detail?num="+num);
+			throw new LoginException("삭제 실패", "detail?num=" + num);
 		}
 
 	}
+
 	@RequestMapping("comment")
 	public ModelAndView comment(@Valid Comment comm, BindingResult bresult) {
 		ModelAndView mav = new ModelAndView("board/detail");
-		
-		if(bresult.hasErrors()) {
+
+		if (bresult.hasErrors()) {
 			mav.getModel().putAll(bresult.getModel());
 			return mav;
 		}
-		
+
 		int seq = userservice.commmaxseq(comm.getNum());
 		comm.setSeq(++seq);
 		userservice.commInsert(comm);
-		mav.setViewName("redirect:detail?num="+comm.getNum());
+		mav.setViewName("redirect:detail?num=" + comm.getNum());
 		return mav;
 	}
+
 	@RequestMapping("commdelete")
 	public String commdelete(Comment comm) {
-		Comment dbcomm = userservice.selectOne
-		userservice.commdelete();
+		userservice.commdelete(comm.getNum(), comm.getSeq());
+		return "redirect:detail?num=" + comm.getNum();
+
 	}
-	 
+
 }

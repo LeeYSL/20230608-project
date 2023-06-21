@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import logic.Comment;
@@ -19,5 +21,8 @@ public interface CommentMapper {
 
 	@Select("select ifnull(max(seq),0) from comment where num=#{num}")
 	int commmaxseq(int num);
+
+	@Delete("delete from comment where num=#{num} and seq=#{seq} ")
+	void commdelete(@Param("num")int num, @Param("seq")int seq);
 
 }

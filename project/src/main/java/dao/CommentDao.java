@@ -38,5 +38,16 @@ private Class<CommentMapper> cls = CommentMapper.class;
 
 	public int commmaxseq(int num) {
 		return template.getMapper(cls).commmaxseq(num); 
-	} 
+	}
+
+
+
+	public void commdelete(int num, int seq) {
+		template.getMapper(cls).commdelete(num,seq);
+		
+	}
+
+
+
+
 }
