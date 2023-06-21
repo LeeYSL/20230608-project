@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -45,8 +46,8 @@ public interface ReservationMapper {
     @Update("update reservation set rsrvt_name=#{rsrvtName},phone_no=#{phoneNo} where num = #{num}")
 	void myListUpdate(@Valid Reservation reservation);
 
-    @Update("update reservation set confirm=#{confirm}" )
-	void ownerconfirm(int confirm);
+    @Update("update reservation set confirm= #{confirm} where num = #{num}" )
+	void ownerconfirm(@Param("num")int num, @Param("confirm")int confirm);
 
 	
 }

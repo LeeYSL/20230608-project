@@ -77,21 +77,25 @@ public class ReservationController {
 
 		return mav;
 	}
+
 	@PostMapping("ownerList")
-		public ModelAndView confirm(@Valid Reservation reservation) {
+	public ModelAndView confirm(int num, int confirm) {
 		ModelAndView mav = new ModelAndView();
-		
+
 		System.out.println("1");
-		
-		service.ownerconfirm(reservation.getConfirm());
-		System.out.println("1:" + reservation.getConfirm());
-		reservation.getConfirm(); // reservation에서 쓸 수 있게 ownerconfirm에서 가져온 걸 set 해줌?
+		System.out.println("num : " + num);
+		System.out.println("confirm : " + confirm);
+
+		service.ownerconfirm(num, confirm);
+		// System.out.println("1:" + reservation.getConfirm());
+		// reservation.getConfirm(); // reservation에서 쓸 수 있게 ownerconfirm에서 가져온 걸 set
+		// 해줌?
 
 		System.out.println();
-		mav.addObject("reservation",reservation); 
+		mav.addObject("num", num);
 
 		return mav;
-		
+
 	}
 
 	@GetMapping("ownerList")
@@ -118,7 +122,7 @@ public class ReservationController {
 		if (user.getUserId() != null) {
 			service.myListUpdate(reservation);
 			mav.setViewName("redirect:myListInfo?num=" + num);
-	//		mav.setViewName("myList");
+			// mav.setViewName("myList");
 		}
 		return mav;
 	}
