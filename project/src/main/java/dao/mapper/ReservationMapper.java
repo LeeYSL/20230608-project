@@ -25,8 +25,8 @@ public interface ReservationMapper {
 			+ " ORDER BY reg_date")
 	List<Reservation> myListSelect(String userId);
  
-	@Select(" SELECT LEFT(A.rsrvt_date,8) AS rsrvt_date, RIGHT(A.reg_date,2) AS rsrvt_time, A.num, A.user_id, A.rsrvt_name "
-	 		+ "	 A.phone_no,A.people,A.confirm,B.rest_num, B.name "
+	@Select(" SELECT LEFT(A.rsrvt_date,8) AS rsrvt_date, RIGHT(A.reg_date,2) AS rsrvt_time, A.num, A.user_id, A.rsrvt_name, "
+	 		+ "	  A.phone_no,A.people,A.confirm,B.rest_num, B.name "
 	 		+ "	  FROM reservation A "
 	 		+ "	  JOIN restaurant B "
 	 		+ "	  ON A.rest_num = B.rest_num "
@@ -44,6 +44,9 @@ public interface ReservationMapper {
 
     @Update("update reservation set rsrvt_name=#{rsrvtName},phone_no=#{phoneNo} where num = #{num}")
 	void myListUpdate(@Valid Reservation reservation);
+
+    @Update("update reservation set confirm=#{confirm}" )
+	void ownerconfirm(int confirm);
 
 	
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.taglibs.standard.lang.jstl.test.beans.PublicBean1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,7 @@ import logic.Reservation;
 import logic.ReservationService;
 
 import logic.User;
+import lombok.val;
 
 @Controller
 @RequestMapping("reservation")
@@ -48,7 +50,7 @@ public class ReservationController {
 		try {
 			User user = (User) session.getAttribute("loginUser");
 			reservation.setUserId(user.getUserId());
-			reservation.setRestNum(2); // 가게번호
+			reservation.setRestNum(1); // 가게번호
 			// reservation.setConfirm(1); // 확정여부-예약대기(1)로 고정
 			service.bookinsert(reservation);
 		} catch (Exception e) {
@@ -75,8 +77,24 @@ public class ReservationController {
 
 		return mav;
 	}
+	@PostMapping("ownerList")
+		public ModelAndView confirm(@Valid Reservation reservation) {
+		ModelAndView mav = new ModelAndView();
+		
+		System.out.println("1");
+		
+		service.ownerconfirm(reservation.getConfirm());
+		System.out.println("1:" + reservation.getConfirm());
+		reservation.getConfirm(); // reservation에서 쓸 수 있게 ownerconfirm에서 가져온 걸 set 해줌?
 
-	@RequestMapping("ownerList")
+		System.out.println();
+		mav.addObject("reservation",reservation); 
+
+		return mav;
+		
+	}
+
+	@GetMapping("ownerList")
 	public ModelAndView ownerList(@RequestParam Map<String, Object> param, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 

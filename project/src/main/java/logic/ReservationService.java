@@ -58,4 +58,10 @@ public class ReservationService {
 		return restaurantDao.maxSelect();
 	}
 
-}
+	public void ownerconfirm(int confirm) {
+		reservationDao.ownerconfirm(confirm);
+		
+	}
+
+		
+	}

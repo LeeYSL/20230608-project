@@ -28,8 +28,8 @@
 					<td align="center">${rsrvt.people}</td>
 					<td>
 					<select>
-						<option value="2">확인</option>
-						<option value="3">예약 취소</option>
+						<option value="1">확인</option>
+						<option value="2">예약 취소</option>
 					</select>
 					<input type="hidden" ${rsrvt.confirm}>
 					 <input type="hidden" ${rsrvt.userId}>

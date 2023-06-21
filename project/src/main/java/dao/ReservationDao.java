@@ -55,6 +55,11 @@ public class ReservationDao {
 		
 	}
 
+	public void ownerconfirm(int confirm) {
+		template.getMapper(cls).ownerconfirm(confirm);
+		
+	}
+
 	
 
 }
