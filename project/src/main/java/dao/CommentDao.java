@@ -49,5 +49,11 @@ private Class<CommentMapper> cls = CommentMapper.class;
 
 
 
+	public List<Comment> myclist(String userId) {
+		return template.getMapper(cls).myclist(userId);
+	}
+
+
+
 
 }

@@ -7,6 +7,37 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+	$(function(){
+		$("#binfo").show()
+		$("#cinfo").hide()
+		$("#rinfo").hide()
+		$("#vinfo").hide()
+		$(".commentLine").each(function(){
+			$(this).hide()
+		})
+		$(".reservationLine").each(function(){
+			$(this).hide()
+		})
+		$(".reviewLine").each(function(){
+			$(this).hide()
+		})
+		$("#tab1").addClass("select")
+	})
+	function disp_div(id,tab) {
+		$(".info").each(function(){
+			$(this).hide()
+		})
+		$(".tab").each(function(){
+			$(this).removeClass("select")
+		})
+		$("#"+id).show()
+		$("#"+tab).addClass("select")
+	}
+	function list_disp(id) {
+		$("#"+id).toggle()
+	}
+</script>
 
 </head>
 <body>
@@ -90,68 +121,142 @@
         <div class="w3-col m12">
           <div class="w3-card w3-round w3-white">
             <div class="w3-container w3-padding w3-quarter">
-            	<button type="button" class=" w3-padding">
-              		<h6 class="w3-opacity ">
-              			<c:if test="${myboard > 0}">
-              		    	글 ${myboard}건
-              		    </c:if> 
-              		    <c:if test="${myboard = 0}">
-              		    	등록된 글이 없습니다.
-              		    </c:if>      		
-              		</h6>
-				</button>
+				<a href="javascript:disp_div('binfo','tab1')">			
+            		<button type="button" id="tab1" class="tab w3-padding">
+            	  		<h6 class="w3-opacity ">
+						게시글  		
+	              		</h6>
+					</button>
+				</a>
             </div>
             <div class="w3-container w3-padding w3-quarter">
-            	<button type="button" class=" w3-padding">
-              		<h6 class="w3-opacity ">댓글</h6>
-				</button>
+				<a href="javascript:disp_div('cinfo','tab2')">			
+            		<button type="button" id="tab2" class="tab w3-padding">
+            	  		<h6 class="w3-opacity ">
+						댓글  		
+	              		</h6>
+					</button>
+				</a>
             </div>
             <div class="w3-container w3-padding w3-quarter">
-            	<button type="button" class=" w3-padding">
-              		<h6 class="w3-opacity ">예약 </h6>
-				</button>
-            </div>            
-             <div class="w3-container w3-padding w3-quarter">
-            	<button type="button" class=" w3-padding">
-              		<h6 class="w3-opacity ">리뷰 </h6>
-				</button>
-            </div>                      
+				<a href="javascript:disp_div('rinfo','tab3')">			
+            		<button type="button" id="tab3" class="tab w3-padding">
+            	  		<h6 class="w3-opacity ">
+						예약  		
+	              		</h6>
+					</button>
+				</a>
+            </div>         
+            <div class="w3-container w3-padding w3-quarter">
+				<a href="javascript:disp_div('vinfo','tab4')">			
+            		<button type="button" id="tab4" class="tab w3-padding">
+            	  		<h6 class="w3-opacity ">
+						리뷰  		
+	              		</h6>
+					</button>
+				</a>
+            </div>                
           </div>
         </div>
       </div>
       
-      <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
-        <img src="/w3images/avatar2.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-        <span class="w3-right w3-opacity">1 min</span>
-        <h4>John Doe</h4><br>
+      
+      <%--board --%>
+      <div class="info w3-container w3-card w3-white w3-round w3-margin" id="binfo" style="display:none;"><br>
+        <h4>내가 쓴 글</h4><br>
         <hr class="w3-clear">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-          <div class="w3-row-padding" style="margin:0 -16px">
-            <div class="w3-half">
-              <img src="/w3images/lights.jpg" style="width:100%" alt="Northern Lights" class="w3-margin-bottom">
-            </div>
-        </div>
-        <button type="button" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i> &nbsp;Like</button> 
-        <button type="button" class="w3-button w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i> &nbsp;Comment</button> 
-      </div>      
+		<table class="w3-table-all">
+			<tr>
+				<th></th>
+				<th align="center">제목</th>
+				<th align="center">작성일</th>
+			</tr>
+			<c:forEach items="${myblist}" var="board">
+				<tr>
+					<td>
+						<input type="checkbox">
+					</td>
+					<td align="center">
+						<a href="../board/detail?num=${board.num}">${board.title}</a>
+					</td>
+					<td align="center">
+						<fmt:formatDate value="${board.regDate}" pattern="yyyy-MM-dd" />
+					</td>
+				</tr>
+			</c:forEach>
+		</table>
+		<br>
+      </div>
       
-      
-      
-      
-            <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
-        <img src="/w3images/avatar2.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-        <span class="w3-right w3-opacity">1 min</span>
-        <h4>John Doe</h4><br>
+      <%--comment --%>
+      <div class="info w3-container w3-card w3-white w3-round w3-margin" id="cinfo" style="display:none;"><br>
+       <h4>내가 쓴 댓글</h4><br>
         <hr class="w3-clear">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-          <div class="w3-row-padding" style="margin:0 -16px">
-            <div class="w3-half">
-              <img src="/w3images/lights.jpg" style="width:100%" alt="Northern Lights" class="w3-margin-bottom">
-            </div>
-        </div>
-        <button type="button" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i> &nbsp;Like</button> 
-        <button type="button" class="w3-button w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i> &nbsp;Comment</button> 
+		<table class="w3-table-all">
+			<tr>
+				<th align="center">댓글</th>
+				<th align="center">작성일</th>
+			</tr>
+			<c:forEach items="${myclist}" var="comm" >
+				<tr>
+					<td align="center">
+						<a href="../board/detail?num=${comm.num}&seq=${comm.seq}">${comm.content}</a>
+					</td>
+					<td align="center">
+						<fmt:formatDate value="${comm.date}" pattern="yyyy-MM-dd" />
+					</td>
+				</tr>
+			</c:forEach>
+		</table>
+		<br>
+      </div>
+      
+            <%--comment --%>
+      <div class="info w3-container w3-card w3-white w3-round w3-margin" id="rinfo" style="display:none;"><br>
+       <h4>예약</h4><br>
+        <hr class="w3-clear">
+		<table class="w3-table-all">
+			<tr>
+				<th align="center">댓글</th>
+				<th align="center">작성일</th>
+			</tr>
+			<c:forEach items="${myclist}" var="comm" >
+				<tr>
+					<td align="center">
+						<a href="../board/detail?num=${comm.num}&seq=${comm.seq}">${comm.content}</a>
+					</td>
+					<td align="center">
+						<fmt:formatDate value="${comm.date}" pattern="yyyy-MM-dd" />
+					</td>
+				</tr>
+			</c:forEach>
+		</table>
+		<br>
+      </div>
+      
+            <%--comment --%>
+      <div class="info w3-container w3-card w3-white w3-round w3-margin" id="vinfo" style="display:none;"><br>
+       <h4>리뷰</h4><br>
+        <hr class="w3-clear">
+		<table class="w3-table-all">
+			<tr>
+				<th align="center">댓글</th>
+				<th align="center">작성일</th>
+			</tr>
+			<c:forEach items="${myclist}" var="comm" >
+				<tr>
+					<td align="center">
+						<a href="../board/detail?num=${comm.num}&seq=${comm.seq}">${comm.content}</a>
+					</td>
+					<td align="center">
+						<fmt:formatDate value="${comm.date}" pattern="yyyy-MM-dd" />
+					</td>
+				</tr>
+			</c:forEach>
+		</table>
+		<br>
       </div>     
+   
      
     <!-- End Middle Column -->
     </div>

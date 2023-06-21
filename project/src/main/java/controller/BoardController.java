@@ -98,11 +98,11 @@ public class BoardController {
 		int limit = 10;
 		int listcount = userservice.boardcount(boardId, type, searchcontent);
 		List<Board> boardlist = userservice.boardlist(boardId, limit, pageNum, type, searchcontent);
-		int maxpage = (int) ((double) listcount / limit + 0.95);
+		int maxpage = (int) ((double) listcount/limit + 0.95);
 		int startpage = (int) ((pageNum / 10.0 + 0.9) - 1) * 10 + 1;
 		int endpage = startpage + 9;
 		if (endpage > maxpage) {
-			maxpage = endpage;
+			endpage =maxpage;
 		}
 		int boardno = listcount - (pageNum - 1) * limit;
 		String today = new SimpleDateFormat("yyyyMMdd").format(new Date());

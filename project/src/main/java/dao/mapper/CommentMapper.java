@@ -25,4 +25,7 @@ public interface CommentMapper {
 	@Delete("delete from comment where num=#{num} and seq=#{seq} ")
 	void commdelete(@Param("num")int num, @Param("seq")int seq);
 
+	@Select("select * from comment c join board b  on c.num = b.num where c.user_id=#{userId} ")
+	List<Comment> myclist(String userId);
+
 }

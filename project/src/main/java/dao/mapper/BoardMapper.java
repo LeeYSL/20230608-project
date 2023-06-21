@@ -65,4 +65,9 @@ public interface BoardMapper {
 		"</script>"})
 	List<Board> boardlist(Map<String, Object> param);
 
+
+
+	@Select("select * from board where user_id=#{userId}")
+	List<Board> myblist(String userId);
+
 }

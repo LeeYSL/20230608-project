@@ -147,4 +147,14 @@ public class UserService {
 	}
 
 
+	public List<Board> myblist(String userId) {
+		return boardDao.myblist(userId);
+	}
+
+
+	public List<Comment> myclist(String userId) {
+		return commDao.myclist(userId);
+	}
+
+
 }

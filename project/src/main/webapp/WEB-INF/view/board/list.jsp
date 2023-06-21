@@ -6,6 +6,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+	function listpage(page){
+		document.searchform.pageNum.value=page;
+		document.searchform.submit();
+	}
+
+</script>
 <style type="text/css">
 .page {
 	height: 10%;
@@ -44,15 +51,18 @@ a {
 					</div>
 
 
+						<form action="list" method="post" name="searchform">
 					<table class="w3-table-all">
 						<tr>
 							<td width="30%">
+							<input type="hidden" name="pageNum" value="1">
+							<input type="hidden" name="boardId" value="param.boardId">
 								<div>
 									<select name="type" class="w3-input">
-										<option>전체</option>
-										<option>제목</option>
-										<option>작성자</option>
-										<option>글내용</option>
+										<option value="">전체</option>
+										<option value="title">제목</option>
+										<option value="userId">작성자</option>
+										<option value="content">글내용</option>
 									</select>
 								</div>
 							</td>
@@ -69,6 +79,7 @@ a {
 							<td>
 						</tr>
 					</table>
+							</form>
 				</div>
 				<br>
 				<div>
@@ -84,7 +95,8 @@ a {
 
 						<c:forEach var="board" items="${boardlist}">
 							<tr height="10%">
-								<td>${board.num}</td>
+								<td>${boardno}</td>
+									<c:set var="boardno" value="${boardno-1}" />
 								<td><a href="detail?num=${board.num}"> ${board.title} </a>
 								</td>
 								<td>${board.userId}</td>
@@ -110,7 +122,7 @@ a {
 								<c:if test="${pageNum <= 1}">[이전]</c:if>
 								<c:forEach var="a" begin="${startpage}" end="${endpage}">
 									<c:if test="${a == pageNum}">[${a}]</c:if>
-									<c:if test="${a!= pageNum}">
+									<c:if test="${a != pageNum}">
 										<a href="javascript:listpage('${a}')">[${a}]</a>
 									</c:if>
 								</c:forEach>

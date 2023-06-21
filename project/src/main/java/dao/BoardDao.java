@@ -71,5 +71,9 @@ public int boardcount(String boardId, String type, String searchcontent) {
 	return template.getMapper(cls).boardcount(param);
 }
 
+public List<Board> myblist(String userId) {
+	return template.getMapper(cls).myblist(userId);
+} 
+
 
 }

@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import exception.LoginException;
+import logic.Board;
+import logic.Comment;
 import logic.User;
 import logic.UserService;
 import util.CipherUtil;
@@ -141,7 +143,7 @@ public class UserController {
 			if(user.getUserId() == loginUser.getUserId()) {
 				session.setAttribute("loginUser", user);
 			}
-			mav.setViewName("redirect:mypage?userid="+user.getUserId());
+			mav.setViewName("redirect:mypage?userId="+user.getUserId()); 
 		} catch (Exception e) {
 			e.printStackTrace();
 			mav.getModel().putAll(bresult.getModel());
@@ -194,5 +196,18 @@ public class UserController {
 		List<User> list = userservice.list();  
 		mav.addObject("list",list);
 		return mav;
+	}
+	@RequestMapping("mypage")
+	public ModelAndView mypage(String userId, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		List<Board> myblist = userservice.myblist(userId);
+		mav.addObject("myblist",myblist);
+		
+		List<Comment> myclist =userservice.myclist(userId);
+		mav.addObject("myclist",myclist);
+		
+		
+		return mav;
+		
 	}
 }
