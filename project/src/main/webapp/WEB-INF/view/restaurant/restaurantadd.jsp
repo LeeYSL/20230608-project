@@ -11,13 +11,17 @@
 <script>
 	//메뉴 추가 버튼 눌렀을 때 테이블에 row 추가.
 	function addRow() {
-		let insertTr = "<tr>";
-    	  insertTr += "<td><input style='width:180' type='text' id='menu' placeholder='메뉴 이름'/></td>";
-		  insertTr += "<td><input style='width:100' type='text' placeholder='가격'/></td>";
-		  insertTr += "<td><button type='button' name='btnDel' onclick='deleteRow(this);'>삭제</button></td>";
-		  insertTr += "</tr>";
-		    
-		  $('#menuTable tbody:last').append(insertTr);
+		//메뉴 입력하는 row의 개수
+		let idx = $('tr[name="menuTr"]').length;
+		
+		//추가 버튼을 누르면 row를 추가해줌
+		let insertTr = "<tr name='menuTr'>";
+  	  	insertTr += '<td><input name="menuList['+idx+'].menuName" style="width:180" placeholder="메뉴 이름"/></td>';
+	  	insertTr += '<td><input name="menuList['+idx+'].price" style="width:100" placeholder="가격"/></td>';
+	  	insertTr += "<td><button type='button' name='btnDel' onclick='deleteRow(this);'>삭제</button></td>";
+	  	insertTr += "</tr>";
+	  	
+		$('#menuTable tbody:last').append(insertTr);
 	}
 	
 	//메뉴 삭제 버튼 눌렀을 때 해당 row 삭제.
@@ -26,13 +30,6 @@
 		$(del).parent().parent().remove();
 	}
 	
-	//메뉴 목록을 List에 담음
-	function setMenuList() {
-		$('#menuTable tbody tr').each(function (index, item) {
-		     console.log(item);
-		     console.log(index);
-		});
-	}
 </script>
 </head>
 <body>
@@ -134,15 +131,13 @@
 				<td><button type="button" id="btnAdd" onclick="addRow();">추가</button></td>
 			</tr>
 			<tbody>
-			<tr>
-				<td><input style="width:180" type="text" id="menu" placeholder="메뉴 이름"/></td>
-				<td><input style="width:100" type="text" placeholder="가격"/></td>
+			<tr name="menuTr">
+				<td><input name="menuList[0].menuName" style="width:180" placeholder="메뉴 이름"/></td>
+				<td><input name="menuList[0].price" style="width:100"  placeholder="가격"/></td>
 				<td><button type="button" name="btnDel" onclick="deleteRow(this);">삭제</button></td>
 			</tr>
 			</tbody>
 		</table>
-		<button type="button" name="test" onclick="setMenuList();">테스트</button>
-		<input type="hidden" name="menuList" />
 		<br>
 		<td><input type="submit" value="등록" name="add"></td>
 		<input type="button" value="취소" name="add">

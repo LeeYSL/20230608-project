@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 import ch.qos.logback.classic.spi.STEUtil;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -30,5 +31,6 @@ public class Restaurant {
 	private String close;
 	private Dayoff dayoff;
     private String tel;
+    private List<Menu> menuList; //메뉴
 
 }

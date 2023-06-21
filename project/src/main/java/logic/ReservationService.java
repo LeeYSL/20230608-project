@@ -20,12 +20,16 @@ public class ReservationService {
 
 
 	
-	public void restauinsert(@Valid Restaurant restaurant) {
+	public void restauInsert(@Valid Restaurant restaurant) {
 		restaurantDao.insert(restaurant);
 	}
 
 	public void dayoffInsert(@Valid Dayoff dayoff) {
 		restaurantDao.insertDayoff(dayoff);
+	}
+	
+	public void menuInsert(@Valid Menu menu) {
+		restaurantDao.insertMenu(menu);
 	}
 
 	public void bookinsert(@Valid Reservation reservation) {
