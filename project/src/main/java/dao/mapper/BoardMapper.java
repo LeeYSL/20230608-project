@@ -29,7 +29,7 @@ public interface BoardMapper {
 	@Select("select * from board where num=#{num}")
 	Board detail(Integer num);
 
-	@Update ("update board set read_cnt= +1 where num=#{num}")
+	@Update ("update board set read_cnt= read_cnt+1 where num=#{num}")
 	void addReadcnt(Integer num);
 	
 

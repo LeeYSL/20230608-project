@@ -200,6 +200,10 @@ public class UserController {
 	@RequestMapping("mypage")
 	public ModelAndView mypage(String userId, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
+				
+				
+				
+				
 		List<Board> myblist = userservice.myblist(userId);
 		mav.addObject("myblist",myblist);
 		

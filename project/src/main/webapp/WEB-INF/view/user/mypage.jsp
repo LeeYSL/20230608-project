@@ -34,9 +34,7 @@
 		$("#"+id).show()
 		$("#"+tab).addClass("select")
 	}
-	function list_disp(id) {
-		$("#"+id).toggle()
-	}
+
 </script>
 
 </head>
@@ -66,7 +64,11 @@
          	<a href="userinfo?userId=${sessionScope.loginUser.userId}">
 								<span class="txt">${sessionScope.loginUser.nickname}</span>
 							</a></p>
-         <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i>${sessionScope.loginUser.birthday}</p>
+         <p>
+         	<i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i>
+         	<fmt:formatDate value="${sessionScope.loginUser.birthday}" pattern="yyyy-MM-dd"/>
+         	
+         </p>
         </div>
       </div>
       <br>
@@ -167,19 +169,19 @@
         <hr class="w3-clear">
 		<table class="w3-table-all">
 			<tr>
-				<th></th>
-				<th align="center">제목</th>
-				<th align="center">작성일</th>
+				<th width="10%"></th>
+				<th align="center" width="70%">제목</th>
+				<th align="center" width="20%">작성일</th>
 			</tr>
 			<c:forEach items="${myblist}" var="board">
 				<tr>
-					<td>
+					<td width="10%">
 						<input type="checkbox">
 					</td>
-					<td align="center">
+					<td align="center" width="70%">
 						<a href="../board/detail?num=${board.num}">${board.title}</a>
 					</td>
-					<td align="center">
+					<td align="center" width="20%">
 						<fmt:formatDate value="${board.regDate}" pattern="yyyy-MM-dd" />
 					</td>
 				</tr>
@@ -194,15 +196,15 @@
         <hr class="w3-clear">
 		<table class="w3-table-all">
 			<tr>
-				<th align="center">댓글</th>
-				<th align="center">작성일</th>
+				<th align="center" width="80%">댓글</th>
+				<th align="center" width="20%">작성일</th>
 			</tr>
 			<c:forEach items="${myclist}" var="comm" >
 				<tr>
-					<td align="center">
+					<td align="center" width="80%">
 						<a href="../board/detail?num=${comm.num}&seq=${comm.seq}">${comm.content}</a>
 					</td>
-					<td align="center">
+					<td align="center" width="20%">
 						<fmt:formatDate value="${comm.date}" pattern="yyyy-MM-dd" />
 					</td>
 				</tr>
