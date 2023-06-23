@@ -56,12 +56,12 @@ a {
 						<tr>
 							<td width="30%">
 							<input type="hidden" name="pageNum" value="1">
-							<input type="hidden" name="boardId" value="param.boardId">
+							<input type="hidden" name="boardId" value="${param.boardId}">
 								<div>
 									<select name="type" class="w3-input">
 										<option value="">전체</option>
 										<option value="title">제목</option>
-										<option value="userId">작성자</option>
+										<option value="user_id">작성자</option>
 										<option value="content">글내용</option>
 									</select>
 								</div>
@@ -86,18 +86,18 @@ a {
 					<table class="w3-table-all">
 						<tr height="10%">
 							<th width="10%"></th>
-							<th width="50%">제목</th>
-							<th width="10%">작성자</th>
+							<th width="55%">제목</th>
+							<th width="15%">작성자</th>
 							<th width="10%">작성일</th>
 							<th width="10%">조회수</th>
-							<th width="10%">좋아요</th>
 						</tr>
 
 						<c:forEach var="board" items="${boardlist}">
 							<tr height="10%">
 								<td>${boardno}</td>
 									<c:set var="boardno" value="${boardno-1}" />
-								<td><a href="detail?num=${board.num}"> ${board.title} </a>
+								<td>
+									<a href="detail?num=${board.num}"> ${board.title} </a>
 								</td>
 								<td>${board.userId}</td>
 								
@@ -111,7 +111,6 @@ a {
 										</c:if>
 								</td>
 								<td>${board.readCnt}</td>
-								<td>좋아요 넣기</td>
 							</tr>
 						</c:forEach>
 						<tr>
