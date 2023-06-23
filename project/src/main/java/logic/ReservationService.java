@@ -67,5 +67,12 @@ public class ReservationService {
 		
 	}
 
-		
+	public List<Restaurant> restList() {
+		return restaurantDao.restList();
+	}
+
+	public List<Restaurant> ownerRest(String userId) {
+		return restaurantDao.ownerRest(userId);
+	}
+
 	}

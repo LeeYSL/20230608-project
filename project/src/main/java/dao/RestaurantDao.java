@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -39,4 +40,14 @@ public class RestaurantDao {
 		return template.getMapper(cls).maxSelect();
 	}
 
+	public List<Restaurant> restList() {
+		return template.getMapper(cls).restList();
+	}
+
+	public List<Restaurant> ownerRest(String userId) {
+		return  template.getMapper(cls).ownerRest(userId);
+	}
+
+	
+	
 }

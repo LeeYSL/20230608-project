@@ -16,7 +16,7 @@
 			let confirm = $(btn).parent().siblings().find('select').val();
 			
 			//업데이트해야할 row의 예약번호를 조회
-			let num = $(btn).attr('name');
+			let num = $(btn).attr('name'); <%--name="${rsrvt.num}" --%>
 			
 			$.ajax({
 				 url:'/project/reservation/ownerList'
@@ -62,10 +62,12 @@
 							<option value="0" ${rsrvt.confirm == '0' ? 'selected="selected"' : '' }>승인 대기</option>
 							<option value="1" ${rsrvt.confirm == '1' ? 'selected="selected"' : '' }>승인</option>
 							<option value="2" ${rsrvt.confirm == '2' ? 'selected="selected"' : '' }>거절</option>
-						</select> <input type="hidden" ${rsrvt.confirm}>
+							<option value="3" ${rsrvt.confirm == '3' ? 'selected="selected"' : '' } disabled= "true" >예약취소</option>
+						</select> 
+						<input type="hidden" ${rsrvt.confirm}>
 					</td>
 					<td>
-						<button type="button" name="${rsrvt.num}" onclick="update(this)">확정</button>
+						<button type="button" name="${rsrvt.num}" onclick="update(this)">확정</button> 
 					</td>
 				</tr>
 			</c:forEach>

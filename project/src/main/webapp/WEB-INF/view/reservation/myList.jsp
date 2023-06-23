@@ -4,44 +4,80 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <meta charset="UTF-8">
 <title>내 예약 목록</title>
 </head>
 <body>
-	<form action="myList">
-		<h2>예약 목록</h2>
-		<table>
+	<script>
+		function update(btn) {
+			//취소기 때문에 3으로 고정
+	//	let confirm = $(btn).parent().siblings().find('c:choose').val
+			let num = $(btn).attr('name');
+			
+			$.ajax({
+				url:'/project/reservation/myList'
+			  ,type:'POST'
+			  ,data:{'num':num , 'confirm':3}
+			  ,success:function(result) {
+				  console.log("success");
+			  }
+			  ,complete:function(result) {
+				  console.log("complete");
+			  },error:function(result) {
+				  cosole.log("err");
+				  console.log(result);
+			  }		
+				
+			})
+		}
+	</script>
+	<h2>예약 목록</h2>
+	<table>
+		<tr>
+			<th>예약자 성함</th>
+			<th>예약자 전화번호</th>
+			<th>예약 날짜</th>
+			<th>예약 시간</th>
+			<th>예약 인원</th>
+			<th>예약 상태</th>
+		</tr>
+		<c:forEach items="${rsrvtList}" var="rsrvt">
 			<tr>
-				<th>예약자 성함</th>
-				<th>예약자 전화번호</th>
-				<th>예약 날짜</th>
-				<th>예약 시간</th>
-				<th>예약 인원</th>
-				<th>예약 상태</th>
+				<td align="center">${rsrvt.rsrvtName}</td>
+				<td align="center">${rsrvt.phoneNo}</td>
+				<td align="center">${rsrvt.rsrvtDate}</td>
+				<td align="center">${rsrvt.rsrvtTime}</td>
+				<td align="center">${rsrvt.people}</td>
+				<td>
+					<c:choose>
+						<c:when test="${rsrvt.confirm == 0}">
+							<p>예약 대기</p>
+						</c:when>
+						<c:when test="${rsrvt.confirm == 1}">
+							<p>예약 확정</p>
+						</c:when>
+						<c:when test="${rsrvt.confirm == 2}">
+							<p>예약 거절</p>
+						</c:when>
+						<c:when test="${rsrvt.confirm == 3}">
+							<p>예약 취소</p>
+						</c:when>
+				</c:choose>
+				   <input type="hidden" ${rsrvt.userId}>
+				<td>
+				   <input type="hidden" ${rsrvt.num}></td>
+				<td>
+				     <c:if test="${rsrvt.confirm == 0 || rsrvt.confirm == 1}"> 
+					  	<button type="button" name="${rsrvt.num}" onclick="update(this)">취소</button>
+					 </c:if>
+				</td>
+				 
+				<td><a href="myListInfo?num=${rsrvt.num}"> <input
+						type="button" value="상세보기">
+				</a></td>
 			</tr>
-			<c:forEach items="${rsrvtList}" var="rsrvt">
-				<tr>
-					<td align="center">${rsrvt.rsrvtName}</td>
-					<td align="center">${rsrvt.phoneNo}</td>
-					<td align="center">${rsrvt.rsrvtDate}</td>
-					<td align="center">${rsrvt.rsrvtTime}</td>
-					<td align="center">${rsrvt.people}</td>
-					<td>
-					<select>
-						<option value="1">확인</option>
-						<option value="2">예약 취소</option>
-					</select>
-					<input type="hidden" ${rsrvt.confirm}>
-					 <input type="hidden" ${rsrvt.userId}>
-					 <td><input type="hidden" ${rsrvt.num}></td>
-					<td><input type="submit" value="확정" name="confirm"></td>
-					<td>
-					    <a href="myListInfo?num=${rsrvt.num}">
-					      <input type="button" value="상세보기">
-					    </a>
-					</td>
-				</tr>
-			</c:forEach>
-		</table>
-	</form>
-</body> 　
+		</c:forEach>
+	</table>
+</body>

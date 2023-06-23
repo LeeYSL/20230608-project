@@ -1,5 +1,8 @@
 package controller;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -11,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import logic.ReservationService;
@@ -59,9 +63,9 @@ public class RestaurantController {
 			service.dayoffInsert(restaurant.getDayoff());
 
 			// 메뉴 저장
-			for(Menu menu : restaurant.getMenuList()) {
-				menu.setRestNum(num); //restNum 세팅해줌. 
-				service.menuInsert(menu); //메뉴 개수만큼 insert해줌.
+			for (Menu menu : restaurant.getMenuList()) {
+				menu.setRestNum(num); // restNum 세팅해줌.
+				service.menuInsert(menu); // 메뉴 개수만큼 insert해줌.
 			}
 			mav.addObject("restaurant", restaurant);
 
@@ -73,4 +77,33 @@ public class RestaurantController {
 		return mav;
 	}
 
+	@RequestMapping("restaurantList")
+	ModelAndView restList(@RequestParam Map<String, Object> param, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+//		String type = param.get("type");
+//		String searchcontent = param.get("searchcontent");
+
+//		if (type == null || type.trim().equals("") || searchcontent == null || searchcontent.trim().equals("")) {
+//			type = null;
+//			searchcontent = null;
+
+		List<Restaurant> restList = service.restList();
+		System.out.println(restList);
+
+		mav.addObject("restList", restList);
+
+		return mav;
+	}
+
+	@RequestMapping("ownerRest") 
+	public ModelAndView ownerRest(HttpSession session,Restaurant restaurant) { 
+		ModelAndView mav = new ModelAndView();
+     
+		User user = (User) session.getAttribute("loginUser");
+ 
+		 List<Restaurant> ownerRest = service.ownerRest(user.getUserId());
+	
+		 mav.addObject("ownerRest",ownerRest);
+		 return mav;
+	}
 }

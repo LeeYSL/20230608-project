@@ -1,5 +1,7 @@
 package dao.mapper;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.apache.ibatis.annotations.Insert;
@@ -28,6 +30,14 @@ public interface RestaurantMapper {
 	
 	@Select("SELECT NVL(MAX(rest_num),0) + 1 as rest_num FROM restaurant ")
 	Restaurant maxSelect();
+
+	@Select("select * from restaurant ")
+	List<Restaurant> restList();
+
+	
+	@Select("select * from restaurant where user_id=#{userId}")
+	List<Restaurant> ownerRest(String userId);
+	
 	
 
 }
