@@ -33,8 +33,8 @@
 </script>
 </head>
 <body>
-	<h2>가게 등록</h2>
-	<div>가게등록하는 창입니다.</div>
+	<h2>상세 보기</h2>
+	<div>사장 가게 상세 보기</div>
 	<form:form modelAttribute="restaurant" method="post"
 		action="restaurantadd">
 		<spring:hasBindErrors name="restaurant">

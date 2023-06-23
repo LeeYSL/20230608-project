@@ -61,23 +61,36 @@ public class ReservationController {
 
 	}
 
-	@RequestMapping("myList")
+	@GetMapping("myList")
 	public ModelAndView myList(@RequestParam Map<String, Object> param, HttpSession session) { // key,value 둘 다 // map으로
 																								// 전달해라
 		ModelAndView mav = new ModelAndView();
 
 		User user = (User) session.getAttribute("loginUser");
 
-//		if(user != null && user.getUserId().equals(ownerList(param, session))){
-
 		List<Reservation> rsrvtList = service.myList(user.getUserId()); // reservation에 있는 정보를 list로 저장, 로그인 되어 있는 id를
 																		// 가지고 리스트를 조회하러가라
 		mav.addObject("rsrvtList", rsrvtList); // jsp에서 items="${rsrvtList} 랑 이름 맞춰줘야 됨
-//		}
 
 		return mav;
 	}
 
+	@PostMapping("myList")
+	public ModelAndView confirm(@RequestParam Map<String, Object> param, HttpSession session, int confirm, int num) { // key,value 둘 다 // map으로
+																								// 전달해라
+		ModelAndView mav = new ModelAndView();
+
+		User user = (User) session.getAttribute("loginUser");
+		
+		service.ownerconfirm(num, confirm);
+
+		List<Reservation> rsrvtList = service.myList(user.getUserId()); // reservation에 있는 정보를 list로 저장, 로그인 되어 있는 id를
+																		// 가지고 리스트를 조회하러가라
+		mav.addObject("rsrvtList", rsrvtList); // jsp에서 items="${rsrvtList} 랑 이름 맞춰줘야 됨
+
+		mav.setViewName("redirect:myList?num=" + num);
+		return mav;
+	}
 	@PostMapping("ownerList")
 	public ModelAndView confirm(int num, int confirm) {
 		ModelAndView mav = new ModelAndView();
@@ -93,6 +106,7 @@ public class ReservationController {
 
 		System.out.println();
 		mav.addObject("num", num);
+		
 
 		return mav;
 
@@ -118,7 +132,7 @@ public class ReservationController {
 
 		// post인 경우엔 form에서 보낸 객체를 사용해야함.
 		int num = reservation.getNum();
-
+		
 		if (user.getUserId() != null) {
 			service.myListUpdate(reservation);
 			mav.setViewName("redirect:myListInfo?num=" + num);

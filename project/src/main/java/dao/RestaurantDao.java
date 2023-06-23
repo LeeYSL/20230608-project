@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import dao.mapper.RestaurantMapper;
 import logic.Dayoff;
 import logic.Restaurant;
+import logic.Menu;
 
 
 @Repository
@@ -29,8 +31,23 @@ public class RestaurantDao {
 	public void insertDayoff(@Valid Dayoff dayoff) {
 		template.getMapper(cls).insertDayoff(dayoff);
 	}
+	
+	public void insertMenu(@Valid Menu menu) {
+		template.getMapper(cls).insertMenu(menu);
+	}
+	
 	public Restaurant maxSelect() {
 		return template.getMapper(cls).maxSelect();
 	}
 
+	public List<Restaurant> restList() {
+		return template.getMapper(cls).restList();
+	}
+
+	public List<Restaurant> ownerRest(String userId) {
+		return  template.getMapper(cls).ownerRest(userId);
+	}
+
+	
+	
 }
