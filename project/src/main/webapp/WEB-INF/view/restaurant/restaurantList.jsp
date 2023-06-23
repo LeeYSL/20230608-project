@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 
-</head>
+</head> 
 <body>
 	<form action="restaurantList" method="post" name="searchform">
 	
