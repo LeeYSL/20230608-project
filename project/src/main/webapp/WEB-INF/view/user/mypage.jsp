@@ -40,8 +40,7 @@
 </head>
 <body>
 	<div class="w3-container w3-padding-32 w3-center">
-		<div
-			style="display: block; margin: auto; width:1300px; height: 533px;">
+		<div style="display: block; margin: auto; width:1300px; height: 533px;">
 			<div class="w3-padding-32">
 				<div class="side">
 
@@ -57,7 +56,7 @@
       <div class="w3-card w3-round w3-white">
         <div class="w3-container">
          <h4 class="w3-center">My Profile</h4>
-         <p class="w3-center"><img src="../img/${user.photoUrl}" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+         <p class="w3-center"><img src="file/${user.fileurl}" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
          <hr>
          <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> ${sessionScope.loginUser.userId}</p>
          <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> 

@@ -79,7 +79,7 @@ a {
 							<td>
 						</tr>
 					</table>
-							</form>
+				</form>
 				</div>
 				<br>
 				<div>
@@ -100,15 +100,14 @@ a {
 									<c:if test="${board.open == Y}">
 										<a href="detail?num=${board.num}"> ${board.title} </a>
 									</c:if>
-									<c:if test="${board.open == N}">
-										<c:choose>
-											<c:when test="${board.userId == sessionScope.userLogin.userId || sessionScope.userLogin.batch == 1}">
+									<c:if test="${board.open == N}">										
+											<c:if test="${board.userId == sessionScope.loginUser.userId || sessionScope.loginUser.batch == 1}">
 												<a href="detail?num=${board.num}"> ${board.title} </a>										
-											</c:when>
-											<c:otherwise>
+											</c:if>
+											<c:if test="${board.userId != sessionScope.loginUser.userId && sessionScope.loginUser.batch != 1}">
 												<a href="detail?num=${board.num}">비밀글은 작성자와 관리자만 볼 수 있습니다.</a>
-											</c:otherwise>	
-										</c:choose>
+											</c:if>
+										
 									</c:if>	
 								
 								</td>

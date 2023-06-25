@@ -41,7 +41,7 @@ td {
 							<span class="txt">회원가입</span>
 						</div>
 					</div>
-						<form:form modelAttribute="user" method="post" action="join">
+						<form:form modelAttribute="user" enctype="multipart/form-data"  name="f" action="join">
 						<spring:hasBindErrors name="user">
 							<font color="red"> 
 								<c:forEach items="${errors.globalErrors}" var="error">
@@ -145,7 +145,7 @@ td {
 								<tr>
 									<th>프로필사진</th>
 									<td>
-										<input type="file" name="photo">
+										<input type="file" name="file1" class="w3-input" >
 									</td>
 								
 								</tr>

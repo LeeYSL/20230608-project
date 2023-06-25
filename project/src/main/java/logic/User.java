@@ -37,8 +37,8 @@ public class User {
 	private String tel;
 	private int batch;
 	private Date regDate;
-	private MultipartFile photo;
-	private String photoUrl;
+	private MultipartFile file1;
+	private String fileurl;
 	
 	
 }

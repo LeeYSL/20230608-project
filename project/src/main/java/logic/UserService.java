@@ -25,13 +25,27 @@ public class UserService {
 	private CommentDao commDao;
 	
 
-	public void userInsert(@Valid User user, HttpServletRequest request) {
-		if(user.getPhoto() != null && !user.getPhoto().isEmpty()) {
-			String path = request.getServletContext().getRealPath("/")+"img/";
-			uploadFileCreate(user.getPhoto(),path);
-			user.setPhotoUrl(user.getPhoto().getOriginalFilename());
+	public void userInsert(@Valid User user, HttpSession session) {
+		if(user.getFile1() != null && !user.getFile1().isEmpty()) {
+			 String path = session.getServletContext().getRealPath("/") + "user/file/";
+			 this.uploadFileCreate(user.getFile1(),path);
+			 user.setFileurl(user.getFile1().getOriginalFilename());
 		}
 		userDao.insert(user);	
+	}
+
+	
+	public void write(@Valid Board board, HttpSession session) {
+		int maxnum = boardDao.maxNum();
+		board.setNum(++maxnum);
+		board.setGrp(maxnum);
+		if(board.getFile1() != null && !board.getFile1().isEmpty()) {
+			 String path = session.getServletContext().getRealPath("/") + "board/file/";
+			 this.uploadFileCreate(board.getFile1(),path);
+			 board.setFileurl(board.getFile1().getOriginalFilename());
+		}
+		boardDao.write(board); 
+		
 	}
 	
 
@@ -77,18 +91,7 @@ public class UserService {
 
 
 
-	public void write(@Valid Board board, HttpSession session) {
-		int maxnum = boardDao.maxNum();
-		board.setNum(++maxnum);
-		board.setGrp(maxnum);
-		if(board.getFile1() != null && !board.getFile1().isEmpty()) {
-			 String path = session.getServletContext().getRealPath("/") + "board/file/";
-			 this.uploadFileCreate(board.getFile1(),path);
-			 board.setFileurl(board.getFile1().getOriginalFilename());
-		}
-		boardDao.write(board); 
-		
-	}
+
 
 
 
