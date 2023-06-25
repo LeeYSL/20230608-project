@@ -10,8 +10,9 @@
 <body>
 	<form action="ownerRest" method="post" name="owrestList">
 		<table>
-			<br>
-			<br>
+		   <tr>
+		   <tr>
+		  
 			<tr>
 				<th>식당 이름</th>
 				<th>식당 위치</th>
