@@ -7,6 +7,18 @@
 <title>가게 상세 조회</title>
 </head>
 <body>
-
+   <h2>가게 상세 보기</h2>
+    <table>
+      <tr>
+        <th>식당이름</th>
+        <th>식당 위치</th>
+        <th>식당 전화번호</th>
+        <th>open</th>       
+        <th>close</th>    
+        <th>휴무일</th>  
+        <th>메뉴</th>
+         
+    
+    </table>   
 </body>
 </html> 

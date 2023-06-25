@@ -85,10 +85,11 @@ public class ReservationController {
 		
 		service.ownerconfirm(num, confirm);
 
-		List<Reservation> rsrvtList = service.myList(user.getUserId()); // reservation에 있는 정보를 list로 저장, 로그인 되어 있는 id를
-																		// 가지고 리스트를 조회하러가라
+		
+		List<Reservation> rsrvtList = service.myList(user.getUserId()); // reservation에 있는 정보를 list로 저장, 로그인 되어 있는 id를 가지고 리스트를 조회하러가라
 		mav.addObject("rsrvtList", rsrvtList); // jsp에서 items="${rsrvtList} 랑 이름 맞춰줘야 됨
 
+		
 		mav.setViewName("redirect:myList?num=" + num);
 		return mav;
 	}
