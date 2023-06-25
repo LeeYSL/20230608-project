@@ -50,6 +50,7 @@ public class ReservationController {
 		try {
 			User user = (User) session.getAttribute("loginUser");
 			reservation.setUserId(user.getUserId());
+			reservation.setRsrvtDate(reservation.getRsrvtDate() + reservation.getRsrvtTime());
 			reservation.setRestNum(1); // 가게번호
 			// reservation.setConfirm(1); // 확정여부-예약대기(1)로 고정
 			service.bookinsert(reservation);

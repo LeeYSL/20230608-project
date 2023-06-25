@@ -6,9 +6,20 @@
 <head>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"> ></script>
+
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>가게 등록</title>
 <script>
+	function searchAddress() {
+		new daum.Postcode({
+	        oncomplete: function(data) { // oncomplete : 콜백함수
+	        	$("#address").val(data.address);
+	        }
+	    }).open();
+	}
+
 	//메뉴 추가 버튼 눌렀을 때 테이블에 row 추가.
 	function addRow() {
 		//메뉴 입력하는 row의 개수
@@ -29,7 +40,6 @@
 		console.log(del);
 		$(del).parent().parent().remove();
 	}
-	
 </script>
 </head>
 <body>
@@ -47,57 +57,51 @@
 		</spring:hasBindErrors>
 		<table>
 			<tr>
-				<td><form:input path="name" placeholder="상호명" /> </td>
+				<td><form:input path="name" placeholder="상호명" /></td>
 				<td><font color="red"> <form:errors path="name" /></font></td>
 			</tr>
 			<tr>
-				<td><input style="width:185" type="file" name="picture" ></td>
+				<td><input style="width: 185" type="file" name="picture"></td>
 			</tr>
 			<tr>
-				<td>
-					<form:select path="open">
+				<td><form:select path="open">
 						<option value="0">여는 시간</option>
-						<c:forEach var="i"  begin="1" end="24">
-        					<option value="${i>9?i:'0'}${i>9?'':i}">${i>9?i:'0'}${i>9?'':i}:00</option>
-    					</c:forEach>
-    				</form:select>
-				</td>
+						<c:forEach var="i" begin="1" end="24">
+							<option value="${i>9?i:'0'}${i>9?'':i}">${i>9?i:'0'}${i>9?'':i}:00</option>
+						</c:forEach>
+					</form:select></td>
 				<td><font color="red"> <form:errors path="open" /></font></td>
-	        </tr>
-	        <tr>			
-				<td>
-					<form:select path="close">
+			</tr>
+			<tr>
+				<td><form:select path="close">
 						<option value="0">닫는 시간</option>
-						<c:forEach var="i"  begin="1" end="24">
-        					<option value="${i>9?i:'0'}${i>9?'':i}">${i>9?i:'0'}${i>9?'':i}:00</option>
-    					</c:forEach>
-    				</form:select>
-				</td>
+						<c:forEach var="i" begin="1" end="24">
+							<option value="${i>9?i:'0'}${i>9?'':i}">${i>9?i:'0'}${i>9?'':i}:00</option>
+						</c:forEach>
+					</form:select></td>
 				<td><font color="red"> <form:errors path="close" /></font></td>
 			</tr>
 			<tr>
-				<td><form:input path="restPhoneNo" placeholder="전화번호" /> </td>
+				<td><form:input path="restPhoneNo" placeholder="전화번호" /></td>
 				<td><font color="red"> <form:errors path="restPhoneNo" /></font></td>
 			</tr>
 			<tr>
-				<td>
-					<form:select path="maxpeople">
-			             <option value="0" >===최대 예약 인원 수===</option>
-			             <option value="1">1명</option>
-			             <option value="2">2명</option>
-			             <option value="3">3명</option>
-			             <option value="4">4명</option>
-					</form:select>
-				</td>
+				<td><form:select path="maxpeople">
+						<option value="0">===최대 예약 인원 수===</option>
+						<option value="1">1명</option>
+						<option value="2">2명</option>
+						<option value="3">3명</option>
+						<option value="4">4명</option>
+					</form:select></td>
 				<td><font color="red"> <form:errors path="maxpeople" /></font></td>
 			</tr>
 			<tr>
 			<tr>
-				<td><form:input path="address" placeholder="주소" /> </td>
+				<td><form:input path="address" placeholder="주소" onclick="searchAddress();" /></td>
 				<td><font color="red"> <form:errors path="address" /></font></td>
 			</tr>
 			<tr>
-				<td><form:input path="licenseNum" placeholder="사업자번호" /> </td>
+				<td><form:input path="licenseNum" placeholder="사업자번호" /></td>
 				<td><font color="red"> <form:errors path="licenseNum" /></font></td>
 			</tr>
 		</table>
@@ -105,19 +109,19 @@
 		<!--휴무일 선택  -->
 		<table style="border-collapse: collapse">
 			<tr>
-				<td colspan="8" style="text-align: center; border: 1px solid black;">휴무일 선택</td>
+				<td colspan="8" style="text-align: center; border: 1px solid black;">휴무일
+					선택</td>
 			</tr>
 			<tr>
-				<td style="text-align: center; border: 1px solid black;">
-					<form:checkbox path="dayoff.mon" value="Y"/>월요일
-					<form:checkbox path="dayoff.tue" value="Y"/>화요일
-					<form:checkbox path="dayoff.wed" value="Y"/>수요일
-					<form:checkbox path="dayoff.thur" value="Y"/>목요일
-					<form:checkbox path="dayoff.fri" value="Y"/>금요일
-					<form:checkbox path="dayoff.sat" value="Y"/>토요일
-					<form:checkbox path="dayoff.sun" value="Y"/>일요일
-					<form:checkbox path="dayoff.holiday" value="Y"/>공휴일
-				</td>
+				<td style="text-align: center; border: 1px solid black;"><form:checkbox
+						path="dayoff.mon" value="Y" />월요일 <form:checkbox
+						path="dayoff.tue" value="Y" />화요일 <form:checkbox
+						path="dayoff.wed" value="Y" />수요일 <form:checkbox
+						path="dayoff.thur" value="Y" />목요일 <form:checkbox
+						path="dayoff.fri" value="Y" />금요일 <form:checkbox
+						path="dayoff.sat" value="Y" />토요일 <form:checkbox
+						path="dayoff.sun" value="Y" />일요일 <form:checkbox
+						path="dayoff.holiday" value="Y" />공휴일</td>
 			</tr>
 		</table>
 		<!--메뉴 등록  -->
@@ -126,16 +130,19 @@
 				<td colspan="3" style="text-align: center;">메뉴 등록</td>
 			</tr>
 			<tr>
-				<td style="width:180">메뉴 이름</td>
-				<td style="width:100">가격</td>
+				<td style="width: 180">메뉴 이름</td>
+				<td style="width: 100">가격</td>
 				<td><button type="button" id="btnAdd" onclick="addRow();">추가</button></td>
 			</tr>
 			<tbody>
-			<tr name="menuTr">
-				<td><input name="menuList[0].menuName" style="width:180" placeholder="메뉴 이름"/></td>
-				<td><input name="menuList[0].price" style="width:100"  placeholder="가격"/></td>
-				<td><button type="button" name="btnDel" onclick="deleteRow(this);">삭제</button></td>
-			</tr>
+				<tr name="menuTr">
+					<td><input name="menuList[0].menuName" style="width: 180"
+						placeholder="메뉴 이름" /></td>
+					<td><input name="menuList[0].price" style="width: 100"
+						placeholder="가격" /></td>
+					<td><button type="button" name="btnDel"
+							onclick="deleteRow(this);">삭제</button></td>
+				</tr>
 			</tbody>
 		</table>
 		<br>

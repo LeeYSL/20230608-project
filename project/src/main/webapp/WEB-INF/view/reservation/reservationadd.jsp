@@ -68,12 +68,6 @@ th {
 		yearSuffix : '년'
 	});
 	
-	//예약 버튼 눌렀을 때 예약날짜 + 예약시간 합쳐줌
-	function setDate() {
-		const date = $('#datepicker');
-		const beforeVal = date.val();
-		date.val(beforeVal + $('#rsrvtTime').val());
-	}
 </script>
 
 </head>
@@ -86,7 +80,7 @@ th {
 		</div>
 		<div class="join_insert">
 			<form:form modelAttribute="reservation" method="post"
-				onsubmit="return setDate()" action="reservationadd">
+				action="reservationadd">
 				<spring:hasBindErrors name="reservation">
 					<font color="red"> <c:forEach items="${errors.globalErrors}"
 							var="error">
