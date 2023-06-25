@@ -30,6 +30,7 @@ CREATE TABLE board
 	grp_level int,
 	grp_step int,
 	comm_cnt int,
+	open varchar(1),
 	PRIMARY KEY (num)
 );
 
@@ -89,7 +90,7 @@ CREATE TABLE restaurant
 (
 	rest_num int NOT NULL,
 	user_id varchar(15) NOT NULL,
-	tel int NOT NULL,
+	tel varchar(100) NOT NULL,
 	name varchar(40) NOT NULL,
 	address varchar(100) NOT NULL,
 	license_num int(12) NOT NULL,
@@ -97,6 +98,8 @@ CREATE TABLE restaurant
 	maxpeople int NOT NULL,
 	open varchar(100),
 	close varchar(100),
+	menu varchar(100),
+	rest_phoneno varchar(100),
 	PRIMARY KEY (rest_num),
 	UNIQUE (license_num)
 );
@@ -126,15 +129,14 @@ CREATE TABLE user
 	pw varchar(200) NOT NULL,
 	name varchar(15) NOT NULL,
 	address varchar(50) NOT NULL,
-	birthday date NOT NULL,
 	nickname varchar(40) NOT NULL,
 	batch int(1) NOT NULL,
-	email varchar(40) NOT NULL,
 	tel varchar(13) NOT NULL,
+	reg_date date NOT NULL,
+	photo varchar(100),
 	PRIMARY KEY (user_id),
 	UNIQUE (user_id),
 	UNIQUE (nickname),
-	UNIQUE (email),
 	UNIQUE (tel)
 );
 

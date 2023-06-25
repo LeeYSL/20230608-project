@@ -4,6 +4,7 @@ package controller;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -39,15 +40,15 @@ public class UserController {
 		return mav;
 	}
 	@PostMapping("join")
-	public ModelAndView userAdd(@Valid User user, BindingResult bresult) throws Exception {
+	public ModelAndView userAdd(@Valid User user, BindingResult bresult, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
-		
-		if(bresult.hasErrors()) {
-			mav.getModel().putAll(bresult.getModel());
-			//reject 메서드 : global error에 추가
-			bresult.reject("error.input.check");
-			return mav;
-		}
+//		
+//		if(bresult.hasErrors()) {
+//			mav.getModel().putAll(bresult.getModel());
+//			//reject 메서드 : global error에 추가
+//			bresult.reject("error.input.check");
+//			return mav;
+//		}
 		User dbUser = userservice.selectOne(user.getUserId());
 		try {
 			/*
@@ -64,7 +65,7 @@ public class UserController {
 				return mav;
 			}
 			user.setPw(pwHash(user.getPw()));
-			userservice.userInsert(user);	//db에 insert
+			userservice.userInsert(user,request);	//db에 insert
 			mav.addObject("user",user);
 		}catch(DataIntegrityViolationException e) {
 	//DataIntegrityViolationException : db에서 중복 key 오류시 발생되는 예외 객체

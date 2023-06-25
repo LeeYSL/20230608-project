@@ -3,6 +3,7 @@ package logic;
 import java.io.File;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -24,9 +25,27 @@ public class UserService {
 	private CommentDao commDao;
 	
 
-	public void userInsert(@Valid User user) {
-		userDao.insert(user);
-		
+	public void userInsert(@Valid User user, HttpServletRequest request) {
+		if(user.getPhoto() != null && !user.getPhoto().isEmpty()) {
+			String path = request.getServletContext().getRealPath("/")+"img/";
+			uploadFileCreate(user.getPhoto(),path);
+			user.setPhotoUrl(user.getPhoto().getOriginalFilename());
+		}
+		userDao.insert(user);	
+	}
+	
+
+	private void uploadFileCreate(MultipartFile file, String path) {
+		String orgFile=file.getOriginalFilename();
+		File f= new File(path);
+		if(!f.exists()) {
+			f.mkdirs();
+		}
+		try  {
+			file.transferTo(new File(path+orgFile));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
 	}
 
 
@@ -72,19 +91,6 @@ public class UserService {
 	}
 
 
-	private void uploadFileCreate(MultipartFile file, String path) {
-		String orgFile=file.getOriginalFilename();
-		File f= new File(path);
-		if(!f.exists()) {
-			f.mkdirs();
-		}
-		try  {
-			file.transferTo(new File(path+orgFile));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
 
 
 	public Board detail(Integer num) {

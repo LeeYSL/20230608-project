@@ -46,9 +46,17 @@ a {
 							<span class="txt">${boardName} 글쓰기</span>
 						</div>
 					</div>
-
 						<form:form modelAttribute="board" action="write" enctype="multipart/form-data" name="f">							
 							<table class="w3-table-all">
+								<c:if test="${boardId == 2 }">				
+									<tr>
+										<th colspan="2"  style="text-align: center;">
+											<input type="radio" name="open" value="Y" >&nbsp;<span>공개</span>
+											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<input type="radio" name="open" value="N" >&nbsp;<span>비공개</span>							
+										</th>
+									</tr>
+								</c:if>
 								<tr>
 									<th>제목</th>
 									<td>									

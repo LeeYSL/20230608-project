@@ -64,16 +64,8 @@ td {
 							<td>${user.name}</td>
 						</tr>
 						<tr>
-							<th>생년월일</th>
-							<td><fmt:formatDate value="${user.birthday}" pattern="yyyy-MM-dd" /></td>
-						</tr>
-						<tr>
 							<th>휴대전화번호</th>
 							<td>${user.tel}</td>
-						</tr>
-						<tr>
-							<th>이메일</th>
-							<td>${user.email}</td>
 						</tr>
 						<tr>
 							<th>주소</th>

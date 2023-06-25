@@ -95,29 +95,11 @@ a {
 									</td>
 								</tr>
 								<tr>
-									<th>생년월일</th>
-									<td>
-										<form:input path="birthday"  class="w3-input"  readonly="true" /> 
-										<font color="red"> 
-											<form:errors path="birthday" />
-										</font>
-									</td>
-								</tr>
-								<tr>
 									<th>휴대전화번호</th>
 									<td>
 										<form:input path="tel"  class="w3-input"  placeholder="휴대폰번호" /> 
 										<font color="red"> 
 											<form:errors path="tel" />
-										</font>
-									</td>
-								</tr>
-								<tr>
-									<th>이메일</th>
-									<td>
-										<form:input path="email"  class="w3-input"  placeholder="이메일" /> 
-										<font color="red"> 
-											<form:errors path="email" />
 										</font>
 									</td>
 								</tr>

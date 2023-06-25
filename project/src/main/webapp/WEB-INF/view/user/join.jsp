@@ -33,7 +33,7 @@ td {
 </head>
 <body>
 	<div class="w3-container w3-padding-32 w3-center">
-		<div style="display: block; margin: auto; width: 800px; height: 100%;">
+		<div style="display: block; margin: auto; width: 1000px; height: 100%;">
 			<div class="w3-padding-32">
 				<div class="side">
 					<div class="page">
@@ -54,10 +54,14 @@ td {
 								<tr>
 									<th>아이디</th>
 									<td>
-										<form:input path="userId" class="w3-input" placeholder="아이디" /> 
+										<form:input path="userId" class="w3-input" placeholder="이메일"  style="width:50%;"/>
 										<font color="red"> 
 											<form:errors path="userId" />
 										</font>
+									<%--
+										<input type="text" class="w3-input" placeholder="인증번호" style="width:30%;">
+										<input type="button" value="인증번호 전송" class="w3-button w3-white w3-border w3-border-orange w3-round-large" >
+									 --%>
 									</td>
 								</tr>
 								<tr>
@@ -97,29 +101,11 @@ td {
 									</td>
 								</tr>
 								<tr>
-									<th>생년월일</th>
-									<td>
-										<form:input path="birthday"  class="w3-input"  placeholder="생년월일" /> 
-										<font color="red"> 
-											<form:errors path="birthday" />
-										</font>
-									</td>
-								</tr>
-								<tr>
 									<th>휴대전화번호</th>
 									<td>
 										<form:input path="tel"  class="w3-input"  placeholder="휴대전화번호" /> 
 										<font color="red"> 
 											<form:errors path="tel" />
-										</font>
-									</td>
-								</tr>
-								<tr>
-									<th>이메일</th>
-									<td>
-										<form:input path="email"  class="w3-input"  placeholder="이메일" /> 
-										<font color="red"> 
-											<form:errors path="email" />
 										</font>
 									</td>
 								</tr>
@@ -156,8 +142,16 @@ td {
 										</select>
 									</td>
 								</tr>
+								<tr>
+									<th>프로필사진</th>
+									<td>
+										<input type="file" name="photo">
+									</td>
+								
+								</tr>
 							</table>
 							<input type="hidden" name="batch" value="1">
+													
 							<hr>
 							<div class="bottom_btn">
 								<div>

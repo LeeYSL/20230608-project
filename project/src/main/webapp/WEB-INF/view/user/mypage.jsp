@@ -57,7 +57,7 @@
       <div class="w3-card w3-round w3-white">
         <div class="w3-container">
          <h4 class="w3-center">My Profile</h4>
-         <p class="w3-center"><img src="/w3images/avatar3.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+         <p class="w3-center"><img src="../img/${user.photoUrl}" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
          <hr>
          <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> ${sessionScope.loginUser.userId}</p>
          <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> 
@@ -66,7 +66,7 @@
 							</a></p>
          <p>
          	<i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i>
-         	<fmt:formatDate value="${sessionScope.loginUser.birthday}" pattern="yyyy-MM-dd"/>
+         	<span class="txt">${sessionScope.loginUser.tel}</span>
          	
          </p>
         </div>
@@ -76,38 +76,47 @@
       <!-- Accordion -->
       <div class="w3-card w3-round">
         <div class="w3-white">
-          <button onclick="myFunction('Demo1')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i> My Groups</button>
-          <div id="Demo1" class="w3-hide w3-container">
-            <p>Some text..</p>
-          </div>
-          <button onclick="myFunction('Demo2')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i> My Events</button>
-          <div id="Demo2" class="w3-hide w3-container">
-            <p>Some other text..</p>
-          </div>
-          <button onclick="myFunction('Demo3')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-users fa-fw w3-margin-right"></i> My Photos</button>
-          <div id="Demo3" class="w3-hide w3-container">
-         <div class="w3-row-padding">
-         <br>
-           <div class="w3-half">
-             <img src="/w3images/lights.jpg" style="width:100%" class="w3-margin-bottom">
-           </div>
-           <div class="w3-half">
-             <img src="/w3images/nature.jpg" style="width:100%" class="w3-margin-bottom">
-           </div>
-           <div class="w3-half">
-             <img src="/w3images/mountains.jpg" style="width:100%" class="w3-margin-bottom">
-           </div>
-           <div class="w3-half">
-             <img src="/w3images/forest.jpg" style="width:100%" class="w3-margin-bottom">
-           </div>
-           <div class="w3-half">
-             <img src="/w3images/nature.jpg" style="width:100%" class="w3-margin-bottom">
-           </div>
-           <div class="w3-half">
-             <img src="/w3images/snow.jpg" style="width:100%" class="w3-margin-bottom">
-           </div>
-         </div>
-          </div>
+        
+        <a href="javascript:disp_div('binfo','tab1')">
+          <button onclick="myFunction('Demo1')" id="tab1" class="w3-button w3-block w3-theme-l1 w3-left-align">
+          	<i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i> 게시글</button>
+        </a>	
+                   	
+        <a href="javascript:disp_div('cinfo','tab2')">  
+          <button onclick="myFunction('Demo2')" class="w3-button w3-block w3-theme-l1 w3-left-align">
+          	<i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i> 댓글</button>
+        </a>  	
+          	
+      
+          
+         <a href="javascript:disp_div('rinfo','tab3')"> 
+          <button onclick="myFunction('Demo3')" class="w3-button w3-block w3-theme-l1 w3-left-align">
+          	<i class="fa fa-users fa-fw w3-margin-right"></i> 예약</button>
+          </a>	
+          
+ 		<a href="javascript:disp_div('vinfo','tab4')">	         
+          <button onclick="myFunction('Demo3')" class="w3-button w3-block w3-theme-l1 w3-left-align">
+          	<i class="fa fa-users fa-fw w3-margin-right"></i> 리뷰</button>
+		</a>
+		
+		<c:if test="${sessionScope.loginUser.batch ==2}">
+		---------------------------------------------
+		<a href="javascript:disp_div('vinfo','tab5')">	         
+          <button class="w3-button w3-block w3-theme-l1 w3-left-align">
+          	<i class="fa fa-users fa-fw w3-margin-right"></i> 가게1</button>
+		</a>
+		
+		<a href="javascript:disp_div('vinfo','tab6')">	         
+          <button onclick="myFunction('Demo3')" class="w3-button w3-block w3-theme-l1 w3-left-align">
+          	<i class="fa fa-users fa-fw w3-margin-right"></i> 가게2</button>
+		</a>
+		
+		 <a href="javascript:disp_div('vinfo','tab7')">	         
+          <button onclick="myFunction('Demo3')" class="w3-button w3-block w3-theme-l1 w3-left-align">
+          	<i class="fa fa-users fa-fw w3-margin-right"></i> 가게3</button>
+		</a>
+		</c:if>
+
         </div>      
       </div>
       <br>
@@ -119,48 +128,6 @@
     <!-- Middle Column -->
     <div class="w3-col m9">
     
-      <div class="w3-row-padding">
-        <div class="w3-col m12">
-          <div class="w3-card w3-round w3-white">
-            <div class="w3-container w3-padding w3-quarter">
-				<a href="javascript:disp_div('binfo','tab1')">			
-            		<button type="button" id="tab1" class="tab w3-padding">
-            	  		<h6 class="w3-opacity ">
-						게시글  		
-	              		</h6>
-					</button>
-				</a>
-            </div>
-            <div class="w3-container w3-padding w3-quarter">
-				<a href="javascript:disp_div('cinfo','tab2')">			
-            		<button type="button" id="tab2" class="tab w3-padding">
-            	  		<h6 class="w3-opacity ">
-						댓글  		
-	              		</h6>
-					</button>
-				</a>
-            </div>
-            <div class="w3-container w3-padding w3-quarter">
-				<a href="javascript:disp_div('rinfo','tab3')">			
-            		<button type="button" id="tab3" class="tab w3-padding">
-            	  		<h6 class="w3-opacity ">
-						예약  		
-	              		</h6>
-					</button>
-				</a>
-            </div>         
-            <div class="w3-container w3-padding w3-quarter">
-				<a href="javascript:disp_div('vinfo','tab4')">			
-            		<button type="button" id="tab4" class="tab w3-padding">
-            	  		<h6 class="w3-opacity ">
-						리뷰  		
-	              		</h6>
-					</button>
-				</a>
-            </div>                
-          </div>
-        </div>
-      </div>
       
       
       <%--board --%>

@@ -13,14 +13,14 @@ import logic.User;
 
 public interface UserMapper {
 
-	@Insert("insert into user (user_id, pw, nickname, name, birthday, address, email, tel, batch) "
-			+ " values (#{userId}, #{pw}, #{nickname}, #{name}, #{birthday}, #{address}, #{email}, #{tel}, #{batch})")
+	@Insert("insert into user (user_id, pw, nickname, name, address, tel, batch, reg_date, photo) "
+			+ " values (#{userId}, #{pw}, #{nickname}, #{name}, #{address}, #{tel}, #{batch}, now(), #{photoUrl})")
 	void insert(@Valid User user);
   
 	@Select("select * from user where user_id=#{userId}")
 	User selectOne(String userId);
 	
-	@Update("update user set nickname=#{nickname}, address=#{address}, email=#{email}, tel=#{tel} where user_id=#{userId}")
+	@Update("update user set nickname=#{nickname}, address=#{address}, tel=#{tel} where user_id=#{userId}")
 	void update(@Valid User user);
 
 	@Delete("delete from user where user_id=#{userId}")
