@@ -153,10 +153,16 @@ a {
 				</div>
 				<div>
 				<br>
-					<a href="write">
-						<button
-							class="w3-button w3-white w3-border w3-border-orange w3-round-large w3-right">글쓰기</button>
-					</a>
+					<c:if test="${boardId == 1 && sessionScope.loginUser.batch ==1 }">
+						<a href="write">
+							<button class="w3-button w3-white w3-border w3-border-orange w3-round-large w3-right">글쓰기</button>
+						</a>
+					</c:if>
+					<c:if test="${boardId == 2}">
+						<a href="write">
+							<button class="w3-button w3-white w3-border w3-border-orange w3-round-large w3-right">글쓰기</button>
+						</a>
+					</c:if>
 				</div>
 			</div>
 		</div>

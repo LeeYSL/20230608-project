@@ -57,7 +57,14 @@
         <div class="w3-container">
         <c:forEach items="${myulist}" var="user">
          <h4 class="w3-center">My Profile</h4>
-         <p class="w3-center"><img src="file/${user.fileurl}" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+         <p class="w3-center">
+         	<c:if test="${user.fileurl != null}">
+         		<img src="file/${user.fileurl}" class="w3-circle" style="height:106px;width:106px" alt="Avatar">
+         	</c:if>
+         	<c:if test="${user.fileurl == null}">
+         		<img src="/WEB-INF/view/orangeprofile.jpg" class="w3-circle" style="height:106px;width:106px" alt="Avatar">
+         	</c:if>	
+         </p>
          <hr>
          <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> ${user.userId}</p>
          <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> 

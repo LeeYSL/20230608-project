@@ -7,6 +7,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<script type="text/javascript">
+		function file_delete() {
+			document.f.fileurl.value = ""
+			file_desc.style.display = "none";
+		}
+	</script>
 <style type="text/css">
 .page {
 
@@ -20,7 +26,7 @@
 th {
 	background-color: #ff8400;
 	color: white;
-	width:20%;
+	width:10%;
 	text-align: center;
 	
 }
@@ -32,13 +38,19 @@ a {
 	text-decoration: none;
 }
 
+  textarea {
+    width: 100%;
+    height: 30em;
+    border:  0.1px strong;
+    resize: none;
+  }
 
 </style>
 </head>
 <body>
 	<div class="w3-container w3-padding-32 w3-center">
 		<div
-			style="display: block; margin: auto; width: 800px; height: 100%;">
+			style="display: block; margin: auto; width: 1100px; height: 100%;">
 			<div class="w3-padding-32">
 				<div class="side">
 					<div class="page">
@@ -72,7 +84,15 @@ a {
 								<tr>
 									<th>첨부파일</th>
 									<td>
+										<c:if test="${!empty board.fileurl}">
+											<div id="file_desc">
+												<a href="file/${board.fileurl}">${board.fileurl}</a>
+												<a href="javascript:file_delete()">[첨부파일삭제]</a>
+											</div>
+										</c:if>
+										<form:hidden path="fileurl"/>
 										<input type="file" name="file1"  class="w3-input" /> 
+										
 									</td>
 								</tr>
 						</table>

@@ -32,12 +32,17 @@ a {
 	text-decoration: none;
 }
 
-
+  textarea {
+    width: 100%;
+    height: 30em;
+    border:  0.1px strong;
+    resize: none;
+  }
 </style>
 </head>
 <body>
 	<div class="w3-container w3-padding-32 w3-center">
-		<div style="display: block; margin: auto; width: 900px; height: 100%;">
+		<div style="display: block; margin: auto; width: 1100px; height: 100%;">
 			<div class="w3-padding-32">
 
 				<div class="side">

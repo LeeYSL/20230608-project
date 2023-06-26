@@ -20,7 +20,7 @@ public interface UserMapper {
 	@Select("select * from user where user_id=#{userId}")
 	User selectOne(String userId);
 	
-	@Update("update user set nickname=#{nickname}, address=#{address}, tel=#{tel} where user_id=#{userId}")
+	@Update("update user set nickname=#{nickname}, address=#{address}, tel=#{tel}, file1=#{fileurl} where user_id=#{userId}")
 	void update(@Valid User user);
 
 	@Delete("delete from user where user_id=#{userId}")
