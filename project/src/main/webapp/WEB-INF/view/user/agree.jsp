@@ -8,47 +8,16 @@
 <script type="text/javascript"
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
-	$(
-			function() {
-				$("#btn")
-						.click(
-								function() {
-									$
-											.ajax({
-												url : 'https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=LdPS5IiOBYPeASfcwjEedxieH9Jey0kSkZtJsnuT7Id4vqmw%2BGe6%2FgTbBSYlOsma%2BRpXoKEJDLYtUg1ePWRbbA%3D%3D',
-												crossDomain : true,
-												method : 'post',
-												headers : {
-													'accept' : 'application/json',
-													'Authorization' : 'LdPS5IiOBYPeASfcwjEedxieH9Jey0kSkZtJsnuT7Id4vqmw+Ge6/gTbBSYlOsma+RpXoKEJDLYtUg1ePWRbbA=='
-												},
-												contentType : 'application/json',
-												// data: '{\n  "b_no": [\n    "0000000000"\n  ]\n}',
-												data : JSON.stringify({
-													'b_no' : [ $("#b").val() ]
-												}),
-												success : function(response) {
-													for (let i = 0; i < response.data.length; i++) {
-														//			$('#result').append(response.data[i].b_stt_cd);
-														//			$('#result').append(response.data[i].tax_type);
-														if ((response.data[i].b_stt_cd) == 01) {
-															$('#result')
-																	.append(
-																			"가입이 가능")
-														} else {
-															$('#result')
-																	.append(
-																			"가입 불가능")
-														}
-
-													}
-												},
-												error : function() {
-													alert("error error error에러")
-												}
-											})
-								})
-			})
+	function chk(checkbox){
+		const button_elem =
+			document.getElementById("button");
+		button_elem.disabled = checkbox.checked? false:true;
+		if(button_elem.disabled){
+			button_elem.value=null;
+		}else{
+			button_elem.focus();
+		}	
+	}
 </script>
 <style type="text/css">
 .page {
@@ -96,7 +65,8 @@ li {
 </head>
 <body>
 	<div class="w3-container w3-padding-32 w3-center">
-		<div style="display: block; margin: auto; width: 1100px; height: 100%;">
+		<div
+			style="display: block; margin: auto; width: 1100px; height: 100%;">
 			<div class="w3-padding-32">
 				<div class="page">
 					<header class="l_member_header">
@@ -112,9 +82,7 @@ li {
 					</header>
 				</div>
 				<br>
-				
-				<div class="w3-col w3-center">
-					<form name="join_agree">
+					<div class="w3-col w3-center">
 						<div class="join_title">
 							<b>이용약관</b> 동의
 						</div>
@@ -123,39 +91,40 @@ li {
 								<textarea readonly>수정수정</textarea>
 							</div>
 							<div class="agree_check">
-								<label> 
-									<input type="checkbox" name="join_agree" value="yes"> " 위 내용에 동의합니다."
+								<label> <input type="checkbox" id="checkbox1" onclick="chk(this)">
+									" 위 내용에 동의합니다."
 								</label>
 							</div>
 						</div>
-					</form>
-				</div>
-
-				<div class="w3-container w3-padding-32 w3-center">
-					<div style="display: block; margin: auto; width: 1100px; height: 100%;">
-						<div class="w3-padding-32">
-							<div class="side">
-								<h5>사업자 등록번호</h5>
-								<table class="w3-table-all">
-									<tr>
-										<td><input type="text" id="b" class="w3-input"></td>
-									</tr>
-								</table>
-								<br>
-								<br>
-								<button id="btn" class="w3-button w3-white w3-border w3-border-orange w3-round-large">조회</button>
+						<div class="agree">
+							<div class="agree_txt">
+								<textarea readonly>수정수정</textarea>
 							</div>
-
-							<div id="result"></div>
+							<div class="agree_check">
+								<label> <input type="checkbox" id="checkbox2" onclick="chk(this)">
+									" 위 내용에 동의합니다."
+								</label>
+							</div>
+						</div>
+						<div class="agree">
+							<div class="agree_txt">
+								<textarea readonly>수정수정</textarea>
+							</div>
+							<div class="agree_check">
+								<label> <input type="checkbox" id="checkbox3" onclick="chk(this)">
+									" 위 내용에 동의합니다."
+								</label>
+							</div>
 						</div>
 					</div>
-				</div>
-
-
-
+					<br>
+					<div>
+						<a href="join?batch=${param.batch}">
+							<button class="w3-button w3-white w3-border w3-border-orange w3-round-large" id="button" disabled>다음단계</button>
+						</a>
+					</div>
 			</div>
 		</div>
 	</div>
-
 </body>
 </html>

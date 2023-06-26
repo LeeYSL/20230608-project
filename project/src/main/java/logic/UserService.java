@@ -166,4 +166,9 @@ public class UserService {
 	}
 
 
+	public List<User> myulist(String userId) {
+		return userDao.myulist(userId);
+	}
+
+
 }

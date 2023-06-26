@@ -30,7 +30,7 @@ CREATE TABLE board
 	grp_level int,
 	grp_step int,
 	comm_cnt int,
-	open varchar(1),
+	secret varchar(1),
 	PRIMARY KEY (num)
 );
 

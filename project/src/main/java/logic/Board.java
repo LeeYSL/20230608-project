@@ -29,5 +29,5 @@ public class Board {
 	private int grpStep;
 	private int commCnt;
 	private String nickname;
-	private String open;
+	private String secret;
 }

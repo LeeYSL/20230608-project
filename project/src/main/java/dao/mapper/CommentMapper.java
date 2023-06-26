@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import logic.Comment;
+import logic.User;
 
 public interface CommentMapper {
 
@@ -27,5 +28,6 @@ public interface CommentMapper {
 
 	@Select("select * from comment c join board b  on c.num = b.num where c.user_id=#{userId} ")
 	List<Comment> myclist(String userId);
+
 
 }

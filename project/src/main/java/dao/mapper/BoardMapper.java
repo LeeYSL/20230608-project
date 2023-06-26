@@ -16,8 +16,8 @@ public interface BoardMapper {
 	
 	
 
-	@Insert("insert into board (num, user_id, title, content, file1, reg_date, read_cnt, board_id, grp, grp_level, grp_step, comm_cnt, open) "
-			+ " values (#{num}, #{userId},#{title}, #{content}, #{fileurl}, now(), #{readCnt}, #{boardId}, #{grp}, #{grpLevel}, #{grpStep}, #{commCnt}, #{open}) ")
+	@Insert("insert into board (num, user_id, title, content, file1, reg_date, read_cnt, board_id, grp, grp_level, grp_step, comm_cnt, secret) "
+			+ " values (#{num}, #{userId},#{title}, #{content}, #{fileurl}, now(), #{readCnt}, #{boardId}, #{grp}, #{grpLevel}, #{grpStep}, #{commCnt}, #{secret}) ")
 	void write(@Valid Board board);
 
 	
@@ -26,7 +26,7 @@ public interface BoardMapper {
 	@Select("select ifnull(max(num),0) from board")
 	int maxNum();
 
-	@Select("select * from board where num=#{num}")
+	@Select("select num, user_id, title, content, file1 fileurl, reg_date, read_cnt, board_id, grp, grp_level, grp_step, comm_cnt, secret from board where num=#{num}")
 	Board detail(Integer num);
 
 	@Update ("update board set read_cnt= read_cnt+1 where num=#{num}")
@@ -54,7 +54,7 @@ public interface BoardMapper {
 
 
 	String select = "select num, user_id, title, content, file1 fileurl, "
-			+ " reg_date, read_cnt, grp, grp_level, grp_step, board_id from board";
+			+ " reg_date, read_cnt, grp, grp_level, grp_step, board_id, secret from board";
 
 	@Select({"<script>",
 		select,

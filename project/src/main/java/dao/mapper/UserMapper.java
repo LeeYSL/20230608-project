@@ -28,4 +28,9 @@ public interface UserMapper {
 
 	@Select("select * from user")
 	List<User> list();
+
+	@Select("select user_id, pw, nickname, name, address, tel, batch, file1 fileurl, reg_date from user where user_id=#{userId}")
+	List<User> myulist(String userId);
+	
+	
 }

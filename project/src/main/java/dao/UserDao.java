@@ -46,4 +46,8 @@ public class UserDao {
 		return template.getMapper(cls).list();
 	}
 
+	public List<User> myulist(String userId) {
+		return template.getMapper(cls).myulist(userId);
+	}
+
 }

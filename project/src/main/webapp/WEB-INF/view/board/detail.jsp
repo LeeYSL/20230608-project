@@ -61,9 +61,9 @@ a {
 								<tr>
 									<th>첨부파일</th>
 									<td>
-										<c:if test="${!empty board.fileurl}">
+									 	<c:if test="${!empty board.fileurl}">
 											<a href="file/${board.fileurl}">${board.fileurl}</a>
-										</c:if>
+									 	</c:if>
 									</td>
 								</tr>
 						</table>

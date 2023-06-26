@@ -26,6 +26,7 @@
 			<div>
 				<button type="button" class="w3-button w3-white w3-border w3-border-orange w3-round-large">아이디 찾기</button>
 				<button type="button" class="w3-button w3-white w3-border w3-border-orange w3-round-large">비밀번호 찾기</button>
+				<input type="button" onclick="location.href='intro'" class="w3-button w3-white w3-border w3-border-orange w3-round-large" value="회원가입">
 			</div>
 		</div>
 	</div>

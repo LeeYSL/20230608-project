@@ -17,7 +17,6 @@ import lombok.ToString;
 @Getter
 @ToString
 public class User {
-	@NotEmpty(message="이메일을 입력해주세요.")
 	@Email(regexp="([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)",message="이메일 형식으로 입력하세요.")
 	private String userId;
 	@Pattern(regexp="(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]|.*[0-9]).{8,16}",

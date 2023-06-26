@@ -55,19 +55,21 @@
       <!-- Profile -->
       <div class="w3-card w3-round w3-white">
         <div class="w3-container">
+        <c:forEach items="${myulist}" var="user">
          <h4 class="w3-center">My Profile</h4>
          <p class="w3-center"><img src="file/${user.fileurl}" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
          <hr>
-         <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> ${sessionScope.loginUser.userId}</p>
+         <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> ${user.userId}</p>
          <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> 
-         	<a href="userinfo?userId=${sessionScope.loginUser.userId}">
-								<span class="txt">${sessionScope.loginUser.nickname}</span>
+         	<a href="userinfo?userId=${user.userId}">
+								<span class="txt">${user.nickname}</span>
 							</a></p>
          <p>
          	<i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i>
-         	<span class="txt">${sessionScope.loginUser.tel}</span>
+         	<span class="txt">${user.tel}</span>
          	
          </p>
+         </c:forEach>
         </div>
       </div>
       <br>    

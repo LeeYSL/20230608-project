@@ -201,7 +201,8 @@ public class UserController {
 	public ModelAndView mypage(String userId, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 				
-				
+		List<User> myulist = userservice.myulist(userId);
+		mav.addObject("myulist",myulist);
 				
 				
 		List<Board> myblist = userservice.myblist(userId);
@@ -214,4 +215,5 @@ public class UserController {
 		return mav;
 		
 	}
+	
 }

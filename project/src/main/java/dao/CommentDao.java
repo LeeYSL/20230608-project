@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import dao.mapper.CommentMapper;
 import logic.Comment;
+import logic.User;
 
 @Repository
 public class CommentDao {

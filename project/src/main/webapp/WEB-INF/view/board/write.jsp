@@ -51,14 +51,9 @@ a {
 								<c:if test="${boardId == 2 }">				
 									<tr>
 										<th colspan="2"  style="text-align: center;">
-											<input type="radio" name="open" value="Y" checked="checked" >&nbsp;<span>공개</span>
-											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-											<input type="radio" name="open" value="N" >&nbsp;<span>비공개</span>							
+											<input type="checkbox" name="secret" value="Y" >&nbsp;<span>비밀글 설정</span>					
 										</th>
 									</tr>
-								</c:if>
-								<c:if test="${boardId == 1}">
-								 	<input type="hidden" name="open" value="Y" checked="checked"> 
 								</c:if>
 								<tr>
 									<th>제목</th>

@@ -150,7 +150,7 @@ td {
 								
 								</tr>
 							</table>
-							<input type="hidden" name="batch" value="1">
+							<input type="hidden" name="batch" value="${param.batch}">
 													
 							<hr>
 							<div class="bottom_btn">
