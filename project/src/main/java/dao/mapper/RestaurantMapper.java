@@ -1,6 +1,7 @@
 package dao.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -31,13 +32,29 @@ public interface RestaurantMapper {
 	@Select("SELECT NVL(MAX(rest_num),0) + 1 as rest_num FROM restaurant ")
 	Restaurant maxSelect();
 
-	@Select("select * from restaurant ")
-	List<Restaurant> restList();
+	//@Select("select * from restaurant ")
+	//List<Restaurant> restList(Map<String, Object> param);
 
+	@Select({"<script>",
+		   "select * from restaurant ",
+		   " <if test='searchcontent != null'> where ${type} like '%${searchcontent}%'</if>",
+		   " <if test='limit != null'> order by rest_num desc limit #{pageNum}, #{limit} </if>",
+	       "</script>"})
+	List<Restaurant> restList(Map<String, Object> param);
 	
 	@Select("select * from restaurant where user_id=#{userId}")
 	List<Restaurant> ownerRest(String userId);
 	
 	
+	@Select({"<script>",
+			  "select count(*) from restaurant",
+			  "<if test='type != null'> where ${type} like '%${searchcontent}%'</if>",
+	          "</script>"})
+	int restListcount(Map<String, Object> param);
+
+
+
+	
+
 
 }

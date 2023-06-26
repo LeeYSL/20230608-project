@@ -6,38 +6,83 @@
 <head>
 <meta charset="UTF-8">
 
-</head> 
+<script type="text/javascript">
+	function listpage(page) {
+		document.searchform.pageNum.value = page;
+		document.searchform.submit();
+	}
+</script>
+</head>
 <body>
-	<form action="restaurantList" method="post" name="searchform">
-	
-		<div>
-			<select name="type">
-				<option value="">전체</option>
-				<option value="name">가게이름</option>
-				<option value="addresss">지역</option>
-				<option value="addresss">지역</option>
-				<option value="menu">메뉴</option>
-			</select>
+	<div class="w3-container w3-padding-32 w3-center">
+		<div
+			style="display: block; margin: auto; width: 1100px; height: 100%;">
+			<div class="w3-padding-32">
+				<div class="side">
+					<div class="page">
+						<form action="restaurantList" method="post" name="searchform">
+							<table>
+								<tr>
+									<td width="30%">
+									 <input type="hidden" name="pageNum" value="1">
+										<div>
+											<select name="type" class="w3-input">
+												<option value="">전체</option>
+												<option value="name">가게 이름</option>
+												<option value="address">지역</option>
+												<option value="menu">메뉴</option>
+											</select>
+										</div>
+										<div>
+											<input type="text" name="searchcontent" class="w3-input">
+										</div>
+										<div>
+											<button>검색</button>
+										</div>
+								<tr>
+									<th><img src="../../img/${rest.pictureUrl}"></th>
+									<th>가게 이름</th>
+									<th>주소</th>
+									<th width="10%"></th>
+									<th width="10%"></th>
+									<th width="10%"></th>
+									<th>전화번호</th>
+								</tr>
+							</table>
+							<div></div>
+							<table class="w3-table-all">
+								<c:forEach items="${restList}" var="rest">
+									<tr>
+										<td align="center">이름 : ${rest.name}</td>
+										<td align="center">주소 : ${rest.address}</td>
+										<td align="center">전화번호 : ${rest.restPhoneNo}</td>
+										<td><input type="hidden" ${rest_restNum}></td>
+										<td><a href="restaurantInfo?num=${rest_restNum}"> <input
+												type="button" value="상세보기">
+										</a>
+									</tr>
+								</c:forEach>
+								<tr>
+									<td colspan="6" class="w3-center">
+									<c:if test="${pageNum > 1}">
+											<a href="javascript:listpage('${pageNum -1}')">[이전]</a>
+										</c:if> 
+										<c:if test="${pageNum <= 1}">[이전]</c:if>
+										  <c:forEach var="a" begin="${startpage}" end="${endpage}">
+											<c:if test="${a == pageNum}">[${a}]</c:if>
+											<c:if test="${a != pageNum}">
+												<a href="javascript:listpage('${a}')">[${a}]</a>
+											</c:if>
+										</c:forEach> <c:if test="${pageNum < maxpage}">
+											<a href="javascript:listpage('${pageNum +1}')">[다음]</a>
+										</c:if> <c:if test="${pageNum >= maxpage}">[다음]</c:if></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div>
-			<input type="text" name="searchcontent" class="w3-input">
-		</div>
-		<div>
-			<%-- 	<form:form modelAttribute="restaurant" method="post"
-		action="restaurantList">  --%>
-			<img src="../../img/${rest.pictureUrl}">
-			<h2>가게 이름</h2>
-			<h2>가게 전화번호</h2>
-		</div>
-		<div></div>
-		<table class="w3-table-all">
-			<c:forEach items="${restList}" var="rest">
-				<tr>
-					<td align="center">이름 : ${rest.name}</td>
-					<td align="center">주소 : ${rest.address}</td>
-				</tr>
-			</c:forEach>
-		</table>
-	</form>
+	</div>
 </body>
 </html>

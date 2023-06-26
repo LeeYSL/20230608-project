@@ -37,13 +37,13 @@ public class ReservationService {
 		
 	}
 	
-	public List<Reservation> myList(String userId) {
-		return reservationDao.myList(userId);
+	public List<Reservation> myList(String userId, Integer pageNum, int limit) {
+		return reservationDao.myList(userId,pageNum,limit);
 		
 	}
 
-	public List<Reservation> ownerList(String userId) {
-	     return reservationDao.ownerList(userId);
+	public List<Restaurant> ownerRest(String userId) {
+	     return restaurantDao.ownerRest(userId);
 		
 		
 	}
@@ -67,12 +67,22 @@ public class ReservationService {
 		
 	}
 
-	public List<Restaurant> restList() {
-		return restaurantDao.restList();
+	public List<Restaurant> restList(Integer pageNum, int limit, String type, String searchcontent) {
+		return restaurantDao.restList(pageNum,limit,type,searchcontent);
+	}
+	public List<Reservation> ownerList(String userId, int pageNum, int limit) {
+		return reservationDao.ownerRest(userId,pageNum,limit);
 	}
 
-	public List<Restaurant> ownerRest(String userId) {
-		return restaurantDao.ownerRest(userId);
+	public int listcount() {
+		return  reservationDao.listCount();
 	}
+
+	public int restListcount(String type, String searchcontent) {
+		return restaurantDao.restListcount(type,searchcontent);
+	}
+
+
+	
 
 	}

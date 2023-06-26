@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import controller.RestaurantController;
 import dao.mapper.ReservationMapper;
 import logic.Reservation;
+import logic.Restaurant;
 
 
 @Repository
@@ -29,14 +30,21 @@ public class ReservationDao {
 		template.getMapper(cls).bookInsert(reservation);
 	}
 
-	public List<Reservation> myList(String userId) {
+	 public List<Reservation> myList(String userId, Integer pageNum, int limit) {
 		param.clear();
-		return template.getMapper(cls).myListSelect(userId); //내가 담아 놓은 걸 가져가야 되니까 매개변수에 param
+		param.put("userId", userId);
+		param.put("pageNum", (pageNum-1) * limit); 
+		param.put("limit", limit);
+
+		return template.getMapper(cls).myListSelect(param); //내가 담아 놓은 걸 가져가야 되니까 매개변수에 param
 	}
 
-	public List<Reservation> ownerList(String userId) {
+		public List<Reservation> ownerRest(String userId, int pageNum, int limit) {
 		param.clear();
-		return template.getMapper(cls).ownerListSelect(userId);
+		param.put("userId", userId);
+		param.put("pageNum", (pageNum-1) * limit); 
+		param.put("limit", limit);
+		return template.getMapper(cls).ownerListSelect(param);
 	}
 
 	public Reservation selectOne(int num) {
@@ -60,6 +68,8 @@ public class ReservationDao {
 		
 	}
 
-	
+	public int listCount() {
+		return template.getMapper(cls).listCount();
+	}
 
 }

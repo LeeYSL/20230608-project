@@ -10,31 +10,37 @@
 <title>내 예약 목록</title>
 </head>
 <body>
+
 	<script>
 		function update(btn) {
 			//취소기 때문에 3으로 고정
-	//	let confirm = $(btn).parent().siblings().find('c:choose').val
+			//	let confirm = $(btn).parent().siblings().find('c:choose').val
 			let num = $(btn).attr('name');
-			
+
 			$.ajax({
-				url:'/project/reservation/myList'
-			  ,type:'POST'
-			  ,data:{'num':num , 'confirm':3}
-			  ,success:function(result) {
-				  console.log("success");
-			  }
-			  ,complete:function(result) {
-				  console.log("complete");
-			  },error:function(result) {
-				  cosole.log("err");
-				  console.log(result);
-			  }		
-				
+				url : '/project/reservation/myList',
+				type : 'POST',
+				data : {
+					'num' : num,
+					'confirm' : 3
+				},
+				success : function(result) {
+					console.log("success");
+				},
+				complete : function(result) {
+					console.log("complete");
+				},
+				error : function(result) {
+					cosole.log("err");
+					console.log(result);
+				}
+
 			})
 		}
 	</script>
+
 	<h2>예약 목록</h2>
-	<table>
+	<table class="w3-table-all">
 		<tr>
 			<th>예약자 성함</th>
 			<th>예약자 전화번호</th>
@@ -50,8 +56,7 @@
 				<td align="center">${rsrvt.rsrvtDate}</td>
 				<td align="center">${rsrvt.rsrvtTime}</td>
 				<td align="center">${rsrvt.people}</td>
-				<td>
-					<c:choose>
+				<td><c:choose>
 						<c:when test="${rsrvt.confirm == 0}">
 							<p>예약 대기</p>
 						</c:when>
@@ -64,20 +69,37 @@
 						<c:when test="${rsrvt.confirm == 3}">
 							<p>예약 취소</p>
 						</c:when>
-				</c:choose>
-				   <input type="hidden" ${rsrvt.userId}>
-				<td>
-				   <input type="hidden" ${rsrvt.num}></td>
-				<td>
-				     <c:if test="${rsrvt.confirm == 0 || rsrvt.confirm == 1}"> 
-					  	<button type="button" name="${rsrvt.num}" onclick="update(this)">취소</button>
-					 </c:if>
-				</td>
-				 
+					</c:choose> <input type="hidden" ${rsrvt.userId}>
+				<td><input type="hidden" ${rsrvt.num}></td>
+				<td><c:if test="${rsrvt.confirm == 0 || rsrvt.confirm == 1}">
+						<button type="button" name="${rsrvt.num}" onclick="update(this)">취소</button>
+					</c:if>
 				<td><a href="myListInfo?num=${rsrvt.num}"> <input
 						type="button" value="상세보기">
 				</a></td>
-			</tr>
 		</c:forEach>
+		<tr>
+			<td colspan="5" style="text-align: center;"><c:if
+					test="${pageNum <=1 }">[이전]</c:if> <c:if test="${pageNum > 1 }">
+					<a href="myList?pageNum="${pageNum-1}>[이전]</a>
+				</c:if> <c:forEach var="a" begin="${startpage}" end="${endpage}">
+					<c:if test="${a==pageNum}">[${a}]</c:if>
+					<c:if test="${a != pageNum }">
+						<a href="myList?pageNum=${a}">[${a}]</a>
+					</c:if>
+				</c:forEach> <c:if test="${pageNum >= maxpage}">[다음]</c:if> <c:if
+					test="${pageNum < maxpage}">
+					<a href="myList?pageNum="${pageNum+1}>[다음]</a>
+				</c:if></td>
+		</tr>
+
+
+		<c:if test="${listcount == 0}">
+			<tr>
+				<td colspan="5">등록된 예약이 없습니다.</td>
+
+			</tr>
+
+		</c:if>
 	</table>
 </body>

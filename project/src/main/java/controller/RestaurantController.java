@@ -78,19 +78,52 @@ public class RestaurantController {
 	}
 
 	@RequestMapping("restaurantList")
-	ModelAndView restList(@RequestParam Map<String, Object> param, HttpSession session) {
+	ModelAndView restList(@RequestParam Map<String, String> param, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-//		String type = param.get("type");
-//		String searchcontent = param.get("searchcontent");
 
-//		if (type == null || type.trim().equals("") || searchcontent == null || searchcontent.trim().equals("")) {
-//			type = null;
-//			searchcontent = null;
+	   Integer pageNum = null;
+		if (param.get("pageNum") != null)
+			pageNum = Integer.parseInt(param.get("pageNum"));
+		String type = param.get("type");
+		String searchcontent = param.get("searchcontent");
+		
+		if (pageNum == null || pageNum.toString().equals("")) {
+			pageNum = 1;
+		}
+		if (type == null || type.trim().equals("") || searchcontent == null || searchcontent.trim().equals("")) {
+			type = null;
+			searchcontent = null;
+		}
 
-		List<Restaurant> restList = service.restList();
-		System.out.println(restList);
-
+		
+		int limit = 10;
+		int restListcount = service.restListcount(type, searchcontent);
+		
+		System.out.println("pageNum : " + pageNum);
+		System.out.println("limit : " + limit);
+		
+		List<Restaurant> restList = service.restList(pageNum, limit, type, searchcontent);
+		
+		int maxpage = (int) ((double) restListcount / limit + 0.95);// 등록 건수에 따른 최대 페이지
+		int startpage = (int) ((pageNum / 10.0 + 0.9) - 1) * 10 + 1;// 페이지의 시작 번호
+		int endpage = startpage + 9; // 화면에 보여줄 페이지 끝 번호
+		if (endpage > maxpage)
+			endpage = maxpage; // 페이지의 끝 번호는 최대 페이지 클 수 없다.
+		
+	//	System.out.println("1"+pageNum);
+	//	System.out.println("2"+restListcount);
+	//	System.out.print("3"+restList);
+	//	System.out.println("4"+maxpage);
+	//	System.out.println("5"+startpage);
+	//	System.out.println("6"+endpage);
+		
+		mav.addObject("pageNum", pageNum);
 		mav.addObject("restList", restList);
+		mav.addObject("restListcount", restListcount);		
+		mav.addObject("pageNum", pageNum);
+		mav.addObject("maxpage", maxpage);
+		mav.addObject("startpage", startpage);
+		mav.addObject("endpage", endpage);
 
 		return mav;
 	}

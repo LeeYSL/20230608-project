@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -14,6 +15,7 @@ import dao.mapper.RestaurantMapper;
 import logic.Dayoff;
 import logic.Restaurant;
 import logic.Menu;
+import logic.Reservation;
 
 
 @Repository
@@ -40,12 +42,32 @@ public class RestaurantDao {
 		return template.getMapper(cls).maxSelect();
 	}
 
-	public List<Restaurant> restList() {
-		return template.getMapper(cls).restList();
+	public List<Restaurant> restList(Integer pageNum, int limit, String type, String searchcontent) {
+		param.clear();
+		param.put("pageNum", (pageNum-1) * limit); 
+		param.put("limit", limit);
+		param.put("type", type);
+		param.put("searchcontent",searchcontent);
+		
+		System.out.println("pageNum" + pageNum);
+		System.out.println("type"+type);
+		System.out.println("searchcontent" + searchcontent);
+		return template.getMapper(cls).restList(param);
 	}
 
 	public List<Restaurant> ownerRest(String userId) {
 		return  template.getMapper(cls).ownerRest(userId);
+	}
+
+	public int restListcount(String type, String searchcontent) {
+		param.clear();
+		param.put("type", type);
+		param.put("searchcontent",searchcontent);
+		
+		System.out.println("type" + searchcontent);
+		System.out.println("searchcontent" + searchcontent);
+		
+		return template.getMapper(cls).restListcount(param);
 	}
 
 	
