@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import logic.Reservation;
+import logic.Restaurant;
 
 public interface ReservationMapper {
 
@@ -50,7 +51,7 @@ public interface ReservationMapper {
     
 	
 	@Select({ "<script>",
-	        " SELECT LEFT(A.rsrvt_date,8) AS rsrvt_date, RIGHT(A.reg_date,2) AS rsrvt_time, A.num, A.user_id, A.rsrvt_name, ",
+	        " SELECT LEFT(A.rsrvt_date,8) AS rsrvt_date, RIGHT(A.rsrvt_date,2) AS rsrvt_time, A.num, A.user_id, A.rsrvt_name, ",
 			"	  A.phone_no,A.people,A.confirm,B.rest_num, B.name " ,
 			"	  FROM reservation A ",
 			"	  JOIN restaurant B " ,
@@ -60,6 +61,10 @@ public interface ReservationMapper {
 			"    <if test='limit != null'> limit #{pageNum}, #{limit} </if> ",
         	"    </script>" })
 	List<Reservation> ownerListSelect(Map<String, Object> param);
+
+	@Select("select * from restaurant where rest_num=#{num}")
+	Restaurant restInfoadd(int num);
+
 
 	
 

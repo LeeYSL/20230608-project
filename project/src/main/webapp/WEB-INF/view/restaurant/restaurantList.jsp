@@ -56,10 +56,10 @@
 										<td align="center">이름 : ${rest.name}</td>
 										<td align="center">주소 : ${rest.address}</td>
 										<td align="center">전화번호 : ${rest.restPhoneNo}</td>
-										<td><input type="hidden" ${rest_restNum}></td>
-										<td><a href="restaurantInfo?num=${rest_restNum}"> <input
+										<td><input type="hidden" ${rest.restNum}></td>
+										<td><a href="restaurantInfo?num=${rest.restNum}"> <input
 												type="button" value="상세보기">
-										</a>
+										</a></td>
 									</tr>
 								</c:forEach>
 								<tr>

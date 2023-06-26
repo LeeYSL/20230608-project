@@ -9,7 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
-
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import logic.ReservationService;
 import logic.Restaurant;
+import logic.Dayoff;
 import logic.Menu;
 import logic.User;
 
@@ -138,5 +139,24 @@ public class RestaurantController {
 	
 		 mav.addObject("ownerRest",ownerRest);
 		 return mav;
+	}
+	@GetMapping("restaurantInfo")
+	public ModelAndView restaurantInfo(Restaurant restaurant,int num) { 
+		//가게리스트에서 이동할 때 보낸 num을 사용한다.
+		ModelAndView mav = new ModelAndView();
+		
+		Restaurant restInfo = service.restInfo(num);
+		List<Menu> memuList = service.menuList(num);
+		Dayoff dayoff = service.dayoffList(num);
+		
+		restaurant.setRestNum(num);
+		
+		System.out.println("restaurant" + restaurant.getRestNum());
+		
+		mav.addObject("dayoff", dayoff);
+		mav.addObject("memuList", memuList);
+		mav.addObject("restInfo", restInfo);
+
+	    return mav;
 	}
 }

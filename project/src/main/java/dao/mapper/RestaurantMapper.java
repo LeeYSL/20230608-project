@@ -52,6 +52,15 @@ public interface RestaurantMapper {
 	          "</script>"})
 	int restListcount(Map<String, Object> param);
 
+	@Select("select * from restaurant where rest_num=#{num}")
+	Restaurant restInfo(int num);
+
+	@Select("select * from menu  where rest_num=#{num} ")
+	List<Menu> menuList(int num);
+ 
+	@Select("select * from dayoff  where rest_num=#{num} ")
+	Dayoff dayoffList(int num);
+
 
 
 	

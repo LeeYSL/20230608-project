@@ -82,7 +82,22 @@ public class ReservationService {
 		return restaurantDao.restListcount(type,searchcontent);
 	}
 
+	public Restaurant restInfo(int num) {
+		return restaurantDao.restInfo(num);
+	}
 
-	
+	public List<Menu> menuList(int num) {
+		return restaurantDao.menuList(num);
+	}
+
+	public Dayoff dayoffList(int num) {
+		return restaurantDao.dayoffList(num);
+	}
+
+	public Restaurant restInfoadd(int Num) {
+	     return reservationDao.restInfoadd(Num);
+		
+	}
 
 	}
+

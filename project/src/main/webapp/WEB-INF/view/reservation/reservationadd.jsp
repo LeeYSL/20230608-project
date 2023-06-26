@@ -160,6 +160,8 @@ th {
 						<td><form:input path="phoneNo" placeholder="전화번호" /> <font
 							color="red"> <form:errors path="phoneNo" />
 						</font></td>
+					   <td><input type="hidden" value="${restNum}"></td>
+					   <td><input type="hidden" value="${Num}"></td>
 					</tr>
 					<tr>
 						<td><form:select style="width:200" path="people">

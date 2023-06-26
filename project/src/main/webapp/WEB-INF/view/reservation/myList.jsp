@@ -73,27 +73,25 @@
 				</a></td>
 		</c:forEach>
 		<tr>
-			<td colspan="5" style="text-align: center;"><c:if
-					test="${pageNum <=1 }">[이전]</c:if> <c:if test="${pageNum > 1 }">
-					<a href="myList?pageNum="${pageNum-1}>[이전]</a>
+			<td colspan="5" style="text-align: center;">
+			<c:if test="${pageNum <= 1}">[이전]</c:if> 
+			 <c:if test="${pageNum > 1 }">
+					<a href="myList?pageNum=${pageNum-1}">[이전]</a>
 				</c:if> <c:forEach var="a" begin="${startpage}" end="${endpage}">
 					<c:if test="${a==pageNum}">[${a}]</c:if>
 					<c:if test="${a != pageNum }">
 						<a href="myList?pageNum=${a}">[${a}]</a>
 					</c:if>
-				</c:forEach> <c:if test="${pageNum >= maxpage}">[다음]</c:if> <c:if
+				</c:forEach> 
+				 <c:if test="${pageNum >= maxpage}">[다음]</c:if> <c:if
 					test="${pageNum < maxpage}">
-					<a href="myList?pageNum="${pageNum+1}>[다음]</a>
+					<a href="myList?pageNum=${pageNum+1}">[다음]</a>
 				</c:if></td>
 		</tr>
-
-
 		<c:if test="${listcount == 0}">
 			<tr>
 				<td colspan="5">등록된 예약이 없습니다.</td>
-
 			</tr>
-
 		</c:if>
 	</table>
 </body>

@@ -70,6 +70,18 @@ public class RestaurantDao {
 		return template.getMapper(cls).restListcount(param);
 	}
 
+	public Restaurant restInfo(int num) {
+		return template.getMapper(cls).restInfo(num);
+	}
+
+	public List<Menu> menuList(int num) {
+		return template.getMapper(cls).menuList(num);
+	}
+
+	public Dayoff dayoffList(int num) {
+		return template.getMapper(cls).dayoffList(num);
+	}
+
 	
 	
 }

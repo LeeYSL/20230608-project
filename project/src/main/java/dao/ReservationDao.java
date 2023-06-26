@@ -72,4 +72,9 @@ public class ReservationDao {
 		return template.getMapper(cls).listCount();
 	}
 
+	public Restaurant restInfoadd(int num) {
+		return template.getMapper(cls).restInfoadd(num);
+	}
+
+
 }

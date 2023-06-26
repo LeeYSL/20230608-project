@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.apache.taglibs.standard.lang.jstl.test.beans.PublicBean1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -15,15 +14,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import logic.Board;
 import logic.Reservation;
 import logic.ReservationService;
-
+import logic.Restaurant;
 import logic.User;
-import lombok.val;
 
 @Controller
 @RequestMapping("reservation")
@@ -53,7 +49,10 @@ public class ReservationController {
 			User user = (User) session.getAttribute("loginUser");
 			reservation.setUserId(user.getUserId());
 			reservation.setRsrvtDate(reservation.getRsrvtDate() + reservation.getRsrvtTime());
-			reservation.setRestNum(1); // 가게번호
+	//		reservation.setRestNum(reservation.getRestNum());
+		
+			
+			
 			// reservation.setConfirm(1); // 확정여부-예약대기(1)로 고정
 			service.bookinsert(reservation);
 		} catch (Exception e) {
@@ -63,6 +62,19 @@ public class ReservationController {
 		return mav;
 
 	}
+	@GetMapping("reservationadd") 
+	public ModelAndView goReservation(Reservation reservation, int num) {
+		ModelAndView mav = new ModelAndView();
+		
+//		service.restInfoadd(reservation.getRestNum());
+		Restaurant restaurant = service.restInfoadd(num);
+		mav.addObject("num", num);
+		mav.addObject("restaurant", restaurant);
+		return mav;
+
+	}
+	
+	
 
 	@GetMapping("myList")
 	public ModelAndView myList(@RequestParam Map<String, String> param, HttpSession session) { // key,value 둘 다 // map으로
@@ -157,21 +169,20 @@ public class ReservationController {
 	}
 
 	@GetMapping("ownerList")
-	public ModelAndView ownerList(@RequestParam Map<String, Object> param, HttpSession session) {
+	public ModelAndView ownerList(@RequestParam Map<String, String> param, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 
 		User user = (User) session.getAttribute("loginUser");
-		int pageNum = 0;
+		Integer pageNum = null;
+		if (param.get("pageNum") != null)
+			pageNum = Integer.parseInt(param.get("pageNum"));
 
-		if (pageNum == 0) {
+		if (param.get("pageNum") == null || pageNum.toString().equals("")) {
 			pageNum = 1;
-		} else {
-			pageNum = (int) param.get("pageNum");
 		}
 
 		int limit = 10;
 		int listcount = service.listcount();
-
 		List<Reservation> rsrvtList = service.ownerList(user.getUserId(), pageNum, limit);
 
 		int maxpage = (int) ((double) listcount / limit + 0.95);

@@ -51,7 +51,7 @@ a {
 									<td>									
 										${board.title}
 									</td>
-								</tr>
+								</dPdtr>
 								<tr>
 									<th>내용</th>
 									<td>
