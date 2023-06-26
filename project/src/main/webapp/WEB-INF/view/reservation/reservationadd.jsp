@@ -50,9 +50,14 @@ th {
 <script>
 	//예약날짜에 달력 세팅
 	$(function() {
-		$("#datepicker").datepicker({minDate:"+1d"});
+		let id = '';
+		let dayoff = true;
+		$("#datepicker").datepicker({minDate:"+1d",
+			//휴무일 세팅
+			beforeShowDay: setDayoff
+		});
 	});
-
+	
 	$.datepicker.setDefaults({
 		dateFormat : 'yymmdd',
 		prevText : '이전 달',
@@ -67,6 +72,20 @@ th {
 		showMonthAfterYear : true,
 		yearSuffix : '년'
 	});
+	
+	function setDayoff(date){
+		let day = date.getDay();
+		let offList = [];
+		$('input[name="dayoff"]').each(function (index, item) {
+			if($(item).val() == "Y") {
+				offList.push($(item).attr('id')); //id를 list에 담음
+			}
+		});	
+		
+		//false면 선택 안됨
+		return [(offList.indexOf(String(day)) == -1)];
+	}
+
 	
 	<!--	   let IMP = window.IMP
 	   IMP.init("imp01555276") //가맹점 식별코드
@@ -162,7 +181,7 @@ th {
 						<td>
 							<form:select id="rsrvtTime" path="rsrvtTime">
 								<option value="">예약 시간</option>
-								<c:forEach var="i" begin="1" end="24">
+								<c:forEach var="i" begin="${restaurant.open}" end="${restaurant.close}">
 									<option value="${i>9?i:'0'}${i>9?'':i}">${i>9?i:'0'}${i>9?'':i}:00</option>
 								</c:forEach>
 							</form:select>
@@ -174,6 +193,15 @@ th {
 				<!-- 예약 상세 페이지로 이동하긴 -->
 				<input type="button" value="취소" name="add">
 			</form:form>
+			
+			<input type="hidden" id="0"  name="dayoff" value="${dayoff.sun}"/>
+			<input type="hidden" id="1"  name="dayoff" value="${dayoff.mon}"/>
+			<input type="hidden" id="2" name="dayoff" value="${dayoff.tue}"/>
+			<input type="hidden" id="3"  name="dayoff" value="${dayoff.wed}"/>
+			<input type="hidden" id="4" name="dayoff" value="${dayoff.thur}"/>
+			<input type="hidden" id="5"  name="dayoff" value="${dayoff.fri}"/>
+			<input type="hidden" id="6"  name="dayoff" value="${dayoff.sat}"/>
+			
 		</div>
 	</div>
 </body>

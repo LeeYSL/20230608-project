@@ -37,8 +37,18 @@
 	
 	//메뉴 삭제 버튼 눌렀을 때 해당 row 삭제.
 	function deleteRow(del) {
-		console.log(del);
 		$(del).parent().parent().remove();
+	}
+	
+	//등록 버튼 클릭 시 여는 시간 보다 닫는시간이 더 늦은지 체크
+	function check() {
+		const open = parseInt($('#open').val());
+		const close = parseInt($('#close').val());
+		
+		if (open > close) {
+			alert("여는시간이 닫는 시간보다 작아야합니다.");
+			return false;
+		}
 	}
 </script>
 </head>
@@ -46,7 +56,7 @@
 	<h2>가게 등록</h2>
 	<div>가게등록하는 창입니다.</div>
 	<form:form modelAttribute="restaurant" method="post"
-		action="restaurantadd">
+		action="restaurantadd" onsubmit="return check()">
 		<spring:hasBindErrors name="restaurant">
 			<font color="red"> <c:forEach items="${errors.globalErrors}"
 					var="error">
@@ -66,7 +76,7 @@
 			<tr>
 				<td><form:select path="open">
 						<option value="0">여는 시간</option>
-						<c:forEach var="i" begin="1" end="24">
+						<c:forEach var="i" begin="1" end="27">
 							<option value="${i>9?i:'0'}${i>9?'':i}">${i>9?i:'0'}${i>9?'':i}:00</option>
 						</c:forEach>
 					</form:select></td>
@@ -75,7 +85,7 @@
 			<tr>
 				<td><form:select path="close">
 						<option value="0">닫는 시간</option>
-						<c:forEach var="i" begin="1" end="24">
+						<c:forEach var="i" begin="1" end="27">
 							<option value="${i>9?i:'0'}${i>9?'':i}">${i>9?i:'0'}${i>9?'':i}:00</option>
 						</c:forEach>
 					</form:select></td>
@@ -87,11 +97,10 @@
 			</tr>
 			<tr>
 				<td><form:select path="maxpeople">
-						<option value="0">===최대 예약 인원 수===</option>
-						<option value="1">1명</option>
-						<option value="2">2명</option>
-						<option value="3">3명</option>
-						<option value="4">4명</option>
+						<option value="0">==1타임당 예약 인원 수==</option>
+						<c:forEach var="i" begin="1" end="20">
+							<option value="${i}">${i}명</option>
+						</c:forEach>
 					</form:select></td>
 				<td><font color="red"> <form:errors path="maxpeople" /></font></td>
 			</tr>

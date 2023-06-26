@@ -30,13 +30,23 @@
 		$(del).parent().parent().remove();
 	}
 	
+	//등록 버튼 클릭 시 여는 시간 보다 닫는시간이 더 늦은지 체크
+	function check() {
+		const open = parseInt($('#open').val());
+		const close = parseInt($('#close').val());
+		
+		if (open > close) {
+			alert("여는시간이 닫는 시간보다 작아야합니다.");
+			return false;
+		}
+	}
 </script>
 </head>
 <body>
 	<h2>상세 보기</h2>
 	<div>사장 가게 상세 보기</div>
 	<form:form modelAttribute="restaurant" method="post"
-		action="restaurantadd">
+		action="restaurantadd" onsubmit="return check();">
 		<spring:hasBindErrors name="restaurant">
 			<font color="red"> <c:forEach items="${errors.globalErrors}"
 					var="error">
@@ -57,7 +67,7 @@
 				<td>
 					<form:select path="open">
 						<option value="0">여는 시간</option>
-						<c:forEach var="i"  begin="1" end="24">
+						<c:forEach var="i"  begin="1" end="27">
         					<option value="${i>9?i:'0'}${i>9?'':i}">${i>9?i:'0'}${i>9?'':i}:00</option>
     					</c:forEach>
     				</form:select>
@@ -68,7 +78,7 @@
 				<td>
 					<form:select path="close">
 						<option value="0">닫는 시간</option>
-						<c:forEach var="i"  begin="1" end="24">
+						<c:forEach var="i"  begin="1" end="27">
         					<option value="${i>9?i:'0'}${i>9?'':i}">${i>9?i:'0'}${i>9?'':i}:00</option>
     					</c:forEach>
     				</form:select>
