@@ -64,7 +64,7 @@
 								<table>
 									<tr>
 										<td>
-											<form:textarea path="content" cols="100" row="10" class="w3-input" placeholder="댓글" />
+											<form:textarea path="review" cols="100" row="10" class="w3-input" placeholder="리뷰" />
 											<font color="red">
 												<form:errors path="content" />
 											</font>
@@ -72,7 +72,7 @@
 											<input type="hidden" name="num" value="${param.num}">
 										</td>
 										<td>
-											<button type="submit" class="w3-button w3-white w3-border w3-border-orange w3-round-large"">댓글 등록</button>
+											<button type="submit" class="w3-button w3-white w3-border w3-border-orange w3-round-large">리뷰 등록</button>
 										</td>
 									</tr>
 								</table>
@@ -101,8 +101,8 @@
 										</td>
 										<c:if test="${sessionScope.loginUser.userId == review.userId}">
 											<td>
-												<a href="commdelete?num=${review.num}&seq=${review.seq}">
-													<button type="button" class="w3-button w3-white w3-border w3-border-orange w3-round-large">삭제</button>
+												<a href="reviewdelete?num=${review.num}&seq=${review.seq}">
+													<button type="button" class="w3-button w3-white w3-border w3-border-orange w3-round-large">리뷰 삭제</button>
 												</a>
 											</td>
 										</c:if>

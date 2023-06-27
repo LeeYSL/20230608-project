@@ -99,5 +99,10 @@ public class ReservationService {
 		
 	}
 
+	public void deleteRest(String delYn, int num) {
+		restaurantDao.deleteRest(delYn,num);
+		
+	}
+
 	}
 

@@ -6,7 +6,9 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import logic.Dayoff;
 import logic.Reservation;
@@ -61,9 +63,8 @@ public interface RestaurantMapper {
 	@Select("select * from dayoff  where rest_num=#{num} ")
 	Dayoff dayoffList(int num);
 
-
-
-	
+	@Update("update restaurant set delYn=#{delYn} where rest_num=#{num} ")
+	void deleteRest(@Param("delYn") String delYn, @Param("num") int num);
 
 
 }

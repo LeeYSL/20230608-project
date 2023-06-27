@@ -129,17 +129,35 @@ public class RestaurantController {
 		return mav;
 	}
 
-	@RequestMapping("ownerRest") 
+	@GetMapping("ownerRest") 
 	public ModelAndView ownerRest(HttpSession session,Restaurant restaurant) { 
 		ModelAndView mav = new ModelAndView();
      
 		User user = (User) session.getAttribute("loginUser");
- 
+       
+	 
 		 List<Restaurant> ownerRest = service.ownerRest(user.getUserId());
 	
 		 mav.addObject("ownerRest",ownerRest);
+	
+
 		 return mav;
 	}
+	
+	@PostMapping("ownerRest")
+	public ModelAndView ownerRest(Restaurant restaurant,String delYn,int num) { 
+		ModelAndView mav = new ModelAndView();
+	
+		service.deleteRest(delYn,num);
+		System.out.println(num);
+		 
+		mav.addObject("deleteRest",num);
+		System.out.println(num);
+		
+		 return mav;
+	
+	}
+
 	@GetMapping("restaurantInfo")
 	public ModelAndView restaurantInfo(Restaurant restaurant,int num) { 
 		//가게리스트에서 이동할 때 보낸 num을 사용한다.
@@ -158,5 +176,12 @@ public class RestaurantController {
 		mav.addObject("restInfo", restInfo);
 
 	    return mav;
+	}
+	@PostMapping("review") 
+	public ModelAndView review() {
+		ModelAndView mav = new ModelAndView();
+
+	    return mav;
+		
 	}
 }

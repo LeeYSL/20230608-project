@@ -162,7 +162,7 @@ public class ReservationController {
 		// 해줌?
 
 		System.out.println();
-		mav.addObject("num", num);
+		mav.addObject("num", num); //조회해온 num을 넘기는건가??
 
 		return mav;
 

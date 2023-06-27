@@ -32,5 +32,6 @@ public class Restaurant {
 	private Dayoff dayoff;
     private String tel;
     private List<Menu> menuList; //메뉴
+    private String delete; // 가게 삭제
 
 }

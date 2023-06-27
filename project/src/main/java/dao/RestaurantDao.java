@@ -82,6 +82,14 @@ public class RestaurantDao {
 		return template.getMapper(cls).dayoffList(num);
 	}
 
-	
+	public void deleteRest(String delYn, int num) {
+//		param.clear();
+//		param.put("delete", delete);
+//		param.put("num", num);
+		template.getMapper(cls).deleteRest(delYn,num);
+		
+	}
+
+
 	
 }

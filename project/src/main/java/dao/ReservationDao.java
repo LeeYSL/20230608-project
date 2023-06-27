@@ -64,7 +64,7 @@ public class ReservationDao {
 	}
 
 	public void ownerconfirm(int num,int confirm) {
-		template.getMapper(cls).ownerconfirm(num,confirm);
+		template.getMapper(cls).ownerconfirm(num,confirm); //왜 이건 param.put 안하나
 		
 	}
 
