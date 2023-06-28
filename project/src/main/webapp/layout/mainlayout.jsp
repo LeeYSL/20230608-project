@@ -32,8 +32,9 @@ a {text-decoration: none;}
   <a href="/project/user/mypage?userId=${sessionScope.loginUser.userId}" onclick="w3_close()" class="w3-bar-item w3-button">MyPage</a>
    <a href="/project/board/list?boardId=1" onclick="w3_close()" class="w3-bar-item w3-button">공지사항</a>
       <a href="/project/board/list?boardId=2" onclick="w3_close()" class="w3-bar-item w3-button">QNA</a>
-          <c:if test="${user.batch == 2}"></c:if>
+          <c:if test="${sessionScope.loginUser.batch ==2 }">
            <a href="/project/restaurant/restaurantadd" onclick="w3_close()" class="w3-bar-item w3-button">예약</a>
+           </c:if>
 </nav>
 
 <!-- Top menu -->

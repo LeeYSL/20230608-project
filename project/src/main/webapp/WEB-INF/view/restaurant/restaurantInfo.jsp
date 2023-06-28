@@ -19,7 +19,8 @@
 							<table>
 								<tr>
 									<th>식당사진</th>
-									<td><img width="100" height="100" src="file/${restInfo.fileurl}"></td>
+									<td><img width="100" height="100"
+										src="file/${restInfo.fileurl}"></td>
 								</tr>
 								<tr>
 									<th>식당이름</th>
@@ -43,22 +44,27 @@
 								</tr>
 								<tr>
 									<th>휴무일</th>
-							    	<c:if test="${not empty dayoff}"> 
-									    ${dayoff}
+								 <td>
+								  	<c:if test="${not empty dayoff}"> 
+									    ${not empty dayoff}
 							       </c:if>
+							       </td>
 								</tr>
-								<%-- 	<th>메뉴</th>
-									<td>${memuList.menuName}</td>
-									<td>${memuList.price}</td> --%>
+								<tr>
+									<th>메뉴</th>
+									<td>${memuList}</td>
+								</tr>
 								<tr>
 									<td><input type="hidden" ${restInfo.restNum}></td>
 									<td><input type="hidden" ${dayoff}></td>
 									<td><input type="hidden" ${memuList}></td>
 									<td><input type="hidden" ${restInfo}></td>
-									<td><a
-										href="/project/reservation/reservationadd?num=${restInfo.restNum}">
-											<input type="button" value="예약">
-									</a></td>
+									<c:if test="${!empty sessionScope.loginUser }">
+										<td><a
+											href="/project/reservation/reservationadd?num=${restInfo.restNum}">
+												<input type="button" value="예약">
+										</a></td>
+									</c:if>
 								</tr>
 							</table>
 
