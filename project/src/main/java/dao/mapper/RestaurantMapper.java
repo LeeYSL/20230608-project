@@ -18,7 +18,7 @@ import logic.Menu;
 public interface RestaurantMapper {
   
 	@Insert("insert into restaurant (rest_num, user_id, license_num, name, address, picture, maxpeople,open,close, rest_phoneNo ) "
-			+ " values (#{restNum}, #{userId}, #{licenseNum}, #{name} ,#{address}, #{picture},#{maxpeople},#{open},#{close},#{restPhoneNo})")
+			+ " values (#{restNum}, #{userId}, #{licenseNum}, #{name} ,#{address}, #{fileurl},#{maxpeople},#{open},#{close},#{restPhoneNo})")
 	void insert(@Valid Restaurant restaurant);
 	
 	@Insert("insert into dayoff (rest_num, Mon, Tue, Wed, Thur, Fri, Sat, Sun, holiday) "
@@ -38,7 +38,7 @@ public interface RestaurantMapper {
 	//List<Restaurant> restList(Map<String, Object> param);
 
 	@Select({"<script>",
-		   "select * from restaurant ",
+		   " select rest_num, user_id, license_num, name, address, picture fileurl, maxpeople,open,close, rest_phoneNo  from restaurant ",
 		   " where delYn IS NULL ",
 		   " <if test='searchcontent != null'>",
 		   " <choose>",
@@ -64,15 +64,18 @@ public interface RestaurantMapper {
 	          "</script>"})
 	int restListcount(Map<String, Object> param);
 
-	@Select("select * from restaurant where rest_num=#{num}")
+	@Select("select rest_num, user_id, license_num, name, address, picture fileurl, maxpeople,open,close, rest_phoneNo from restaurant where rest_num=#{num}")
 	Restaurant restInfo(int num);
 
 	@Select("select * from menu  where rest_num=#{num} ")
 	List<Menu> menuList(int num);
  
-	@Select("select * from dayoff  where rest_num=#{num} ")
+//	@Select("select * from dayoff  where rest_num=#{num} and COALESCE(Mon,Tue,Wed,Thur,Fri,Sat,Sun) is not null")
+//	Dayoff dayoffList(int num);
+	
+	@Select("select * from dayoff  where rest_num=#{num}")
 	Dayoff dayoffList(int num);
-
+	
 	@Update("update restaurant set delYn=#{delYn} where rest_num=#{num} ")
 	void deleteRest(@Param("delYn") String delYn, @Param("num") int num);
 

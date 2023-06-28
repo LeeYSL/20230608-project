@@ -57,7 +57,7 @@ public class RestaurantController {
 			int num = service.maxSelect().getRestNum();
 			// 가게정보 저장
 			restaurant.setRestNum(num);
-			service.restauInsert(restaurant);
+			service.restauInsert(restaurant,session);
 
 			// 휴무일 저장
 			restaurant.getDayoff().setRestNum(num);

@@ -8,6 +8,7 @@
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <meta charset="UTF-8">
 <title>예약 페이지</title>
@@ -86,10 +87,9 @@ th {
 		return [(offList.indexOf(String(day)) == -1)];
 	}
 
-	
-	/*	   let IMP = window.IMP
-	   IMP.init("imp01555276") //가맹점 식별코드
-	   
+<%--	  let IMP = window.IMP
+	   IMP.init("imp01555276") //가맹점 식별코드 TC0ONETIME??
+			   
 	   function kakaopay() {
 		   $.ajax("kakao",{
 			   success : function(json) {
@@ -98,17 +98,17 @@ th {
 			}
 		   })
 		
-	}
-	function iamPay(json) {
+	}	
+	  function iamPay(json) {
 		IMP.request_pay({
 			pg :"kakaopay", // 상점구분. 카카오페이
 			pay_method : "card", //결제 방식 : 카드
 			merchant_uid : json.merchant_uid, //주문번호 : 주문별로 유일한 값으로 필요함 usrrid-session id 값
 			name : json.name, //주문상품명. ex) 사과 외 3건
 			amount : json.amount, //전체 주문 금액
+			buyer_email :"dudtjs960630@naver.com", //주문자 이메일 테스트
 			buyer_name : json.buyer_name, //주문자 성명
 			buyer_tel : json.buyer_tel, //주문자 전화번호
-			buyer_addr : json.buyer_addr, //주문자 주소
 		},function(rsp){
 			if(rsp.success) {
 				let msg = "결제가 완료 되었습니다."
@@ -124,7 +124,9 @@ th {
 			
 		})
 		
-	} */
+	}
+	
+	 --%>
 	
 </script>
 
@@ -191,7 +193,8 @@ th {
 						</font></td>
 					</tr>
 				</table>
-				<input type="submit" value="예약 및 예약금 결제" name="add">
+			<td><a href="javascript:kakaopay()">예약 및 예약금 결제</a></td>
+		        <input type="submit" value="예약 및 예약금 결제" name="add">
 				<!-- 예약 상세 페이지로 이동하긴 -->
 				<input type="button" value="취소" name="add">
 			</form:form>

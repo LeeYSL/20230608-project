@@ -19,9 +19,7 @@
 							<table>
 								<tr>
 									<th>식당사진</th>
-									<th>
-									<img src="file/${restInfo.fileurl}">
-									</th>
+									<td><img width="100" height="100" src="file/${restInfo.fileurl}"></td>
 								</tr>
 								<tr>
 									<th>식당이름</th>
@@ -45,7 +43,9 @@
 								</tr>
 								<tr>
 									<th>휴무일</th>
-									<td>${dayoff}</td>
+							    	<c:if test="${not empty dayoff}"> 
+									    ${dayoff}
+							       </c:if>
 								</tr>
 								<%-- 	<th>메뉴</th>
 									<td>${memuList.menuName}</td>
@@ -55,12 +55,13 @@
 									<td><input type="hidden" ${dayoff}></td>
 									<td><input type="hidden" ${memuList}></td>
 									<td><input type="hidden" ${restInfo}></td>
-									<td><a href="/project/reservation/reservationadd?num=${restInfo.restNum}"> 
+									<td><a
+										href="/project/reservation/reservationadd?num=${restInfo.restNum}">
 											<input type="button" value="예약">
-										</a></td>
+									</a></td>
 								</tr>
 							</table>
-							
+
 						</div>
 					</div>
 				</div>

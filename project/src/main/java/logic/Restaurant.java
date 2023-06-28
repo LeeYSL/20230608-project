@@ -6,7 +6,7 @@ import javax.validation.constraints.Positive;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import ch.qos.logback.classic.spi.STEUtil;
+
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,8 +34,8 @@ public class Restaurant {
     private String tel;
     private List<Menu> menuList; //메뉴
     private String delYn; // 가게 삭제
-//    private MultipartFile picture; // 사진 등록해서 전송할 때 쓰는거
-// 	private String fileurl;
-    private String picture;
+    private MultipartFile picture; // 사진 등록해서 전송할 때 쓰는거
+	private String fileurl;
+   
 	
 }

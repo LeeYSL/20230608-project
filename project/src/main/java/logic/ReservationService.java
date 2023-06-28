@@ -1,11 +1,14 @@
 package logic;
 
+import java.io.File;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import dao.ReservationDao;
 import dao.RestaurantDao;
@@ -20,8 +23,26 @@ public class ReservationService {
 
 
 	
-	public void restauInsert(@Valid Restaurant restaurant) {
+	public void restauInsert(@Valid Restaurant restaurant, HttpSession session) {
+		if(restaurant.getPicture() != null && !restaurant.getPicture().isEmpty()) {
+			 String path = session.getServletContext().getRealPath("/") + "restaurant/file/";
+			 this.uploadFileCreate(restaurant.getPicture(),path);
+			 restaurant.setFileurl(restaurant.getPicture().getOriginalFilename());
+		}
 		restaurantDao.insert(restaurant);
+	}
+
+	private void uploadFileCreate(MultipartFile file, String path) {
+		String orgFile=file.getOriginalFilename();
+		File f= new File(path);
+		if(!f.exists()) {
+			f.mkdirs();
+		}
+		try  {
+			file.transferTo(new File(path+orgFile));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
 	}
 
 	public void dayoffInsert(@Valid Dayoff dayoff) {

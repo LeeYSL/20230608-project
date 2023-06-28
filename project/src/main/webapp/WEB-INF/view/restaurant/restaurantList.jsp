@@ -40,7 +40,6 @@
 											<button>검색</button>
 										</div>
 								<tr>
-									<th><img src="../../img/${rest.pictureUrl}"></th>
 									<th>가게 이름</th>
 									<th>주소</th>
 									<th width="10%"></th>
@@ -53,6 +52,7 @@
 							<table class="w3-table-all">
 								<c:forEach items="${restList}" var="rest">
 									<tr>
+										<td align="center">사진 : <img width="100" height="100" src="file/${rest.fileurl}"></td>
 										<td align="center">이름 : ${rest.name}</td>
 										<td align="center">주소 : ${rest.address}</td>
 										<td align="center">전화번호 : ${rest.restPhoneNo}</td>

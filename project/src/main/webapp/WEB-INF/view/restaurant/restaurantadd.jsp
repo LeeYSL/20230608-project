@@ -55,7 +55,7 @@
 <body>
 	<h2>가게 등록</h2>
 	<div>가게등록하는 창입니다.</div>
-	<form:form modelAttribute="restaurant" method="post"
+	<form:form modelAttribute="restaurant" enctype="multipart/form-data"  method="post"
 		action="restaurantadd" onsubmit="return check()">
 		<spring:hasBindErrors name="restaurant">
 			<font color="red"> <c:forEach items="${errors.globalErrors}"
