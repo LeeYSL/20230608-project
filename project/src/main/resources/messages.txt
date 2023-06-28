@@ -8,3 +8,9 @@ error.input.pw=비밀번호 오류입니다.
 error.input.update=회원정보 수정 실패
 error.pw.check=비밀번호가 일치하지 않습니다.
 error.duplicate.userId=아이디를 사용할 수 없습니다.
+
+error.userId.search=회원 정보가 없습니다.
+error.required.tel=전화번호를 입력해주세요.
+error.required.name=이름을 입력해주세요.
+error.required.UserId=아이디를 입력해주세요.
+error.userId.search=비밀번호 찾기 오류

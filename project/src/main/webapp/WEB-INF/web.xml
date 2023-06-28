@@ -22,7 +22,7 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>config.MvcConfig
                  config.DBConfig
-                 config.WebSocketConfig
+                 config.MailConfig
     </param-value>
   </init-param>
   <load-on-startup>1</load-on-startup> <!-- 서버를 restart 시키면 항상 1개는 올려놔 -->

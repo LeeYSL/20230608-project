@@ -158,7 +158,7 @@ a {
 							<button class="w3-button w3-white w3-border w3-border-orange w3-round-large w3-right">글쓰기</button>
 						</a>
 					</c:if>
-					<c:if test="${boardId == 2}">
+					<c:if test="${boardId == 2 && sessionScope.loginUser != null}">
 						<a href="write">
 							<button class="w3-button w3-white w3-border w3-border-orange w3-round-large w3-right">글쓰기</button>
 						</a>

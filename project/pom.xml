@@ -1,30 +1,26 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>gdu.kr</groupId>
-  <artifactId>project</artifactId>
-  <packaging>war</packaging>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>project Maven Webapp</name> 
-  <url>http://maven.apache.org</url>
-  
-    	<properties>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>gdu.kr</groupId>
+	<artifactId>project</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>project Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	<properties>
 		<project.build.souceEncoding>UTF-8</project.build.souceEncoding>
 		<spring.version>5.3.20</spring.version>
 		<org.slf4j.version>1.7.30</org.slf4j.version>
 		<!--slf4j 로그 작성해주는 유틸리티 -->
 	</properties>
-
-  
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-      
-    		<dependency>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>${spring.version}</version>
@@ -35,7 +31,7 @@
 					<artifactId>commons-logging</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency> 
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
@@ -109,7 +105,6 @@
 			<version>2.1</version>
 		</dependency>
 		<!-- 파일 업로드 설정 끝-->
-		
 		<!-- sitemesh 설정 -->
 		<dependency>
 			<groupId>org.sitemesh</groupId>
@@ -117,7 +112,6 @@
 			<version>3.0.1</version>
 		</dependency>
 		<!-- sitemesh 설정 끝 -->
-
 		<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -145,14 +139,19 @@
 			<version>1.4.7</version>
 		</dependency>
 		<!--mail 관련 설정 끝-->
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
 		<!--spring websocket을 위한 설정 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-websocket</artifactId>
 			<version>${spring.version}</version>
-		</dependency>
-		<!--spring websocket을 위한 설정 끝-->	
-		
+		</dependency> 
+		<!--spring websocket을 위한 설정 끝-->
 		<!--
 			@RestController 의 메서드에서 리턴값을 JavaScript의 객체로 변경해주는 설정
 				리턴타입 : List => 배열 객체로
@@ -160,15 +159,15 @@
 		-->
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
 		<dependency>
-    		<groupId>com.fasterxml.jackson.core</groupId>
-    		<artifactId>jackson-core</artifactId>
-    		<version>2.13.4</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.13.4</version>
 		</dependency>
 		<dependency>
-	   		<groupId>com.fasterxml.jackson.core</groupId>
-   			<artifactId>jackson-databind</artifactId>
-   			<version>2.13.4</version>
-			</dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.13.4</version>
+		</dependency>
 		<!--jsoup 설정 -->
 		<dependency>
 			<groupId>org.jsoup</groupId>
@@ -188,25 +187,31 @@
 			<version>2.0.6</version>
 		</dependency>
 		<!--mybatis 관련 설정 끝 -->
-  		<!--connection Pool 에 관련한 객체 시작 --> 
+		<!--connection Pool 에 관련한 객체 시작 -->
 		<dependency>
 			<groupId>com.mchange</groupId>
 			<artifactId>c3p0</artifactId>
 			<version>0.9.5.5</version>
-		</dependency>   
-  		<!--connection Pool 에 관련한 객체 끝 -->
-  		<!--lombok 관련설정 -->
-  		<dependency>
-  			<groupId>org.projectlombok</groupId>
-  			<artifactId>lombok</artifactId>
-  			<version>1.18.28</version>
-  		</dependency>
-  		<!--lombok 관련설정 끝-->
+		</dependency>
+		<!--connection Pool 에 관련한 객체 끝 -->
+		<!--lombok 관련설정 -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.28</version>
+		</dependency>
+		<!--lombok 관련설정 끝-->
+    <!--json-simple 설정 -->
+    <dependency>
+		<groupId>com.googlecode.json-simple</groupId>
+		<artifactId>json-simple</artifactId>
+		<version>1.1.1</version>
+	</dependency>
+	 <!--json-simple 설정 끝-->		
 	</dependencies>
-  
-  <build>
-    <finalName>project</finalName>
-    		<!--pom.xml의 첫번째 줄 오류 발생시 추가 -->
+	<build>
+		<finalName>project</finalName>
+		<!--pom.xml의 첫번째 줄 오류 발생시 추가 -->
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -214,6 +219,5 @@
 				<version>3.3.2</version>
 			</plugin>
 		</plugins>
-  </build>
+	</build>
 </project>
-    

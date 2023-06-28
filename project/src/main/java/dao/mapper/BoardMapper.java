@@ -70,4 +70,9 @@ public interface BoardMapper {
 	@Select("select * from board where user_id=#{userId}")
 	List<Board> myblist(String userId);
 
+
+
+	@Select("select count(*) from board where user_id=#{userId}")
+	int myblistcount(String userId);
+
 }

@@ -7,6 +7,27 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+$(".chk_btn").click(function(){
+	const userId = $(".userId").val();
+	console.log("내이메일:"+userId);
+	const check=$(".check")
+	
+	$.ajax({
+		type:"GET",
+		url:'<c:url value="/user/userIdCheck?userId="/>'+userId,
+				success:function(data){
+					console.log("data:"+data);
+					check.attr('disabled',false);
+					code=data;
+					alert('인증번호가 전송되었습니다.')
+				}
+	});
+});
+
+
+</script>
+
 <style type="text/css">
 .page {
 
@@ -27,7 +48,12 @@ th {
 td {
 	background-color :white;
 }
-
+#mail_check_input_box_false{
+	background: #ebebe4; 
+}
+#mail_check_input_box_true{
+	background: white; 
+}
 
 </style>
 </head>
@@ -54,14 +80,10 @@ td {
 								<tr>
 									<th>아이디</th>
 									<td>
-										<form:input path="userId" class="w3-input" placeholder="이메일"  style="width:50%;"/>
+										<form:input path="userId" class="w3-input" id="userId" placeholder="아이디"  style="width:50%;"/>
 										<font color="red"> 
 											<form:errors path="userId" />
-										</font>
-									<%--
-										<input type="text" class="w3-input" placeholder="인증번호" style="width:30%;">
-										<input type="button" value="인증번호 전송" class="w3-button w3-white w3-border w3-border-orange w3-round-large" >
-									 --%>
+										</font>								
 									</td>
 								</tr>
 								<tr>
@@ -109,6 +131,17 @@ td {
 										</font>
 									</td>
 								</tr>
+								<tr>
+									<th>이메일</th>
+									<td>
+										<form:input path="email"  class="w3-input"  placeholder="이메일" /> 
+										<font color="red"> 
+											<form:errors path="email" />
+										</font>
+										<input type="text" id="check" placeholder="인증번호입력" disabled="disabled">		
+										<input type="button" id="chk_btn" value="인증번호전송">	
+									</td>
+								</tr>								
 								<tr>
 									<th>주소</th>
 									<td>

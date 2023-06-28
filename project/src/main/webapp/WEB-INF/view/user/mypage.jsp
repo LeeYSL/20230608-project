@@ -142,7 +142,7 @@
       <div class="info w3-container w3-card w3-white w3-round w3-margin" id="binfo" style="display:none;"><br>
         <h4>내가 쓴 글</h4><br>
         <hr class="w3-clear">
-		<table class="w3-table-all">
+		<table class="w3-table-all">		
 			<tr>
 				<th width="10%"></th>
 				<th align="center" width="70%">제목</th>
@@ -151,6 +151,7 @@
 			<c:forEach items="${myblist}" var="board">
 				<tr>
 					<td width="10%">
+						<input type="hidden" name="pageNum" value="1">
 						<input type="checkbox">
 					</td>
 					<td align="center" width="70%">
@@ -161,6 +162,24 @@
 					</td>
 				</tr>
 			</c:forEach>
+						<tr>
+							<td colspan="6" class="w3-center">
+								<c:if test="${pageNum > 1}">
+									<a href="javascript:listpage('${pageNum -1}')">[이전]</a>
+								</c:if>
+								<c:if test="${pageNum <= 1}">[이전]</c:if>
+								<c:forEach var="a" begin="${startpage}" end="${endpage}">
+									<c:if test="${a == pageNum}">[${a}]</c:if>
+									<c:if test="${a != pageNum}">
+										<a href="javascript:listpage('${a}')">[${a}]</a>
+									</c:if>
+								</c:forEach>
+								<c:if test="${pageNum < maxpage}">
+									<a href="javascript:listpage('${pageNum +1}')">[다음]</a>
+								</c:if>
+								<c:if test="${pageNum >= maxpage}">[다음]</c:if>
+							</td>
+						</tr>			
 		</table>
 		<br>
       </div>

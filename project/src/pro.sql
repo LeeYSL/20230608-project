@@ -134,6 +134,7 @@ CREATE TABLE user
 	tel varchar(13) NOT NULL,
 	reg_date date NOT NULL,
 	photo varchar(100),
+	auth_key varchar(100),
 	PRIMARY KEY (user_id),
 	UNIQUE (user_id),
 	UNIQUE (nickname),

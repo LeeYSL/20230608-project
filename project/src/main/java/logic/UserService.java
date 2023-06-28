@@ -3,7 +3,6 @@ package logic;
 import java.io.File;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -91,11 +90,6 @@ public class UserService {
 
 
 
-
-
-
-
-
 	public Board detail(Integer num) {
 		return boardDao.detail(num);
 	}
@@ -169,6 +163,45 @@ public class UserService {
 	public List<User> myulist(String userId) {
 		return userDao.myulist(userId);
 	}
+
+
+
+
+
+	public String idsearch(String tel, String name) {
+		return userDao.idsearch(tel,name);
+	}
+
+
+	public List<User> getUserlist(String[] string) {
+		return userDao.list(string);
+	}
+
+
+	public String getSearch(User user) {
+		return userDao.search(user);
+	}
+
+
+	public void userChgpass(String userId, String chgpass) {
+		userDao.chgpass(userId,chgpass);
+	}
+
+
+	public List<User> getUserlist() {
+		return userDao.list();
+	}
+
+
+	public List<User> getUserlist(String tel) {
+		return userDao.telList(tel);
+	}
+
+
+	public int myblistcount(String userId) {
+		return boardDao.myblistcount(userId);
+	}
+
 
 
 }
