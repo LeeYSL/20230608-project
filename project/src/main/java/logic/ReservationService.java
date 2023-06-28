@@ -37,13 +37,13 @@ public class ReservationService {
 		
 	}
 	
-	public List<Reservation> myList(String userId, Integer pageNum, int limit) {
-		return reservationDao.myList(userId,pageNum,limit);
+	public List<Reservation> myList(String userId, Integer pageNum, int limit, String delYn) {
+		return reservationDao.myList(userId,pageNum,limit,delYn);
 		
 	}
 
-	public List<Restaurant> ownerRest(String userId) {
-	     return restaurantDao.ownerRest(userId);
+	public List<Restaurant> ownerRest(String userId,String delYn) {
+	     return restaurantDao.ownerRest(userId,delYn);
 		
 		
 	}
@@ -67,11 +67,11 @@ public class ReservationService {
 		
 	}
 
-	public List<Restaurant> restList(Integer pageNum, int limit, String type, String searchcontent) {
-		return restaurantDao.restList(pageNum,limit,type,searchcontent);
+	public List<Restaurant> restList(Integer pageNum, int limit, String type, String searchcontent, String delYn) {
+		return restaurantDao.restList(pageNum,limit,type,searchcontent,delYn);
 	}
-	public List<Reservation> ownerList(String userId, int pageNum, int limit) {
-		return reservationDao.ownerRest(userId,pageNum,limit);
+	public List<Reservation> ownerList(String userId, int pageNum, int limit,String delYn) {
+		return reservationDao.ownerRest(userId,pageNum,limit,delYn);
 	}
 
 	public int listcount() {
@@ -96,6 +96,11 @@ public class ReservationService {
 
 	public Restaurant restInfoadd(int Num) {
 	     return reservationDao.restInfoadd(Num);
+		
+	}
+
+	public void deleteRest(String delYn, int num) {
+		restaurantDao.deleteRest(delYn,num);
 		
 	}
 

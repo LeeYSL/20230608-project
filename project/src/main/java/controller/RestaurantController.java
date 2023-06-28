@@ -40,7 +40,7 @@ public class RestaurantController {
 	@PostMapping("restaurantadd")
 	public ModelAndView restaurantAdd(@Valid Restaurant restaurant, BindingResult bresult, HttpSession session)
 			throws Exception {
-		System.out.println("rest : " + restaurant);
+		
 		ModelAndView mav = new ModelAndView();
 		if (bresult.hasErrors()) {
 			mav.getModel().putAll(bresult.getModel());
@@ -75,11 +75,12 @@ public class RestaurantController {
 
 		}
 		mav.setViewName("/reservation/myList");
+		System.out.println("rest : " + restaurant);
 		return mav;
 	}
 
 	@RequestMapping("restaurantList")
-	ModelAndView restList(@RequestParam Map<String, String> param, HttpSession session) {
+	ModelAndView restList(@RequestParam Map<String, String> param, HttpSession session,String delYn) {
 		ModelAndView mav = new ModelAndView();
 
 	   Integer pageNum = null;
@@ -103,7 +104,7 @@ public class RestaurantController {
 		System.out.println("pageNum : " + pageNum);
 		System.out.println("limit : " + limit);
 		
-		List<Restaurant> restList = service.restList(pageNum, limit, type, searchcontent);
+		List<Restaurant> restList = service.restList(pageNum, limit, type, searchcontent,delYn);
 		
 		int maxpage = (int) ((double) restListcount / limit + 0.95);// 등록 건수에 따른 최대 페이지
 		int startpage = (int) ((pageNum / 10.0 + 0.9) - 1) * 10 + 1;// 페이지의 시작 번호
@@ -129,17 +130,35 @@ public class RestaurantController {
 		return mav;
 	}
 
-	@RequestMapping("ownerRest") 
+	@GetMapping("ownerRest") 
 	public ModelAndView ownerRest(HttpSession session,Restaurant restaurant) { 
 		ModelAndView mav = new ModelAndView();
      
 		User user = (User) session.getAttribute("loginUser");
- 
-		 List<Restaurant> ownerRest = service.ownerRest(user.getUserId());
+       
+	 
+		 List<Restaurant> ownerRest = service.ownerRest(user.getUserId(),restaurant.getDelYn());
 	
 		 mav.addObject("ownerRest",ownerRest);
+	
+
 		 return mav;
 	}
+	
+	@PostMapping("ownerRest")
+	public ModelAndView ownerRest(Restaurant restaurant,String delYn,int num) { 
+		ModelAndView mav = new ModelAndView();
+	
+		service.deleteRest(delYn,num);
+		System.out.println(num);
+		 
+		mav.addObject("deleteRest",num);
+		System.out.println(num);
+		
+		 return mav;
+	
+	}
+
 	@GetMapping("restaurantInfo")
 	public ModelAndView restaurantInfo(Restaurant restaurant,int num) { 
 		//가게리스트에서 이동할 때 보낸 num을 사용한다.
@@ -158,5 +177,12 @@ public class RestaurantController {
 		mav.addObject("restInfo", restInfo);
 
 	    return mav;
+	}
+	@PostMapping("review") 
+	public ModelAndView review() {
+		ModelAndView mav = new ModelAndView();
+
+	    return mav;
+		
 	}
 }

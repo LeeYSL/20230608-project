@@ -77,7 +77,7 @@ public class ReservationController {
 	
 
 	@GetMapping("myList")
-	public ModelAndView myList(@RequestParam Map<String, String> param, HttpSession session) { // key,value 둘 다 // map으로
+	public ModelAndView myList(@RequestParam Map<String, String> param, HttpSession session,String delYn) { // key,value 둘 다 // map으로
 																								// // 전달해라
 		ModelAndView mav = new ModelAndView();
 
@@ -94,7 +94,7 @@ public class ReservationController {
 		int limit = 10;
 		int listcount = service.listcount();
 
-		List<Reservation> rsrvtList = service.myList(user.getUserId(), pageNum, limit); // reservation에 있는 정보를 list로 저장
+		List<Reservation> rsrvtList = service.myList(user.getUserId(), pageNum, limit,delYn); // reservation에 있는 정보를 list로 저장
 																						// 로그인 되어 있는 id를 가지고 리스트를 조회하러가라
 		int maxpage = (int) ((double) listcount / limit + 0.95);
 		int startpage = (int) ((pageNum / 10.0 + 0.9) - 1) * 10 + 1;
@@ -162,14 +162,14 @@ public class ReservationController {
 		// 해줌?
 
 		System.out.println();
-		mav.addObject("num", num);
+		mav.addObject("num", num); //조회해온 num을 넘기는건가??
 
 		return mav;
 
 	}
 
 	@GetMapping("ownerList")
-	public ModelAndView ownerList(@RequestParam Map<String, String> param, HttpSession session) {
+	public ModelAndView ownerList(@RequestParam Map<String, String> param, HttpSession session,String delYn) {
 		ModelAndView mav = new ModelAndView();
 
 		User user = (User) session.getAttribute("loginUser");
@@ -183,7 +183,7 @@ public class ReservationController {
 
 		int limit = 10;
 		int listcount = service.listcount();
-		List<Reservation> rsrvtList = service.ownerList(user.getUserId(), pageNum, limit);
+		List<Reservation> rsrvtList = service.ownerList(user.getUserId(), pageNum, limit ,delYn);
 
 		int maxpage = (int) ((double) listcount / limit + 0.95);
 		int startpage = (int) ((pageNum / 10.0 + 0.9) - 1) * 10 + 1;
