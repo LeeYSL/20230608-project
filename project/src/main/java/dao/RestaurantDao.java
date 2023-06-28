@@ -42,12 +42,13 @@ public class RestaurantDao {
 		return template.getMapper(cls).maxSelect();
 	}
 
-	public List<Restaurant> restList(Integer pageNum, int limit, String type, String searchcontent) {
+	public List<Restaurant> restList(Integer pageNum, int limit, String type, String searchcontent, String delYn) {
 		param.clear();
 		param.put("pageNum", (pageNum-1) * limit); 
 		param.put("limit", limit);
 		param.put("type", type);
 		param.put("searchcontent",searchcontent);
+		param.put("delYn",delYn);
 		
 		System.out.println("pageNum" + pageNum);
 		System.out.println("type"+type);
@@ -55,8 +56,8 @@ public class RestaurantDao {
 		return template.getMapper(cls).restList(param);
 	}
 
-	public List<Restaurant> ownerRest(String userId) {
-		return  template.getMapper(cls).ownerRest(userId);
+	public List<Restaurant> ownerRest(String userId, String delYn) {
+		return  template.getMapper(cls).ownerRest(userId,delYn);
 	}
 
 	public int restListcount(String type, String searchcontent) {

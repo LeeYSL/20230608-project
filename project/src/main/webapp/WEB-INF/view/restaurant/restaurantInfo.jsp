@@ -19,7 +19,9 @@
 							<table>
 								<tr>
 									<th>식당사진</th>
-									<th></th>
+									<th>
+									<img src="file/${restInfo.fileurl}">
+									</th>
 								</tr>
 								<tr>
 									<th>식당이름</th>
@@ -59,58 +61,6 @@
 								</tr>
 							</table>
 							
-							<form:form modelAttribute="review"  method="post" action="review">
-								<div>
-								<table>
-									<tr>
-										<td>
-											<form:textarea path="review" cols="100" row="10" class="w3-input" placeholder="리뷰" />
-											<font color="red">
-												<form:errors path="content" />
-											</font>
-											<input type="hidden" name="userId" value="${sessionScope.loginUser.userId}">
-											<input type="hidden" name="num" value="${param.num}">
-										</td>
-										<td>
-											<button type="submit" class="w3-button w3-white w3-border w3-border-orange w3-round-large">리뷰 등록</button>
-										</td>
-									</tr>
-								</table>
-								</div>
-							</form:form>
-							<hr>
-							<div>
-								<form action="reviewDelete" method="post">
-								<table class="w3-table-all">
-									<c:forEach var="review" items="${reviewList}">
-									<tr>
-										<td>
-											${review.userId}
-										</td>
-										<td>
-											${review.content}
-										</td>
-										<td>
-											<fmt:formatDate value="${review.date}" pattern="yyyyMMdd" var="cdate"/>
-												<c:if test="${cdate == today}">
-													<fmt:formatDate value="${review.date}" pattern="HH:mm:ss" />												
-												</c:if>
-												<c:if test="${cdate != today}">
-													<fmt:formatDate value="${review.date}" pattern="yyyy-MM-dd" />
-												</c:if>
-										</td>
-										<c:if test="${sessionScope.loginUser.userId == review.userId}">
-											<td>
-												<a href="reviewdelete?num=${review.num}&seq=${review.seq}">
-													<button type="button" class="w3-button w3-white w3-border w3-border-orange w3-round-large">리뷰 삭제</button>
-												</a>
-											</td>
-										</c:if>
-									</tr>
-									</c:forEach>
-								</table>
-									</form>
-							</div>
 						</div>
 					</div>
 				</div>

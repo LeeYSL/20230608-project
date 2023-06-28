@@ -30,20 +30,22 @@ public class ReservationDao {
 		template.getMapper(cls).bookInsert(reservation);
 	}
 
-	 public List<Reservation> myList(String userId, Integer pageNum, int limit) {
+	 public List<Reservation> myList(String userId, Integer pageNum, int limit, String delYn) {
 		param.clear();
 		param.put("userId", userId);
 		param.put("pageNum", (pageNum-1) * limit); 
 		param.put("limit", limit);
+		param.put("delYn", delYn);
 
 		return template.getMapper(cls).myListSelect(param); //내가 담아 놓은 걸 가져가야 되니까 매개변수에 param
 	}
 
-		public List<Reservation> ownerRest(String userId, int pageNum, int limit) {
+		public List<Reservation> ownerRest(String userId, int pageNum, int limit,String delYn) {
 		param.clear();
 		param.put("userId", userId);
 		param.put("pageNum", (pageNum-1) * limit); 
 		param.put("limit", limit);
+		param.put("delYn", delYn);
 		return template.getMapper(cls).ownerListSelect(param);
 	}
 

@@ -26,7 +26,7 @@
 					dataType : 'json',
 					data : {
 						'num' : num,
-						'delete' : 'Y'
+						'delYn' : 'Y'
 					},
 					success : function(result) {
 						console.log("success");

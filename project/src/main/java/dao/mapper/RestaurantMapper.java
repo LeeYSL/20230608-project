@@ -39,13 +39,23 @@ public interface RestaurantMapper {
 
 	@Select({"<script>",
 		   "select * from restaurant ",
-		   " <if test='searchcontent != null'> where ${type} like '%${searchcontent}%'</if>",
+		   " where delYn IS NULL ",
+		   " <if test='searchcontent != null'>",
+		   " <choose>",
+		   " <when test=\"type.equalsIgnoreCase('menu')\">",
+		   "and rest_num IN (select rest_num from menu where menu_name like '%${searchcontent}%')",
+		   " </when>",
+		   " <otherwise>",
+		   "and ${type} like '%${searchcontent}%'",
+		   " </otherwise>",
+		   " </choose>",
+		   "</if>",
 		   " <if test='limit != null'> order by rest_num desc limit #{pageNum}, #{limit} </if>",
 	       "</script>"})
 	List<Restaurant> restList(Map<String, Object> param);
 	
-	@Select("select * from restaurant where user_id=#{userId}")
-	List<Restaurant> ownerRest(String userId);
+	@Select("select * from restaurant where user_id=#{userId} and delYn IS NULL")
+	List<Restaurant> ownerRest(@Param("userId") String userId,@Param("delYn")String delYn);
 	
 	
 	@Select({"<script>",

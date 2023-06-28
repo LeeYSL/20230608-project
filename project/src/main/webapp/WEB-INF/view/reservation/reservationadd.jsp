@@ -87,7 +87,7 @@ th {
 	}
 
 	
-	<!--	   let IMP = window.IMP
+	/*	   let IMP = window.IMP
 	   IMP.init("imp01555276") //가맹점 식별코드
 	   
 	   function kakaopay() {
@@ -124,7 +124,7 @@ th {
 			
 		})
 		
-	} -->
+	} */
 	
 </script>
 

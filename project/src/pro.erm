@@ -11,8 +11,8 @@
 	</page_setting>
 	<category_index>0</category_index>
 	<zoom>0.8</zoom>
-	<x>0</x>
-	<y>264</y>
+	<x>107</x>
+	<y>30</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -135,7 +135,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2023-06-08 16:43:37</creation_date>
-			<updated_date>2023-06-27 15:54:03</updated_date>
+			<updated_date>2023-06-28 09:36:40</updated_date>
 			<model_property>
 				<name>프로젝트명</name>
 				<value></value>
@@ -766,7 +766,7 @@
 		</word>
 		<word>
 			<id>37</id>
-			<length>100</length>
+			<length>200</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -1700,7 +1700,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>18</word_id>
+					<word_id>17</word_id>
 					<id>12</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -2199,7 +2199,7 @@
 			<connections>
 				<relation>
 					<id>3</id>
-					<source>5</source>
+					<source>7</source>
 					<target>4</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -2221,7 +2221,7 @@
 				</relation>
 				<relation>
 					<id>4</id>
-					<source>7</source>
+					<source>5</source>
 					<target>4</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -2252,7 +2252,7 @@
 				<normal_column>
 					<id>24</id>
 					<referenced_column>47</referenced_column>
-					<relation>4</relation>
+					<relation>3</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -2319,7 +2319,7 @@
 				<normal_column>
 					<id>26</id>
 					<referenced_column>29</referenced_column>
-					<relation>3</relation>
+					<relation>4</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -3459,7 +3459,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>17</word_id>
+					<word_id>18</word_id>
 					<id>56</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
