@@ -285,13 +285,13 @@ public class UserController {
 	@PostMapping("update")
 	public ModelAndView idCheckupdate (@Valid User user, BindingResult bresult, String userId, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-//		if(bresult.hasErrors()) {
-//			mav.getModel().putAll(bresult.getModel());
-//			//reject 메서드 : global error에 추가
-//			bresult.reject("error.input.check");
-//			mav.setViewName("redirect:update?userId="+user.getUserId());
-//			return mav;
-//		}
+		if(bresult.hasErrors()) {
+			mav.getModel().putAll(bresult.getModel());
+			//reject 메서드 : global error에 추가
+			bresult.reject("error.input.check");
+			mav.setViewName("redirect:update?userId="+user.getUserId());
+			return mav;
+		}
 		User loginUser = (User)session.getAttribute("loginUser");		
 		if(!pwHash(user.getPw()).equals(loginUser.getPw())) {
 			mav.getModel().putAll(bresult.getModel());
