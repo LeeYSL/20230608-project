@@ -24,8 +24,8 @@ public interface ReservationMapper {
 			" SELECT LEFT(A.rsrvt_date,8) AS rsrvt_date, RIGHT(A.rsrvt_date,2) AS rsrvt_time, A.num, A.rsrvt_name,A.phone_no,A.people,A.confirm,B.name,B.delYn ",
 			" FROM reservation A ",
 			" JOIN restaurant B ",
-			"  ON A.rest_num = B.rest_num ",
-			" WHERE A.user_id =#{userId} and delYn IS NULL " ,
+			" ON A.rest_num = B.rest_num ",
+			" WHERE A.user_id =#{userId} and B.delYn IS NULL ",
 			" ORDER BY reg_date", 
 			" <if test='limit != null'> limit #{pageNum}, #{limit} </if> ",
 			" </script>" })
@@ -58,7 +58,7 @@ public interface ReservationMapper {
 			"	  FROM reservation A ",
 			"	  JOIN restaurant B " ,
 		    "	  ON A.rest_num = B.rest_num " ,
-			"	  WHERE B.user_id = #{userId} and delYn IS NULL",
+			"	  WHERE B.user_id = #{userId} and B.delYn IS NULL",
 			"	  ORDER BY rest_num, reg_date" ,
 			"    <if test='limit != null'> limit #{pageNum}, #{limit} </if> ",
         	"    </script>" })

@@ -36,7 +36,7 @@ import logic.User;
 public class ReservationController {
 	@Autowired
 	private ReservationService service;
-
+	
 	@GetMapping("*")
 	public ModelAndView add() {
 		ModelAndView mav = new ModelAndView();
@@ -45,7 +45,7 @@ public class ReservationController {
 	}
 
 	@PostMapping("reservationadd")
-	public ModelAndView reservation(@Valid Reservation reservation, BindingResult bresult, HttpSession session)
+	public ModelAndView reservation(@Valid Reservation reservation, BindingResult bresult, HttpSession session,Restaurant restaurant)
 			throws Exception {
 		ModelAndView mav = new ModelAndView();
 		if (bresult.hasErrors()) {
@@ -57,18 +57,30 @@ public class ReservationController {
 		}
 		try {
 			User user = (User) session.getAttribute("loginUser");
+			System.out.println(restaurant.getRestNum());
 			reservation.setUserId(user.getUserId());
-			reservation.setRsrvtDate(reservation.getRsrvtDate() + reservation.getRsrvtTime());
-	//		reservation.setRestNum(reservation.getRestNum());
+			reservation.setRsrvtDate(reservation.getRsrvtDate() + reservation.getRsrvtTime());		
+	    //    reservation.setRestNum(restaurant.getRestNum());
 		
 			
 			
-			// reservation.setConfirm(1); // 확정여부-예약대기(1)로 고정
-			service.bookinsert(reservation);
+		//	 reservation.setConfirm(1); // 확정여부-예약대기(1)로 고정
+		//	mav.addObject("restNum",restaurant.getRestNum());
+			
+	//		System.out.println(reservation);
+			
+		 service.bookinsert(reservation);		 
+
+		mav.addObject("reservation", reservation);
+	//	mav.addObject("restNum",num);
+	
+			
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println(restaurant.getRestNum());
 		}
-		mav.setViewName("redirect:myList");
+	
+		mav.setViewName("redirect:myList?num="+restaurant.getRestNum());
 		return mav;
 
 	}
@@ -78,7 +90,8 @@ public class ReservationController {
 		
 //		service.restInfoadd(reservation.getRestNum());
 		Restaurant restaurant = service.restInfoadd(num);
-		mav.addObject("num", num);
+		mav.addObject("dayoff", service.dayoffList(num)); 
+		mav.addObject("restNum", num);
 		mav.addObject("restaurant", restaurant);
 		return mav;
 

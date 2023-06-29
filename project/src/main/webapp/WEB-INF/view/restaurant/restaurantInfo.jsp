@@ -44,21 +44,31 @@
 								</tr>
 								<tr>
 									<th>휴무일</th>
-									<td>
-										<input type="checkbox" id="mon" <c:if test="${dayoff.mon eq 'Y'}">checked</c:if> onclick="return false;"/>월요일 
-										<input type="checkbox" id="tue" <c:if test="${dayoff.tue eq 'Y'}">checked</c:if> onclick="return false;"/>화요일
-										<input type="checkbox" id="wed" <c:if test="${dayoff.wed eq 'Y'}">checked</c:if> onclick="return false;"/>수요일
-										<input type="checkbox" id="thur" <c:if test="${dayoff.thur eq 'Y'}">checked</c:if> onclick="return false;"/>목요일
-										<input type="checkbox" id="fri" <c:if test="${dayoff.fri eq 'Y'}">checked</c:if> onclick="return false;" />금요일
-										<input type="checkbox" id="sat" <c:if test="${dayoff.sat eq 'Y'}">checked</c:if> onclick="return false;"/>토요일
-										<input type="checkbox" id="sun" <c:if test="${dayoff.sun eq 'Y'}">checked</c:if> onclick="return false;"/>일요일
-									</td>
+									<td><input type="checkbox" id="mon"
+										<c:if test="${dayoff.mon eq 'Y'}">checked</c:if>
+										onclick="return false;" />월요일 <input type="checkbox" id="tue"
+										<c:if test="${dayoff.tue eq 'Y'}">checked</c:if>
+										onclick="return false;" />화요일 <input type="checkbox" id="wed"
+										<c:if test="${dayoff.wed eq 'Y'}">checked</c:if>
+										onclick="return false;" />수요일 <input type="checkbox" id="thur"
+										<c:if test="${dayoff.thur eq 'Y'}">checked</c:if>
+										onclick="return false;" />목요일 <input type="checkbox" id="fri"
+										<c:if test="${dayoff.fri eq 'Y'}">checked</c:if>
+										onclick="return false;" />금요일 <input type="checkbox" id="sat"
+										<c:if test="${dayoff.sat eq 'Y'}">checked</c:if>
+										onclick="return false;" />토요일 <input type="checkbox" id="sun"
+										<c:if test="${dayoff.sun eq 'Y'}">checked</c:if>
+										onclick="return false;" />일요일</td>
 								</tr>
+								<c:forEach items="${memuList}" var="menu">
+									<tr>
+										<th>메뉴</th>
+										<td align="left" colspan="2">메뉴 :${menu.menuName}, 가격:
+											${menu.price} 원</td>
+									</tr>
+								</c:forEach>
 								<tr>
-									<th>메뉴</th>
-									<td>${memuList}</td>
-								</tr>
-								<tr>
+									<td><input type="hidden" ${menu.restNum}></td>
 									<td><input type="hidden" ${restInfo.restNum}></td>
 									<td><input type="hidden" ${dayoff}></td>
 									<td><input type="hidden" ${memuList}></td>

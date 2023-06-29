@@ -93,7 +93,7 @@ CREATE TABLE restaurant
 	tel varchar(100) NOT NULL,
 	name varchar(40) NOT NULL,
 	address varchar(100) NOT NULL,
-	license_num int(12) NOT NULL,
+	license_num int(200) NOT NULL,
 	picture varchar(100),
 	maxpeople int NOT NULL,
 	open varchar(100),

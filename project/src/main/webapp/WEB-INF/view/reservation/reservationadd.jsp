@@ -172,8 +172,7 @@ th {
 						<td><form:input path="phoneNo" placeholder="전화번호" /> <font
 							color="red"> <form:errors path="phoneNo" />
 						</font></td>
-					   <td><input type="hidden" value="${restNum}"></td>
-					   <td><input type="hidden" value="${Num}"></td>
+					   <td><input type="hidden" name="restNum" value="${restNum}"></td> 
 					</tr>
 					<tr>
 						<td><form:select style="width:200" path="people">
@@ -203,9 +202,10 @@ th {
 						</font></td>
 					</tr>
 				</table>
-			<td><a href="javascript:kakaopay()">예약 및 예약금 결제</a></td>
+			<td>
+			 <input type="submit" value="예약 및 예약금 결제" name="add"></td>
 		       <!-- 
-		        <input type="submit" value="예약 및 예약금 결제" name="add">
+		       <a href="javascript:kakaopay()">예약 및 예약금 결제</a>
 		        --> 
 				<!-- 예약 상세 페이지로 이동하기 -->
 				<input type="button" value="취소" name="add">

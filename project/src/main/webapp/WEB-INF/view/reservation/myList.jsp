@@ -24,7 +24,7 @@
 					'num' : num,
 					'confirm' : 3
 				},
-				,success:function(result) {
+				success:function(result) {
 					  //예약취소로 문구로 변경하고 취소 버튼을 숨김
 					  $(btn).parent().siblings('td[name="tdConfirm"]').text("예약 취소");
 					  $(btn).hide();
