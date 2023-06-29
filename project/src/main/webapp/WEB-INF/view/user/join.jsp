@@ -80,7 +80,7 @@ td {
 								<tr>
 									<th>아이디</th>
 									<td>
-										<form:input path="userId" class="w3-input" id="userId" placeholder="아이디"  style="width:50%;"/>
+										<form:input path="userId" class="w3-input" placeholder="아이디"  style="width:50%;"/>
 										<font color="red"> 
 											<form:errors path="userId" />
 										</font>								

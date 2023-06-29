@@ -85,6 +85,22 @@ public class UserDao {
 		return template.getMapper(cls).telList(tel);
 	}
 
+	public int usercount(String type, String searchcontent) {
+		param.clear();
+		param.put("type", type);
+		param.put("searchcontent", searchcontent);
+		return template.getMapper(cls).usercount(param);
+	}
+
+	public List<User> userlist(int limit, Integer pageNum, String type, String searchcontent) {
+		param.clear();
+		param.put("limit", limit);
+		param.put("startrow",(pageNum-1)*limit);
+		param.put("type",type);
+		param.put("searchcontent", searchcontent);
+		return template.getMapper(cls).userlist(param);
+	}
+
 
 
 }

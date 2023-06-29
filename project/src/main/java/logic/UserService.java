@@ -84,11 +84,6 @@ public class UserService {
 
 
 
-	public List<User> list() {
-		return userDao.list();
-	}
-
-
 
 	public Board detail(Integer num) {
 		return boardDao.detail(num);
@@ -189,7 +184,7 @@ public class UserService {
 
 
 	public List<User> getUserlist() {
-		return userDao.list();
+		return userDao.list(); 
 	}
 
 
@@ -200,6 +195,16 @@ public class UserService {
 
 	public int myblistcount(String userId) {
 		return boardDao.myblistcount(userId);
+	}
+
+
+	public int usercount(String type, String searchcontent) {
+		return userDao.usercount(type,searchcontent);
+	}
+
+
+	public List<User> userlist(int limit, Integer pageNum, String type, String searchcontent) {
+		return userDao.userlist(limit, pageNum, type, searchcontent); 
 	}
 
 

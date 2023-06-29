@@ -287,7 +287,6 @@ public class UserController {
 		ModelAndView mav = new ModelAndView();
 		if(bresult.hasErrors()) {
 			mav.getModel().putAll(bresult.getModel());
-			//reject 메서드 : global error에 추가
 			bresult.reject("error.input.check");
 			mav.setViewName("redirect:update?userId="+user.getUserId());
 			return mav;
@@ -302,19 +301,16 @@ public class UserController {
 		try {
 			user.setPw(pwHash(user.getPw()));
 			userservice.update(user);
-			if(user.getUserId() == loginUser.getUserId()) {
+			if(user.getUserId().equals(loginUser.getUserId())) {
 				session.setAttribute("loginUser", user);
 			}
 			mav.setViewName("redirect:mypage?userId="+user.getUserId()); 
 		} catch (Exception e) {
 			e.printStackTrace();
-			mav.getModel().putAll(bresult.getModel());
-			bresult.reject("error.input.update");
-			mav.setViewName("redirect:update?userId="+user.getUserId());
-			return mav;
+			throw new LoginException
+			("고객 정보 수정 실패","update?userId="+user.getUserId());
 			
-		}
-		
+		}		
 		return mav;
 	}
 	@GetMapping("update")
@@ -371,14 +367,7 @@ public class UserController {
 		session.invalidate();
 		return "redirect:login";
 	}
-	
-	@RequestMapping("list")
-	public ModelAndView list (HttpSession session) {
-		ModelAndView mav = new ModelAndView();
-		List<User> list = userservice.list();  
-		mav.addObject("list",list);
-		return mav;
-	}
+
 	@RequestMapping("mypage")
 	public ModelAndView idCheckMypage(@RequestParam Map<String, String> param, String userId, HttpSession session) {
 		ModelAndView mav = new ModelAndView();

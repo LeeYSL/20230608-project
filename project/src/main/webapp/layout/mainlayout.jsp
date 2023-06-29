@@ -54,7 +54,7 @@ a {text-decoration: none;}
   	</div>
 </div>
   
-   <div class="w3-panel">
+   <div class="w3-panel" style="height:100%">
   <sitemesh:write property="body" />
   </div> 
   <hr>

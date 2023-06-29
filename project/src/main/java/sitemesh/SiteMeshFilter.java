@@ -27,7 +27,8 @@ public class SiteMeshFilter extends ConfigurableSiteMeshFilter {
 		else if(url.contains("/board/")) url="board";
 		else if(url.contains("/item/")) url="item";
 		else if(url.contains("/cart/")) url="item";
-		else if(url.contains("/chat/")) url="chat";
+		else if(url.contains("/chat/")) url="chat";		
+//		else if(url.contains("/admin/")) url="admin";
 		else url=""; //외에는 전부 빈문자열로 넣는다
 		request.setAttribute("url", url); //속성 등록
 		super.doFilter(servletRequest, servletResponse, filterChain);
@@ -36,11 +37,13 @@ public class SiteMeshFilter extends ConfigurableSiteMeshFilter {
 
 	@Override
 	protected void applyCustomConfiguration(SiteMeshFilterBuilder builder) {
+//		builder.addDecoratorPath("/admin/*", "/layout/adminlayout.jsp");
+		
 		builder.addDecoratorPath("/*", "/layout/mainlayout.jsp")
 		.addExcludedPath("/reservation/myList*")
 		.addExcludedPath("/user/*search*")
 		.addExcludedPath("/restaurant/restaurantadd*")
+	//	.addExcludedPath("/admin/*")
 		.addExcludedPath("/ajax/*");
-		
 	}
 }

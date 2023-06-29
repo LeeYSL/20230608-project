@@ -58,6 +58,19 @@ public interface UserMapper {
 	@Select("select * from user where tel=#{tel}")
 	List<User> telList(String tel);
 
+	@Select({"<script>",
+				"select count(*) from user ",
+				"<if test='type != null'> where ${type} like '%${searchcontent}%'</if>",
+				"</script>"})
+	int usercount(Map<String, Object> param);
+
+	@Select({"<script>",
+			"select * from user ",
+			"<if test='searchcontent != null'> where ${type} like '%${searchcontent}%' </if>",
+			"<if test='limit != null'> order by user_id asc limit #{startrow},#{limit} </if>",
+			"</script>"})
+	List<User> userlist(Map<String, Object> param);
+
 
 	
 }
