@@ -44,11 +44,15 @@
 								</tr>
 								<tr>
 									<th>휴무일</th>
-								 <td>
-								  	<c:if test="${not empty dayoff}"> 
-									    ${not empty dayoff}
-							       </c:if>
-							       </td>
+									<td>
+										<input type="checkbox" id="mon" <c:if test="${dayoff.mon eq 'Y'}">checked</c:if> onclick="return false;"/>월요일 
+										<input type="checkbox" id="tue" <c:if test="${dayoff.tue eq 'Y'}">checked</c:if> onclick="return false;"/>화요일
+										<input type="checkbox" id="wed" <c:if test="${dayoff.wed eq 'Y'}">checked</c:if> onclick="return false;"/>수요일
+										<input type="checkbox" id="thur" <c:if test="${dayoff.thur eq 'Y'}">checked</c:if> onclick="return false;"/>목요일
+										<input type="checkbox" id="fri" <c:if test="${dayoff.fri eq 'Y'}">checked</c:if> onclick="return false;" />금요일
+										<input type="checkbox" id="sat" <c:if test="${dayoff.sat eq 'Y'}">checked</c:if> onclick="return false;"/>토요일
+										<input type="checkbox" id="sun" <c:if test="${dayoff.sun eq 'Y'}">checked</c:if> onclick="return false;"/>일요일
+									</td>
 								</tr>
 								<tr>
 									<th>메뉴</th>

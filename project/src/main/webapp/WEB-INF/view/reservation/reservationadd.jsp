@@ -8,7 +8,7 @@
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
+<!-- <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script> -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <meta charset="UTF-8">
 <title>예약 페이지</title>
@@ -87,19 +87,32 @@ th {
 		return [(offList.indexOf(String(day)) == -1)];
 	}
 
-<%--	  let IMP = window.IMP
-	   IMP.init("imp01555276") //가맹점 식별코드 TC0ONETIME??
+/* 	let IMP = window.IMP
+	IMP.init("imp01555276") //가맹점 식별코드 TC0ONETIME?? */
 			   
-	   function kakaopay() {
-		   $.ajax("kakao",{
-			   success : function(json) {
-				   iamPay(json)
+   function kakaopay() {
+		console.log("check");
+		$.ajax({
+			url:'/project/reservation/kakaopay',
+			dataType:'json',
+			success:function(data){
+				 // alert(resp.tid); //결제 고유 번호
+				//var box = resp.next_redirect_pc_url;
+				//window.open(box); // 새창 열기
+				//location.href = box;
+				console.log("success");
+				var test = JSON.stringify(data);
 				
+				alert(test.next_redirect_pc_url);
+			},
+			error:function(error){
+				console.log("error");
+				alert(error);
 			}
-		   })
-		
+		});
 	}	
-	  function iamPay(json) {
+	
+	/*   function iamPay(json) {
 		IMP.request_pay({
 			pg :"kakaopay", // 상점구분. 카카오페이
 			pay_method : "card", //결제 방식 : 카드
@@ -124,10 +137,7 @@ th {
 			
 		})
 		
-	}
-	
-	 --%>
-	
+	} */
 </script>
 
 </head>
@@ -194,8 +204,10 @@ th {
 					</tr>
 				</table>
 			<td><a href="javascript:kakaopay()">예약 및 예약금 결제</a></td>
+		       <!-- 
 		        <input type="submit" value="예약 및 예약금 결제" name="add">
-				<!-- 예약 상세 페이지로 이동하긴 -->
+		        --> 
+				<!-- 예약 상세 페이지로 이동하기 -->
 				<input type="button" value="취소" name="add">
 			</form:form>
 			
