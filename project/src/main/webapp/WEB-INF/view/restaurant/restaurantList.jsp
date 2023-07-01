@@ -23,8 +23,8 @@
 						<form action="restaurantList" method="post" name="searchform">
 							<table>
 								<tr>
-									<td width="30%">
-									 <input type="hidden" name="pageNum" value="1">
+									<td width="30%"><input type="hidden" name="pageNum"
+										value="1">
 										<div>
 											<select name="type" class="w3-input">
 												<option value="">전체</option>
@@ -52,7 +52,14 @@
 							<table class="w3-table-all">
 								<c:forEach items="${restList}" var="rest">
 									<tr>
-										<td align="center">사진 : <img width="100" height="100" src="file/${rest.fileurl}"></td>
+										<td align="center">사진 : <c:if
+												test="${rest.fileurl != null}">
+												<img width="100" height="100" src="file/${rest.fileurl}">
+											</c:if> <c:if test="${rest.fileurl == null}">
+												<img width="100" height="100" src="${path}\image\Zxc.jpg">
+											</c:if>
+										</td>
+
 										<td align="center">이름 : ${rest.name}</td>
 										<td align="center">주소 : ${rest.address}</td>
 										<td align="center">전화번호 : ${rest.restPhoneNo}</td>
@@ -63,12 +70,11 @@
 									</tr>
 								</c:forEach>
 								<tr>
-									<td colspan="6" class="w3-center">
-									<c:if test="${pageNum > 1}">
+									<td colspan="6" class="w3-center"><c:if
+											test="${pageNum > 1}">
 											<a href="javascript:listpage('${pageNum -1}')">[이전]</a>
-										</c:if> 
-										<c:if test="${pageNum <= 1}">[이전]</c:if>
-										  <c:forEach var="a" begin="${startpage}" end="${endpage}">
+										</c:if> <c:if test="${pageNum <= 1}">[이전]</c:if> <c:forEach var="a"
+											begin="${startpage}" end="${endpage}">
 											<c:if test="${a == pageNum}">[${a}]</c:if>
 											<c:if test="${a != pageNum}">
 												<a href="javascript:listpage('${a}')">[${a}]</a>

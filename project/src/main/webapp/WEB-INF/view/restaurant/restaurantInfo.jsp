@@ -9,33 +9,32 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-	function drawStar(btn) {
-		//	$(`.star span`).css({ width: `${btn.value * 10}%` });
-		$(`.star span`).css("width", ($(btn).val() * 10) + '%');
-	}
+$('.starRev span').click(function(){
+	  $(this).parent().children('span').removeClass('on');
+	  $(this).addClass('on').prevAll('span').addClass('on');
+	  return false;
+	});
 </script>
 <style type="text/css">
-.star {
-	position: relative;
-	font-size: 32px;
-	color: #ddd;
+.starR{
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  color: transparent;
+  text-shadow: 0 0 0 #f0f0f0;
+  font-size: 1.8em;
+  box-sizing: border-box;
+  cursor: pointer;
 }
 
-.star input {
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	left: 0;
-	opacity: 0;
+/* 별 이모지에 마우스 오버 시 */
+.starR:hover {
+  text-shadow: 0 0 0 #ccc;
 }
 
-.star span {
-	width: 0;
-	position: absolute;
-	left: 0;
-	color: red;
-	overflow: hidden;
-	pointer-events: none;
+/* 별 이모지를 클릭 후 class="on"이 되었을 경우 */
+.starR.on{
+  text-shadow: 0 0 0 #ffbc00;
 }
 </style>
 </head>
@@ -54,11 +53,9 @@
 									<th>식당사진</th>
 									<td><c:if test="${restInfo.fileurl != null}">
 											<img width="100" height="100" src="file/${restInfo.fileurl}">
-										</c:if>
-										<c:if test="${restInfo.fileurl == null}">
-										   s<img width="100" height="100" src="project\src\main\webapp\image\Zxc.jpg">
-										</c:if>
-								    </td>
+										</c:if> <c:if test="${restInfo.fileurl == null}">
+											<img width="100" height="100" src="${path}\image\Zxc.jpg">
+										</c:if></td>
 								</tr>
 								<tr>
 									<th>식당이름</th>
@@ -121,10 +118,13 @@
 							</table>
 
 							<h2>별점 후기</h2>
-							<span class="star"> ★★★★★ <span>★★★★★</span> <input
-								type="range" oninput="drawStar(this)" value="1" step="1" min="0"
-								max="10">
-							</span> <input type="submit">
+							<div class="starRev">
+								<span class="starR on">⭐</span>
+								<span class="starR">⭐</span>
+							    <span class="starR">⭐</span>
+							    <span class="starR">⭐</span> 
+							    <span class="starR">⭐</span>
+							</div>
 
 						</div>
 					</div>
@@ -132,6 +132,5 @@
 			</div>
 		</div>
 	</div>
-
 </body>
 </html>
