@@ -60,8 +60,8 @@
 					<td><input type="hidden" ${orsrvt.restNum}></td>
 					<td><input type="hidden" ${orsrvt.userId}></td>
 					<td><input type="hidden" ${orsrvt.delYn}></td>
-					<td><a href="ownerRestInfo?num=${orsrvt.restNum}"> <input
-							type="button" value="상세보기">
+					<td><a href="restUpdate?num=${orsrvt.restNum}"> <input
+							type="button" value="상세보기 및 수정">
 					</a></td>
 					<td><input type="button" id="${orsrvt.restNum}" value="가게 삭제"
 						onclick="deleteRest(this)"></td>

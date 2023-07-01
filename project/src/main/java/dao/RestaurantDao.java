@@ -91,6 +91,11 @@ public class RestaurantDao {
 		
 	}
 
+	public void restUpdate(@Valid Restaurant restaurant) {
+		 template.getMapper(cls).restUpdate(restaurant);
+		
+	}
+
 
 	
 }

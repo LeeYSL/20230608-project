@@ -125,5 +125,10 @@ public class ReservationService {
 		
 	}
 
+	public void restUpdate(@Valid Restaurant restaurant) {
+		restaurantDao.restUpdate(restaurant);
+		
 	}
 
+	
+}

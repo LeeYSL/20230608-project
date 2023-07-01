@@ -79,5 +79,8 @@ public interface RestaurantMapper {
 	@Update("update restaurant set delYn=#{delYn} where rest_num=#{num} ")
 	void deleteRest(@Param("delYn") String delYn, @Param("num") int num);
 
+	@Update("update restaurant set name={name}, address={address}, maxpeople=#{maxpeople},open=#{open},close={close},rest_phoneNo=#{rest_phoneNo} ")
+	void restUpdate(@Valid Restaurant restaurant);
+
 
 }

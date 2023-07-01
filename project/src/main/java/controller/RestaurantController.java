@@ -1,13 +1,16 @@
 package controller;
 
+import java.io.Serial;
+import java.security.Provider.Service;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.aspectj.lang.annotation.AdviceName;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 import logic.ReservationService;
 import logic.Restaurant;
@@ -184,5 +189,39 @@ public class RestaurantController {
 
 	    return mav;
 		
+	}
+	@GetMapping("restUpdate")
+	public ModelAndView restInfo(Restaurant restaurant,int num) {
+		ModelAndView mav = new ModelAndView();
+		
+	    Restaurant restInfo = service.restInfo(num);
+	    Dayoff dayoff = service.dayoffList(num);
+	    List<Menu> memuList = service.menuList(num);
+		
+
+		System.out.println(restInfo);
+	    
+		mav.addObject("restInfo",restInfo);
+		mav.addObject("dayoff", dayoff); //jsp에서 dayoff 받는게 없는데 어떻게 쓰나?
+		mav.addObject("memuList", memuList);
+
+		return mav;
+		
+	}
+	@PostMapping("restUpdate") 
+	public ModelAndView restUpdate(@Valid Restaurant restaurant,BindingResult bresult) {
+		ModelAndView mav = new ModelAndView();
+	
+		if (bresult.hasErrors()) {
+			mav.getModel().putAll(bresult.getModel());
+			bresult.reject("error.input.restaurant");
+			bresult.reject("error.input.check");
+			return mav;
+
+		}
+		service.restUpdate(restaurant);
+		
+		mav.addObject("restUpdate",restaurant);
+		return mav;
 	}
 }
