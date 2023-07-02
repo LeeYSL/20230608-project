@@ -21,7 +21,8 @@ public interface ReservationMapper {
 	void bookInsert(@Valid Reservation reservation);
 
 	@Select({ "<script>",
-			" SELECT LEFT(A.rsrvt_date,8) AS rsrvt_date, RIGHT(A.rsrvt_date,2) AS rsrvt_time, A.num, A.rsrvt_name,A.phone_no,A.people,A.confirm,B.name,B.delYn ",
+			" SELECT LEFT(A.rsrvt_date,8) AS rsrvt_date, RIGHT(A.rsrvt_date,2) AS rsrvt_time, A.num, A.rsrvt_name,A.phone_no,A.people,B.name,B.delYn, ",
+			" case when A.rsrvt_date  <![CDATA[ < ]]> to_char(NOW(),'YYYYMMDDHH') then '4' ELSE A.confirm END confirm",
 			" FROM reservation A ",
 			" JOIN restaurant B ",
 			" ON A.rest_num = B.rest_num ",
@@ -31,13 +32,8 @@ public interface ReservationMapper {
 			" </script>" })
 	List<Reservation> myListSelect(Map<String, Object> param);
 
-	//@Select(" SELECT LEFT(A.rsrvt_date,8) AS rsrvt_date, RIGHT(A.reg_date,2) AS rsrvt_time, A.num, A.user_id, A.rsrvt_name, "
-	//		+ "	  A.phone_no,A.people,A.confirm,B.rest_num, B.name " + "	  FROM reservation A "
-	///		+ "	  JOIN restaurant B " + "	  ON A.rest_num = B.rest_num " + "	     WHERE B.user_id = #{userId} "
-	//		+ "	     ORDER BY rest_num, reg_date")
-	//List<Reservation> ownerListSelect(String userId);
-
-	@Select("SELECT LEFT(A.rsrvt_date,8) AS rsrvt_date, RIGHT(A.rsrvt_date,2) AS rsrvt_time, A.num, A.rsrvt_name,A.phone_no,A.people,A.confirm,B.rest_phoneNo,B.name "
+	@Select("SELECT LEFT(A.rsrvt_date,8) AS rsrvt_date, RIGHT(A.rsrvt_date,2) AS rsrvt_time, A.num, A.rsrvt_name,A.phone_no,A.people,B.rest_phoneNo,B.name, "
+			+ " case when A.rsrvt_date  <![CDATA[ < ]]> to_char(NOW(),'YYYYMMDDHH') then '4' ELSE A.confirm END confirm"
 			+ " FROM reservation A " + " JOIN restaurant B " + "  ON A.rest_num = B.rest_num " + " WHERE A.num =#{num}"
 			+ " ORDER BY reg_date")
 	Reservation selectOne(int num);
@@ -54,7 +50,8 @@ public interface ReservationMapper {
 	
 	@Select({ "<script>",
 	        " SELECT LEFT(A.rsrvt_date,8) AS rsrvt_date, RIGHT(A.rsrvt_date,2) AS rsrvt_time, A.num, A.user_id, A.rsrvt_name, ",
-			"	  A.phone_no,A.people,A.confirm,B.rest_num, B.name, B.delYn" ,
+			"	  A.phone_no,A.people,B.rest_num, B.name, B.delYn," ,
+			" case when A.rsrvt_date  <![CDATA[ < ]]> to_char(NOW(),'YYYYMMDDHH') then '4' ELSE A.confirm END confirm",
 			"	  FROM reservation A ",
 			"	  JOIN restaurant B " ,
 		    "	  ON A.rest_num = B.rest_num " ,

@@ -72,7 +72,10 @@
 							${rsrvt.confirm == '2' ? 'selected="selected"' : '' }>거절</option>
 						<option value="3"
 							${rsrvt.confirm == '3' ? 'selected="selected"' : '' }
-							disabled="true">예약취소</option>
+							disabled="true">예약 취소</option>
+						<option value="4"
+							${rsrvt.confirm == '4' ? 'selected="selected"' : '' }
+							disabled="true">이용 완료</option>
 				</select> <input type="hidden" ${rsrvt.confirm}></td>
 				<td>
 					<button type="button" name="${rsrvt.num}" onclick="update(this)">확정</button>
