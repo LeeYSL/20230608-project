@@ -112,7 +112,7 @@ th {
 		});
 	}	
 	
-	/*   function iamPay(json) {
+	   function iamPay(json) {
 		IMP.request_pay({
 			pg :"kakaopay", // 상점구분. 카카오페이
 			pay_method : "card", //결제 방식 : 카드
@@ -137,7 +137,7 @@ th {
 			
 		})
 		
-	} */
+	} 
 </script>
 
 </head>

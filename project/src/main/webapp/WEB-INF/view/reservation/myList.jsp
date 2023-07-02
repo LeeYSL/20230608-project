@@ -8,6 +8,12 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <meta charset="UTF-8">
 <title>내 예약 목록</title>
+<script type="text/javascript">
+	function win_open(page) {
+		var op = "width=500, height=350, left=50, top=150";
+		open(page, "", op);
+	}
+</script>
 </head>
 <body>
 
@@ -24,11 +30,12 @@
 					'num' : num,
 					'confirm' : 3
 				},
-				success:function(result) {
-					  //예약취소로 문구로 변경하고 취소 버튼을 숨김
-					  $(btn).parent().siblings('td[name="tdConfirm"]').text("예약 취소");
-					  $(btn).hide();
-				  }
+				success : function(result) {
+					//예약취소로 문구로 변경하고 취소 버튼을 숨김
+					$(btn).parent().siblings('td[name="tdConfirm"]').text(
+							"예약 취소");
+					$(btn).hide();
+				}
 			})
 		}
 	</script>
@@ -36,6 +43,7 @@
 	<h2>예약 목록</h2>
 	<table class="w3-table-all">
 		<tr>
+		    <th>가게 이름</th>
 			<th>예약자 성함</th>
 			<th>예약자 전화번호</th>
 			<th>예약 날짜</th>
@@ -45,6 +53,7 @@
 		</tr>
 		<c:forEach items="${rsrvtList}" var="rsrvt">
 			<tr>
+			    <td align="center">${rsrvt.restName}</td>
 				<td align="center">${rsrvt.rsrvtName}</td>
 				<td align="center">${rsrvt.phoneNo}</td>
 				<td align="center">${rsrvt.rsrvtDate}</td>
@@ -63,6 +72,9 @@
 						<c:when test="${rsrvt.confirm == 3}">
 							<p>예약 취소</p>
 						</c:when>
+						<c:when test="${rsrvt.confirm == 4}">
+							<p>이용 완료</p>
+						</c:when>
 					</c:choose> <input type="hidden" ${rsrvt.userId}>
 				<td><input type="hidden" ${rsrvt.num}></td>
 				<td><c:if test="${rsrvt.confirm == 0 || rsrvt.confirm == 1}">
@@ -71,19 +83,22 @@
 				<td><a href="myListInfo?num=${rsrvt.num}"> <input
 						type="button" value="상세보기">
 				</a></td>
+				<td>
+				  <c:if test="${rsrvt.confirm == 4}">
+					<button type="button" onclick="win_open('point')">별점 등록</button>
+					</c:if>
+				</td>
 		</c:forEach>
 		<tr>
-			<td colspan="5" style="text-align: center;">
-			<c:if test="${pageNum <= 1}">[이전]</c:if> 
-			 <c:if test="${pageNum > 1 }">
+			<td colspan="5" style="text-align: center;"><c:if
+					test="${pageNum <= 1}">[이전]</c:if> <c:if test="${pageNum > 1 }">
 					<a href="myList?pageNum=${pageNum-1}">[이전]</a>
 				</c:if> <c:forEach var="a" begin="${startpage}" end="${endpage}">
 					<c:if test="${a==pageNum}">[${a}]</c:if>
 					<c:if test="${a != pageNum }">
 						<a href="myList?pageNum=${a}">[${a}]</a>
 					</c:if>
-				</c:forEach> 
-				 <c:if test="${pageNum >= maxpage}">[다음]</c:if> <c:if
+				</c:forEach> <c:if test="${pageNum >= maxpage}">[다음]</c:if> <c:if
 					test="${pageNum < maxpage}">
 					<a href="myList?pageNum=${pageNum+1}">[다음]</a>
 				</c:if></td>

@@ -19,7 +19,8 @@ public interface ReservationMapper {
 			+ " phone_no,rsrvt_name,user_id ) "
 			+ " values ((SELECT NVL(MAX(num), 0) + 1 FROM reservation A),#{restNum},#{rsrvtDate},#{people},now(),#{confirm},#{phoneNo},#{rsrvtName},#{userId})")
 	void bookInsert(@Valid Reservation reservation);
-
+    
+	//부등호를 사용하면 <![CDATA[ ]]>를 사용해야함
 	@Select({ "<script>",
 			" SELECT LEFT(A.rsrvt_date,8) AS rsrvt_date, RIGHT(A.rsrvt_date,2) AS rsrvt_time, A.num, A.rsrvt_name,A.phone_no,A.people,B.name,B.delYn, ",
 			" case when A.rsrvt_date  <![CDATA[ < ]]> to_char(NOW(),'YYYYMMDDHH') then '4' ELSE A.confirm END confirm",
