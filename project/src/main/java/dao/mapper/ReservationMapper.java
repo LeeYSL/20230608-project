@@ -44,10 +44,12 @@ public interface ReservationMapper {
 	@Update("update reservation set confirm= #{confirm} where num = #{num}")
 	void ownerconfirm(@Param("num") int num, @Param("confirm") int confirm);
 
-	@Select("select count(*) from reservation")
-	int listCount();
-    
+	@Select("select count(*) from reservation A JOIN restaurant B ON A.rest_num = B.rest_num WHERE A.user_id = #{userId} and B.delYn IS NULL")
+	int myListCount(String userId);
 	
+	@Select("select count(*) from reservation A JOIN restaurant B ON A.rest_num = B.rest_num WHERE B.user_id = #{userId} and B.delYn IS NULL")
+	int ownerListCount(String userId);
+    
 	@Select({ "<script>",
 	        " SELECT LEFT(A.rsrvt_date,8) AS rsrvt_date, RIGHT(A.rsrvt_date,2) AS rsrvt_time, A.num, A.user_id, A.rsrvt_name, ",
 			"	  A.phone_no,A.people,B.rest_num, B.name, B.delYn," ,

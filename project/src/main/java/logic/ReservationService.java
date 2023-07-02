@@ -95,8 +95,12 @@ public class ReservationService {
 		return reservationDao.ownerRest(userId,pageNum,limit,delYn);
 	}
 
-	public int listcount() {
-		return  reservationDao.listCount();
+	public int myListCount(String userId) {
+		return  reservationDao.myListCount(userId);
+	}
+	
+	public int ownerListCount(String userId) {
+		return  reservationDao.ownerListCount(userId);
 	}
 
 	public int restListcount(String type, String searchcontent) {

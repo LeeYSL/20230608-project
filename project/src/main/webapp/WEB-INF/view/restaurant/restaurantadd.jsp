@@ -129,8 +129,7 @@
 						path="dayoff.thur" value="Y" />목요일 <form:checkbox
 						path="dayoff.fri" value="Y" />금요일 <form:checkbox
 						path="dayoff.sat" value="Y" />토요일 <form:checkbox
-						path="dayoff.sun" value="Y" />일요일 <form:checkbox
-						path="dayoff.holiday" value="Y" />공휴일</td>
+						path="dayoff.sun" value="Y" />일요일 </td>
 			</tr>
 		</table>
 		<!--메뉴 등록  -->

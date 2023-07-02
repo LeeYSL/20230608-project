@@ -115,16 +115,20 @@ public class ReservationController {
 		}
 
 		int limit = 10;
-		int listcount = service.listcount();
+		int listcount = service.myListCount(user.getUserId());
 
 		List<Reservation> rsrvtList = service.myList(user.getUserId(), pageNum, limit,delYn); // reservation에 있는 정보를 list로 저장
 																						// 로그인 되어 있는 id를 가지고 리스트를 조회하러가라
 		int maxpage = (int) ((double) listcount / limit + 0.95);
+		System.out.println("maxpage : " + maxpage);
 		int startpage = (int) ((pageNum / 10.0 + 0.9) - 1) * 10 + 1;
+		System.out.println("startpage : " + startpage);
 		int endpage = startpage + 9; // 화면에 보여줄 페이지 끝 번호
+		
 		if (endpage > maxpage)
 			endpage = maxpage;
-
+		System.out.println("endpage : " + endpage);
+		
 		mav.addObject("rsrvtList", rsrvtList); // jsp에서 items="${rsrvtList} 랑 이름 맞춰줘야 됨
 		mav.addObject("listcount", listcount);
 		mav.addObject("pageNum", pageNum);
@@ -205,7 +209,7 @@ public class ReservationController {
 		}
 
 		int limit = 10;
-		int listcount = service.listcount();
+		int listcount = service.ownerListCount(user.getUserId());
 		List<Reservation> rsrvtList = service.ownerList(user.getUserId(), pageNum, limit ,delYn);
 
 		int maxpage = (int) ((double) listcount / limit + 0.95);

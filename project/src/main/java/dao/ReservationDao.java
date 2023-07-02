@@ -70,8 +70,12 @@ public class ReservationDao {
 		
 	}
 
-	public int listCount() {
-		return template.getMapper(cls).listCount();
+	public int myListCount(String userId) {
+		return template.getMapper(cls).myListCount(userId);
+	}
+	
+	public int ownerListCount(String userId) {
+		return template.getMapper(cls).ownerListCount(userId);
 	}
 
 	public Restaurant restInfoadd(int num) {
