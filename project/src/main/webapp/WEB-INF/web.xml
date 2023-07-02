@@ -3,8 +3,8 @@
   <display-name>project</display-name>
   <!-- /shop1/src/main/webapp/WEB-INF/web.xml -->
   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
     <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
     <welcome-file>default.html</welcome-file>
     <welcome-file>default.jsp</welcome-file>

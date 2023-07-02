@@ -183,6 +183,7 @@ public class RestaurantController {
 
 	    return mav;
 	}
+	
 	@PostMapping("review") 
 	public ModelAndView review() {
 		ModelAndView mav = new ModelAndView();
@@ -190,6 +191,7 @@ public class RestaurantController {
 	    return mav;
 		
 	}
+	
 	@GetMapping("restUpdate")
 	public ModelAndView restInfo(Restaurant restaurant,int num) {
 		ModelAndView mav = new ModelAndView();
@@ -197,7 +199,6 @@ public class RestaurantController {
 	    Restaurant restInfo = service.restInfo(num);
 	    Dayoff dayoff = service.dayoffList(num);
 	    List<Menu> memuList = service.menuList(num);
-		
 
 		System.out.println(restInfo);
 	    
@@ -206,10 +207,10 @@ public class RestaurantController {
 		mav.addObject("memuList", memuList);
 
 		return mav;
-		
 	}
+	
 	@PostMapping("restUpdate") 
-	public ModelAndView restUpdate(@Valid Restaurant restaurant,BindingResult bresult) {
+	public ModelAndView restUpdate(@Valid Restaurant restaurant,BindingResult bresult,HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 	
 		if (bresult.hasErrors()) {
@@ -219,9 +220,23 @@ public class RestaurantController {
 			return mav;
 
 		}
-		service.restUpdate(restaurant);
+		int num = restaurant.getRestNum();
+		//가게정보 업데이트
+		service.restUpdate(restaurant,session);
 		
-		mav.addObject("restUpdate",restaurant);
+		//휴무일 삭제하고 insert
+		service.deleteDayoff(num);
+		restaurant.getDayoff().setRestNum(num);
+		service.dayoffInsert(restaurant.getDayoff());
+		
+		// 메뉴 삭제하고 insert
+		service.deleteMenu(num);
+		for (Menu menu : restaurant.getMenuList()) {
+			menu.setRestNum(num); // restNum 세팅해줌.
+			service.menuInsert(menu); // 메뉴 개수만큼 insert해줌.
+		}
+		
+		mav.setViewName("redirect:restUpdate?num="+num);
 		return mav;
 	}
 }

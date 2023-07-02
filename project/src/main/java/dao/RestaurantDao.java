@@ -96,6 +96,12 @@ public class RestaurantDao {
 		
 	}
 
-
+	public void deleteDayoff(int num) {
+		template.getMapper(cls).deleteDayoff(num);
+	}
+	
+	public void deleteMenu(int num) {
+		template.getMapper(cls).deleteMenu(num);
+	}
 	
 }

@@ -125,10 +125,21 @@ public class ReservationService {
 		
 	}
 
-	public void restUpdate(@Valid Restaurant restaurant) {
+	public void restUpdate(@Valid Restaurant restaurant, HttpSession session) {
+		if(restaurant.getPicture() != null && !restaurant.getPicture().isEmpty()) {
+			 String path = session.getServletContext().getRealPath("/") + "restaurant/file/";
+			 this.uploadFileCreate(restaurant.getPicture(),path);
+			 restaurant.setFileurl(restaurant.getPicture().getOriginalFilename());
+		}
 		restaurantDao.restUpdate(restaurant);
 		
 	}
 
+	public void deleteDayoff(int num) {
+		restaurantDao.deleteDayoff(num);
+	}
 	
+	public void deleteMenu(int num) {
+		restaurantDao.deleteMenu(num);
+	}
 }

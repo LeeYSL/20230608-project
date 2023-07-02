@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.Delete;
 
 import logic.Dayoff;
 import logic.Reservation;
@@ -79,8 +80,17 @@ public interface RestaurantMapper {
 	@Update("update restaurant set delYn=#{delYn} where rest_num=#{num} ")
 	void deleteRest(@Param("delYn") String delYn, @Param("num") int num);
 
-	@Update("update restaurant set name={name}, address={address}, maxpeople=#{maxpeople},open=#{open},close={close},rest_phoneNo=#{rest_phoneNo} ")
+	@Update({"<script>",
+			 "update restaurant set name=#{name}, address=#{address}, maxpeople=#{maxpeople},open=#{open},close=#{close},rest_phoneNo=#{restPhoneNo}",
+			 "<if test='fileurl != null'> ,picture=#{fileurl}</if>",
+			 "where rest_num = #{restNum}",
+			 "</script>"})
 	void restUpdate(@Valid Restaurant restaurant);
 
-
+	@Delete("delete from dayoff where rest_num=#{num}")
+	void deleteDayoff(int num);
+	
+	@Delete("delete from menu where rest_num=#{num}")
+	void deleteMenu(int num);
+	
 }
