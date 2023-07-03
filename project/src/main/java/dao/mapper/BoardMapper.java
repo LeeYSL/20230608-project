@@ -75,4 +75,9 @@ public interface BoardMapper {
 	@Select("select count(*) from board where user_id=#{userId}")
 	int myblistcount(String userId);
 
+
+
+	@Update ("update board set grp_step=grp_step+1 where grp=#{grp} and grp_step>#{grpStep} ")
+	void updateGrpStep(Map<String, Object> param);
+
 }

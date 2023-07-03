@@ -139,11 +139,11 @@ public class BoardController {
 
 	}
 
-	@GetMapping("update")
+	@GetMapping({"update","reply"})
 	public ModelAndView boardupdate(Integer num, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		String boardId = (String) session.getAttribute("boardId");
-		Board board = userservice.detail(num);
+		Board board = userservice.detail(num); 
 		mav.addObject("board", board);
 		if (boardId == null || boardId.equals("1")) {
 			mav.addObject("boardName", "Notice");
@@ -206,5 +206,27 @@ public class BoardController {
 		return "redirect:detail?num=" + comm.getNum();
 
 	}
+	@PostMapping("reply")
+	public ModelAndView reply(@Valid Board board, BindingResult bresult ) {
+		ModelAndView mav = new ModelAndView();
+		if(bresult.hasErrors()) {
+			Board dbboard = userservice.detail(board.getNum());
+			Map<String,Object> map = bresult.getModel();
+			Board b = (Board)map.get("board");
+			b.setTitle(dbboard.getTitle());
+			mav.getModel().putAll(bresult.getModel());
+			return mav;
+		}
+		try {
+			userservice.reply(board);
+			mav.setViewName("redirect:list?boardId="+board.getBoardId());
+		} catch(Exception e) {
+			e.printStackTrace();
+			throw new LoginException ("답변등록시 오류 발생","reply?num="+board.getNum());
+		}
+			return mav;
+	}
+	
+	
 
 }

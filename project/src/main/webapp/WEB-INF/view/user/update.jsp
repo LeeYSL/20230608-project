@@ -7,6 +7,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<script type="text/javascript">
+		function file_delete() {
+			document.f.fileurl.value = ""
+			file_desc.style.display = "none";
+		}
+	</script>
 <style type="text/css">
 .page {
 
@@ -47,7 +53,7 @@ a {
 						</div>
 					</div>
 
-						<form:form modelAttribute="user" method="post" action="update">
+						<form:form modelAttribute="user" enctype="multipart/form-data"  name="f" action="update">
 							<spring:hasBindErrors name="user">
 								<font color="red"> 
 									<c:forEach items="${errors.globalErrors}" var="error">
@@ -61,7 +67,7 @@ a {
 								<tr>
 									<th>아이디</th>
 									<td>
-										<form:input path="userId" class="w3-input" readonly="true" /> 
+										<form:input path="userId" class="w3-input"  readonly="true"/> 
 										<font color="red"> 
 											<form:errors path="userId" />
 										</font>
@@ -104,6 +110,15 @@ a {
 									</td>
 								</tr>
 								<tr>
+									<th>이메일</th>
+									<td>
+										<form:input path="email"  class="w3-input" readonly="true" placeholder="이메일" /> 
+										<font color="red"> 
+											<form:errors path="email" />
+										</font>
+									</td>
+								</tr>									
+								<tr>
 									<th>주소</th>
 									<td>
 										<select name="address" class="w3-select">
@@ -139,6 +154,20 @@ a {
 										</select>
 									</td>
 								</tr>
+								<tr>
+									<th>프로필사진</th>
+									<td>
+										<c:if test="${!empty user.fileurl}">
+											<div id="file_desc">
+												<a href="file/${user.fileurl}">${user.fileurl}</a>
+												<a href="javascript:file_delete()">[첨부파일삭제]</a>
+											</div>
+										</c:if>
+										<form:hidden path="fileurl"/>
+										<input type="file" name="file1"  class="w3-input" /> 
+										
+									</td>
+								</tr>							
 							</table>
 							<input type="hidden" name="batch" value="${user.batch}">
 							<hr>

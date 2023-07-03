@@ -67,10 +67,15 @@ public class UserService {
 	}
 
 
-
-	public void update(@Valid User user) {
-		userDao.update(user);
-		
+	
+	
+	public void update(User user, HttpSession session) {
+		if(user.getFile1() != null && !user.getFile1().isEmpty()) {
+			String path = session.getServletContext().getRealPath("/") + "user/file/";
+			this.uploadFileCreate(user.getFile1(), path);  
+			user.setFileurl(user.getFile1().getOriginalFilename());
+		}		
+		userDao.update(user);		
 	}
 
 
@@ -168,9 +173,6 @@ public class UserService {
 	}
 
 
-	public List<User> getUserlist(String[] string) {
-		return userDao.list(string);
-	}
 
 
 	public String getSearch(User user) {
@@ -205,6 +207,47 @@ public class UserService {
 
 	public List<User> userlist(int limit, Integer pageNum, String type, String searchcontent) {
 		return userDao.userlist(limit, pageNum, type, searchcontent); 
+	}
+
+
+	public User selectOneEmail(String email) {
+		return userDao.selectOneEmail(email);
+	}
+
+
+	public User selectOneTel(String tel) {
+		return userDao.selectOneTel(tel);
+	}
+
+
+	public User selectOneNickname(String nickname) {
+		return userDao.selectOneNickname(nickname);
+	}
+
+
+	public User selectTel(String tel, String userId) {
+		return userDao.selectTel(tel,userId);
+	}
+
+
+	public User selectNickname(String nickname, String userId) {
+		return userDao.selectNickname(nickname,userId);
+	}
+ 
+
+	public List<User> getUserList(String[] idchks) {
+		return userDao.list(idchks);
+	}
+
+
+	public void reply(@Valid Board board) {
+		boardDao.updateGrpStep(board);
+		int max = boardDao.maxNum();
+		board.setNum(++max);
+		board.setGrpLevel(board.getGrpLevel()+1);
+		board.setGrpStep(board.getGrpStep()+1);
+		boardDao.write(board);
+		
 	}
 
 

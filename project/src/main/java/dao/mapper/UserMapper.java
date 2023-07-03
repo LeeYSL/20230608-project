@@ -18,17 +18,15 @@ public interface UserMapper {
 	@Insert("insert into user (user_id, pw, nickname, name, address, tel, batch, file1, reg_date,channel,email) "
 			+ " values (#{userId}, #{pw}, #{nickname}, #{name}, #{address}, #{tel}, #{batch},#{fileurl}, now(),#{channel},#{email})")
 	void insert(@Valid User user);
-  
-	@Select("select * from user where user_id=#{userId}")
-	User selectOne(String userId);
+
 	
 	@Update("update user set nickname=#{nickname}, address=#{address}, tel=#{tel}, file1=#{fileurl} where user_id=#{userId}")
-	void update(@Valid User user);
+	void update(User user);
 
 	@Delete("delete from user where user_id=#{userId}")
 	void delete(String userId);
 
-	@Select("select * from user")
+	@Select("select user_id, pw, nickname, name, address, tel, batch, file1 fileurl, reg_date,channel,email from user")
 	List<User> list();
 
 	@Select("select user_id, pw, nickname, name, address, tel, batch, file1 fileurl, reg_date from user where user_id=#{userId}")
@@ -45,15 +43,7 @@ public interface UserMapper {
 			+ " <if test='userId !=null'> and user_id=#{userId}</if> ",
 				"</script>"})
 	String search(Map<String, Object> param);
-	
-	@Select({"<script>",
-				"select * from user ",
-				"<if test='userId != null'> where user_id=#{userId}</if>",
-				"<if test='userids != null'> where userid in "
-						+ "<foreach collection='userIds' item='id' separator=',' open='(' close=')'>#{id}" 
-						+ "</foreach></if>",
-						"</script>"})
-	List<User> select(Map<String, Object> param);
+
 
 	@Select("select * from user where tel=#{tel}")
 	List<User> telList(String tel);
@@ -70,6 +60,37 @@ public interface UserMapper {
 			"<if test='limit != null'> order by user_id asc limit #{startrow},#{limit} </if>",
 			"</script>"})
 	List<User> userlist(Map<String, Object> param);
+
+	
+	@Select("select email from user where email=#{email}")
+	User selectOneEmail(String email);
+
+	@Select("select tel from user where tel=#{tel}")
+	User selectOneTel(String tel);
+
+	@Select("select nickname from user where nickname=#{nickname}")
+	User selectOneNickname(String nickname);
+
+
+	@Select("select user_id, pw, nickname, name, address, tel, batch, file1 fileurl, reg_date,channel,email from user where user_id=#{userId}")
+	User selectOne(String userId);
+
+	@Select("SELECT * FROM user WHERE tel=#{tel} AND  user_id != #{userId}")
+	User selectTel(@Param("tel")String tel, @Param("userId")String userId);
+
+	@Select("SELECT * FROM user WHERE nickname=#{nickname} AND   user_id != #{userId}")
+	User selectNickname(@Param("nickname")String nickname, @Param("userId")String userId);
+
+	@Select({"<script>",
+		"select * from user ", 
+		"<if test='userId != null'> where user_id=#{userId}</if>",
+		"<if test='userIds != null'> where user_id in "
+		+ "<foreach collection='userIds' item='id' separator=',' open='(' close=')'>#{id}" 
+		+ "</foreach></if>",
+		"</script>"})
+List<User> select(Map<String,Object> param);
+
+
 
 
 	

@@ -32,7 +32,7 @@ public class UserDao {
 		return template.getMapper(cls).selectOne(userId);
 	}
 
-	public void update(@Valid User user) {
+	public void update(User user) {
 		template.getMapper(cls).update(user);
 		
 	}
@@ -56,11 +56,6 @@ public class UserDao {
 		return template.getMapper(cls).idsearch(tel,name);
 	}
 
-	public List<User> list(String[] idchks) {
-		param.clear();
-		param.put("userIds", idchks);
-		return template.getMapper(cls).select(param);
-	}
 
 	public String search(User user) {
 		String col = "userId";
@@ -83,7 +78,7 @@ public class UserDao {
 
 	public List<User> telList(String tel) {
 		return template.getMapper(cls).telList(tel);
-	}
+	} 
 
 	public int usercount(String type, String searchcontent) {
 		param.clear();
@@ -99,6 +94,32 @@ public class UserDao {
 		param.put("type",type);
 		param.put("searchcontent", searchcontent);
 		return template.getMapper(cls).userlist(param);
+	}
+
+	public User selectOneEmail(String email) {
+		return template.getMapper(cls).selectOneEmail(email);
+	}
+
+	public User selectOneTel(String tel) {
+		return template.getMapper(cls).selectOneTel(tel);
+	}
+
+	public User selectOneNickname(String nickname) {
+		return template.getMapper(cls).selectOneNickname(nickname);
+	}
+
+	public User selectTel(String tel, String userId) {
+		return template.getMapper(cls).selectTel(tel,userId);
+	}
+
+	public User selectNickname(String nickname, String userId) {
+		return template.getMapper(cls).selectNickname(nickname,userId);
+	}
+
+	public List<User> list(String[] idchks) {
+		param.clear();
+		param.put("userids", idchks);
+		return template.getMapper(cls).select(param);
 	}
 
 

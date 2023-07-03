@@ -54,7 +54,16 @@ td {
 #mail_check_input_box_true{
 	background: white; 
 }
-
+li {
+	list-style: none;
+	float: left;
+	width: 25%;
+	height: 50%;
+	line-height: 50px;
+	text-align: center;
+	background: #ff8400;
+	color: white;
+}
 </style>
 </head>
 <body>
@@ -63,10 +72,21 @@ td {
 			<div class="w3-padding-32">
 				<div class="side">
 					<div class="page">
-						<div class="join_top">
-							<span class="txt">회원가입</span>
-						</div>
+					<header class="l_member_header">
+						<h1 class="tit">
+							<span>회원가입</span>
+						</h1>
+						
+							<li class="step1"><span class="number">01</span> 회원선택</li>
+							<li class="step2"><span class="number">02</span> 약관동의</li>
+							<li class="step3"><span class="number">03</span> 정보입력</li>
+							<li class="step4"><span class="number">04</span> 가입완료</li>
+						
+					</header>
 					</div>
+					<br>
+					<br>
+					<br>
 						<form:form modelAttribute="user" enctype="multipart/form-data"  name="f" action="join">
 						<spring:hasBindErrors name="user">
 							<font color="red"> 

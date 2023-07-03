@@ -10,6 +10,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Map;
 
@@ -58,32 +59,48 @@ public class UserController {
 	@PostMapping("join")
 	public ModelAndView userAdd(@Valid User user, BindingResult bresult, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-//		
-//		if(bresult.hasErrors()) {
-//			mav.getModel().putAll(bresult.getModel());
-//			//reject 메서드 : global error에 추가
-//			bresult.reject("error.input.check");
-//			return mav;
-//		}
-		User dbUser = userservice.selectOne(user.getUserId());
+		
+		if(bresult.hasErrors()) {
+			mav.getModel().putAll(bresult.getModel());
+			//reject 메서드 : global error에 추가
+			return mav;
+		}
+		User dbId = userservice.selectOne(user.getUserId());
+		User dbEmail = userservice.selectOneEmail(user.getEmail());
+		User dbTel = userservice.selectOneTel(user.getTel());
+		User dbNickname = userservice.selectOneNickname(user.getNickname());
+		
 		try {
-			/*
-			 * password : SHA-512 해쉬값 변경
-			 */
-			if(dbUser != null) {
+			if(dbId != null) {
 				mav.getModel().putAll(bresult.getModel());
-				bresult.reject("error.duplicate.userId");
+				bresult.reject("error.duplicate.user");
+				return mav;
+			}
+			if(dbEmail != null) {
+				mav.getModel().putAll(bresult.getModel());
+				bresult.reject("error.duplicate.email"); 
+				return mav;
+			}
+			if(dbTel != null) {
+				mav.getModel().putAll(bresult.getModel());
+				bresult.reject("error.duplicate.tel"); 
+				return mav;
+			}
+			if(dbNickname != null) {
+				mav.getModel().putAll(bresult.getModel());
+				bresult.reject("error.duplicate.nickname"); 
 				return mav;
 			}
 			if(!user.getPw().equals(user.getPw1())) {
 				mav.getModel().putAll(bresult.getModel());
-				bresult.reject("error.pw.check"); //global 오류 등록
+				bresult.reject("error.pw.check"); 
+				user.setPw(null);
+				user.setPw1(null);
 				return mav;
 			}
 			user.setPw(pwHash(user.getPw()));
 			mav.addObject("user",user);
-			userservice.userInsert(user,session);	//db에 insert
-
+			userservice.userInsert(user,session);
 			mav.setViewName("redirect:login");
 		}catch(DataIntegrityViolationException e) {
 	//DataIntegrityViolationException : db에서 중복 key 오류시 발생되는 예외 객체
@@ -287,24 +304,41 @@ public class UserController {
 		ModelAndView mav = new ModelAndView();
 		if(bresult.hasErrors()) {
 			mav.getModel().putAll(bresult.getModel());
-			bresult.reject("error.input.check");
-			mav.setViewName("redirect:update?userId="+user.getUserId());
+//			mav.setViewName("redirect:update?userId="+user.getUserId());
 			return mav;
 		}
-		User loginUser = (User)session.getAttribute("loginUser");		
+		User loginUser = (User)session.getAttribute("loginUser");
+		User dbTel = userservice.selectTel(user.getTel(),user.getUserId());
+		User dbNickname = userservice.selectNickname(user.getNickname(), user.getUserId());
+		try {
+			System.out.println("tel:" + dbTel);
+			System.out.println("nick:" +dbNickname);
+			if(dbTel != null) {
+				mav.getModel().putAll(bresult.getModel());
+				bresult.reject("error.duplicate.tel"); 
+				return mav;
+			}
+			if(dbNickname != null) {
+				mav.getModel().putAll(bresult.getModel());
+				bresult.reject("error.duplicate.nickname"); 
+				return mav;
+			}
+			
+			
 		if(!pwHash(user.getPw()).equals(loginUser.getPw())) {
 			mav.getModel().putAll(bresult.getModel());
-			bresult.reject("error.input.pw");
-			mav.setViewName("redirect:update?userId="+user.getUserId());
+			bresult.reject("error.input.pw"); 
+			user.setPw(null);
 			return mav;
 		}
-		try {
 			user.setPw(pwHash(user.getPw()));
-			userservice.update(user);
+			mav.addObject("user", user);
+			userservice.update(user,session);
 			if(user.getUserId().equals(loginUser.getUserId())) {
 				session.setAttribute("loginUser", user);
 			}
 			mav.setViewName("redirect:mypage?userId="+user.getUserId()); 
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new LoginException
