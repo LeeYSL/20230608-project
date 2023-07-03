@@ -1,18 +1,14 @@
 package controller;
 
-import java.io.Serial;
-import java.security.Provider.Service;
+
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.aspectj.lang.annotation.AdviceName;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 import logic.ReservationService;
 import logic.Restaurant;
 import logic.Dayoff;
 import logic.Menu;
+import logic.Reservation;
 import logic.User;
 
 @Controller
@@ -86,7 +82,7 @@ public class RestaurantController {
 	}
 
 	@RequestMapping("restaurantList")
-	ModelAndView restList(@RequestParam Map<String, String> param, HttpSession session,String delYn) {
+	ModelAndView restList(@RequestParam Map<String, String> param, Restaurant restaurant, HttpSession session,String delYn,Integer point) {
 		ModelAndView mav = new ModelAndView();
 
 	   Integer pageNum = null;
@@ -107,10 +103,14 @@ public class RestaurantController {
 		int limit = 10;
 		int restListcount = service.restListcount(type, searchcontent);
 		
+		int num = restaurant.getRestNum();
+	    Integer pointNum = service.PointAvg(num,point);
+			
 		System.out.println("pageNum : " + pageNum);
 		System.out.println("limit : " + limit);
 		
 		List<Restaurant> restList = service.restList(pageNum, limit, type, searchcontent,delYn);
+	
 		
 		int maxpage = (int) ((double) restListcount / limit + 0.95);// 등록 건수에 따른 최대 페이지
 		int startpage = (int) ((pageNum / 10.0 + 0.9) - 1) * 10 + 1;// 페이지의 시작 번호
@@ -132,6 +132,8 @@ public class RestaurantController {
 		mav.addObject("maxpage", maxpage);
 		mav.addObject("startpage", startpage);
 		mav.addObject("endpage", endpage);
+	    mav.addObject("pointNum",pointNum);
+
 
 		return mav;
 	}
@@ -166,18 +168,21 @@ public class RestaurantController {
 	}
 
 	@GetMapping("restaurantInfo")
-	public ModelAndView restaurantInfo(Restaurant restaurant,int num) { 
+	public ModelAndView restaurantInfo(Restaurant restaurant,int num, Integer point) { 
 		//가게리스트에서 이동할 때 보낸 num을 사용한다.
 		ModelAndView mav = new ModelAndView();
 		
 		Restaurant restInfo = service.restInfo(num);
 		List<Menu> memuList = service.menuList(num);
 		Dayoff dayoff = service.dayoffList(num);
+	    Integer pointNum = service.PointAvg(num,point);
 		
 		restaurant.setRestNum(num);
 		
 		System.out.println("restaurant" + restaurant.getRestNum());
 		
+	    mav.addObject("pointNum",pointNum);
+		System.out.println("pointNum :"+pointNum);
 		mav.addObject("dayoff", dayoff);
 		mav.addObject("memuList", memuList);
 		mav.addObject("restInfo", restInfo);
@@ -240,4 +245,5 @@ public class RestaurantController {
 		mav.setViewName("redirect:restUpdate?num="+num);
 		return mav;
 	}
+	
 }

@@ -82,5 +82,9 @@ public class ReservationDao {
 		return template.getMapper(cls).restInfoadd(num);
 	}
 
+	public void pointInsert(int num, Integer point) {
+	    template.getMapper(cls).pointInsert(num,point);
+	}
+
 
 }

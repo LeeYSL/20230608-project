@@ -1,6 +1,5 @@
 package controller;
 
-
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +26,7 @@ import logic.User;
 public class ReservationController {
 	@Autowired
 	private ReservationService service;
-	
+
 	@GetMapping("*")
 	public ModelAndView add() {
 		ModelAndView mav = new ModelAndView();
@@ -36,8 +35,8 @@ public class ReservationController {
 	}
 
 	@PostMapping("reservationadd")
-	public ModelAndView reservation(@Valid Reservation reservation, BindingResult bresult, HttpSession session,Restaurant restaurant)
-			throws Exception {
+	public ModelAndView reservation(@Valid Reservation reservation, BindingResult bresult, HttpSession session,
+			Restaurant restaurant) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		if (bresult.hasErrors()) {
 			System.out.println("error");
@@ -47,54 +46,52 @@ public class ReservationController {
 			return mav;
 		}
 		try {
-			
-			User user = (User) session.getAttribute("loginUser");
-        	System.out.println(restaurant.getRestNum());
-			reservation.setUserId(user.getUserId());
-			reservation.setRsrvtDate(reservation.getRsrvtDate() + reservation.getRsrvtTime());		
-			
-      
-			
-		 service.bookinsert(reservation);		 
 
-		mav.addObject("reservation", reservation);
-	//	mav.addObject("restNum",num);
-	
-			
+			User user = (User) session.getAttribute("loginUser");
+			System.out.println(restaurant.getRestNum());
+			reservation.setUserId(user.getUserId());
+			reservation.setRsrvtDate(reservation.getRsrvtDate() + reservation.getRsrvtTime());
+
+			service.bookinsert(reservation);
+
+			mav.addObject("reservation", reservation);
+			// mav.addObject("restNum",num);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(restaurant.getRestNum());
 		}
-	
-		mav.setViewName("redirect:myList?num="+restaurant.getRestNum());
+
+		mav.setViewName("redirect:myList?num=" + restaurant.getRestNum());
 		return mav;
-	
 
 	}
-	@GetMapping("reservationadd") 
+
+	@GetMapping("reservationadd")
 	public ModelAndView goReservation(Reservation reservation, int num, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		
-		User user = (User) session.getAttribute("loginUser");
-	   if(user == null ) {
-		   
-		   throw new LoginException("로그인하세요","/project/user/login");
 
-		  }
+		User user = (User) session.getAttribute("loginUser");
+		if (user == null) {
+
+			throw new LoginException("로그인하세요", "/project/user/login");
+
+		}
 //		service.restInfoadd(reservation.getRestNum());
 		Restaurant restaurant = service.restInfoadd(num);
-		mav.addObject("dayoff", service.dayoffList(num)); 
+		mav.addObject("dayoff", service.dayoffList(num));
 		mav.addObject("restNum", num);
 		mav.addObject("restaurant", restaurant);
 		return mav;
 
 	}
-	
-	
 
 	@GetMapping("myList")
-	public ModelAndView myList(@RequestParam Map<String, String> param, HttpSession session,String delYn) { // key,value 둘 다 // map으로
-																								// // 전달해라
+	public ModelAndView myList(@RequestParam Map<String, String> param, HttpSession session, String delYn) { // key,value
+																												// 둘 다
+																												// //
+																												// map으로
+		// // 전달해라
 		ModelAndView mav = new ModelAndView();
 
 		User user = (User) session.getAttribute("loginUser");
@@ -110,8 +107,9 @@ public class ReservationController {
 		int limit = 10;
 		int listcount = service.myListCount(user.getUserId());
 
-		List<Reservation> rsrvtList = service.myList(user.getUserId(), pageNum, limit,delYn); // reservation에 있는 정보를 list로 저장
-																						// 로그인 되어 있는 id를 가지고 리스트를 조회하러가라
+		List<Reservation> rsrvtList = service.myList(user.getUserId(), pageNum, limit, delYn); // reservation에 있는 정보를
+																								// list로 저장
+		// 로그인 되어 있는 id를 가지고 리스트를 조회하러가라
 		int maxpage = (int) ((double) listcount / limit + 0.95);
 		int startpage = (int) ((pageNum / 10.0 + 0.9) - 1) * 10 + 1;
 		int endpage = startpage + 9; // 화면에 보여줄 페이지 끝 번호
@@ -178,14 +176,14 @@ public class ReservationController {
 		// 해줌?
 
 		System.out.println();
-		mav.addObject("num", num); //조회해온 num을 넘기는건가??
+		mav.addObject("num", num); // 조회해온 num을 넘기는건가??
 
 		return mav;
 
 	}
 
 	@GetMapping("ownerList")
-	public ModelAndView ownerList(@RequestParam Map<String, String> param, HttpSession session,String delYn) {
+	public ModelAndView ownerList(@RequestParam Map<String, String> param, HttpSession session, String delYn) {
 		ModelAndView mav = new ModelAndView();
 
 		User user = (User) session.getAttribute("loginUser");
@@ -199,7 +197,7 @@ public class ReservationController {
 
 		int limit = 10;
 		int listcount = service.ownerListCount(user.getUserId());
-		List<Reservation> rsrvtList = service.ownerList(user.getUserId(), pageNum, limit ,delYn);
+		List<Reservation> rsrvtList = service.ownerList(user.getUserId(), pageNum, limit, delYn);
 
 		int maxpage = (int) ((double) listcount / limit + 0.95);
 		int startpage = (int) ((pageNum / 10.0 + 0.9) - 1) * 10 + 1;
@@ -237,11 +235,26 @@ public class ReservationController {
 	@GetMapping("myListInfo")
 	public ModelAndView Info(Integer num, Reservation reservatio) {
 		// http://localhost:8080/project/reservation/myListInfo?num=3
-		System.out.println("!!!");
 		ModelAndView mav = new ModelAndView();
 		Reservation reservation2 = service.selectOne(num);
 		mav.addObject("rsrvt", reservation2);
 		return mav;
 	}
-	
+
+	@PostMapping("point")
+	public ModelAndView pointadd(Reservation reservation, int num, Integer point) {
+		ModelAndView mav = new ModelAndView();
+
+		service.pointInsert(num, point);
+
+		return mav;
+	}
+
+	@GetMapping("point")
+	public ModelAndView point(int num) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("num", num);
+		return mav;
+	}
+
 }

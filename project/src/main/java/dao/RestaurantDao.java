@@ -49,10 +49,8 @@ public class RestaurantDao {
 		param.put("type", type);
 		param.put("searchcontent",searchcontent);
 		param.put("delYn",delYn);
-		
-		System.out.println("pageNum" + pageNum);
-		System.out.println("type"+type);
-		System.out.println("searchcontent" + searchcontent);
+
+	
 		return template.getMapper(cls).restList(param);
 	}
 
@@ -102,6 +100,10 @@ public class RestaurantDao {
 	
 	public void deleteMenu(int num) {
 		template.getMapper(cls).deleteMenu(num);
+	}
+
+	public int pointAvg(int num, Integer point) {
+		return template.getMapper(cls).pointAvg(num,point);
 	}
 	
 }

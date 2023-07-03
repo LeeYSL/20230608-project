@@ -63,6 +63,7 @@
 										<td align="center">이름 : ${rest.name}</td>
 										<td align="center">주소 : ${rest.address}</td>
 										<td align="center">전화번호 : ${rest.restPhoneNo}</td>
+										<td align="center">평점 : ${pointNum}</td> 
 										<td><input type="hidden" ${rest.restNum}></td>
 										<td><a href="restaurantInfo?num=${rest.restNum}"> <input
 												type="button" value="상세보기">

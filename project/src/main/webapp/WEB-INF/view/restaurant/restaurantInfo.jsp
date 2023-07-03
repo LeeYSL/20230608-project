@@ -16,8 +16,11 @@
 				<div class="side">
 					<div class="page">
 						<div class="join_top">
-							<h2>가게 상세 보기</h2>
+							<h2>${restInfo.name}</h2>
 							<table>
+								<tr>
+									<th align="center">평균 별점 : ${pointNum} 점</th>
+								</tr>
 								<tr>
 									<th>식당사진</th>
 									<td><c:if test="${restInfo.fileurl != null}">
@@ -25,10 +28,6 @@
 										</c:if> <c:if test="${restInfo.fileurl == null}">
 											<img width="100" height="100" src="${path}\image\Zxc.jpg">
 										</c:if></td>
-								</tr>
-								<tr>
-									<th>식당이름</th>
-									<td>${restInfo.name}</td>
 								</tr>
 								<tr>
 									<th>식당 위치</th>

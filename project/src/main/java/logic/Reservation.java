@@ -32,6 +32,7 @@ public class Reservation {
 	private String rsrvtName; //예약자 이름
     private String restPhoneNo; // 가게 전화번호
     private String name; // 가게 이름
+    private int point; //별점
 	
 
 }

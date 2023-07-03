@@ -26,6 +26,28 @@
 		 onclick으로 해서 했을 때
 		 } */
 	});
+	function point(btn) {
+		
+		let num =$(btn).attr('name');
+		let point = $('.on').length;
+		
+		$.ajax({
+		  url  : '/project/reservation/point',
+		  type : 'POST',
+		  data : {
+			  'num' : num,
+			  'point' : point //on으로 눌린 걸로 점수 몇 점인지 체크
+		  },
+		  success : function(result) {
+			  $('td[name="${num}"]',opener.document).text(point+"점" );
+		         self.close();
+		  },
+		  error : function(error) {
+			    console.log(error);
+		  },
+		});
+		
+	}
 </script>
 <style type="text/css">
 .starR {
@@ -59,7 +81,7 @@
 		<span class="starR">⭐</span> 
 		<span class="starR">⭐</span>
 		&nbsp;&nbsp;&nbsp;
-		<button type="button" name="${point}" onclick="point(this)">별점등록</button>
+		<button type="button" name="${num}" onclick="point(this)">별점등록</button>
 	</div>
 </body>
 </html>

@@ -32,8 +32,8 @@
 				},
 				success : function(result) {
 					//예약취소로 문구로 변경하고 취소 버튼을 숨김
-					$(btn).parent().siblings('td[name="tdConfirm"]').text(
-							"예약 취소");
+					$(btn).parent().siblings('td[name="tdConfirm"]').find('p')
+							.text("예약 취소");
 					$(btn).hide();
 				}
 			})
@@ -43,23 +43,31 @@
 	<h2>예약 목록</h2>
 	<table class="w3-table-all">
 		<tr>
-		    <th>가게 이름</th>
+		    <th>예약 상세보기</th>
+			<th>가게 이름</th>
 			<th>예약자 성함</th>
 			<th>예약자 전화번호</th>
 			<th>예약 날짜</th>
 			<th>예약 시간</th>
 			<th>예약 인원</th>
 			<th>예약 상태</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th>별점</th>
 		</tr>
 		<c:forEach items="${rsrvtList}" var="rsrvt">
 			<tr>
-			    <td align="center">${rsrvt.restName}</td>
+				<td><a href="myListInfo?num=${rsrvt.num}"> <input
+						type="button" value="상세보기">
+				</a></td>
+				<td align="center">${rsrvt.name}</td>
 				<td align="center">${rsrvt.rsrvtName}</td>
 				<td align="center">${rsrvt.phoneNo}</td>
 				<td align="center">${rsrvt.rsrvtDate}</td>
 				<td align="center">${rsrvt.rsrvtTime}</td>
 				<td align="center">${rsrvt.people}</td>
-				<td><c:choose>
+				<td name="tdConfirm"><c:choose>
 						<c:when test="${rsrvt.confirm == 0}">
 							<p>예약 대기</p>
 						</c:when>
@@ -77,15 +85,17 @@
 						</c:when>
 					</c:choose> <input type="hidden" ${rsrvt.userId}>
 				<td><input type="hidden" ${rsrvt.num}></td>
+				<td><input type="hidden" ${rsrvt.point}></td>
 				<td><c:if test="${rsrvt.confirm == 0 || rsrvt.confirm == 1}">
 						<button type="button" name="${rsrvt.num}" onclick="update(this)">취소</button>
 					</c:if>
-				<td><a href="myListInfo?num=${rsrvt.num}"> <input
-						type="button" value="상세보기">
-				</a></td>
-				<td>
-				  <c:if test="${rsrvt.confirm == 4}">
-					<button type="button" onclick="win_open('point')">별점 등록</button>
+				<td name="${rsrvt.num}">
+					 <c:if test="${rsrvt.confirm == 4 && rsrvt.point == '0'}">
+						<button type="button" name="${rsrvt.num}"
+								onclick="win_open('point?num=${rsrvt.num}')">별점 등록</button>
+					</c:if> 
+					<c:if test="${rsrvt.confirm == 4 && rsrvt.point != '0'}">
+						${rsrvt.point}점
 					</c:if>
 				</td>
 		</c:forEach>

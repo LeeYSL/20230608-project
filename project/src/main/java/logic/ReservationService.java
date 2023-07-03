@@ -1,5 +1,6 @@
 package logic;
 
+import java.awt.Point;
 import java.io.File;
 import java.util.List;
 
@@ -146,4 +147,14 @@ public class ReservationService {
 	public void deleteMenu(int num) {
 		restaurantDao.deleteMenu(num);
 	}
+
+	public void pointInsert(int num, Integer point) {
+		reservationDao.pointInsert(num,point);
+		
+	}
+
+	public int PointAvg(int num, Integer point) {
+	   return restaurantDao.pointAvg(num,point);
+	}
+
 }

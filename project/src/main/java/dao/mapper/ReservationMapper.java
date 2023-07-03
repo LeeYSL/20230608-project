@@ -22,7 +22,7 @@ public interface ReservationMapper {
     
 	//부등호를 사용하면 <![CDATA[ ]]>를 사용해야함
 	@Select({ "<script>",
-			" SELECT LEFT(A.rsrvt_date,8) AS rsrvt_date, RIGHT(A.rsrvt_date,2) AS rsrvt_time, A.num, A.rsrvt_name,A.phone_no,A.people,B.name,B.delYn, ",
+			" SELECT LEFT(A.rsrvt_date,8) AS rsrvt_date, RIGHT(A.rsrvt_date,2) AS rsrvt_time, A.num, A.rsrvt_name,A.rest_num,A.phone_no,A.people,A.point,B.name,B.delYn, ",
 			" case when A.rsrvt_date  <![CDATA[ < ]]> to_char(NOW(),'YYYYMMDDHH') then '4' ELSE A.confirm END confirm",
 			" FROM reservation A ",
 			" JOIN restaurant B ",
@@ -66,5 +66,17 @@ public interface ReservationMapper {
 
 	@Select("select * from restaurant where rest_num=#{num}")
 	Restaurant restInfoadd(int num);
+
+
+/*	@Insert({"<script>",
+		    " insert into reservation(point) values #{point}",
+		    " select A.rest_num,B.rest_num ",
+		    " from reservation A, ",
+		    "      restaurant B ",
+		    " where A.rest_num = B.rest_num ",
+		    "</script>"	}) */
+	
+	@Update("update reservation set point=#{point} where num=#{num}")
+	void pointInsert(@Param("num")int num, @Param("point") Integer point);
 
 }
