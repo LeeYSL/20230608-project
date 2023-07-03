@@ -82,7 +82,7 @@ public class RestaurantController {
 	}
 
 	@RequestMapping("restaurantList")
-	ModelAndView restList(@RequestParam Map<String, String> param, Restaurant restaurant, HttpSession session,String delYn,Integer point) {
+	ModelAndView restList(@RequestParam Map<String, String> param,HttpSession session,String delYn) {
 		ModelAndView mav = new ModelAndView();
 
 	   Integer pageNum = null;
@@ -103,9 +103,6 @@ public class RestaurantController {
 		int limit = 10;
 		int restListcount = service.restListcount(type, searchcontent);
 		
-		int num = restaurant.getRestNum();
-	    Integer pointNum = service.PointAvg(num,point);
-			
 		System.out.println("pageNum : " + pageNum);
 		System.out.println("limit : " + limit);
 		
@@ -132,8 +129,6 @@ public class RestaurantController {
 		mav.addObject("maxpage", maxpage);
 		mav.addObject("startpage", startpage);
 		mav.addObject("endpage", endpage);
-	    mav.addObject("pointNum",pointNum);
-
 
 		return mav;
 	}
