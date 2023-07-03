@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import exception.LoginException;
+import exception.ReservationException;
 import logic.Reservation;
 import logic.ReservationService;
 import logic.Restaurant;
@@ -45,12 +46,32 @@ public class ReservationController {
 			bresult.reject("error.input.check");
 			return mav;
 		}
+		
+		int num = reservation.getRestNum(); //가게번호
+		String date = reservation.getRsrvtDate(); //예약날짜
+		String time = reservation.getRsrvtTime(); //예약시간
+		
+		//해당 예약날짜와 예약시간에 예약이 가능한지 조회함
+		Reservation rsrvt = service.checkReservation(num, date, time);
+		
+		if(rsrvt.getRsrvtYn().equals("N")) { 
+			// N : 예약마감인 경우
+			throw new ReservationException("해당 시간에 예약이 마감되었습니다.","reservationadd?num=" + num);
+		}else { 
+			// Y : 예약 가능한 경우
+			if(reservation.getPeople() > rsrvt.getCanPeople()) {
+				//선택한 예약인원이 가능한 예약인원 수를 초과한 경우 
+				throw new ReservationException(
+						"해당 시간에 가능한 예약 인원을 초과했습니다. (가능인원 : "+rsrvt.getCanPeople()+"명)",
+						"reservationadd?num=" + num);
+			}
+		}
+		
 		try {
 
 			User user = (User) session.getAttribute("loginUser");
-			System.out.println(restaurant.getRestNum());
 			reservation.setUserId(user.getUserId());
-			reservation.setRsrvtDate(reservation.getRsrvtDate() + reservation.getRsrvtTime());
+			reservation.setRsrvtDate(date + time);
 
 			service.bookinsert(reservation);
 
@@ -59,10 +80,9 @@ public class ReservationController {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println(restaurant.getRestNum());
 		}
 
-		mav.setViewName("redirect:myList?num=" + restaurant.getRestNum());
+		mav.setViewName("redirect:myList?num=" + num);
 		return mav;
 
 	}

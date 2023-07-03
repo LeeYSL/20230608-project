@@ -33,6 +33,8 @@ public class Reservation {
     private String restPhoneNo; // 가게 전화번호
     private String name; // 가게 이름
     private int point; //별점
+    private String rsrvtYn; //예약타임에 예약가능여부
+    private int canPeople; //예약타임에 남은 인원
 	
 
 }
