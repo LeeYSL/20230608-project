@@ -14,38 +14,10 @@
 <meta charset="UTF-8">
 <title>예약 페이지</title>
 <style type="text/css">
-.side {
-	margin: 0% 25% 0% 25%;
-	height: 100%;
-	text-align: center;
-	display: block;
-}
-
-.page {
-	border: 1px gray solid;
-	height: 10%;
-	display: block;
-}
-
-.txt {
-	font-size: 200%;
-}
-
-.join_insert {
-	height: 90%;
-	border: 1px gray solid;
-	text-align: center;
-	display: block;
-}
-
-table {
-	border: 1px gray solid;
-	width: 90%;
-	margin: 5%;
-}
-
 th {
-	width: 20%;
+	width:20%;
+	height:55px;
+	vertical-align:middle !important;
 }
 </style>
 
@@ -122,82 +94,91 @@ th {
 
 </head>
 <body>
-	<div class="side">
-		<div class="page">
-			<div>
-				<div class="txt">예약 창입니다.</div>
-			</div>
-		</div>
-		<div class="join_insert">
-			<form:form modelAttribute="reservation" method="post"
-				action="reservationadd">
-				<spring:hasBindErrors name="reservation">
-					<font color="red"> <c:forEach items="${errors.globalErrors}"
-							var="error">
-							<spring:message code="${error.code}" />
-							<br>
-						</c:forEach>
-					</font>
-				</spring:hasBindErrors>
-				<div class="join_title">
-					<h2>${restaurant.name}</h2> 
-				</div>
-				<table class="join_table">
-					<tr>
-						<td><form:input path="rsrvtName" placeholder="예약자 이름" /> <font
-							color="red"> <form:errors path="rsrvtName" />
-						</font></td>
-					</tr>
-					<tr>
-						<td><form:input path="phoneNo" placeholder="전화번호" /> <font
-							color="red"> <form:errors path="phoneNo" />
-						</font></td>
-						<td><input type="hidden" name="restNum" value="${restNum}"></td>
-						<td><input type="hidden" name="userId" value="${user.userId}"></td>
-						<td><input type="hidden" name="userTel" value="${user.tel}"></td>
-					</tr>
-					<tr>
-						<td><form:select style="width:200" path="people">
-								<option value="0">===예약인원===</option>
-								<option value="1">1명</option>
-								<option value="2">2명</option>
-								<option value="3">3명</option>
-								<option value="4">4명</option>
-							</form:select> <font color="red"> <form:errors path="people" />
-						</font></td>
-					</tr>
-					<tr>
-						<td><form:input id="datepicker" path="rsrvtDate"
-								autocomplete='off' placeholder="예약날짜" /> <font color="red">
-								<form:errors path="rsrvtDate" />
-						</font></td>
-					</tr>
-					<tr>
-						<td><form:select id="rsrvtTime" path="rsrvtTime">
-								<option value="">예약 시간</option>
-								<c:forEach var="i" begin="${restaurant.open}"
-									end="${restaurant.close}">
-									<option value="${i>9?i:'0'}${i>9?'':i}">${i>9?i:'0'}${i>9?'':i}:00</option>
+	<div class="w3-container w3-padding-32 w3-center">
+		<div
+			style="display: block; margin: auto; width: 1000px; height: 100%;">
+			<div class="w3-padding-32">
+				<div class="side">
+					<div class="page">
+						<header class="l_member_header">
+							<h2 class="tit">
+								<span>${restaurant.name} 예약 페이지</span>
+							</h2>
+						</header>
+					</div>
+					<form:form modelAttribute="reservation" method="post"
+						action="reservationadd">
+						<spring:hasBindErrors name="reservation">
+							<font color="red"> <c:forEach
+									items="${errors.globalErrors}" var="error">
+									<spring:message code="${error.code}" />
+									<br>
 								</c:forEach>
-							</form:select> <font color="red"> <form:errors path="rsrvtTime" />
-						</font></td>
-					</tr>
-				</table>
-				<td>
-					<%-- <input type="submit" value="예약 및 예약금 결제" name="add"></td> --%>
+							</font>
+						</spring:hasBindErrors>
+						<br>
+						<table class="w3-table-all">
+							<tr>
+								<th>예약자 이름</th>
+								<td><form:input path="rsrvtName" class="w3-input" placeholder="예약자 이름" /> <font
+									color="red"> <form:errors path="rsrvtName" />
+								</font></td>
+							</tr>
+							<tr>
+								<th>예약자 전화번호</th>
+								<td><form:input path="phoneNo" placeholder="전화번호" class="w3-input" /> <font
+									color="red"> <form:errors path="phoneNo" />
+								</font></td>
+								<td><input type="hidden" name="restNum" value="${restNum}"></td>
+							</tr>
+							<tr>
+								<th>예약 인원</th>
+								<td><form:select path="people" class="w3-select">
+										<option value="0">예약인원</option>
+										<option value="1">1명</option>
+										<option value="2">2명</option>
+										<option value="3">3명</option>
+										<option value="4">4명</option>
+									</form:select> <font color="red"> <form:errors path="people" />
+								</font></td>
+							</tr>
+							<tr>
+								<th>예약 날짜</th>
+								<td><form:input id="datepicker" path="rsrvtDate" class="w3-input"
+										autocomplete='off' placeholder="예약날짜" /> <font color="red">
+										<form:errors path="rsrvtDate" />
+								</font></td>
+							</tr>
+							<tr>
+								<th>예약 시간</th>
+								<td><form:select id="rsrvtTime" path="rsrvtTime" class="w3-select">
+										<option value="">예약 시간</option>
+										<c:forEach var="i" begin="${restaurant.open}"
+											end="${restaurant.close}">
+											<option value="${i>9?i:'0'}${i>9?'':i}">${i>9?i:'0'}${i>9?'':i}:00</option>
+										</c:forEach>
+									</form:select> <font color="red"> <form:errors path="rsrvtTime" />
+								</font></td>
+							</tr>
+						</table>
+						<br>
+							 <input type="submit" class="w3-btn w3-white w3-border w3-border-orange w3-round-xlarge" value="예약 및 예약금 결제" name="add">
+						<!-- 예약 완료 시 예약 상세 페이지로 이동하기 -->
+<!-- 						<input type="button" class="w3-btn w3-white w3-border w3-border-orange w3-round-xlarge" 
+								name="add" value="예약 및 예약금 결제" onclick="javascript:iamPay()"> -->
+								&nbsp;
+						<input type="button" class="w3-btn w3-white w3-border w3-border-orange w3-round-xlarge" value="취소" onclick="javascript:history.back()">
+					</form:form>
 
-					<a href="javascript:iamPay()">예약 및 예약금 결제</a> <!-- 예약 상세 페이지로 이동하기 -->
-					<input type="button" value="취소" name="add">
-			</form:form>
-
-			<input type="hidden" id="0" name="dayoff" value="${dayoff.sun}" /> <input
-				type="hidden" id="1" name="dayoff" value="${dayoff.mon}" /> <input
-				type="hidden" id="2" name="dayoff" value="${dayoff.tue}" /> <input
-				type="hidden" id="3" name="dayoff" value="${dayoff.wed}" /> <input
-				type="hidden" id="4" name="dayoff" value="${dayoff.thur}" /> <input
-				type="hidden" id="5" name="dayoff" value="${dayoff.fri}" /> <input
-				type="hidden" id="6" name="dayoff" value="${dayoff.sat}" />
-
+					<input type="hidden" id="0" name="dayoff" value="${dayoff.sun}" />
+					<input type="hidden" id="1" name="dayoff" value="${dayoff.mon}" />
+					<input type="hidden" id="2" name="dayoff" value="${dayoff.tue}" />
+					<input type="hidden" id="3" name="dayoff" value="${dayoff.wed}" />
+					<input type="hidden" id="4" name="dayoff" value="${dayoff.thur}" />
+					<input type="hidden" id="5" name="dayoff" value="${dayoff.fri}" />
+					<input type="hidden" id="6" name="dayoff" value="${dayoff.sat}" />
+				</div>
+			</div>
 		</div>
 	</div>
 </body>

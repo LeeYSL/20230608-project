@@ -192,6 +192,7 @@ th {
 						</table>
 						<br>
 						<input type="submit" class="w3-btn w3-white w3-border w3-border-orange w3-round-xlarge" value="등록" name="add"> 
+						&nbsp;
 						<button type="button" onclick="location.href='/project/restaurant/restaurantList'" class="w3-btn w3-white w3-border w3-border-orange w3-round-xlarge" >취소
 						</button>
 					</form:form>
