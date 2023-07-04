@@ -6,3 +6,13 @@
 	border: 20px solid;	
 */
 }
+
+td {
+	background-color: white;
+}
+
+th {
+	background-color: #ff8400;
+	color: white;
+	text-align: center;
+}

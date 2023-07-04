@@ -74,7 +74,7 @@ public class RestaurantController {
 
 		}
 		// 수정 필요 , 가게 등록 후 화면 이동하는 곳 바꾸기
-		mav.setViewName("/reservation/");
+		mav.setViewName("redirect:ownerRest");
 		System.out.println("rest : " + restaurant);
 		return mav;
 	}
