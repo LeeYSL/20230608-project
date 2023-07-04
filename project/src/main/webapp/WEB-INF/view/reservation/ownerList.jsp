@@ -56,7 +56,10 @@ textarea {
 				dataType : 'json',
 				data : {
 					'num' : num,
-					'confirm' : confirm
+					'confirm' : confirm,
+					//객체로 넘기는 방법
+//					'reservation' : {'restName' : $(btn).parent().siblings('td[name="restName"]').text(),}
+					'restName' : $(btn).parent().siblings('td[name="restName"]').text();
 				},
 				success : function(result) {
 					console.log("success");
@@ -94,14 +97,15 @@ textarea {
 							<c:forEach items="${rsrvtList}" var="rsrvt">
 								<!--reservation 객체를 만들어서 rstvt라는 이름에 넣고 필요한 요소들을 뽑아온다.  -->
 								<tr>
-									<td align="center">${rsrvt.name}</td>
-									<td align="center">${rsrvt.num}</td>
-									<td align="center">${rsrvt.rsrvtName}</td>
-									<td align="center">${rsrvt.phoneNo}</td>
-									<td align="center">${rsrvt.rsrvtDate}</td>
-									<td align="center">${rsrvt.rsrvtTime}</td>
-									<td align="center">${rsrvt.people}</td>
-									<td><select name="confirm${rsrvt.num}">
+									<td name="restName" align="center">${rsrvt.name}</td>
+									<td align="center" >${rsrvt.num}</td>
+									<td name="rsrvtName" align="center">${rsrvt.rsrvtName}</td>
+									<td name="phoneNo" align="center">${rsrvt.phoneNo}</td>
+									<td name="rsrvtDate" align="center">${rsrvt.rsrvtDate}</td>
+									<td name="rsrvtTime" align="center">${rsrvt.rsrvtTime}</td>
+									<td name="people" align="center">${rsrvt.people}</td>
+									<td>
+									   <select name="confirm${rsrvt.num}">
 											<option value="0"
 												${rsrvt.confirm == '0' ? 'selected="selected"' : '' }>승인
 												대기</option>
@@ -117,8 +121,9 @@ textarea {
 												disabled="true">이용 완료</option>
 									</select> <input type="hidden" ${rsrvt.confirm}></td>
 									<td>
+									<c:if test="${rsrvt.confirm == 0}">
 										<button type="button" name="${rsrvt.num}"
-											onclick="update(this)">확정</button>
+											onclick="update(this)">확정</button></c:if>
 									</td>
 								</tr>
 							</c:forEach>

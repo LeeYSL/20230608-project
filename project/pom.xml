@@ -150,7 +150,7 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-websocket</artifactId>
 			<version>${spring.version}</version>
-		</dependency> 
+		</dependency>
 		<!--spring websocket을 위한 설정 끝-->
 		<!--
 			@RestController 의 메서드에서 리턴값을 JavaScript의 객체로 변경해주는 설정
@@ -201,13 +201,28 @@
 			<version>1.18.28</version>
 		</dependency>
 		<!--lombok 관련설정 끝-->
-    <!--json-simple 설정 -->
-    <dependency>
-		<groupId>com.googlecode.json-simple</groupId>
-		<artifactId>json-simple</artifactId>
-		<version>1.1.1</version>
-	</dependency>
-	 <!--json-simple 설정 끝-->		
+		<!--json-simple 설정 -->
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<!--json-simple 설정 끝-->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+			<version>4.4.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.11</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+			<version>2.13.0</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>project</finalName>
