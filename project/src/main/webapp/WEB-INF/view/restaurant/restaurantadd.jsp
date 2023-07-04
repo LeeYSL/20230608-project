@@ -154,7 +154,8 @@
 			</tbody>
 		</table>
 		<br>
-		<td><input type="submit" value="등록" name="add"></td>
+		<td><input type="submit" value="등록" name="add">
+		<a href="/project/restaurant/restaurantList"></a></td>
 		<input type="button" value="취소" name="add">
 	</form:form>
 </body>

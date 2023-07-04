@@ -8,7 +8,8 @@
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<!-- <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script> -->
+<script type="text/javascript"
+	src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <meta charset="UTF-8">
 <title>예약 페이지</title>
@@ -53,12 +54,13 @@ th {
 	$(function() {
 		let id = '';
 		let dayoff = true;
-		$("#datepicker").datepicker({minDate:"+1d",
+		$("#datepicker").datepicker({
+			minDate : "+1d",
 			//휴무일 세팅
-			beforeShowDay: setDayoff
+			beforeShowDay : setDayoff
 		});
 	});
-	
+
 	$.datepicker.setDefaults({
 		dateFormat : 'yymmdd',
 		prevText : '이전 달',
@@ -73,71 +75,98 @@ th {
 		showMonthAfterYear : true,
 		yearSuffix : '년'
 	});
-	
-	function setDayoff(date){
+
+	function setDayoff(date) {
 		let day = date.getDay();
 		let offList = [];
-		$('input[name="dayoff"]').each(function (index, item) {
-			if($(item).val() == "Y") {
+		$('input[name="dayoff"]').each(function(index, item) {
+			if ($(item).val() == "Y") {
 				offList.push($(item).attr('id')); //id를 list에 담음
 			}
-		});	
-		
+		});
+
 		//false면 선택 안됨
-		return [(offList.indexOf(String(day)) == -1)];
+		return [ (offList.indexOf(String(day)) == -1) ];
 	}
 
-/* 	let IMP = window.IMP
-	IMP.init("imp01555276") //가맹점 식별코드 TC0ONETIME?? */
-			   
-   function kakaopay() {
-		console.log("check");
-		$.ajax({
-			url:'/project/reservation/kakaopay',
-			dataType:'json',
-			success:function(data){
-				 // alert(resp.tid); //결제 고유 번호
-				//var box = resp.next_redirect_pc_url;
-				//window.open(box); // 새창 열기
-				//location.href = box;
-				console.log("success");
-				var test = JSON.stringify(data);
-				
-				alert(test.next_redirect_pc_url);
-			},
-			error:function(error){
-				console.log("error");
-				alert(error);
-			}
-		});
-	}	
+	/*			   
+	 function kakaopay() {
+	 console.log("check");
+	 $.ajax({
+	 url:'/project/reservation/kakaopay',
+	 dataType:'json',
+	 success:function(data){
+	 // alert(resp.tid); //결제 고유 번호
+	 //var box = resp.next_redirect_pc_url;
+	 //window.open(box); // 새창 열기
+	 //location.href = box;
+	 console.log("success");
+	 var test = JSON.stringify(data);
 	
-	   function iamPay(json) {
+	 alert(test.next_redirect_pc_url);
+	 },
+	 error:function(error){
+	 console.log("error");
+	 alert(error);
+	 }
+	 });
+	 }	
+	 */
+
+	/* 	  function kakaopay() {
+	 console.log("check");
+	 $.ajax({
+	 url:'/project/reservation/kakao',
+	 dataType:'json',
+	 data : {
+	 name : "예약금",//주문상품명. ex) 사과 외 3건
+	 amount : "5000",//전체 주문 금액
+	 buyer_email :"dudtjs960630@naver.com", //주문자 이메일 테스트
+	 buyer_name : "test3" //주문자 성명
+	 buyer_tel : "010010010"
+	
+	 },
+	
+	 success:function(data){
+	
+	
+	 },
+	 error:function(error){
+	 console.log("error");
+	 alert(error);
+	 }
+	 });
+	 } */
+
+	function iamPay() {
+		 
+		let IMP = window.IMP
+		IMP.init("imp01555276") //가맹점 식별코드
 		IMP.request_pay({
-			pg :"kakaopay", // 상점구분. 카카오페이
+			pg : "kakaopay", // 상점구분. 카카오페이
 			pay_method : "card", //결제 방식 : 카드
-			merchant_uid : json.merchant_uid, //주문번호 : 주문별로 유일한 값으로 필요함 usrrid-session id 값
-			name : json.name, //주문상품명. ex) 사과 외 3건
-			amount : json.amount, //전체 주문 금액
-			buyer_email :"dudtjs960630@naver.com", //주문자 이메일 테스트
-			buyer_name : json.buyer_name, //주문자 성명
-			buyer_tel : json.buyer_tel, //주문자 전화번호
-		},function(rsp){
-			if(rsp.success) {
+			merchant_uid : "order_no_0001", //주문번호 : 주문별로 유일한 값으로 필요함 usrrid-session id 값
+			name : ${restaurant.name}, //주문상품명. ex) 사과 외 3건
+			amount : "5000", //전체 주문 금액
+			buyer_email : ${restaurant.name}, //주문자 이메일 테스트
+			buyer_name : ${restaurant.name}, //주문자 성명
+			buyer_tel : ${restaurant.name}, //주문자 전화번호
+		}, function(rsp) {
+			if (rsp.success) {
 				let msg = "결제가 완료 되었습니다."
 				msg += "\n:고유:ID : " + rsp.imp_uid
 				msg += "\n:상점ID : " + rsp.merchant_uid
 				msg += "\n:결제금액 :  " + rsp.paid_amount
 				alert(msg)
-				location.href="end"
-					
-			}else {
-				alert("결제에 실패 했습니다.:"  + rsp.error_msg)
+				location.href = "end"
+
+			} else {
+				alert("결제에 실패 했습니다.:" + rsp.error_msg)
 			}
-			
+
 		})
-		
-	} 
+
+	}
 </script>
 
 </head>
@@ -172,7 +201,7 @@ th {
 						<td><form:input path="phoneNo" placeholder="전화번호" /> <font
 							color="red"> <form:errors path="phoneNo" />
 						</font></td>
-					   <td><input type="hidden" name="restNum" value="${restNum}"></td> 
+						<td><input type="hidden" name="restNum" value="${restNum}"></td>
 					</tr>
 					<tr>
 						<td><form:select style="width:200" path="people">
@@ -185,40 +214,37 @@ th {
 						</font></td>
 					</tr>
 					<tr>
-						<td><form:input id="datepicker" path="rsrvtDate" autocomplete='off'
-								placeholder="예약날짜" /> <font color="red"> <form:errors
-									path="rsrvtDate" />
+						<td><form:input id="datepicker" path="rsrvtDate"
+								autocomplete='off' placeholder="예약날짜" /> <font color="red">
+								<form:errors path="rsrvtDate" />
 						</font></td>
 					</tr>
 					<tr>
-						<td>
-							<form:select id="rsrvtTime" path="rsrvtTime">
+						<td><form:select id="rsrvtTime" path="rsrvtTime">
 								<option value="">예약 시간</option>
-								<c:forEach var="i" begin="${restaurant.open}" end="${restaurant.close}">
+								<c:forEach var="i" begin="${restaurant.open}"
+									end="${restaurant.close}">
 									<option value="${i>9?i:'0'}${i>9?'':i}">${i>9?i:'0'}${i>9?'':i}:00</option>
 								</c:forEach>
-							</form:select>
-							<font color="red"> <form:errors path="rsrvtTime" />
+							</form:select> <font color="red"> <form:errors path="rsrvtTime" />
 						</font></td>
 					</tr>
 				</table>
-			<td>
-			 <input type="submit" value="예약 및 예약금 결제" name="add"></td>
-		       <!-- 
-		       <a href="javascript:kakaopay()">예약 및 예약금 결제</a>
-		        --> 
-				<!-- 예약 상세 페이지로 이동하기 -->
-				<input type="button" value="취소" name="add">
+				<td>
+					<%-- <input type="submit" value="예약 및 예약금 결제" name="add"></td> --%>
+
+					<a href="javascript:iamPay()">예약 및 예약금 결제</a> <!-- 예약 상세 페이지로 이동하기 -->
+					<input type="button" value="취소" name="add">
 			</form:form>
-			
-			<input type="hidden" id="0"  name="dayoff" value="${dayoff.sun}"/>
-			<input type="hidden" id="1"  name="dayoff" value="${dayoff.mon}"/>
-			<input type="hidden" id="2" name="dayoff" value="${dayoff.tue}"/>
-			<input type="hidden" id="3"  name="dayoff" value="${dayoff.wed}"/>
-			<input type="hidden" id="4" name="dayoff" value="${dayoff.thur}"/>
-			<input type="hidden" id="5"  name="dayoff" value="${dayoff.fri}"/>
-			<input type="hidden" id="6"  name="dayoff" value="${dayoff.sat}"/>
-			
+
+			<input type="hidden" id="0" name="dayoff" value="${dayoff.sun}" /> <input
+				type="hidden" id="1" name="dayoff" value="${dayoff.mon}" /> <input
+				type="hidden" id="2" name="dayoff" value="${dayoff.tue}" /> <input
+				type="hidden" id="3" name="dayoff" value="${dayoff.wed}" /> <input
+				type="hidden" id="4" name="dayoff" value="${dayoff.thur}" /> <input
+				type="hidden" id="5" name="dayoff" value="${dayoff.fri}" /> <input
+				type="hidden" id="6" name="dayoff" value="${dayoff.sat}" />
+
 		</div>
 	</div>
 </body>

@@ -88,4 +88,14 @@ public interface ReservationMapper {
 		"  WHERE A.rest_num=#{restNum} AND LEFT(A.rsrvt_date,8) = #{date} AND RIGHT(A.rsrvt_date,2) = #{time} AND A.confirm = 1",
     	"    </script>" })
 	Reservation checkReservation(Map<String, Object> param);
+
+	@Select("select * "
+		  + " from reservation A "
+		  + " join restaurant B "
+		  + " on A.rest_num = B.rest_num "
+		  + " where A.user_id=#{userId}"
+		  + " ORDER BY rsrvt_date")
+	List<Reservation> Myrsrvt(String userId);
+
+
 }

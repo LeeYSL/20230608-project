@@ -94,5 +94,9 @@ public class ReservationDao {
 		return template.getMapper(cls).checkReservation(param);
 	}
 
+	public List<Reservation> Myrsrvt(String userId) {
+		return template.getMapper(cls).Myrsrvt(userId);
+	}
+
 
 }

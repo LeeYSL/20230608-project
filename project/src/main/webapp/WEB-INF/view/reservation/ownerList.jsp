@@ -122,11 +122,12 @@ textarea {
 									</td>
 								</tr>
 							</c:forEach>
+
 							<tr>
 								<td colspan="5" style="text-align: center;"><c:if
-										test="${pageNum <=1 }">[이전]</c:if> <c:if
+										test="${pageNum <= 1}">[이전]</c:if> <c:if
 										test="${pageNum > 1 }">
-										<a href="ownerList?pageNum= ${pageNum-1}">[이전]</a>
+										<a href="ownerList?pageNum=${pageNum-1}">[이전]</a>
 									</c:if> <c:forEach var="a" begin="${startpage}" end="${endpage}">
 										<c:if test="${a==pageNum}">[${a}]</c:if>
 										<c:if test="${a != pageNum }">
@@ -134,10 +135,9 @@ textarea {
 										</c:if>
 									</c:forEach> <c:if test="${pageNum >= maxpage}">[다음]</c:if> <c:if
 										test="${pageNum < maxpage}">
-										<a href="ownerList?pageNum= ${pageNum+1}">[다음]</a>
+										<a href="ownerList?pageNum=${pageNum+1}">[다음]</a>
 									</c:if></td>
 							</tr>
-
 
 							<c:if test="${listcount == 0}">
 								<tr>

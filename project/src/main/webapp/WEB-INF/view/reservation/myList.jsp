@@ -8,16 +8,16 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <meta charset="UTF-8">
 <title>내 예약 목록</title>
-<script type="text/javascript">
+</head>
+
+<body>
+
+	<script>
 	function win_open(page) {
 		var op = "width=500, height=350, left=50, top=150";
 		open(page, "", op);
 	}
-</script>
-</head>
-<body>
-
-	<script>
+	
 		function update(btn) {
 			//취소기 때문에 3으로 고정
 			//	let confirm = $(btn).parent().siblings().find('c:choose').val
@@ -39,6 +39,7 @@
 			})
 		}
 	</script>
+	
 
 	<h2>예약 목록</h2>
 	<table class="w3-table-all">

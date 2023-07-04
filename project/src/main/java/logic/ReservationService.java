@@ -161,4 +161,12 @@ public class ReservationService {
 		return reservationDao.checkReservation(num, date, time);
 	}
 
+	public List<Reservation> Myrsrvt(String userId) {
+		return reservationDao.Myrsrvt(userId);
+//	}
+
+//	public List<Restaurant> MyRest(String userId, String delYn) {
+//		return restaurantDao.MyRest(userId,delYn);
+	}
+
 }

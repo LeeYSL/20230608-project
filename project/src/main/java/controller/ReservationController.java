@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import exception.LoginException;
@@ -165,30 +167,27 @@ public class ReservationController {
 		return mav;
 	}
 
-//	@RequestMapping("kakao")
-//	@ResponseBody
-//	public Map<String, Object> kakao(HttpSession session,Integer num) {
-//		Map<String, Object> map = new HashMap<>();
-//
-//		User loginUser = (User) session.getAttribute("loginUser");
-//		Reservation reservation = service.selectOne(num); 
-//
-//		map.put("merchant_uid", loginUser.getUserId() + "-" + session.getId());
-//	
-//		map.put("buyer_name", reservation.getName());
-//		map.put("buyer_tel", reservation.getPhoneNo());
-//		map.put("buyer_addr", reservation.getUserId());
-//	
-//		return map; // 클라이언트는 json 객체로 전달
-//	}
+	@RequestMapping("kakao")
+	@ResponseBody
+	public Map<String, Object> kakao(HttpSession session,Integer num) {
+		Map<String, Object> map = new HashMap<>();
+
+		User loginUser = (User) session.getAttribute("loginUser");
+		Reservation reservation = service.selectOne(num); 
+
+		map.put("merchant_uid", loginUser.getUserId() + "-" + session.getId());
+	
+		map.put("buyer_name", reservation.getName());
+		map.put("buyer_tel", reservation.getPhoneNo());
+		map.put("buyer_addr", reservation.getUserId());
+	
+		return map; // 클라이언트는 json 객체로 전달
+	}
 
 	@PostMapping("ownerList")
 	public ModelAndView confirm(int num, int confirm) {
 		ModelAndView mav = new ModelAndView();
 
-		System.out.println("1");
-		System.out.println("num : " + num);
-		System.out.println("confirm : " + confirm);
 
 		service.ownerconfirm(num, confirm);
 		// System.out.println("1:" + reservation.getConfirm());
@@ -207,16 +206,18 @@ public class ReservationController {
 		ModelAndView mav = new ModelAndView();
 
 		User user = (User) session.getAttribute("loginUser");
+
 		Integer pageNum = null;
 		if (param.get("pageNum") != null)
 			pageNum = Integer.parseInt(param.get("pageNum"));
 
+
 		if (param.get("pageNum") == null || pageNum.toString().equals("")) {
 			pageNum = 1;
 		}
-
 		int limit = 10;
-		int listcount = service.ownerListCount(user.getUserId());
+		int listcount = service.myListCount(user.getUserId());
+		
 		List<Reservation> rsrvtList = service.ownerList(user.getUserId(), pageNum, limit, delYn);
 
 		int maxpage = (int) ((double) listcount / limit + 0.95);

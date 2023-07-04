@@ -35,6 +35,8 @@ import org.springframework.web.servlet.ModelAndView;
 import exception.LoginException;
 import logic.Board;
 import logic.Comment;
+import logic.Reservation;
+import logic.ReservationService;
 import logic.User;
 import logic.UserService;
 import util.CipherUtil;
@@ -44,6 +46,8 @@ import util.CipherUtil;
 public class UserController {
 	@Autowired
 	private UserService userservice;
+	@Autowired
+	private ReservationService reservationService;
 	@Autowired
 	private CipherUtil util;
 
@@ -423,7 +427,7 @@ public class UserController {
 	}
 
 	@RequestMapping("mypage")
-	public ModelAndView idCheckMypage(@RequestParam Map<String, String> param, String userId, HttpSession session) {
+	public ModelAndView idCheckMypage(@RequestParam Map<String, String> param, String userId, HttpSession session,String delYn) {
 		ModelAndView mav = new ModelAndView();
 				
 		List<User> myulist = userservice.myulist(userId);
@@ -435,6 +439,15 @@ public class UserController {
 		
 		List<Comment> myclist =userservice.myclist(userId);
 		mav.addObject("myclist",myclist);
+		
+		List<Reservation> Myrsrvt = reservationService.Myrsrvt(userId);
+		mav.addObject("Myrsrvt",Myrsrvt);
+		
+//		List<Restaurant> MyRest = reservationService.MyRest(userId, delYn);
+//		mav.addObject("MyRest",MyRest);
+		
+		
+		System.out.println(Myrsrvt);
 		
 		Integer pageNum =null;
 		if(param.get("pageNum") != null) {
