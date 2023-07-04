@@ -85,6 +85,14 @@ public class ReservationDao {
 	public void pointInsert(int num, Integer point) {
 	    template.getMapper(cls).pointInsert(num,point);
 	}
+	
+	public Reservation checkReservation(int num, String date, String time) {
+		param.clear();
+		param.put("restNum",num);
+		param.put("date", date);
+		param.put("time", time);
+		return template.getMapper(cls).checkReservation(param);
+	}
 
 
 }

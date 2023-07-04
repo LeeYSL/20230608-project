@@ -68,6 +68,10 @@ td {
 							<td>${user.tel}</td>
 						</tr>
 						<tr>
+							<th>이메일</th>
+							<td>${user.email}</td>
+						</tr>
+						<tr>
 							<th>주소</th>
 							<td>${user.address}</td>
 						</tr>

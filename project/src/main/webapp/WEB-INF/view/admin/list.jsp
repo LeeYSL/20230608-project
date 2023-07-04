@@ -11,6 +11,10 @@
 		document.searchform.pageNum.value=page;
 		document.searchform.submit();
 	}
+	function allchkbox(allchk){
+		$(".idchks").prop("checked",allchk.checked)
+		
+	}
 
 </script>
 <style type="text/css">
@@ -81,7 +85,7 @@ a {
 						<th>닉네임</th>
 						<th>이메일</th>
 						<th>휴대전화번호</th>
-						<th><input type="checkbox"></th>
+						<th><input type="checkbox" name="allchk" onchange="allchkbox(this)"></th>
 					</tr>
 
 					<c:forEach var="user" items="${userlist}">
@@ -91,7 +95,7 @@ a {
 							<td>${user.nickname}</td>
 							<td>${user.email}</td>
 							<td>${user.tel}</td>
-							<td><input type="checkbox"></td>
+							<td><input type="checkbox" name="idchks" class="idchks" value="${user.userId}"></td>
 						</tr>
 					</c:forEach>
 						<tr>
@@ -113,6 +117,12 @@ a {
 							</td>
 						</tr>
 				</table>
+			</div>
+			<div>
+			<br>		
+				<a href="mail">
+					<button class="w3-button w3-white w3-border w3-border-orange w3-round-large w3-right">메일보내기</button>
+				</a>
 			</div>
 		</div>
 	</div>

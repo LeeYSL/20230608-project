@@ -77,6 +77,16 @@ public List<Board> myblist(String userId) {
 
 public int myblistcount(String userId) {
 	return template.getMapper(cls).myblistcount(userId);
+}
+
+
+
+public void updateGrpStep(@Valid Board board) {
+	param.clear();
+	param.put("grp", board.getGrp());
+	param.put("grpstep", board.getGrpStep());
+	template.getMapper(cls).updateGrpStep(param);
+	
 } 
 
 

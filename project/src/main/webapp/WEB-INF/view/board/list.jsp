@@ -97,7 +97,12 @@ a {
 								<td>${boardno}</td>
 									<c:set var="boardno" value="${boardno-1}" />
 								<td>
-								
+									<c:if test="${! empty board.fileurl}">
+										<a href="file/${board.fileurl}">@</a>
+									</c:if>		
+									<c:if test="${! empty board.fileurl}">&nbsp;&nbsp;&nbsp;</c:if>
+									<c:forEach begin="1" end="${board.grpLevel}">&nbsp;&nbsp;&nbsp;&nbsp;</c:forEach>
+									<c:if test="${board.grpLevel > 0}">┖</c:if>															
 									<c:if test="${board.secret== NULL}">
 										<a href="detail?num=${board.num}"> ${board.title} </a>
 									</c:if>

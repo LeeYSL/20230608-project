@@ -36,7 +36,26 @@
 	}
 
 </script>
+<style type="text/css">
+.page {
+	height: 10%;
+	display: block;
+}
 
+th {
+	background-color: #ff8400;
+	color: white;
+	text-align: center;
+}
+
+td {
+	background-color: white;
+}
+
+a {
+	text-decoration: none;
+}
+</style>
 </head>
 <body>
 	<div class="w3-container w3-padding-32 w3-center">
@@ -58,11 +77,11 @@
         <c:forEach items="${myulist}" var="user">
          <h4 class="w3-center">My Profile</h4>
          <p class="w3-center">
-         	<c:if test="${user.fileurl != null}">
+         	<c:if test="${user.fileurl != null&& ! user.fileurl.trim().equals('')}">
          		<img src="file/${user.fileurl}" class="w3-circle" style="height:106px;width:106px" alt="Avatar">
          	</c:if>
-         	<c:if test="${user.fileurl == null}">
-         		<img src="/WEB-INF/view/orangeprofile.jpg" class="w3-circle" style="height:106px;width:106px" alt="Avatar">
+         	<c:if test="${user.fileurl == null || user.fileurl.trim().equals('')}">
+         		<img src="${path}\image\orangeprofile.jpg" class="w3-circle" style="height:106px;width:106px" alt="Avatar">
          	</c:if>	
          </p>
          <hr>
@@ -139,7 +158,7 @@
       
       
       <%--board --%>
-      <div class="info w3-container w3-card w3-white w3-round w3-margin" id="binfo" style="display:none;"><br>
+      <div class="info w3-container w3-card w3-white w3-round w3-margin-left" id="binfo" style="display:none;"><br>
         <h4>내가 쓴 글</h4><br>
         <hr class="w3-clear">
 		<table class="w3-table-all">		

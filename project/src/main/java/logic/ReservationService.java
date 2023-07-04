@@ -156,5 +156,9 @@ public class ReservationService {
 	public Integer PointAvg(int num) {
 	   return restaurantDao.pointAvg(num);
 	}
+	
+	public Reservation checkReservation(int num, String date, String time) {
+		return reservationDao.checkReservation(num, date, time);
+	}
 
 }

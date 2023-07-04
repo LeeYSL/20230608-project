@@ -18,7 +18,7 @@ import lombok.ToString;
 @ToString
 public class User {
 	@NotEmpty(message="아이디는 필수입니다.")
-	@Pattern(regexp="[a-z]+[a-z0-9]{6,12}",
+	@Pattern(regexp="[a-z]+[a-z0-9]{5,11}",
 	message="영어로 시작, 숫자 포함 가능, 6~12자 ")
 	private String userId;
 	@Pattern(regexp="(?=.*\\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}",

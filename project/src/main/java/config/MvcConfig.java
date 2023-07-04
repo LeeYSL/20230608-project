@@ -68,6 +68,7 @@ public class MvcConfig implements WebMvcConfigurer {
 		Properties pr = new Properties();
 		pr.put("exception.CartEmptyException","exception");// 발생 예외 클래스 , 호출되는 뷰 이름
 		pr.put("exception.LoginException","exception");
+		pr.put("exception.ReservationException","exception");
 		pr.put("exception.BoardException","exception");
 		ser.setExceptionMappings(pr);
 		return ser;

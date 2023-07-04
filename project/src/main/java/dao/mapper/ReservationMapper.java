@@ -33,8 +33,9 @@ public interface ReservationMapper {
 			" </script>" })
 	List<Reservation> myListSelect(Map<String, Object> param);
 
+	//스크립트를 안쓰면 <![CDATA[]]>를 안써도 부등호 사용가능
 	@Select("SELECT LEFT(A.rsrvt_date,8) AS rsrvt_date, RIGHT(A.rsrvt_date,2) AS rsrvt_time, A.num, A.rsrvt_name,A.phone_no,A.people,B.rest_phoneNo,B.name, "
-			+ " case when A.rsrvt_date  <![CDATA[ < ]]> to_char(NOW(),'YYYYMMDDHH') then '4' ELSE A.confirm END confirm"
+			+ " case when A.rsrvt_date < to_char(NOW(),'YYYYMMDDHH') then '4' ELSE A.confirm END confirm"
 			+ " FROM reservation A " + " JOIN restaurant B " + "  ON A.rest_num = B.rest_num " + " WHERE A.num =#{num}"
 			+ " ORDER BY reg_date")
 	Reservation selectOne(int num);
@@ -79,4 +80,12 @@ public interface ReservationMapper {
 	@Update("update reservation set point=#{point} where num=#{num}")
 	void pointInsert(@Param("num")int num, @Param("point") Integer point);
 
+	//예약확정이고 예약날짜, 예약시간으로 예약인원을 초과하는지 체크함
+	@Select({ "<script>",
+        " SELECT case when NVL(SUM(A.people),0) <![CDATA[ < ]]> B.maxpeople then 'Y' ELSE 'N' END rsrvtYn, ",
+        " 		 maxpeople - NVL(SUM(A.people),0) as canPeople",
+		"   FROM reservation A JOIN restaurant B ON A.rest_num = B.rest_num" ,
+		"  WHERE A.rest_num=#{restNum} AND LEFT(A.rsrvt_date,8) = #{date} AND RIGHT(A.rsrvt_date,2) = #{time} AND A.confirm = 1",
+    	"    </script>" })
+	Reservation checkReservation(Map<String, Object> param);
 }
