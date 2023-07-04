@@ -93,7 +93,7 @@ public interface RestaurantMapper {
 	@Delete("delete from menu where rest_num=#{num}")
 	void deleteMenu(int num);
 
-	@Select("select avg(point) from reservation where rest_num=#{num}")
-    int pointAvg(@Param("num")int num,@Param("point") Integer point);
+	@Select("select ifnull(avg(POINT),0) from reservation where rest_num=#{num}")
+    Integer pointAvg(@Param("num")int num);
  	
 }

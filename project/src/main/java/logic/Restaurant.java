@@ -36,6 +36,7 @@ public class Restaurant {
     private String delYn; // 가게 삭제
     private MultipartFile picture; // 사진 등록해서 전송할 때 쓰는거
 	private String fileurl;
+	private int point; //별점
    
 	
 }
