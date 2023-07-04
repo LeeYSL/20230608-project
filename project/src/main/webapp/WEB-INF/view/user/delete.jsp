@@ -29,8 +29,7 @@ a {
 </head>
 <body>
 	<div class="w3-container w3-padding-32 w3-center">
-		<div
-			style="display: block; margin: auto; width: 800px; height: 100%;">
+		<div style="display: block; margin: auto; width: 800px; height: 100%;">
 			<div class="w3-padding-32">
 				<div class="side">
 					<div class="page">
@@ -38,38 +37,24 @@ a {
 							<span class="txt">회원탈퇴</span>
 						</div>
 					</div>
-						<form:form modelAttribute="user" method="post" action="delete">
-							<spring:hasBindErrors name="user">
-								<font color="red"> 
-									<c:forEach items="${errors.globalErrors}" var="error">
-										<spring:message code="${error.code}" />
-										<br>
-									</c:forEach>
-								</font>
-							</spring:hasBindErrors>
-							
+						<form method="post" action="delete">
+							<input type="hidden" name="userId" value="${param.userId}">					
 							<table class="w3-table-all w3-white w3-border w3-border-orange w3-round-large">
 								<tr>
 									<td>
-										<form:input path="pw" class="w3-input" placeholder="비밀번호" /> 
-										<font color="red"> 
-											<form:errors path="pw" />
-										</font>
+										<input type="text" name="pw" class="w3-input" placeholder="비밀번호" /> 
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<form:input path="pw1" class="w3-input" placeholder="비밀번호 재확인" /> 
-										<font color="red"> 
-											<form:errors path="pw1" />
-										</font>
+										<input type="text" name="pw1"  class="w3-input" placeholder="비밀번호 재확인" /> 
 									</td>
 								</tr>
 							</table>
 							<hr>
 							<div class="bottom_btn">
 								<div>
-									<a href="userinfo?userId=${user.userId}">
+									<a href="userinfo?userId=${param.userId}">
 										<button type="button"
 											class="w3-button w3-white w3-border w3-border-orange w3-round-large">취소</button>
 									</a>
@@ -77,7 +62,7 @@ a {
 										class="w3-button w3-white w3-border w3-border-orange w3-round-large">탈퇴하기</button>
 								</div>
 							</div>
-						</form:form>
+						</form>
 				</div>
 			</div>
 		</div>

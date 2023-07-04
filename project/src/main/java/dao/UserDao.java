@@ -121,6 +121,12 @@ public class UserDao {
 		param.put("userids", idchks);
 		return template.getMapper(cls).select(param);
 	}
+	
+	public void deleteUser(String delYn, String userId) {
+		template.getMapper(cls).deleteUser(delYn,userId);
+		
+	}
+
 
 
 

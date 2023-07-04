@@ -26,6 +26,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,6 +34,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import exception.LoginException;
 import logic.Mail;
+import logic.Reservation;
+import logic.ReservationService;
+import logic.Restaurant;
 import logic.User;
 import logic.UserService;
 
@@ -42,6 +46,8 @@ import logic.UserService;
 public class AdminController {
 	@Autowired
 	private UserService userservice;
+	@Autowired
+	private ReservationService service;
 
 	
 	@RequestMapping("*")
@@ -85,6 +91,90 @@ public class AdminController {
 		mav.addObject("boardno", boardno);
 		return mav;
 	}
+	/*
+	@PostMapping("list")
+	public ModelAndView list(User user, String delYn, String userId) {
+		ModelAndView mav = new ModelAndView();
+
+		userservice.deleteUser(delYn, userId);
+		System.out.println(userId);
+
+		mav.addObject("deleteUser", userId);
+		System.out.println(userId);
+
+		return mav;
+
+	}
+	*/
+	@RequestMapping("restaurantlist")
+	ModelAndView restist(@RequestParam Map<String, String> param, HttpSession session, String delYn,Restaurant restaurant,Reservation reservation) {
+		ModelAndView mav = new ModelAndView();
+
+		Integer pageNum = null;
+		if (param.get("pageNum") != null)
+			pageNum = Integer.parseInt(param.get("pageNum"));
+		String type = param.get("type");
+		String searchcontent = param.get("searchcontent");
+
+		if (pageNum == null || pageNum.toString().equals("")) {
+			pageNum = 1;
+		}
+		if (type == null || type.trim().equals("") || searchcontent == null || searchcontent.trim().equals("")) {
+			type = null;
+			searchcontent = null;
+		}
+
+		int limit = 10;
+		int restListcount = service.restListcount(type, searchcontent);
+		
+	    int num = restaurant.getRestNum();
+	    
+		//Integer pointNum = service.PointAvg(num);
+		
+		List<Restaurant> restList = service.restList(pageNum, limit, type, searchcontent, delYn);
+		for(Restaurant rest : restList) {
+			rest.setPoint(service.PointAvg(rest.getRestNum()));
+		}
+//		for(int i = 0; i < restList.size(); i++) {
+//			Restaurant rest = restList.get(i);
+//		}
+		int maxpage = (int) ((double) restListcount / limit + 0.95);// 등록 건수에 따른 최대 페이지
+		int startpage = (int) ((pageNum / 10.0 + 0.9) - 1) * 10 + 1;// 페이지의 시작 번호
+		int endpage = startpage + 9; // 화면에 보여줄 페이지 끝 번호
+		if (endpage > maxpage)
+			endpage = maxpage; // 페이지의 끝 번호는 최대 페이지 클 수 없다.
+
+		// System.out.println("1"+pageNum);
+		// System.out.println("2"+restListcount);
+		// System.out.print("3"+restList);
+		// System.out.println("4"+maxpage);
+		// System.out.println("5"+startpage);
+		// System.out.println("6"+endpage);
+
+		mav.addObject("pageNum", pageNum);
+		mav.addObject("restList", restList);
+		mav.addObject("restListcount", restListcount);
+		mav.addObject("pageNum", pageNum);
+		mav.addObject("maxpage", maxpage);
+		mav.addObject("startpage", startpage);
+		mav.addObject("endpage", endpage);
+		//mav.addObject("pointNum", pointNum);
+
+		return mav;
+	}	
+	@PostMapping("restaurantlist")
+	public ModelAndView restaurantlist(Restaurant restaurant, String delYn, int num) {
+		ModelAndView mav = new ModelAndView();
+
+		service.deleteRest(delYn, num);
+		System.out.println(num);
+
+		mav.addObject("deleteRest", num);
+		System.out.println(num);
+
+		return mav;
+
+	}
 	@RequestMapping("maileForm")
 	public ModelAndView mailForm(String[] idchks, HttpSession session) {
 		ModelAndView mav = new ModelAndView("admin/mail");
@@ -114,6 +204,7 @@ public class AdminController {
 		mav.addObject("url","list");
 		return mav;
 	}
+
 
 	private void mailSend(Mail mail,Properties prop) {
 		MyAuthenticator auth = new MyAuthenticator(mail.getNaverid(),mail.getNaverpw());

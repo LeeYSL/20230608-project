@@ -97,19 +97,25 @@ a {
 								<td>${boardno}</td>
 									<c:set var="boardno" value="${boardno-1}" />
 								<td>
+								
+								
 									<c:if test="${! empty board.fileurl}">
 										<a href="file/${board.fileurl}">@</a>
-									</c:if>		
+									</c:if>	
+									
+										
 									<c:if test="${! empty board.fileurl}">&nbsp;&nbsp;&nbsp;</c:if>
 									<c:forEach begin="1" end="${board.grpLevel}">&nbsp;&nbsp;&nbsp;&nbsp;</c:forEach>
 									<c:if test="${board.grpLevel > 0}">┖</c:if>															
-									<c:if test="${board.secret== NULL}">
-										<a href="detail?num=${board.num}"> ${board.title} </a>
-									</c:if>
+									<c:if test="${board.secret==null || board.secret.trim().equals('')}"><%--비밀글아닐때 --%>
+												<a href="detail?num=${board.num}">
+													${board.title}
+												</a>												
+									</c:if>	
 								
-									<c:if test="${board.secret!=null}">
+									<c:if test="${board.secret!=null && !board.secret.trim().equals('')}"><%--비밀글일때 --%>
 										<c:choose>										
-											<c:when test="${board.userId==sessionScope.loginUser.userId || sessionScope.loginUser.batch == 1}">
+											<c:when test="${board.userId==sessionScope.loginUser.userId || sessionScope.loginUser.batch == 1}"> <%--운영자이거나, 작성자일때 --%>
 												<a href="detail?num=${board.num}">
 													${board.title}
 												</a>										
@@ -118,7 +124,8 @@ a {
 												비밀글은 작성자와 관리자만 볼 수 있습니다.
 											</c:otherwise>
 										</c:choose>
-									</c:if>	
+									</c:if>
+	
 								
 								</td>
 								<td>${board.userId}</td>

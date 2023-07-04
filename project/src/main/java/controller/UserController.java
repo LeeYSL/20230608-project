@@ -270,19 +270,19 @@ public class UserController {
 		User dbUser = userservice.selectOne(user.getUserId());
 		System.out.println("dbUser : " +dbUser);
 		if(dbUser == null) {
-			throw new LoginException("아이디 오류입니다.","login");
+			throw new LoginException("회원정보가 없습니다.","login");
 		}
 		if(pwHash(user.getPw()).equals(dbUser.getPw())) {
 			session.setAttribute("loginUser", dbUser);
 			System.out.println("loginuser : " +session.getAttribute("loginUser"));
 			mav.setViewName("redirect:userinfo?userId="+user.getUserId());
 		} else {
-			throw new LoginException("비밀번호 오류입니다.", "login");
+			throw new LoginException("회원정보가 없습니다.", "login");
 		}
 		return mav;
 	}
 	@RequestMapping("userinfo")
-	public ModelAndView userinfo(String userId, HttpSession session) {
+	public ModelAndView idCheckUserinfo(String userId, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 
 //		user = (User)session.getAttribute("loginUser");	
@@ -300,7 +300,7 @@ public class UserController {
 	}
 	
 	@PostMapping("update")
-	public ModelAndView idCheckupdate (@Valid User user, BindingResult bresult, String userId, HttpSession session) {
+	public ModelAndView idCheckUpdate (@Valid User user, BindingResult bresult, String userId, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		if(bresult.hasErrors()) {
 			mav.getModel().putAll(bresult.getModel());
@@ -347,16 +347,17 @@ public class UserController {
 		}		
 		return mav;
 	}
-	@GetMapping("update")
-	public ModelAndView idCheckuserupdate (String userId) {
+	@GetMapping({"update","delete"})
+	public ModelAndView idCheckUserupdate (String userId, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		User user =userservice.selectOne(userId);
 		user.setPw(null);
+		user.setPw1(null);
 		mav.addObject("user", user);
 		return mav;
 	}
 	@PostMapping("pwchange")
-	public ModelAndView idCheckpwchange(@Valid User user, BindingResult bresult, HttpSession session) {
+	public ModelAndView idCheckPwchange(@Valid User user, BindingResult bresult, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		User loginUser = (User)session.getAttribute("loginUser");
 		if(!loginUser.getPw().equals(pwHash(user.getPw()))) {
@@ -378,23 +379,42 @@ public class UserController {
 	
 	
 	@PostMapping("delete")
-	public String idCheckdelete (String userId, String pw, String pw1, HttpSession session) {
+	public ModelAndView delete (String pw, String pw1,String userId,HttpSession session) {
+		ModelAndView mav = new ModelAndView();
 		User loginUser = (User)session.getAttribute("loginUser");		
-
+		if(!pw.equals(pw1) && (loginUser.getPw() != pwHash(pw))) {
+			System.out.println("1번통과");
+			System.out.println("pwHash(pw)="+pwHash(pw));
+			System.out.println("loginUser.getPw()="+loginUser.getPw());
+			System.out.println("userId="+userId);
+			System.out.println("loginUser.getUserId()="+loginUser.getUserId());
+			throw new LoginException("비밀번호가 일치하지 않습니다.","delete?userId="+loginUser.getUserId());	
+		}	
 		try {
-			if(pw.equals(pw1) || (loginUser.getPw() == pwHash(pw))) {
-				System.out.println("loginUser.getUserId()"+loginUser.getUserId());
-				userservice.delete(loginUser.getUserId());			
-				session.invalidate();
-				System.out.println("loginUser.getUserId()"+loginUser.getUserId());
-
-				return "redirect:login";
-			}else {
-				throw new LoginException("비밀번호가 일치하지 않습니다.","delete?userId="+loginUser.getUserId());			
+			if(loginUser.getUserId().equals(userId)) {
+					System.out.println("2번통과");
+					System.out.println("loginUser.getUserId()="+loginUser.getUserId());
+					System.out.println("userId="+userId);
+					userservice.delete(userId);	 		
+					session.invalidate();
+					System.out.println("loginUser.getUserId()"+loginUser.getUserId());
+					mav.setViewName("redirect:login");	
+					return mav;
+				
+			} else if(loginUser.getBatch() == 1) {
+				System.out.println("3번통과");
+				System.out.println("userId="+userId);
+				userservice.delete(userId);	
+				System.out.println("userId="+userId);
+				mav.setViewName("redirect:../admin/list");
+				return mav;
 			}
+						
 		} catch (Exception e) {
 			throw new LoginException("탈퇴 실패","userinfo?userId="+loginUser.getUserId());
 		}
+		return mav;
+		
 	}
 	@RequestMapping("logout")
 	public String logout (String userId, HttpSession session) {

@@ -251,5 +251,12 @@ public class UserService {
 	}
 
 
+	public void deleteUser(String delYn, String userId) {
+		userDao.deleteUser(delYn,userId);
+		
+	}
+
+
+
 
 }

@@ -15,15 +15,15 @@ import logic.User;
 
 public interface UserMapper {
 
-	@Insert("insert into user (user_id, pw, nickname, name, address, tel, batch, file1, reg_date,channel,email) "
-			+ " values (#{userId}, #{pw}, #{nickname}, #{name}, #{address}, #{tel}, #{batch},#{fileurl}, now(),#{channel},#{email})")
+	@Insert("insert into user (user_id, pw, nickname, name, address, tel, batch, file1, reg_date,channel,email,delYn) "
+			+ " values (#{userId}, #{pw}, #{nickname}, #{name}, #{address}, #{tel}, #{batch},#{fileurl}, now(),#{channel},#{email},'N')")
 	void insert(@Valid User user);
 
 	
 	@Update("update user set nickname=#{nickname}, address=#{address}, tel=#{tel}, file1=#{fileurl} where user_id=#{userId}")
 	void update(User user);
 
-	@Delete("delete from user where user_id=#{userId}")
+	@Update("update user set delYn='Y', del_date=now() where user_id=#{userId}")
 	void delete(String userId);
 
 	@Select("select user_id, pw, nickname, name, address, tel, batch, file1 fileurl, reg_date,channel,email from user")
@@ -55,8 +55,8 @@ public interface UserMapper {
 	int usercount(Map<String, Object> param);
 
 	@Select({"<script>",
-			"select * from user ",
-			"<if test='searchcontent != null'> where ${type} like '%${searchcontent}%' </if>",
+			"select * from user where delYn='N'",
+			"<if test='searchcontent != null'> and ${type} like '%${searchcontent}%' </if>",
 			"<if test='limit != null'> order by user_id asc limit #{startrow},#{limit} </if>",
 			"</script>"})
 	List<User> userlist(Map<String, Object> param);
@@ -72,7 +72,7 @@ public interface UserMapper {
 	User selectOneNickname(String nickname);
 
 
-	@Select("select user_id, pw, nickname, name, address, tel, batch, file1 fileurl, reg_date,channel,email from user where user_id=#{userId}")
+	@Select("select user_id, pw, nickname, name, address, tel, batch, file1 fileurl, reg_date,channel,email from user where user_id=#{userId} and delYn='N'")
 	User selectOne(String userId);
 
 	@Select("SELECT * FROM user WHERE tel=#{tel} AND  user_id != #{userId}")
@@ -88,7 +88,11 @@ public interface UserMapper {
 		+ "<foreach collection='userIds' item='id' separator=',' open='(' close=')'>#{id}" 
 		+ "</foreach></if>",
 		"</script>"})
-List<User> select(Map<String,Object> param);
+	List<User> select(Map<String,Object> param);
+
+
+	@Update("update user set delYn=#{delYn} where user_id=#{userId}")
+	void deleteUser(@Param("delYn")String delYn,@Param("userId") String userId);
 
 
 
