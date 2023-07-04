@@ -102,8 +102,8 @@ public class RestaurantDao {
 		template.getMapper(cls).deleteMenu(num);
 	}
 
-	public int pointAvg(int num, Integer point) {
-		return template.getMapper(cls).pointAvg(num,point);
+	public int pointAvg(int num) {
+		return template.getMapper(cls).pointAvg(num);
 	}
 	
 }
