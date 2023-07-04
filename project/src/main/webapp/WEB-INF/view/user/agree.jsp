@@ -47,7 +47,19 @@ li {
 	list-style: none;
 	float: left;
 	width: 25%;
-	height: 50%;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	background: white;
+	color: #ff8400;
+	border: 0.1px solid #ff8400;
+}
+
+.now {
+	list-style: none;
+	float: left;
+	width: 25%;
+	height: 50px;
 	line-height: 50px;
 	text-align: center;
 	background: #ff8400;
@@ -64,29 +76,22 @@ li {
 
 </head>
 <body>
-	<div class="w3-container w3-padding-32 w3-center">
-		<div
-			style="display: block; margin: auto; width: 1100px; height: 100%;">
-			<div class="w3-padding-32">
-				<div class="page">
+		<div style="display: block; margin: auto; width: 1100px; height: 100%; padding-top:100px;" class="w3-center">
+			<div class="w3-padding-32" style="height: 100%;">
 					<header class="l_member_header">
-						<h1 class="tit">
+						<div >
+						<h1 class="tit" >
 							<span>회원가입</span>
 						</h1>
-			
+						</div>
 							<li class="step1"><span class="number">01</span> 회원선택</li>
-							<li class="step2"><span class="number">02</span> 약관동의</li>
+							<li class="step2 now"><span class="number">02</span> 약관동의</li>
 							<li class="step3"><span class="number">03</span> 정보입력</li>
 							<li class="step4"><span class="number">04</span> 가입완료</li>
 						
-					</header>
-				</div>
-				<br>
-					<div class="w3-col w3-center">
-						<div class="join_title">
-							<b>이용약관</b> 동의
-						</div>
-						<div class="agree">
+					</header>				
+					<div class="w3-col w3-center w3-padding-32 ">
+						<div class="agree w3-padding-32">
 							<div class="agree_txt">
 								<textarea readonly>수정수정</textarea>
 							</div>
@@ -96,22 +101,12 @@ li {
 								</label>
 							</div>
 						</div>
-						<div class="agree">
+						<div class="agree w3-padding-32">
 							<div class="agree_txt">
 								<textarea readonly>수정수정</textarea>
 							</div>
 							<div class="agree_check">
 								<label> <input type="checkbox" id="checkbox2" onclick="chk(this)">
-									" 위 내용에 동의합니다."
-								</label>
-							</div>
-						</div>
-						<div class="agree">
-							<div class="agree_txt">
-								<textarea readonly>수정수정</textarea>
-							</div>
-							<div class="agree_check">
-								<label> <input type="checkbox" id="checkbox3" onclick="chk(this)">
 									" 위 내용에 동의합니다."
 								</label>
 							</div>
@@ -125,6 +120,6 @@ li {
 					</div>
 			</div>
 		</div>
-	</div>
+
 </body>
 </html>

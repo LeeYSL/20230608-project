@@ -8,7 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.support.ResourceBundleMessageSource;
-
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.HandlerMapping;
@@ -86,4 +87,31 @@ public class MvcConfig implements WebMvcConfigurer {
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
 	}
+	
+	
+    @Bean
+    public static JavaMailSender mailSender() {
+        JavaMailSenderImpl jms = new JavaMailSenderImpl();
+        jms.setHost("smtp.naver.com");//google smtp 서버 설정(고정)
+        jms.setPort(465);//네이버는 465(고정) //메일 포트587
+        jms.setUsername("g2ve_jeong@naver.com");
+        jms.setPassword("zheldcjswo");
+
+	//세부사항
+        Properties prop = new Properties();
+        prop.setProperty("mail.smtp.starttls.enable", "true");
+        prop.setProperty("mail.smtp.auth", "true"); 
+ //       prop.setProperty("mail.transport.protocol", "smtp");
+        prop.setProperty("mail.debug", "true");
+ //       prop.setProperty("mail.smtp.ssl.trust", "smtp.gmail.com");
+        prop.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
+        prop.setProperty("mail.smtp.socketFactory.port", "465"); //
+        prop.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory"); // 
+        prop.setProperty("mail.smtp.socketFactory.fallback", "false"); // 
+        jms.setJavaMailProperties(prop);
+
+        return jms;
+    }
+	
+	
 }
