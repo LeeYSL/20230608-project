@@ -40,11 +40,11 @@
 					</td>
 				</tr>
 				<tr>
-					<th>전화번호</th>
+					<th>이메일</th>
 					<td>
-						<input type="text" name="tel" class="w3-input">
+						<input type="text" name="email" class="w3-input">
 						<font color="red">
-							<form:errors path="tel"/>
+							<form:errors path="email"/>
 						</font>
 					</td>				
 				</tr>

@@ -190,8 +190,8 @@ public class UserService {
 	}
 
 
-	public List<User> getUserlist(String tel) {
-		return userDao.telList(tel);
+	public List<User> emailList(String email) {
+		return userDao.emailList(email);
 	}
 
 

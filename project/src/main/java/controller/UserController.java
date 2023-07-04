@@ -455,8 +455,8 @@ public class UserController {
 				bresult.rejectValue("userId", "error.required");
 			}
 		}
-		if(user.getTel() == null || user.getTel().trim().equals("")) {
-			bresult.rejectValue("tel","error.required");
+		if(user.getEmail() == null || user.getEmail().trim().equals("")) {
+			bresult.rejectValue("email","error.required");
 		}
 		if(user.getName() == null || user.getName().trim().equals("")) {
 			bresult.rejectValue("name","error.required");
@@ -471,7 +471,7 @@ public class UserController {
 		String result=null;
 		
 		if(user.getUserId() == null) {
-			List<User> list = userservice.getUserlist(user.getTel());
+			List<User> list = userservice.emailList(user.getEmail());
 			System.out.println(list);
 			for(User u :list) {
 				if(u.getName().equals(user.getName())) {

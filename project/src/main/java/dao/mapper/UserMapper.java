@@ -33,20 +33,20 @@ public interface UserMapper {
 	List<User> myulist(String userId);
 
 
-	@Select("select user_id from user where tel=#{tel} and name=#{name}")
-	String idsearch(@Param("tel")String tel, @Param("name")String name);
+	@Select("select user_id from user where email=#{email} and name=#{name}")
+	String idsearch(@Param("email")String email, @Param("name")String name);
 
 	@Update("update user set pw=#{pw} where user_id=#{userId}")
 	void chgpass(Map<String, Object> param);
 
-	@Select({"<script>","select ${col} from user where name=#{name} and tel=#{tel} "
+	@Select({"<script>","select ${col} from user where name=#{name} and email=#{email} "
 			+ " <if test='userId !=null'> and user_id=#{userId}</if> ",
 				"</script>"})
 	String search(Map<String, Object> param);
 
 
-	@Select("select * from user where tel=#{tel}")
-	List<User> telList(String tel);
+	@Select("select * from user where email=#{email}")
+	List<User> emailList(String email);
 
 	@Select({"<script>",
 				"select count(*) from user ",
@@ -89,6 +89,11 @@ public interface UserMapper {
 		+ "</foreach></if>",
 		"</script>"})
 List<User> select(Map<String,Object> param);
+
+
+
+
+
 
 
 

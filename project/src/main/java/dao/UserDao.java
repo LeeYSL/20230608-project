@@ -63,7 +63,7 @@ public class UserDao {
 		param.clear();
 		param.put("col", col);
 		param.put("userId", user.getUserId());
-		param.put("tel", user.getTel());
+		param.put("email", user.getEmail());
 		param.put("name", user.getName());
 		return template.getMapper(cls).search(param);
 	}
@@ -76,8 +76,8 @@ public class UserDao {
 		
 	}
 
-	public List<User> telList(String tel) {
-		return template.getMapper(cls).telList(tel);
+	public List<User> emailList(String email) {
+		return template.getMapper(cls).emailList(email);
 	} 
 
 	public int usercount(String type, String searchcontent) {

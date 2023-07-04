@@ -73,10 +73,12 @@ a {
 				<br>
 				<div>
 					<div>
+					<c:if test="${loginUser.batch ==  1}">
 						<a href="reply?num=${board.num}">
 							<button type="button"
 								class="w3-button w3-white w3-border w3-border-orange w3-round-large">답변</button>
 						</a>
+					</c:if>
 						<c:if test="${sessionScope.loginUser.userId == board.userId }">
 							&nbsp;	&nbsp;	&nbsp;	&nbsp;
 							<a href="update?num=${board.num}">
