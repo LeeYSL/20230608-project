@@ -40,10 +40,10 @@ public interface ReservationMapper {
 			+ " ORDER BY reg_date")
 	Reservation selectOne(int num);
 
-	@Update("update reservation set rsrvt_name=#{rsrvtName},phone_no=#{phoneNo} where num = #{num}")
+	@Update("update reservation set rsrvt_name=#{rsrvtName},phone_no=#{phoneNo} where num = #{num} ")
 	void myListUpdate(@Valid Reservation reservation);
 
-	@Update("update reservation set confirm= #{confirm} where num = #{num}")
+	@Update("update reservation set confirm= #{confirm} where num = #{num}  ")
 	void ownerconfirm(@Param("num") int num, @Param("confirm") int confirm);
 
 	@Select("select count(*) from reservation A JOIN restaurant B ON A.rest_num = B.rest_num WHERE A.user_id = #{userId} and B.delYn IS NULL")
@@ -60,7 +60,7 @@ public interface ReservationMapper {
 			"	  JOIN restaurant B " ,
 		    "	  ON A.rest_num = B.rest_num " ,
 			"	  WHERE B.user_id = #{userId} and B.delYn IS NULL",
-			"	  ORDER BY rest_num, reg_date" ,
+			"	  ORDER BY reg_date" ,
 			"    <if test='limit != null'> limit #{pageNum}, #{limit} </if> ",
         	"    </script>" })
 	List<Reservation> ownerListSelect(Map<String, Object> param);

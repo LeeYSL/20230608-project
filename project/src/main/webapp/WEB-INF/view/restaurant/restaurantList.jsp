@@ -52,7 +52,7 @@
 							<table class="w3-table-all">
 								<c:forEach items="${restList}" var="rest">
 									<tr>
-										<td align="center">사진 : <c:if
+										<td align="center"><c:if
 												test="${rest.fileurl != null}">
 												<img width="100" height="100" src="file/${rest.fileurl}">
 											</c:if> <c:if test="${rest.fileurl == null}">
