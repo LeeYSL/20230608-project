@@ -12,14 +12,10 @@
 		$("#binfo").show()
 		$("#cinfo").hide()
 		$("#rinfo").hide()
-		$("#vinfo").hide()
 		$(".commentLine").each(function() {
 			$(this).hide()
 		})
 		$(".reservationLine").each(function() {
-			$(this).hide()
-		})
-		$(".reviewLine").each(function() {
 			$(this).hide()
 		})
 		$("#tab1").addClass("select")
@@ -34,16 +30,16 @@
 		$("#" + id).show()
 		$("#" + tab).addClass("select")
 	}
-	function mypage(page) {
-		document.b.pageNum.value = page;
+	function mypage(page){
+		document.b.pageNum.value=page;
 		document.b.submit();
 	}
-	function mypage(page) {
-		document.c.pageNum.value = page;
+	function mypage(page){
+		document.c.pageNum.value=page;
 		document.c.submit();
 	}
-	function mypage(page) {
-		document.r.pageNum.value = page;
+	function mypage(page){
+		document.r.pageNum.value=page;
 		document.r.submit();
 	}
 </script>
@@ -126,47 +122,21 @@ a {
 									<div class="w3-white">
 
 										<a href="javascript:disp_div('binfo','tab1')">
-											<button onclick="myFunction('Demo1')" id="tab1"
-												class="w3-button w3-block w3-theme-l1 w3-left-align">
-												<i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i>
-												게시글
+											<button  id="tab1" class="w3-button w3-block w3-theme-l1  w3-center">
+												<i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i>게시글
 											</button>
-										</a> <a href="javascript:disp_div('cinfo','tab2')">
-											<button onclick="myFunction('Demo2')"
-												class="w3-button w3-block w3-theme-l1 w3-left-align">
-												<i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i>
-												댓글
+										</a> 
+										<a href="javascript:disp_div('cinfo','tab2')">
+											<button  class="w3-button w3-block w3-theme-l1  w3-center">
+												<i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i>댓글
 											</button>
-										</a> <a href="javascript:disp_div('rinfo','tab3')">
-											<button onclick="myFunction('Demo3')"
-												class="w3-button w3-block w3-theme-l1 w3-left-align">
-												<i class="fa fa-users fa-fw w3-margin-right"></i> 예약
+										</a> 
+										<a href="javascript:disp_div('rinfo','tab3')">
+											<button  class="w3-button w3-block w3-theme-l1  w3-center">
+												<i class="fa fa-users fa-fw w3-margin-right"></i>예약
 											</button>
 										</a>
-										<%-- 
-										<c:if test="${sessionScope.loginUser.batch ==2}">
-		---------------------------------------------
-											<a href="javascript:disp_div('vinfo','tab5')">
-												<button class="w3-button w3-block w3-theme-l1 w3-left-align">
-													<i class="fa fa-users fa-fw w3-margin-right"></i> 가게1
-												</button>
-											</a>
 
-											<a href="javascript:disp_div('vinfo','tab6')">
-												<button onclick="myFunction('Demo3')"
-													class="w3-button w3-block w3-theme-l1 w3-left-align">
-													<i class="fa fa-users fa-fw w3-margin-right"></i> 가게2
-												</button>
-											</a>
-
-											<a href="javascript:disp_div('vinfo','tab7')">
-												<button onclick="myFunction('Demo3')"
-													class="w3-button w3-block w3-theme-l1 w3-left-align">
-													<i class="fa fa-users fa-fw w3-margin-right"></i> 가게3
-												</button>
-											</a>
-										</c:if>
---%>
 									</div>
 								</div>
 								<br>
@@ -181,201 +151,36 @@ a {
 
 
 								<%--board --%>
-								<div
-									class="info w3-container w3-card w3-white w3-round w3-margin-left"
-									id="binfo" style="display: none;">
+								<div class="info w3-container w3-card w3-white w3-round w3-margin-left" id="binfo" style="display: none;">
 									<br>
-
-									<form name="b">
-										<div class="page">
-											<h4>게시글 목록</h4>
-											<input type="hidden" name="pageNum" value="1"> <input
-												type="hidden" name="userId" value="${param.userId}">
-										</div>
-									</form>
+									
+							<form name="b">	
+									<div class="page">
+										<h4>게시글 목록</h4>
+										<input type="hidden" name="pageNum" value="1"> 
+										<input type="hidden" name="userId" value="${param.userId}">
+									</div>
+															
 									<br>
 									<hr class="w3-clear">
-									<table class="w3-table-all">
-										<c:if test="${myblistcount > 0}">
-											<tr>
-												<th width="10%"></th>
-												<th align="center" width="70%">제목</th>
-												<th align="center" width="20%">작성일</th>
-											</tr>
-											<c:forEach items="${myblist}" var="board">
-												<tr>
-													<td width="10%"><input type="checkbox"></td>
-													<td align="center" width="70%"><a
-														href="../board/detail?num=${board.num}">${board.title}</a>
-													</td>
-													<td align="center" width="20%"><fmt:formatDate
-															value="${board.regDate}" pattern="yyyy-MM-dd" /></td>
-												</tr>
-											</c:forEach>
-											<tr>
-												<td colspan="3" class="w3-center"><c:if
-														test="${pageNum > 1}">
-														<a href="javascript:mypage('${pageNum -1}')">[이전]</a>
-													</c:if> <c:if test="${pageNum <= 1}">[이전]</c:if> <c:forEach
-														var="a" begin="${startpage}" end="${endpage}">
-														<c:if test="${a == pageNum}">[${a}]</c:if>
-														<c:if test="${a != pageNum}">
-															<a href="javascript:mypage('${a}')">[${a}]</a>
-														</c:if>
-													</c:forEach> <c:if test="${pageNum < maxpage}">
-														<a href="javascript:mypage('${pageNum +1}')">[다음]</a>
-													</c:if> <c:if test="${pageNum >= maxpage}">[다음]</c:if></td>
-											</tr>
-										</c:if>
-										<c:if test="${myblistcount ==  0}">
-											<tr>
-												<th colspan="3" style="text-align: center;">등록된 게시물이
-													없습니다.</th>
-											</tr>
-										</c:if>
-									</table>
-
-									<br>
-								</div>
-
-								<%--comment --%>
-								<div
-									class="info w3-container w3-card w3-white w3-round w3-margin-left"
-									id="cinfo" style="display: none;">
-									<br>
-									<form name="c">
-										<div class="page">
-											<h4>댓글 목록</h4>
-											<input type="hidden" name="pageNum" value="1"> <input
-												type="hidden" name="userId" value="${param.userId}">
-										</div>
-									</form>
-									<br>
-									<hr class="w3-clear">
-									<table class="w3-table-all">
-										<c:if test="${myclistcount > 0}">
-											<tr>
-												<th align="center" width="80%">댓글</th>
-												<th align="center" width="20%">작성일</th>
-											</tr>
-											<c:forEach items="${myclist}" var="comm">
-												<tr>
-													<td align="center" width="80%"><a
-														href="../board/detail?num=${comm.num}&seq=${comm.seq}">${comm.content}</a>
-													</td>
-													<td align="center" width="20%"><fmt:formatDate
-															value="${comm.date}" pattern="yyyy-MM-dd" /></td>
-												</tr>
-											</c:forEach>
-											<tr>
-												<td colspan="3" class="w3-center"><c:if
-														test="${pageNum > 1}">
-														<a href="javascript:mypage('${pageNum -1}')">[이전]</a>
-													</c:if> <c:if test="${pageNum <= 1}">[이전]</c:if> <c:forEach
-														var="a" begin="${startpage}" end="${cendpage}">
-														<c:if test="${a == pageNum}">[${a}]</c:if>
-														<c:if test="${a != pageNum}">
-															<a href="javascript:mypage('${a}')">[${a}]</a>
-														</c:if>
-													</c:forEach> <c:if test="${pageNum < cmaxpage}">
-														<a href="javascript:mypage('${pageNum +1}')">[다음]</a>
-													</c:if> <c:if test="${pageNum >= cmaxpage}">[다음]</c:if></td>
-											</tr>
-										</c:if>
-										<c:if test="${myclistcount ==  0}">
-											<tr>
-												<th colspan="3" style="text-align: center;">등록된 댓글이
-													없습니다.</th>
-											</tr>
-										</c:if>
+									<table class="w3-table-all" >
+									<c:if test="${myblistcount > 0}">
 										<tr>
-											<td colspan="3" class="w3-center"><c:if
-													test="${pageNum > 1}">
-													<a href="javascript:mypage('${pageNum -1}')">[이전]</a>
-												</c:if> <c:if test="${pageNum <= 1}">[이전]</c:if> <c:forEach var="a"
-													begin="${startpage}" end="${cendpage}">
-													<c:if test="${a == pageNum}">[${a}]</c:if>
-													<c:if test="${a != pageNum}">
-														<a href="javascript:mypage('${a}')">[${a}]</a>
-													</c:if>
-												</c:forEach> <c:if test="${pageNum < cmaxpage}">
-													<a href="javascript:mypage('${pageNum +1}')">[다음]</a>
-												</c:if> <c:if test="${pageNum >= cmaxpage}">[다음]</c:if></td>
+											<th width="10%"></th>
+											<th align="center" width="70%">제목</th>
+											<th align="center" width="20%">작성일</th>
 										</tr>
-									</table>
-
-									<br>
-								</div>
-
-								<%--reservation --%>
-								<div
-									class="info w3-container w3-card w3-white w3-round w3-margin-left"
-									id="rinfo" style="display: none;">
-									<br>
-
-									<form name="r">
-										<div class="page">
-											<h4>예약 목록</h4>
-											<input type="hidden" name="pageNum" value="1"> <input
-												type="hidden" name="userId" value="${param.userId}">
-										</div>
-									</form>
-
-									<hr class="w3-clear">
-									<table class="w3-table-all">
-										<c:if test="${myrlistcount ==  0}">
+										<c:forEach items="${myblist}" var="board">
 											<tr>
-												<th colspan="3" style="text-align: center;">등록된 예약이
-													없습니다.</th>
-											</tr>
-										</c:if>
-											<tr>
-												<th align="center">식당 이름</th>
-												<th align="center">예약일</th>
-												<th align="center">예약 인원</th>
-											</tr>
-											<c:forEach items="${Myrsrvt}" var="rsrvt">
-												<tr>
-													<td align="center" width="20%">${rsrvt.name}</td>
-													<td align="center">${rsrvt.rsrvtDate}</td>
-													<td align="center">${rsrvt.people}명</td>
-												</tr>
-											</c:forEach>
-											<tr>
-											<td colspan="3" class="w3-center"><c:if
-													test="${pageNum > 1}">
-													<a href="javascript:mypage('${pageNum -1}')">[이전]</a>
-												</c:if> <c:if test="${pageNum <= 1}">[이전]</c:if> <c:forEach var="a"
-													begin="${startpage}" end="${rendpage}">
-													<c:if test="${a == pageNum}">[${a}]</c:if>
-													<c:if test="${a != pageNum}">
-														<a href="javascript:mypage('${a}')">[${a}]</a>
-													</c:if>
-												</c:forEach> <c:if test="${pageNum < rmaxpage}">
-													<a href="javascript:mypage('${pageNum +1}')">[다음]</a>
-												</c:if> <c:if test="${pageNum >= rmaxpage}">[다음]</c:if></td>
-										</tr>
-									</table>
-									<br>
-								</div>
-								<%-- <div
-									class="info w3-container w3-card w3-white w3-round w3-margin"
-									id="rinfo" style="display: none;">
-									<br>
-									<h4>내 가게</h4>
-									<br>
-									<hr class="w3-clear">
-									<table class="w3-table-all">
-										<tr>
-											<th align="center">식당 이름</th>
-											<th align="center">위치</th>
-											<th align="center">전화 번호</th>
-										</tr>
-										<c:forEach items="${MyRest}" var="rest">
-											<tr>
-												<td align="center" width="20%">${rest.name}</td>
-												<td align="center">${rest.address}</td>
-												<td align="center">${rest.resthoneno}</td>
+												<td width="10%">
+													<input type="checkbox">
+												</td>
+												<td align="center" width="70%">
+													<a href="../board/detail?num=${board.num}">${board.title}</a>
+												</td>
+												<td align="center" width="20%">
+													<fmt:formatDate value="${board.regDate}" pattern="yyyy-MM-dd" />
+												</td>
 											</tr>
 										</c:forEach>
 										<tr>
@@ -390,21 +195,136 @@ a {
 													</c:if>
 												</c:forEach> <c:if test="${pageNum < maxpage}">
 													<a href="javascript:mypage('${pageNum +1}')">[다음]</a>
-												</c:if> <c:if test="${pageNum >= maxpage}">[다음]</c:if></td>
+												</c:if> <c:if test="${pageNum >= maxpage}">[다음]</c:if>
+											</td>
 										</tr>
 										</c:if>
 										<c:if test="${myblistcount ==  0}">
 											<tr>
-												<th colspan="3" style="text-align: center;">등록된 게시물이
-													없습니다.</th>
+												<th colspan="3" style="text-align: center;">등록된 게시물이 없습니다.</th>
 											</tr>
-										</c:if> --%>
-								</table>
+										</c:if>
+									</table>
+									</form>	
+									<br>
+								</div>
 
-								<br>
-							</div>
+								<%--comment --%>
+								<div class="info w3-container w3-card w3-white w3-round w3-margin-left" id="cinfo" style="display: none;">
+									<br>
+								<form name="c">	
+									<div class="page">					
+									<h4>댓글 목록</h4>
+										<input type="hidden" name="pageNum" value="1"> 
+										<input type="hidden" name="userId" value="${param.userId}">
+									</div>
+																		
+									<br>
+									<hr class="w3-clear">
+									<table class="w3-table-all">
+									<c:if test="${myclistcount > 0}">									
+										<tr>
+											<th align="center" width="80%">댓글</th>
+											<th align="center" width="20%">작성일</th>
+										</tr>
+										<c:forEach items="${myclist}" var="comm">
+											<tr>
+												<td align="center" width="80%"><a
+													href="../board/detail?num=${comm.num}&seq=${comm.seq}">${comm.content}</a>
+												</td>
+												<td align="center" width="20%"><fmt:formatDate
+														value="${comm.date}" pattern="yyyy-MM-dd" /></td>
+											</tr>
+										</c:forEach>
+										<tr>
+											<td colspan="3" class="w3-center"><c:if
+													test="${pageNum > 1}">
+													<a href="javascript:mypage('${pageNum -1}')">[이전]</a>
+												</c:if> <c:if test="${pageNum <= 1}">[이전]</c:if> <c:forEach var="a"
+													begin="${startpage}" end="${cendpage}">
+													<c:if test="${a == pageNum}">[${a}]</c:if>
+													<c:if test="${a != pageNum}">
+														<a href="javascript:mypage('${a}')">[${a}]</a>
+													</c:if>
+												</c:forEach> <c:if test="${pageNum < cmaxpage}">
+													<a href="javascript:mypage('${pageNum +1}')">[다음]</a>
+												</c:if> <c:if test="${pageNum >= cmaxpage}">[다음]</c:if>
+											</td>
+										</tr>
+										</c:if>
+										<c:if test="${myclistcount ==  0}">
+											<tr>
+												<th colspan="3" style="text-align: center;">등록된 댓글이 없습니다.</th>
+											</tr>
+										</c:if>
+									</table>
+									</form>
+											
+									<br>
+								</div>
 
-							<%--       <div class="info w3-container w3-card w3-white w3-round w3-margin" id="vinfo" style="display:none;"><br>
+								<%--reservation --%>
+								<div class="info w3-container w3-card w3-white w3-round w3-margin-left" id="rinfo" style="display: none;">
+									<br>
+								<form name="r">	
+									<div class="page">					
+									<h4>댓글 목록</h4>
+										<input type="hidden" name="pageNum" value="1"> 
+										<input type="hidden" name="userId" value="${param.userId}">
+									</div>
+																		
+									<br>
+									<hr class="w3-clear">
+									<table class="w3-table-all">
+									<c:if test="${myrlistcount > 0}">									
+										<tr>
+											<th align="center" width="60%">식당이름</th>
+											<th align="center" width="20%">예약일</th>
+											<th align="center" width="20%">예약인원</th>
+											
+										</tr>
+										<c:forEach items="${Myrsrvt}" var="rsrvt">
+											<tr>
+												<td align="center" width="60%">
+													${rsrvt.name}
+												</td>
+												<td align="center" width="20%">
+													${rsrvt.rsrvtDate} 
+												</td>
+												<td align="center" width="20%">
+													${rsrvt.people}명
+												</td>
+												
+											</tr>
+										</c:forEach>
+										<tr>
+											<td colspan="3" class="w3-center"><c:if
+													test="${pageNum > 1}">
+													<a href="javascript:mypage('${pageNum -1}')">[이전]</a>
+												</c:if> <c:if test="${pageNum <= 1}">[이전]</c:if> <c:forEach var="a"
+													begin="${startpage}" end="${rendpage}">
+													<c:if test="${a == pageNum}">[${a}]</c:if>
+													<c:if test="${a != pageNum}">
+														<a href="javascript:mypage('${a}')">[${a}]</a>
+													</c:if>
+												</c:forEach> <c:if test="${pageNum < rmaxpage}">
+													<a href="javascript:mypage('${pageNum +1}')">[다음]</a>
+												</c:if> <c:if test="${pageNum >= rmaxpage}">[다음]</c:if>
+											</td>
+										</tr>
+										</c:if>
+										<c:if test="${myrlistcount ==  0}">
+											<tr>
+												<th colspan="3" style="text-align: center;">등록된 예약이 없습니다.</th>
+											</tr>
+										</c:if>
+									</table>
+									</form>	
+									<br>
+								</div>
+
+
+								<%--       <div class="info w3-container w3-card w3-white w3-round w3-margin" id="vinfo" style="display:none;"><br>
        <h4>리뷰</h4><br>
         <hr class="w3-clear">
 		<table class="w3-table-all">
@@ -427,19 +347,19 @@ a {
       </div>   
     --%>
 
-							<!-- End Middle Column -->
+								<!-- End Middle Column -->
+							</div>
+
+
+							<!-- End Grid -->
 						</div>
 
-
-						<!-- End Grid -->
+						<!-- End Page Container -->
 					</div>
-
-					<!-- End Page Container -->
+					<br>
 				</div>
-				<br>
 			</div>
 		</div>
-	</div>
 	</div>
 
 

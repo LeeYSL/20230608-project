@@ -88,7 +88,7 @@ public interface ReservationMapper {
 //	List<Reservation> Myrsrvt(String userId, int limit, Integer pageNum);
 
 	@Select({ "<script>", 
-		    " select A.rsrvt_name, B.name ,A.user_id,B.user_id ", 
+		    " select A.rsrvt_name, A.rsrvt_date, A.people, B.name ,A.user_id,B.user_id ", 
 		    " from reservation A ",
 		    " JOIN restaurant B ",
 		    " ON A.rest_num = B.rest_num ",
