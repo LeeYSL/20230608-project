@@ -51,7 +51,7 @@ a {text-decoration: none;}
 <div class="w3-top">
   <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
     <div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">&#9776;</div>
-    <div class="w3-center w3-padding-16"><img width="150" height="50" src="${path}\image\bobticket1.png" onclick="location.href='/project'">
+    <div class="w3-center w3-padding-16"><img width="150" height="50" src="${path}\image\abc.png0.png" onclick="location.href='/project'">
     		<c:if test="${empty sessionScope.loginUser}">    			
     			<a href="/project/user/login"  class="w3-right">Login</a>
 			</c:if>
