@@ -116,12 +116,12 @@ public class UserService {
 		
 	}
 
-
+/*
 	public List<Comment> commlist(Integer num) {
 		
 		return commDao.commlist(num);
 	}
-
+*/
 
 	public void commInsert(@Valid Comment comm) {
 		commDao.commInsert(comm);
@@ -272,6 +272,14 @@ public class UserService {
 	}
 
 
+	public int commcount(Integer num) {
+		return commDao.commcount(num);
+	}
+
+
+	public List<Comment> commlist(Integer num, int limit, Integer pageNum) {
+		return commDao.commlist(num, limit, pageNum);
+	}
 
 
 

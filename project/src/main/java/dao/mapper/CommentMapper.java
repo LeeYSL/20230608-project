@@ -11,13 +11,12 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import logic.Comment;
-import logic.User;
 
 public interface CommentMapper {
-
+/*
 	@Select("select * from comment where num=#{num}")
 	List<Comment> commlist(Integer num);
-
+*/
 	@Insert("insert into comment (num, seq, user_id, date, content) values (#{num}, #{seq}, #{userId}, now(),#{content})")
 	void commInsert(@Valid Comment comm);
 
@@ -40,6 +39,16 @@ public interface CommentMapper {
 		"<if test='limit != null'> order by date desc limit #{startrow}, #{limit} </if>",
 		"</script>"})	
 	List<Comment> myclist(Map<String, Object> param);
+
+	@Select("select count(*) from comment where num=#{num}")	
+	int commcount(Integer num);
+
+	@Select({"<script>",
+		"select num, seq, user_id, date, content from comment",
+		"<if test='num != null'> where num = #{num} </if>",
+		"<if test='limit != null'> order by date desc limit #{startrow}, #{limit} </if>",
+		"</script>"})	
+	List<Comment> commlist(Map<String, Object> param);
 
 
 }

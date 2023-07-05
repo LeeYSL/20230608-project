@@ -13,6 +13,11 @@
 		$('input[name="num"]').attr('value', $(btn).parents('td').children('input[name="num"]').val());
 		document.commUpdate.submit();
 	}
+	function detail(page){
+		document.c.pageNum.value=page;
+		document.c.submit();
+	}
+	
 </script>
 <style type="text/css">
 .page {
@@ -43,8 +48,8 @@ a {
 </head>
 <body>
 	<div class="w3-container w3-padding-32 w3-center">
-		<div style="display: block; margin: auto; width: 1100px; height: 100%;">
-			<div class="w3-padding-32" style="height: 100%;">
+		<div style="display: block; margin: auto; width: 1100px; height: 300%;">
+			<div class="w3-padding-32" style="height: 300%;">
 				<div class="side">
 					<div class="page">
 						<div class="join_top">
@@ -124,7 +129,9 @@ a {
 				</form:form>
 				<hr>
 				<div>
-					<form action="commdelete" method="post">
+					<form action="commdelete" method="post" name="c">
+						<input type="hidden" name="pageNum" value="1">
+						<input type="hidden" name="num" value="${param.num}"> 
 						<table class="w3-table-all">
 							<c:forEach var="comm" items="${commlist}">
 								<tr>
@@ -156,7 +163,24 @@ a {
 									</c:if>
 								</tr>
 							</c:forEach>
-						</table>
+										<tr>
+											<td colspan="3" class="w3-center"><c:if
+													test="${pageNum > 1}">
+													<a href="javascript:detail('${pageNum -1}')">[이전]</a>
+												</c:if> <c:if test="${pageNum <= 1}">[이전]</c:if> <c:forEach var="a"
+													begin="${startpage}" end="${endpage}">
+													<c:if test="${a == pageNum}">[${a}]</c:if>
+													<c:if test="${a != pageNum}">
+														<a href="javascript:detail('${a}')">[${a}]</a>
+													</c:if>
+												</c:forEach> <c:if test="${pageNum < maxpage}">
+													<a href="javascript:detail('${pageNum +1}')">[다음]</a>
+												</c:if> <c:if test="${pageNum >= maxpage}">[다음]</c:if>
+											</td>
+										</tr>
+										
+									</table>
+
 					</form>
 				</div>
 			</div>

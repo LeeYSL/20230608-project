@@ -323,7 +323,7 @@ a {
 
 									<hr class="w3-clear">
 									<table class="w3-table-all">
-										<c:if test="${myslistcount ==  0}">
+										<c:if test="${myrlistcount ==  0}">
 											<tr>
 												<th colspan="3" style="text-align: center;">등록된 예약이
 													없습니다.</th>

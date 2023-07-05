@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import dao.mapper.CommentMapper;
 import logic.Comment;
-import logic.User;
 
 @Repository
 public class CommentDao {
@@ -22,14 +21,14 @@ private Map<String,Object> param = new HashMap<>();
 private Class<CommentMapper> cls = CommentMapper.class;
 
 
-
+/*
 	public List<Comment> commlist(Integer num) {
 		param.clear();
 		param.put("num", num);
 		return template.getMapper(cls).commlist(num);
 	}
 
-
+*/
 
 	public void commInsert(@Valid Comment comm) {
 		template.getMapper(cls).commInsert(comm);
@@ -72,6 +71,20 @@ private Class<CommentMapper> cls = CommentMapper.class;
 	}
 
 
+
+	public int commcount(Integer num) {
+		return template.getMapper(cls).commcount(num);
+	}
+
+
+
+	public List<Comment> commlist(Integer num, int limit, Integer pageNum) {
+		param.clear();
+		param.put("num", num);
+		param.put("limit", limit);
+		param.put("startrow",(pageNum-1) * limit);
+		return template.getMapper(cls).commlist(param);
+	} 
 
 
 

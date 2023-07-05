@@ -120,7 +120,7 @@ public class BoardController {
 	}
 
 	@GetMapping("detail")
-	public ModelAndView detail(Integer num) {
+	public ModelAndView detail(@RequestParam Map<String, String> param, Integer num) {
 		ModelAndView mav = new ModelAndView();
 		Board board = userservice.detail(num);
 		userservice.addReadcnt(num);
@@ -130,8 +130,43 @@ public class BoardController {
 		else if (board.getBoardId().equals("2"))
 			mav.addObject("boardName", "QnA");
 
-		List<Comment> commlist = userservice.commlist(num);
+//comment 리스트		
+		Integer pageNum =null;
+		if(param.get("pageNum") != null) {
+			pageNum = Integer.parseInt(param.get("pageNum"));
+		}
+		if (pageNum == null || pageNum.toString().equals("")) {
+			pageNum = 1;
+		}
+		int limit = 10; //한페이지에 10개
+		int commcount = userservice.commcount(num); //리스트개수
+		int maxpage = (int)((double)commcount/limit + 0.95); 
+		int startpage = (int) ((pageNum/10.0+0.9)-1)*10+1; //조회하는페이지
+		
+		int endpage = startpage + 9;
+		
+		
+		if (endpage > maxpage) {
+			endpage =maxpage;
+		}	
+		int commno = commcount - (pageNum -1) * limit;
+
+		mav.addObject("pageNum",pageNum);
+		mav.addObject("maxpage", maxpage);
+
+		mav.addObject("startpage", startpage);
+		mav.addObject("endpage", endpage);
+
+		mav.addObject("commcount", commcount);
+
+		mav.addObject("commno", commno);				
+
+		
+		
+		
+		List<Comment> commlist = userservice.commlist(num,limit, pageNum);
 		mav.addObject("commlist", commlist);
+		
 		Comment comm = new Comment();
 		comm.setNum(num);
 		mav.addObject("comment", comm);
