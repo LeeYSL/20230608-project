@@ -100,8 +100,8 @@ public class ReservationService {
 		return  reservationDao.myListCount(userId);
 	}
 	
-	public int ownerListCount(String userId) {
-		return  reservationDao.ownerListCount(userId);
+	public int ownerListCount(String userId, int num) {
+		return  reservationDao.ownerListCount(userId, num);
 	}
 
 	public int restListcount(String type, String searchcontent) {

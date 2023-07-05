@@ -75,10 +75,6 @@ th {
 									<td align="center">${orsrvt.name}</td>
 									<td align="center">${orsrvt.address}</td>
 									<td align="center">${orsrvt.restPhoneNo}</td>
-									<td><input type="hidden" ${orsrvt.restNum}></td>
-									<td><input type="hidden" ${orsrvt.userId}></td>
-									<td><input type="hidden" ${orsrvt.delYn}></td>
-									<td><input type="hidden" ${orsrvt.restNum}></td>
 									<td><a href="restUpdate?num=${orsrvt.restNum}"> <input
 											type="button"
 											class="w3-btn w3-white w3-border w3-border-orange w3-round-xlarge"
@@ -97,6 +93,10 @@ th {
 								</tr>
 							</c:forEach>
 						</table>
+						<input type="hidden" ${orsrvt.restNum}>
+						<input type="hidden" ${orsrvt.userId}>
+						<input type="hidden" ${orsrvt.delYn}>
+						<input type="hidden" ${orsrvt.restNum}>
 					</form>
 				</div>
 			</div>

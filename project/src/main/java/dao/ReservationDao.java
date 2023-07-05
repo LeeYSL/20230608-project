@@ -75,8 +75,8 @@ public class ReservationDao {
 		return template.getMapper(cls).myListCount(userId);
 	}
 	
-	public int ownerListCount(String userId) {
-		return template.getMapper(cls).ownerListCount(userId);
+	public int ownerListCount(String userId, int num) {
+		return template.getMapper(cls).ownerListCount(userId, num);
 	}
 
 	public Restaurant restInfoadd(int num) {

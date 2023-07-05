@@ -61,8 +61,7 @@ th {
 </head>
 <body>
 	<div class="w3-container w3-padding-32 w3-center">
-		<div
-			style="display: block; margin: auto; width: 1000px; height: 100%;">
+		<div style="display: block; margin: auto; width: 1000px; ">
 			<div class="w3-padding-32">
 				<div class="side">
 					<div class="page">

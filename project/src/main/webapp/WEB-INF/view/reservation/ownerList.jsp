@@ -66,36 +66,40 @@
 		}
 	</script>
 	<div class="w3-container w3-padding-32 w3-center">
-		<div
-			style="display: block; margin: auto; width: 1100px; height: 100%;">
+		<div style="display: block; margin: auto; width: 1100px; ">
 			<div class="w3-padding-32">
 				<div class="side">
 					<div class="page">
-						<h2>예약 목록</h2>
+						<header class="l_member_header">
+							<h1 class="tit">
+								<span>예약 목록</span>
+							</h1>
+						</header>
+					</div>
 						<table class="w3-table-all">
 							<tr>
-								<th>가게 이름</th>
-								<th>예약 번호</th>
-								<th>예약자 성함</th>
-								<th>예약자 전화번호</th>
-								<th>예약 날짜</th>
-								<th>예약 시간</th>
-								<th>예약 인원</th>
-								<th>예약 상태</th>
+								<th style="text-align: center;">예약 번호</th>
+								<th style="text-align: center;">가게 이름</th>
+								<th style="text-align: center;">예약자 성함</th>
+								<th style="text-align: center;">예약자 전화번호</th>
+								<th style="text-align: center;">예약 날짜</th>
+								<th style="text-align: center;">예약 시간</th>
+								<th style="text-align: center;">예약 인원</th>
+								<th style="text-align: center;">예약 상태</th>
 								<th></th>
 							</tr>
 
 							<c:forEach items="${rsrvtList}" var="rsrvt">
 								<!--reservation 객체를 만들어서 rstvt라는 이름에 넣고 필요한 요소들을 뽑아온다.  -->
 								<tr>
-									<td name="restName" align="center">${rsrvt.name}</td>
-									<td align="center">${rsrvt.num}</td>
-									<td name="rsrvtName" align="center">${rsrvt.rsrvtName}</td>
-									<td name="phoneNo" align="center">${rsrvt.phoneNo}</td>
-									<td name="rsrvtDate" align="center">${rsrvt.rsrvtDate}</td>
-									<td name="rsrvtTime" align="center">${rsrvt.rsrvtTime}</td>
-									<td name="people" align="center">${rsrvt.people}</td>
-									<td><select name="confirm${rsrvt.num}">
+									<td align="center" style=" vertical-align:middle;">${rsrvt.num}</td>
+									<td name="restName" style=" vertical-align:middle;">${rsrvt.name}</td>
+									<td name="rsrvtName" style=" vertical-align:middle;">${rsrvt.rsrvtName}</td>
+									<td name="phoneNo" style="text-align: center; vertical-align:middle;">${rsrvt.phoneNo}</td>
+									<td name="rsrvtDate" style="text-align: center; vertical-align:middle;">${rsrvt.rsrvtDate}</td>
+									<td name="rsrvtTime" style="text-align: center; vertical-align:middle;">${rsrvt.rsrvtTime}</td>
+									<td name="people" style=" vertical-align:middle;">${rsrvt.people}</td>
+									<td><select class="w3-select" name="confirm${rsrvt.num}" style=" vertical-align:middle;">
 											<option value="0"
 												${rsrvt.confirm == '0' ? 'selected="selected"' : '' }>승인
 												대기</option>
@@ -119,24 +123,30 @@
 							</c:forEach>
 
 							<tr>
-								<td width="30%"><input type="hidden" name="pageNum"
-									value="1"> <c:if test="${listcount == 0}">
-										<td colspan="5" align="right">등록된 예약이 없습니다.</td>
-									</c:if> <c:if test="${listcount != 0}">
-										<td colspan="7" class="w3-center"><c:if
-												test="${pageNum > 1}">
-												<a href="javascript:listpage('${pageNum -1}')">[이전]</a>
-											</c:if> <c:if test="${pageNum <= 1}">[이전]</c:if> <c:forEach var="a"
-												begin="${startpage}" end="${endpage}">
-												<c:if test="${a == pageNum}">[${a}]</c:if>
-												<c:if test="${a != pageNum}">
-													<a href="javascript:listpage('${a}')">[${a}]</a>
-												</c:if>
-											</c:forEach> <c:if test="${pageNum < maxpage}">
-												<a href="javascript:listpage('${pageNum +1}')">[다음]</a>
-											</c:if> <c:if test="${pageNum >= maxpage}">[다음]</c:if></td></c:if>
+								<c:if test="${rsrvtList.size() == 0}">
+									<td colspan="9" style="text-align: center;">등록된 예약이 없습니다.</td>
+								</c:if> 
+								<c:if test="${rsrvtList.size() != 0}">
+									<td colspan="9" class="w3-center">
+									<c:if test="${pageNum > 1}">
+										<a href="javascript:listpage('${pageNum -1}')">[이전]</a>
+									</c:if> 
+									<c:if test="${pageNum <= 1}">[이전]</c:if> 
+									 <c:forEach var="a" begin="${startpage}" end="${endpage}">
+										<c:if test="${a == pageNum}">[${a}]</c:if>
+										<c:if test="${a != pageNum}">
+											<a href="javascript:listpage('${a}')">[${a}]</a>
+										</c:if>
+									</c:forEach> 
+									<c:if test="${pageNum < maxpage}">
+										<a href="javascript:listpage('${pageNum +1}')">[다음]</a>
+									</c:if> 
+									<c:if test="${pageNum >= maxpage}">[다음]</c:if>
+									</td>
+								</c:if>
 							</tr>
 						</table>
+						<input type="hidden" name="pageNum" value="1">
 					</div>
 				</div>
 			</div>

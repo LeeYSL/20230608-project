@@ -46,8 +46,8 @@ public interface ReservationMapper {
 	@Select("select count(*) from reservation A JOIN restaurant B ON A.rest_num = B.rest_num WHERE A.user_id = #{userId} and B.delYn IS NULL")
 	int myListCount(String userId);
 
-	@Select("select count(*) from reservation A JOIN restaurant B ON A.rest_num = B.rest_num WHERE B.user_id = #{userId} and B.delYn IS NULL")
-	int ownerListCount(String userId);
+	@Select("select count(*) from reservation A JOIN restaurant B ON A.rest_num = B.rest_num WHERE B.user_id = #{userId} and A.rest_num=#{num} and  B.delYn IS NULL")
+	int ownerListCount(@Param("userId")String userId, @Param("num")int num);
 
 	@Select({ "<script>",
 			" SELECT LEFT(A.rsrvt_date,8) AS rsrvt_date, RIGHT(A.rsrvt_date,2) AS rsrvt_time, A.num, A.user_id, A.rsrvt_name, ",
@@ -61,11 +61,7 @@ public interface ReservationMapper {
 	@Select("select * from restaurant where rest_num=#{num}")
 	Restaurant restInfoadd(int num);
 
-	/*
-	 * @Insert({"<script>", " insert into reservation(point) values #{point}",
-	 * " select A.rest_num,B.rest_num ", " from reservation A, ",
-	 * "      restaurant B ", " where A.rest_num = B.rest_num ", "</script>" })
-	 */
+
 
 	@Update("update reservation set point=#{point} where num=#{num}")
 	void pointInsert(@Param("num") int num, @Param("point") Integer point);
@@ -78,14 +74,6 @@ public interface ReservationMapper {
 			"  WHERE A.rest_num=#{restNum} AND LEFT(A.rsrvt_date,8) = #{date} AND RIGHT(A.rsrvt_date,2) = #{time} AND A.confirm = 1",
 			"    </script>" })
 	Reservation checkReservation(Map<String, Object> param);
-
-//	@Select("select * "
-//		  + " from reservation A "
-//		  + " join restaurant B "
-//		  + " on A.rest_num = B.rest_num "
-//		  + " where A.user_id=#{userId}"
-//		  + " ORDER BY rsrvt_date")
-//	List<Reservation> Myrsrvt(String userId, int limit, Integer pageNum);
 
 	@Select({ "<script>", 
 		    " select A.rsrvt_name, A.rsrvt_date, A.people, B.name ,A.user_id,B.user_id ", 

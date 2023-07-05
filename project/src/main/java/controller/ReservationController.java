@@ -273,7 +273,7 @@ public class ReservationController {
 			pageNum = 1;
 		}
 		int limit = 10;
-		int listcount = service.ownerListCount(user.getUserId());
+		int listcount = service.ownerListCount(user.getUserId(), num);
 
 		List<Reservation> rsrvtList = service.ownerList(user.getUserId(), pageNum, limit, delYn, num);
 
