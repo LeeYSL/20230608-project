@@ -17,31 +17,40 @@
 .txt {
 	font-size: 200%;
 }
+
 th {
 	background-color: #ff8400;
 	color: white;
-	width:20%;
+	width:30%;
 	text-align: center;
+	height: 50px;
 	
 }
 td {
 	background-color :white;
+	height: 50px;
 }
 
+#table{
+	width: 700px;
+}
+
+.table_div {
+ margin: 0% 30% 0% 20%;
+ padding-bottom: 3%;
+}
 
 </style>
 </head>
 <body>
-	<div class="w3-container w3-padding-32 w3-center">
-		<div style="display: block; margin: auto; width: 800px; height: 100%;">
-			<div class="w3-padding-32">
-				<div class="side">
-					<div class="page">
-						<div class="join_top">
-							<span class="txt">내 회원정보</span>
-						</div>
-					</div>
-					<table class="w3-table-all">
+	<div style="display: block; margin: auto; width: 1100px; height: auto; padding-top: 100px;"
+		class="w3-center">
+		<div class="w3-padding-32">
+			<div class="page">
+				<span class="txt">회원 정보</span>
+			</div>
+			<div class="table_div">
+					<table class="w3-table-all" id="table">
 						<tr>
 							<th>아이디</th>
 							<td>${user.userId}</td>
@@ -77,23 +86,23 @@ td {
 						</tr>
 
 					</table>
+				</div>
+					<br>
 					<div>
-						<div>
+						
 							<a href="update?userId=${user.userId}">
 								<button type="button" class="w3-button w3-white w3-border w3-border-orange w3-round-large">회원정보 수정</button>
 							</a>
-						</div>
-						<div>
+						&nbsp;	&nbsp;	&nbsp;	&nbsp;
 							<a href="delete?userId=${user.userId}">
 								<button type="button"
 									class="w3-button w3-white w3-border w3-border-orange w3-round-large">회원탈퇴</button>
 							</a>
-						</div>
+						
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
+
 
 </body>
 

@@ -17,31 +17,48 @@
 .txt {
 	font-size: 200%;
 }
-
+th {
+	background-color: #ff8400;
+	color: white;
+	width:30%;
+	text-align: center;
+	height: 50px;
+	
+}
 td {
 	background-color :white;
+	height: 50px;
 }
+
+#table{
+	width: 700px;
+}
+
+.table_div {
+ margin: 0% 30% 0% 20%;
+ padding-bottom: 3%;
+}
+
 
 a {
 	text-decoration: none;
 }
-
+.w3-input {
+	border: none;
+}
 
 </style>
 </head>
 <body>
-	<div class="w3-container w3-padding-32 w3-center">
-		<div
-			style="display: block; margin: auto; width: 800px; height: 100%;">
-			<div class="w3-padding-32">
-				<div class="side">
-					<div class="page">
-						<div class="join_top">
-							<span class="txt">비밀번호 수정</span>
-						</div>
-					</div>
+	<div style="display: block; margin: auto; width: 1100px; height: auto; padding-top: 100px;"
+		class="w3-center">
+		<div class="w3-padding-32">
+			<div class="page">
+				<span class="txt">비밀번호 수정</span>
+			</div>
 
-						<form:form modelAttribute="user" method="post" action="pwchange">
+						<form:form modelAttribute="user" enctype="multipart/form-data"  name="f" action="pwchange">
+						<input type="hidden" name="userId" value="${user.userId}">
 							<spring:hasBindErrors name="user">
 								<font color="red"> 
 									<c:forEach items="${errors.globalErrors}" var="error">
@@ -50,17 +67,17 @@ a {
 									</c:forEach>
 								</font>
 							</spring:hasBindErrors>
-							
-							<table class="w3-table-all w3-white w3-border w3-border-orange w3-round-large">
-								<tr>
+			<div class="table_div">
+					<table class="w3-table-all" id="table">
+								<tr>									
 									<td>
-										<form:input path="pw" class="w3-input" placeholder="비밀번호" /> 
+										<form:input path="pw" class="w3-input" placeholder="비밀번호"/> 
 										<font color="red"> 
 											<form:errors path="pw" />
 										</font>
 									</td>
 								</tr>
-								<tr>
+								<tr>									
 									<td>
 										<form:input path="pw1" class="w3-input" placeholder="변경할 비밀번호" /> 
 										<font color="red"> 
@@ -68,32 +85,30 @@ a {
 										</font>
 									</td>
 								</tr>
-								<tr>
+								<tr>									
 									<td>
-										<form:input path="pw2" class="w3-input" placeholder="변경할 비밀번호 재확인" /> 
+										<form:input path="pw2"  class="w3-input"  placeholder="변경할 비밀번호 재확인" /> 
 										<font color="red"> 
 											<form:errors path="pw2" />
 										</font>
 									</td>
 								</tr>
-							</table>
-							<hr>
-							<div class="bottom_btn">
-								<div>
+					</table>
+							</div>
+							<br>						
+								<div class="w3-center">
 									<a href="userinfo?userId=${user.userId}">
 										<button type="button"
 											class="w3-button w3-white w3-border w3-border-orange w3-round-large">취소</button>
 									</a>
+									&nbsp;	&nbsp;	&nbsp;	&nbsp;
 									<button type="submit"
 										class="w3-button w3-white w3-border w3-border-orange w3-round-large">수정</button>
 								</div>
-							</div>
+				
 						</form:form>
 				</div>
 			</div>
-		</div>
-	</div>
-
-
+	
 </body>
 </html>

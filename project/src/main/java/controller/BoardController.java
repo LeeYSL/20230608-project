@@ -119,7 +119,7 @@ public class BoardController {
 		return mav;
 	}
 
-	@GetMapping("detail")
+	@RequestMapping("detail")
 	public ModelAndView detail(@RequestParam Map<String, String> param, Integer num) {
 		ModelAndView mav = new ModelAndView();
 		Board board = userservice.detail(num);
@@ -150,7 +150,7 @@ public class BoardController {
 			endpage =maxpage;
 		}	
 		int commno = commcount - (pageNum -1) * limit;
-
+		String today = new SimpleDateFormat("yyyyMMdd").format(new Date());
 		mav.addObject("pageNum",pageNum);
 		mav.addObject("maxpage", maxpage);
 
@@ -160,7 +160,7 @@ public class BoardController {
 		mav.addObject("commcount", commcount);
 
 		mav.addObject("commno", commno);				
-
+		mav.addObject("today", today);
 		
 		
 		

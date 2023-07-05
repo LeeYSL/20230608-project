@@ -23,3 +23,5 @@ error.required.name=이름을 입력해주세요.
 error.required.email=이메일을 입력해주세요.
 error.required.userId=아이디를 입력해주세요.
 error.pw.search=회원 정보가 없습니다.
+
+error.pw.check=변경할 비밀번호가 서로 맞지 않습니다.

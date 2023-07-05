@@ -363,8 +363,6 @@ public class UserController {
 		User dbTel = userservice.selectTel(user.getTel(),user.getUserId());
 		User dbNickname = userservice.selectNickname(user.getNickname(), user.getUserId());
 		try {
-			System.out.println("tel:" + dbTel);
-			System.out.println("nick:" +dbNickname);
 			if(dbTel != null) {
 				mav.getModel().putAll(bresult.getModel());
 				bresult.reject("error.duplicate.tel"); 
@@ -375,14 +373,14 @@ public class UserController {
 				bresult.reject("error.duplicate.nickname"); 
 				return mav;
 			}
-			
-			
-		if(!pwHash(user.getPw()).equals(loginUser.getPw())) {
-			mav.getModel().putAll(bresult.getModel());
-			bresult.reject("error.input.pw"); 
-			user.setPw(null);
-			return mav;
-		}
+				
+				
+			if(!pwHash(user.getPw()).equals(loginUser.getPw())) {
+				mav.getModel().putAll(bresult.getModel());
+				bresult.reject("error.input.pw"); 
+				user.setPw(null);
+				return mav;
+			}
 			user.setPw(pwHash(user.getPw()));
 			mav.addObject("user", user);
 			userservice.update(user,session);
@@ -399,7 +397,7 @@ public class UserController {
 		}		
 		return mav;
 	}
-	@GetMapping({"update","delete"})
+	@GetMapping({"update","delete","pwchange"})
 	public ModelAndView idCheckUserupdate (String userId, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		User user =userservice.selectOne(userId);
@@ -409,25 +407,47 @@ public class UserController {
 		return mav;
 	}
 	@PostMapping("pwchange")
-	public ModelAndView idCheckPwchange(@Valid User user, BindingResult bresult, HttpSession session) {
+	public ModelAndView idCheckPwchange(@Valid User user, BindingResult bresult, String userId, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
+		if(bresult.hasErrors()) {
+			mav.getModel().putAll(bresult.getModel());
+			return mav;
+		}		
 		User loginUser = (User)session.getAttribute("loginUser");
-		if(!loginUser.getPw().equals(pwHash(user.getPw()))) {
-			throw new LoginException("비밀번호가 일치하지 않습니다.", "pwchange");
-		} else {
-			if(!user.getPw1().equals(user.getPw2())) {
-				throw new LoginException("변경할 비밀번호가 서로 맞지않습니다.", "pwchange");
-			} else {				
-				user.setPw(pwHash(user.getPw1()));
+		try {
+			System.out.println("1.loginUser.getPw"+loginUser.getPw());
+			System.out.println("2.pwHash(user.getPw())"+pwHash(user.getPw()));
+			System.out.println("3.userId"+userId);
+				if(!pwHash(user.getPw()).equals(loginUser.getPw())) {
+					mav.getModel().putAll(bresult.getModel());
+					bresult.reject("error.input.pw");
+					user.setPw(null);
+					return mav;
+				}
+				if(!user.getPw1().equals(user.getPw2())) {
+					mav.getModel().putAll(bresult.getModel());
+					bresult.reject("error.pw.check");
+					user.setPw2(null);					
+					return mav;
+				}				
+		//		user.setPw(pwHash(user.getPw1()));
 				mav.addObject("user",user);
 				userservice.userChgpass(loginUser.getUserId(),pwHash(user.getPw1()));
-				loginUser.setPw(pwHash(user.getPw1()));
+				if(user.getUserId().equals(loginUser.getUserId())) {
+					session.setAttribute("loginUser", user);
+				}				
+		//		loginUser.setPw(pwHash(user.getPw1()));
 				mav.setViewName("redirect:userinfo?userId="+loginUser.getUserId());
-				return mav;
-			}
-		}
-		
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new LoginException ("비밀번호 수정 실패","pwchange?userId="+user.getUserId());
+			
+		}		
+		return mav;
 	}
+		
+	
 	
 	
 	@PostMapping("delete")

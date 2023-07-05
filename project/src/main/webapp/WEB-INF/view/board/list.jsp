@@ -40,14 +40,11 @@ a {
 
 </head>
 <body>
-	<div class="w3-container w3-padding-32 w3-center">
-		<div style="display: block; margin: auto; width: 1100px; height: 100%;">
+		<div style="display: block; margin: auto; width: 1100px; height: 100%; padding-top:100px;" class="w3-center">
 			<div class="w3-padding-32">
-				<div class="side">
+
 					<div class="page">
-						<div class="join_top">
-							<span class="txt">${boardName}</span>
-						</div>
+						<span class="txt">${boardName}</span>						
 					</div>
 
 
@@ -177,7 +174,6 @@ a {
 					</c:if>
 				</div>
 			</div>
-		</div>
-	</div>
+
 </body>
 </html>
