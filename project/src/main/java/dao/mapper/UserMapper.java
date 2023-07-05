@@ -29,7 +29,7 @@ public interface UserMapper {
 	@Select("select user_id, pw, nickname, name, address, tel, batch, file1 fileurl, reg_date,channel,email from user")
 	List<User> list();
 
-	@Select("select user_id, pw, nickname, name, address, tel, batch, file1 fileurl, reg_date from user where user_id=#{userId}")
+	@Select("select user_id, pw, nickname, name, address, tel, batch, file1 fileurl, reg_date, email from user where user_id=#{userId}")
 	List<User> myulist(String userId);
 
 

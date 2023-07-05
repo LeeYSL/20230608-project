@@ -49,11 +49,27 @@ private Class<CommentMapper> cls = CommentMapper.class;
 	}
 
 
-
+/*
 	public List<Comment> myclist(String userId) {
 		return template.getMapper(cls).myclist(userId);
 	}
+*/
+ 
 
+	public int myclistcount(String userId) {
+		return template.getMapper(cls).myclistcount(userId);
+
+	}
+
+
+
+	public List<Comment> myclist(String userId, int limit, Integer pageNum) {
+		param.clear();
+		param.put("userId", userId);
+		param.put("limit", limit);
+		param.put("startrow",(pageNum-1) * limit);
+		return template.getMapper(cls).myclist(param);
+	} 
 
 
 

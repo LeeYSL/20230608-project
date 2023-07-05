@@ -486,29 +486,57 @@ public class UserController {
 		}
 		int limit = 10; //한페이지에 10개
 		int myblistcount = userservice.myblistcount(userId); //리스트개수
+		int myclistcount = userservice.myclistcount(userId); //리스트개수
+		int myrlistcount = userservice.myrlistcount(userId); //리스트개수
+		
+		
 		int maxpage = (int)((double)myblistcount/limit + 0.95); 
+		int cmaxpage = (int)((double)myclistcount/limit + 0.95); 
+		int rmaxpage = (int)((double)myrlistcount/limit + 0.95); 
+		
+		
 		int startpage = (int) ((pageNum/10.0+0.9)-1)*10+1; //조회하는페이지
+		
 		int endpage = startpage + 9;
+		int cendpage = startpage + 9;
+		int rendpage = startpage + 9;
+		
+		
 		if (endpage > maxpage) {
 			endpage =maxpage;
 		}
+		if (cendpage > cmaxpage) {
+			cendpage =cmaxpage;
+		}
+		if (rendpage > rmaxpage) {
+			rendpage =rmaxpage;
+		}	
+		
+		
 		int boardno = myblistcount - (pageNum -1) * limit;
+		int commentno = myclistcount - (pageNum-1) *limit;
+		int rsrvtno = myrlistcount - (pageNum-1) *limit;
+		
 		
 		mav.addObject("pageNum",pageNum);
 		mav.addObject("maxpage", maxpage);
+		mav.addObject("cmaxpage", cmaxpage);
 		mav.addObject("startpage", startpage);
 		mav.addObject("endpage", endpage);
+		mav.addObject("cendpage", cendpage);
 		mav.addObject("myblistcount", myblistcount);
+		mav.addObject("myclistcount", myclistcount);
 		mav.addObject("boardno", boardno);
-				
+		mav.addObject("commentno", commentno);		
+		
+		
 		List<User> myulist = userservice.myulist(userId);
 		mav.addObject("myulist",myulist);
-				
-				
+								
 		List<Board> myblist = userservice.myblist(userId, limit, pageNum);
 		mav.addObject("myblist",myblist);
 		
-		List<Comment> myclist =userservice.myclist(userId);
+		List<Comment> myclist =userservice.myclist(userId, limit, pageNum);
 		mav.addObject("myclist",myclist);
 		
 		List<Reservation> Myrsrvt = reservationService.Myrsrvt(userId);

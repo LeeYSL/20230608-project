@@ -1,6 +1,7 @@
 package dao.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -25,9 +26,20 @@ public interface CommentMapper {
 
 	@Delete("delete from comment where num=#{num} and seq=#{seq} ")
 	void commdelete(@Param("num")int num, @Param("seq")int seq);
-
+/*
 	@Select("select * from comment c join board b  on c.num = b.num where c.user_id=#{userId} ")
 	List<Comment> myclist(String userId);
+*/
+	@Select("select count(*) from comment where user_id=#{userId}")
+	int myclistcount(String userId);
+
+	@Select({"<script>",
+		"select num, seq, user_id, date, content from comment",
+		"<if test='num != null'> where num = #{num} </if>",
+		"<if test='userId != null'> where user_id = #{userId} </if>",
+		"<if test='limit != null'> order by date desc limit #{startrow}, #{limit} </if>",
+		"</script>"})	
+	List<Comment> myclist(Map<String, Object> param);
 
 
 }

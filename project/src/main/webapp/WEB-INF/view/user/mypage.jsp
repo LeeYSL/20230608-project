@@ -35,9 +35,13 @@
 		$("#" + tab).addClass("select")
 	}
 	function mypage(page){
-		document.pageNum.value=page;
-		document.submit();
+		document.b.pageNum.value=page;
+		document.b.submit();
 	}
+	function mypage(page){
+		document.c.pageNum.value=page;
+		document.c.submit();
+	}S
 </script>
 <style type="text/css">
 .page {
@@ -93,14 +97,14 @@ a {
 											</p>
 											<hr>
 											<p>
-												<i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i>
-												${user.userId}
-											</p>
-											<p>
 												<i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i>
 												<a href="userinfo?userId=${user.userId}"> <span
 													class="txt">${user.nickname}</span>
 												</a>
+											</p>
+											<p>
+												<i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i>
+												${user.email}
 											</p>
 											<p>
 												<i
@@ -138,7 +142,7 @@ a {
 
 										<c:if test="${sessionScope.loginUser.batch ==2}">
 		---------------------------------------------
-		<a href="javascript:disp_div('vinfo','tab5')">
+											<a href="javascript:disp_div('vinfo','tab5')">
 												<button class="w3-button w3-block w3-theme-l1 w3-left-align">
 													<i class="fa fa-users fa-fw w3-margin-right"></i> 가게1
 												</button>
@@ -175,13 +179,18 @@ a {
 								<%--board --%>
 								<div class="info w3-container w3-card w3-white w3-round w3-margin-left" id="binfo" style="display: none;">
 									<br>
+									
+							<form name="b">	
 									<div class="page">
-										<h4>내가 쓴 글</h4>
-													<input type="hidden" name="pageNum" value="1"> 
+										<h4>게시글 목록</h4>
+										<input type="hidden" name="pageNum" value="1"> 
+										<input type="hidden" name="userId" value="${param.userId}">
 									</div>
+							</form>									
 									<br>
 									<hr class="w3-clear">
 									<table class="w3-table-all" >
+									<c:if test="${myblistcount > 0}">
 										<tr>
 											<th width="10%"></th>
 											<th align="center" width="70%">제목</th>
@@ -201,7 +210,7 @@ a {
 											</tr>
 										</c:forEach>
 										<tr>
-											<td colspan="6" class="w3-center"><c:if
+											<td colspan="3" class="w3-center"><c:if
 													test="${pageNum > 1}">
 													<a href="javascript:mypage('${pageNum -1}')">[이전]</a>
 												</c:if> <c:if test="${pageNum <= 1}">[이전]</c:if> <c:forEach var="a"
@@ -215,20 +224,31 @@ a {
 												</c:if> <c:if test="${pageNum >= maxpage}">[다음]</c:if>
 											</td>
 										</tr>
+										</c:if>
+										<c:if test="${myblistcount ==  0}">
+											<tr>
+												<th colspan="3" style="text-align: center;">등록된 게시물이 없습니다.</th>
+											</tr>
+										</c:if>
 									</table>
 									
 									<br>
 								</div>
 
 								<%--comment --%>
-								<div
-									class="info w3-container w3-card w3-white w3-round w3-margin"
-									id="cinfo" style="display: none;">
+								<div class="info w3-container w3-card w3-white w3-round w3-margin-left" id="cinfo" style="display: none;">
 									<br>
-									<h4>내가 쓴 댓글</h4>
+								<form name="c">	
+									<div class="page">					
+									<h4>댓글 목록</h4>
+										<input type="hidden" name="pageNum" value="1"> 
+										<input type="hidden" name="userId" value="${param.userId}">
+									</div>
+								</form>											
 									<br>
 									<hr class="w3-clear">
 									<table class="w3-table-all">
+									<c:if test="${myclistcount > 0}">									
 										<tr>
 											<th align="center" width="80%">댓글</th>
 											<th align="center" width="20%">작성일</th>
@@ -242,19 +262,47 @@ a {
 														value="${comm.date}" pattern="yyyy-MM-dd" /></td>
 											</tr>
 										</c:forEach>
+										<tr>
+											<td colspan="3" class="w3-center"><c:if
+													test="${pageNum > 1}">
+													<a href="javascript:mypage('${pageNum -1}')">[이전]</a>
+												</c:if> <c:if test="${pageNum <= 1}">[이전]</c:if> <c:forEach var="a"
+													begin="${startpage}" end="${cendpage}">
+													<c:if test="${a == pageNum}">[${a}]</c:if>
+													<c:if test="${a != pageNum}">
+														<a href="javascript:mypage('${a}')">[${a}]</a>
+													</c:if>
+												</c:forEach> <c:if test="${pageNum < cmaxpage}">
+													<a href="javascript:mypage('${pageNum +1}')">[다음]</a>
+												</c:if> <c:if test="${pageNum >= cmaxpage}">[다음]</c:if>
+											</td>
+										</tr>
+										</c:if>
+										<c:if test="${myclistcount ==  0}">
+											<tr>
+												<th colspan="3" style="text-align: center;">등록된 댓글이 없습니다.</th>
+											</tr>
+										</c:if>
 									</table>
+									
 									<br>
 								</div>
 
-								<%--comment --%>
-								<div
-									class="info w3-container w3-card w3-white w3-round w3-margin"
-									id="rinfo" style="display: none;">
-									<br>
-									<h4>예약</h4>
-									<br>
+								<%--reservation --%>
+								<div class="info w3-container w3-card w3-white w3-round w3-margin-left" id="rinfo" style="display: none;">
+						<br>
+									
+							<form name="r">	
+									<div class="page">
+										<h4>예약 목록</h4>
+										<input type="hidden" name="pageNum" value="1"> 
+										<input type="hidden" name="userId" value="${param.userId}">
+									</div>
+							</form>									
+			
 									<hr class="w3-clear">
 									<table class="w3-table-all">
+									<c:if test="${myblistcount > 0}">
 										<tr>
 											<th align="center">식당 이름</th>
 											<th align="center">예약일</th>
@@ -290,7 +338,29 @@ a {
 												<td align="center">${rest.resthoneno}</td>
 											</tr>
 										</c:forEach>
+										<tr>
+											<td colspan="3" class="w3-center"><c:if
+													test="${pageNum > 1}">
+													<a href="javascript:mypage('${pageNum -1}')">[이전]</a>
+												</c:if> <c:if test="${pageNum <= 1}">[이전]</c:if> <c:forEach var="a"
+													begin="${startpage}" end="${endpage}">
+													<c:if test="${a == pageNum}">[${a}]</c:if>
+													<c:if test="${a != pageNum}">
+														<a href="javascript:mypage('${a}')">[${a}]</a>
+													</c:if>
+												</c:forEach> <c:if test="${pageNum < maxpage}">
+													<a href="javascript:mypage('${pageNum +1}')">[다음]</a>
+												</c:if> <c:if test="${pageNum >= maxpage}">[다음]</c:if>
+											</td>
+										</tr>
+										</c:if>
+										<c:if test="${myblistcount ==  0}">
+											<tr>
+												<th colspan="3" style="text-align: center;">등록된 게시물이 없습니다.</th>
+											</tr>
+										</c:if>
 									</table>
+									
 									<br>
 								</div>
 

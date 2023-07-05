@@ -154,12 +154,12 @@ public class UserService {
 		return boardDao.myblist(userId);
 	}
 
-*/
+
 	public List<Comment> myclist(String userId) {
 		return commDao.myclist(userId);
 	}
 
-
+*/
 	public List<User> myulist(String userId) {
 		return userDao.myulist(userId);
 	}
@@ -259,6 +259,16 @@ public class UserService {
 
 	public List<Board> myblist(String userId, int limit, Integer pageNum) {
 		return boardDao.myblist(userId, limit, pageNum);
+	}
+
+
+	public int myclistcount(String userId) {
+		return commDao.myclistcount(userId);
+	}
+
+
+	public List<Comment> myclist(String userId, int limit, Integer pageNum) {
+		return commDao.myclist(userId, limit, pageNum);
 	}
 
 
