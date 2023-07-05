@@ -24,26 +24,26 @@ a {text-decoration: none;}
 <body>
 
 <!-- Sidebar (hidden by default) -->
-<nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
+<nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="display:none;z-index:2;width:20%;min-width:300px" id="mySidebar">
   <a href="javascript:void(0)" onclick="w3_close()"
-  class="w3-bar-item w3-button">Close Menu</a>
-  <a href="/project/restaurant/restaurantList" onclick="w3_close()" class="w3-bar-item w3-button">Restaurant</a>
-  <a href="/project/reservation/myList?userId=${sessionScope.loginUser.userId}" onclick="w3_close()" class="w3-bar-item w3-button">예약 관리</a>
+  class="w3-bar-item w3-button">＊Close Menu</a>
+  <a href="/project/restaurant/restaurantList" onclick="w3_close()" class="w3-bar-item w3-button">＊Restaurant</a>
+  <a href="/project/reservation/myList?userId=${sessionScope.loginUser.userId}" onclick="w3_close()" class="w3-bar-item w3-button">＊예약 관리</a>
   <c:if test="${sessionScope.loginUser != null}">
-  	<a href="/project/user/mypage?userId=${sessionScope.loginUser.userId}" onclick="w3_close()" class="w3-bar-item w3-button">MyPage</a>
+  	<a href="/project/user/mypage?userId=${sessionScope.loginUser.userId}" onclick="w3_close()" class="w3-bar-item w3-button">＊MyPage</a>
   </c:if>
   <c:if test="${sessionScope.loginUser == null}">
-  	<a href="/project/user/login" onclick="w3_close()" class="w3-bar-item w3-button">MyPage</a>
+  	<a href="/project/user/login" onclick="w3_close()" class="w3-bar-item w3-button">＊MyPage</a>
   </c:if>
   
-  <a href="/project/board/list?boardId=1" onclick="w3_close()" class="w3-bar-item w3-button">공지사항</a>
-  <a href="/project/board/list?boardId=2" onclick="w3_close()" class="w3-bar-item w3-button">QNA</a>
+  <a href="/project/board/list?boardId=1" onclick="w3_close()" class="w3-bar-item w3-button">＊공지사항</a>
+  <a href="/project/board/list?boardId=2" onclick="w3_close()" class="w3-bar-item w3-button">＊QNA</a>
   	<c:if test="${sessionScope.loginUser.batch ==2 }">
-  	- - - - - - - - - -	- - - - - - - - - -	- - - - - - - - - -
-  		<a href="/project/reservation/ownerList?userId=${sessionScope.loginUser.userId}" onclick="w3_close()" class="w3-bar-item w3-button">식당 예약 관리</a>
-  	</c:if>
+  	- - - - - - - - - -	- - - - - - - - - -	- 
+  	<!-- 	<a href="/project/reservation/ownerList?userId=${sessionScope.loginUser.userId}" onclick="w3_close()" class="w3-bar-item w3-button">식당 예약 관리</a>  -->
+  	</c:if> 
   		<c:if test="${sessionScope.loginUser.batch ==2 }">
-  		<a href="/project/restaurant/ownerRest?userId=${sessionScope.loginUser.userId}" onclick="w3_close()" class="w3-bar-item w3-button">식당 관리</a>
+  		<a href="/project/restaurant/ownerRest?userId=${sessionScope.loginUser.userId}" onclick="w3_close()" class="w3-bar-item w3-button">＊식당 및 예약 관리</a>
   	</c:if>
 </nav>
 
@@ -77,7 +77,7 @@ a {text-decoration: none;}
       <p>구디아카데미</p>
     </div>
   </footer>
-
+ 
 <!-- End page content -->
 </div>
 

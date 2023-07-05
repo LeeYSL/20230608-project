@@ -40,12 +40,13 @@ public class ReservationDao {
 		return template.getMapper(cls).myListSelect(param); //내가 담아 놓은 걸 가져가야 되니까 매개변수에 param
 	}
 
-		public List<Reservation> ownerRest(String userId, int pageNum, int limit,String delYn) {
+		public List<Reservation> ownerRest(String userId, int pageNum, int limit,String delYn, int num) {
 		param.clear();
 		param.put("userId", userId);
 		param.put("pageNum", (pageNum-1) * limit); 
 		param.put("limit", limit);
 		param.put("delYn", delYn);
+		param.put("num", num);
 		return template.getMapper(cls).ownerListSelect(param);
 	}
 
@@ -94,9 +95,20 @@ public class ReservationDao {
 		return template.getMapper(cls).checkReservation(param);
 	}
 
-	public List<Reservation> Myrsrvt(String userId) {
-		return template.getMapper(cls).Myrsrvt(userId);
+	public List<Reservation> Myrsrvt(String userId, int limit, Integer pageNum) {
+		param.clear();
+		param.put("userId", userId);
+		param.put("limit", limit);
+		param.put("startrow",(pageNum-1) * limit);
+		return template.getMapper(cls).Myrsrvt(param);
+		
 	}
+
+
+	public int myrlistcount(String userId) {
+		return template.getMapper(cls).myrlistcount(userId);
+	} 
+
 
 
 }

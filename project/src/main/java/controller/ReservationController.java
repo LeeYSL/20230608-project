@@ -69,27 +69,26 @@ public class ReservationController {
 			bresult.reject("error.input.check");
 			return mav;
 		}
-		
-		int num = reservation.getRestNum(); //가게번호
-		String date = reservation.getRsrvtDate(); //예약날짜
-		String time = reservation.getRsrvtTime(); //예약시간
-		
-		//해당 예약날짜와 예약시간에 예약이 가능한지 조회함
+
+		int num = reservation.getRestNum(); // 가게번호
+		String date = reservation.getRsrvtDate(); // 예약날짜
+		String time = reservation.getRsrvtTime(); // 예약시간
+
+		// 해당 예약날짜와 예약시간에 예약이 가능한지 조회함
 		Reservation rsrvt = service.checkReservation(num, date, time);
-		
-		if(rsrvt.getRsrvtYn().equals("N")) { 
+
+		if (rsrvt.getRsrvtYn().equals("N")) {
 			// N : 예약마감인 경우
-			throw new ReservationException("해당 시간에 예약이 마감되었습니다.","reservationadd?num=" + num);
-		}else { 
+			throw new ReservationException("해당 시간에 예약이 마감되었습니다.", "reservationadd?num=" + num);
+		} else {
 			// Y : 예약 가능한 경우
-			if(reservation.getPeople() > rsrvt.getCanPeople()) {
-				//선택한 예약인원이 가능한 예약인원 수를 초과한 경우 
-				throw new ReservationException(
-						"해당 시간에 가능한 예약 인원을 초과했습니다. (가능인원 : "+rsrvt.getCanPeople()+"명)",
+			if (reservation.getPeople() > rsrvt.getCanPeople()) {
+				// 선택한 예약인원이 가능한 예약인원 수를 초과한 경우
+				throw new ReservationException("해당 시간에 가능한 예약 인원을 초과했습니다. (가능인원 : " + rsrvt.getCanPeople() + "명)",
 						"reservationadd?num=" + num);
 			}
 		}
-		
+
 		try {
 
 			User user = (User) session.getAttribute("loginUser");
@@ -171,12 +170,23 @@ public class ReservationController {
 	}
 
 	@PostMapping("myList")
-	public ModelAndView confirm(@RequestParam Map<String, Object> param, HttpSession session, int confirm, int num) { // key,value
-																														// 둘
-																														// 다
-		// 전달해라
+	public ModelAndView confirm(@RequestParam Map<String, Object> param, HttpSession session, int confirm, int num,
+			String restName, String rsrvtName, String phoneNo) { // key,value 둘 다 전달해라
 		ModelAndView mav = new ModelAndView();
+		
+			MessageDao messageDao = new MessageDao();
 
+			messageDao.setTo(phoneNo);
+			messageDao.setContent(restName + "\n" +rsrvtName + "님 예약 취소 되었습니다.");
+
+			try {
+				sendSms(messageDao);
+			} catch (JsonProcessingException | RestClientException | InvalidKeyException | NoSuchAlgorithmException
+					| UnsupportedEncodingException | URISyntaxException e) {
+
+				e.printStackTrace();
+			}
+	
 		User user = (User) session.getAttribute("loginUser");
 
 		service.ownerconfirm(num, confirm);
@@ -191,51 +201,66 @@ public class ReservationController {
 
 	@RequestMapping("kakao")
 	@ResponseBody
-	public Map<String, Object> kakao(HttpSession session,Integer num) {
+	public Map<String, Object> kakao(HttpSession session, Integer num) {
 		Map<String, Object> map = new HashMap<>();
 
 		User loginUser = (User) session.getAttribute("loginUser");
-		Reservation reservation = service.selectOne(num); 
+		Reservation reservation = service.selectOne(num);
 
 		map.put("merchant_uid", loginUser.getUserId() + "-" + session.getId());
-	
+
 		map.put("buyer_name", reservation.getName());
 		map.put("buyer_tel", reservation.getPhoneNo());
 		map.put("buyer_addr", reservation.getUserId());
-	
+
 		return map; // 클라이언트는 json 객체로 전달
 	}
 
 	@PostMapping("ownerList")
-	public ModelAndView confirm(int num, int confirm,Reservation reservation) {
+	public ModelAndView confirm(int num, int confirm, String restName, String rsrvtName, String phoneNo,
+			String rsrvtDate, String rsrvtTime, int people) {
 		ModelAndView mav = new ModelAndView();
-	//	String restName = reservation.getName();
-	//	String tel = reservation.getPhoneNo();
-	//	String name = reservation.getRsrvtName();
-		
-		MessageDao messageDao = new MessageDao();
-		messageDao.setTo("01033252804");
-		messageDao.setContent("예약 확정되었습니다.");
-		try {
-			sendSms(messageDao);
-		} catch (JsonProcessingException | RestClientException | InvalidKeyException | NoSuchAlgorithmException
-				| UnsupportedEncodingException | URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		/*
+		 * String restName = reservation.getName(); String rsrvtName =
+		 * reservation.getRsrvtName(); String phoneNo = reservation.getPhoneNo(); String
+		 * rsrvtDate = reservation.getRsrvtDate(); String rsrvtTime =
+		 * reservation.getRsrvtTime(); int people = reservation.getPeople();
+		 * 
+		 * System.out.println("1"+reservation);
+		 */
+
 		service.ownerconfirm(num, confirm);
 		// System.out.println("1:" + reservation.getConfirm());
 		// reservation.getConfirm(); // reservation에서 쓸 수 있게 ownerconfirm에서 가져온 걸 set
 		// 해줌?
+		MessageDao messageDao = new MessageDao();
+		if (confirm == 1) {
 
-		System.out.println();
+			messageDao.setTo(phoneNo);
+			messageDao.setContent(restName + "\n" + rsrvtName + "님" + "\t" + rsrvtDate + "일" + "\t" + rsrvtTime + "시"
+					+ "\n" + people + "명" + "예약 확정되었습니다.");
+		} else if (confirm == 2) {
+			messageDao.setTo(phoneNo);
+			messageDao.setContent(restName + "\n" + rsrvtName + " 예약 거절 됐습니다.");
+
+		}
+
+		try {
+			sendSms(messageDao);
+		} catch (JsonProcessingException | RestClientException | InvalidKeyException | NoSuchAlgorithmException
+				| UnsupportedEncodingException | URISyntaxException e) {
+
+			e.printStackTrace();
+		}
+
 		mav.addObject("num", num); // 조회해온 num을 넘기는건가??
 
 		return mav;
 
 	}
+
 	@GetMapping("ownerList")
-	public ModelAndView ownerList(@RequestParam Map<String, String> param, HttpSession session, String delYn) {
+	public ModelAndView ownerList(@RequestParam Map<String, String> param, HttpSession session, String delYn, int num) {
 		ModelAndView mav = new ModelAndView();
 
 		User user = (User) session.getAttribute("loginUser");
@@ -244,14 +269,13 @@ public class ReservationController {
 		if (param.get("pageNum") != null)
 			pageNum = Integer.parseInt(param.get("pageNum"));
 
-
 		if (param.get("pageNum") == null || pageNum.toString().equals("")) {
 			pageNum = 1;
 		}
 		int limit = 10;
 		int listcount = service.ownerListCount(user.getUserId());
-		
-		List<Reservation> rsrvtList = service.ownerList(user.getUserId(), pageNum, limit, delYn);
+
+		List<Reservation> rsrvtList = service.ownerList(user.getUserId(), pageNum, limit, delYn, num);
 
 		int maxpage = (int) ((double) listcount / limit + 0.95);
 		int startpage = (int) ((pageNum / 10.0 + 0.9) - 1) * 10 + 1;
@@ -264,71 +288,63 @@ public class ReservationController {
 		mav.addObject("maxpage", maxpage);
 		mav.addObject("startpage", startpage);
 		mav.addObject("endpage", endpage);
+		mav.addObject("num", num);
 
 		return mav;
 	}
-	public String makeSignature(Long time) throws NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException {
+
+	public String makeSignature(Long time)
+			throws NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException {
 		String space = " ";
-        String newLine = "\n";
-        String method = "POST";
-        String url = "/sms/v2/services/ncp:sms:kr:311072611756:lys/messages";
-        String timestamp = time.toString();
-        String accessKey = "OsxUlMxn78m4DMcprwak";
-        String secretKey = "hVfQpMFimfHas7hQsxLuGLy3fPwQDZ9Ez5kYeG4E";
- 
-        String message = new StringBuilder() //StringBuilder : 위 내용들을 하나의 문자열로 합치겠다.
-                .append(method)
-                .append(space)
-                .append(url)
-                .append(newLine)
-                .append(timestamp)
-                .append(newLine)
-                .append(accessKey)
-                .toString();
- 
-        SecretKeySpec signingKey = new SecretKeySpec(secretKey.getBytes("UTF-8"), "HmacSHA256");
-        Mac mac = Mac.getInstance("HmacSHA256");
-        mac.init(signingKey); //init : 초기화
- 
-        byte[] rawHmac = mac.doFinal(message.getBytes("UTF-8")); //바이트 형식에 담겠다.
-        String encodeBase64String = Base64.encodeBase64String(rawHmac); //복호화 하겠다?
- 
-        return encodeBase64String;
+		String newLine = "\n";
+		String method = "POST";
+		String url = "/sms/v2/services/ncp:sms:kr:311072611756:lys/messages";
+		String timestamp = time.toString();
+		String accessKey = "OsxUlMxn78m4DMcprwak";
+		String secretKey = "hVfQpMFimfHas7hQsxLuGLy3fPwQDZ9Ez5kYeG4E";
+
+		String message = new StringBuilder() // StringBuilder : 위 내용들을 하나의 문자열로 합치겠다.
+				.append(method).append(space).append(url).append(newLine).append(timestamp).append(newLine)
+				.append(accessKey).toString();
+
+		SecretKeySpec signingKey = new SecretKeySpec(secretKey.getBytes("UTF-8"), "HmacSHA256");
+		Mac mac = Mac.getInstance("HmacSHA256");
+		mac.init(signingKey); // init : 초기화
+
+		byte[] rawHmac = mac.doFinal(message.getBytes("UTF-8")); // 바이트 형식에 담겠다.
+		String encodeBase64String = Base64.encodeBase64String(rawHmac); // 복호화 하겠다?
+
+		return encodeBase64String;
 	}
-	
-	public SmsResponseDao sendSms(MessageDao messageDao) throws JsonProcessingException, RestClientException, URISyntaxException, InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
+
+	public SmsResponseDao sendSms(MessageDao messageDao) throws JsonProcessingException, RestClientException,
+			URISyntaxException, InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
 		Long time = System.currentTimeMillis();
-		
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.set("x-ncp-apigw-timestamp", time.toString());
 		headers.set("x-ncp-iam-access-key", "OsxUlMxn78m4DMcprwak");
 		headers.set("x-ncp-apigw-signature-v2", makeSignature(time));
-		
+
 		List<MessageDao> messages = new ArrayList<>();
 		messages.add(messageDao);
-		
-		SmsRequestDao request = SmsRequestDao.builder()
-				.type("SMS")
-				.contentType("COMM")
-				.countryCode("82")
-				.from("01022308370")
-				.content(messageDao.getContent())
-				.messages(messages)
-				.build();
-		
+
+		SmsRequestDao request = SmsRequestDao.builder().type("SMS").contentType("COMM").countryCode("82")
+				.from("01022308370").content(messageDao.getContent()).messages(messages).build();
+
 		ObjectMapper objectMapper = new ObjectMapper();
 		String body = objectMapper.writeValueAsString(request);
 		HttpEntity<String> httpBody = new HttpEntity<>(body, headers);
-		
-		RestTemplate restTemplate = new RestTemplate();
-	    restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-	    SmsResponseDao response = restTemplate.postForObject(new URI("https://sens.apigw.ntruss.com/sms/v2/services/"+ "ncp:sms:kr:311072611756:lys" +"/messages"), httpBody, SmsResponseDao.class);
- 
-	    return response;	
-	}
 
-	
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
+		SmsResponseDao response = restTemplate.postForObject(
+				new URI("https://sens.apigw.ntruss.com/sms/v2/services/" + "ncp:sms:kr:311072611756:lys" + "/messages"),
+				httpBody, SmsResponseDao.class);
+
+		return response;
+	}
 
 	// 예약상세페이지 수정
 	@PostMapping("myListInfo")

@@ -131,6 +131,7 @@ public class RestaurantController {
 		mav.addObject("maxpage", maxpage);
 		mav.addObject("startpage", startpage);
 		mav.addObject("endpage", endpage);
+		mav.addObject("endpage", endpage);
 		//mav.addObject("pointNum", pointNum);
 
 		return mav;

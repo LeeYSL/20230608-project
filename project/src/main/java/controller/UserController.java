@@ -487,7 +487,7 @@ public class UserController {
 		int limit = 10; //한페이지에 10개
 		int myblistcount = userservice.myblistcount(userId); //리스트개수
 		int myclistcount = userservice.myclistcount(userId); //리스트개수
-		int myrlistcount = userservice.myrlistcount(userId); //리스트개수
+		int myrlistcount = reservationService.myrlistcount(userId); //리스트개수
 		
 		
 		int maxpage = (int)((double)myblistcount/limit + 0.95); 
@@ -521,13 +521,17 @@ public class UserController {
 		mav.addObject("pageNum",pageNum);
 		mav.addObject("maxpage", maxpage);
 		mav.addObject("cmaxpage", cmaxpage);
+		mav.addObject("rmaxpage", rmaxpage);
 		mav.addObject("startpage", startpage);
 		mav.addObject("endpage", endpage);
 		mav.addObject("cendpage", cendpage);
+		mav.addObject("rendpage", rendpage);
 		mav.addObject("myblistcount", myblistcount);
 		mav.addObject("myclistcount", myclistcount);
+		mav.addObject("myrlistcount", myrlistcount);
 		mav.addObject("boardno", boardno);
 		mav.addObject("commentno", commentno);		
+		mav.addObject("rsrvtno", rsrvtno);		
 		
 		
 		List<User> myulist = userservice.myulist(userId);
@@ -539,7 +543,7 @@ public class UserController {
 		List<Comment> myclist =userservice.myclist(userId, limit, pageNum);
 		mav.addObject("myclist",myclist);
 		
-		List<Reservation> Myrsrvt = reservationService.Myrsrvt(userId);
+		List<Reservation> Myrsrvt = reservationService.Myrsrvt(userId,limit, pageNum);
 		mav.addObject("Myrsrvt",Myrsrvt);
 		
 //		List<Restaurant> MyRest = reservationService.MyRest(userId, delYn);

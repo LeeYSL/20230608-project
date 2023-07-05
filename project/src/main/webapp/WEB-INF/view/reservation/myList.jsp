@@ -22,13 +22,16 @@
 			//취소기 때문에 3으로 고정
 			//	let confirm = $(btn).parent().siblings().find('c:choose').val
 			let num = $(btn).attr('name');
-
+		
 			$.ajax({
 				url : '/project/reservation/myList',
 				type : 'POST',
 				data : {
 					'num' : num,
-					'confirm' : 3
+					'confirm' : 3,
+					'restName' : $(btn).parent().siblings('td[name="restName"]').text(),
+				    'rsrvtName' : $(btn).parent().siblings('td[name="rsrvtName"]').text(),
+				    'phoneNo' : $(btn).parent().siblings('td[name="phoneNo"]').text()
 				},
 				success : function(result) {
 					//예약취소로 문구로 변경하고 취소 버튼을 숨김
@@ -39,7 +42,11 @@
 			})
 		}
 	</script>
-	
+	<div class="w3-container w3-padding-32 w3-center">
+		<div
+			style="display: block; margin: auto; width: 1100px; height: 100%;">
+			<div class="w3-padding-32">
+				<div class="side">
 
 	<h2>예약 목록</h2>
 	<table class="w3-table-all">
@@ -62,9 +69,9 @@
 				<td><a href="myListInfo?num=${rsrvt.num}"> <input
 						type="button" value="상세보기">
 				</a></td>
-				<td align="center">${rsrvt.name}</td>
-				<td align="center">${rsrvt.rsrvtName}</td>
-				<td align="center">${rsrvt.phoneNo}</td>
+				<td name="restName"  align="center">${rsrvt.name}</td>
+				<td name="rsrvtName" align="center">${rsrvt.rsrvtName}</td>
+				<td name="phoneNo" align="center">${rsrvt.phoneNo}</td>
 				<td align="center">${rsrvt.rsrvtDate}</td>
 				<td align="center">${rsrvt.rsrvtTime}</td>
 				<td align="center">${rsrvt.people}</td>
@@ -101,6 +108,10 @@
 				</td>
 		</c:forEach>
 		<tr>
+		<c:if test="${listcount == 0}">
+				<td colspan="5" align="right">등록된 예약이 없습니다.</td>
+		</c:if>
+		<c:if test="${listcount != 0}">
 			<td colspan="5" style="text-align: center;"><c:if
 					test="${pageNum <= 1}">[이전]</c:if> <c:if test="${pageNum > 1 }">
 					<a href="myList?pageNum=${pageNum-1}">[이전]</a>
@@ -112,12 +123,11 @@
 				</c:forEach> <c:if test="${pageNum >= maxpage}">[다음]</c:if> <c:if
 					test="${pageNum < maxpage}">
 					<a href="myList?pageNum=${pageNum+1}">[다음]</a>
-				</c:if></td>
+				</c:if></td></c:if>
 		</tr>
-		<c:if test="${listcount == 0}">
-			<tr>
-				<td colspan="5">등록된 예약이 없습니다.</td>
-			</tr>
-		</c:if>
 	</table>
+	</div>
+	</div>
+	</div>
+	</div>
 </body>

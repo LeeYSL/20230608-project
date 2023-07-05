@@ -69,7 +69,9 @@ private Class<CommentMapper> cls = CommentMapper.class;
 		param.put("limit", limit);
 		param.put("startrow",(pageNum-1) * limit);
 		return template.getMapper(cls).myclist(param);
-	} 
+	}
+
+
 
 
 

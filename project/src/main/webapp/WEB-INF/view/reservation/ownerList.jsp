@@ -9,40 +9,13 @@
 <meta charset="UTF-8">
 <title>사장 로그인 예약 목록</title>
 </head>
-<style type="text/css">
-.page {
-	height: 10%;
-	display: block;
-}
-
-.txt {
-	font-size: 200%;
-}
-
-th {
-	background-color: #ff8400;
-	color: white;
-	width: 10%;
-	text-align: center;
-}
-
-td {
-	background-color: white;
-}
-
-a {
-	text-decoration: none;
-}
-
-textarea {
-	width: 100%;
-	height: 30em;
-	border: 0.1px strong;
-	resize: none;
-}
-</style>
 <body>
 	<script>
+		function listpage(page) {
+			document.searchform.pageNum.value = page;
+			document.searchform.submit();
+		}
+
 		function update(btn) {
 			//selectbox value 조회
 			let confirm = $(btn).parent().siblings().find('select').val();
@@ -58,8 +31,26 @@ textarea {
 					'num' : num,
 					'confirm' : confirm,
 					//객체로 넘기는 방법
-//					'reservation' : {'restName' : $(btn).parent().siblings('td[name="restName"]').text(),}
-					'restName' : $(btn).parent().siblings('td[name="restName"]').text();
+					//	'reservation' : {'restName' : $(btn).parent().siblings('td[name="restName"]').text(),  
+					//                        'rsrvtName' : $(btn).parent().siblings('td[name="rsrvtName"]').text(),
+					//                        'phoneNo' : $(btn).parent().siblings('td[name="phoneNo"]').text(),
+					//                        'rsrvtDate' : $(btn).parent().siblings('td[name="rsrvtDate"]').text(),
+					//                        'rsrvtTime' : $(btn).parent().siblings('td[name="rsrvtTime"]').text(),
+					//                   	 'people'    : $(btn).parent().siblings('td[name="people"]').text()}		
+					//하나씩 넘기는 방법	   	'people'    : $(btn).parent().siblings('td[name="people"]').text();	
+
+					'restName' : $(btn).parent()
+							.siblings('td[name="restName"]').text(),
+					'rsrvtName' : $(btn).parent().siblings(
+							'td[name="rsrvtName"]').text(),
+					'phoneNo' : $(btn).parent().siblings('td[name="phoneNo"]')
+							.text(),
+					'rsrvtDate' : $(btn).parent().siblings(
+							'td[name="rsrvtDate"]').text(),
+					'rsrvtTime' : $(btn).parent().siblings(
+							'td[name="rsrvtTime"]').text(),
+					'people' : $(btn).parent().siblings('td[name="people"]')
+							.text()
 				},
 				success : function(result) {
 					console.log("success");
@@ -81,7 +72,7 @@ textarea {
 				<div class="side">
 					<div class="page">
 						<h2>예약 목록</h2>
-						<table>
+						<table class="w3-table-all">
 							<tr>
 								<th>가게 이름</th>
 								<th>예약 번호</th>
@@ -98,14 +89,13 @@ textarea {
 								<!--reservation 객체를 만들어서 rstvt라는 이름에 넣고 필요한 요소들을 뽑아온다.  -->
 								<tr>
 									<td name="restName" align="center">${rsrvt.name}</td>
-									<td align="center" >${rsrvt.num}</td>
+									<td align="center">${rsrvt.num}</td>
 									<td name="rsrvtName" align="center">${rsrvt.rsrvtName}</td>
 									<td name="phoneNo" align="center">${rsrvt.phoneNo}</td>
 									<td name="rsrvtDate" align="center">${rsrvt.rsrvtDate}</td>
 									<td name="rsrvtTime" align="center">${rsrvt.rsrvtTime}</td>
 									<td name="people" align="center">${rsrvt.people}</td>
-									<td>
-									   <select name="confirm${rsrvt.num}">
+									<td><select name="confirm${rsrvt.num}">
 											<option value="0"
 												${rsrvt.confirm == '0' ? 'selected="selected"' : '' }>승인
 												대기</option>
@@ -120,37 +110,32 @@ textarea {
 												${rsrvt.confirm == '4' ? 'selected="selected"' : '' }
 												disabled="true">이용 완료</option>
 									</select> <input type="hidden" ${rsrvt.confirm}></td>
-									<td>
-									<c:if test="${rsrvt.confirm == 0}">
-										<button type="button" name="${rsrvt.num}"
-											onclick="update(this)">확정</button></c:if>
-									</td>
+									<td><c:if test="${rsrvt.confirm == 0}">
+											<button type="button" name="${rsrvt.num}"
+												class="w3-btn w3-white w3-border w3-border-orange w3-round-xlarge"
+												onclick="update(this)">확정</button>
+										</c:if></td>
 								</tr>
 							</c:forEach>
 
 							<tr>
-								<td colspan="5" style="text-align: center;"><c:if
-										test="${pageNum <= 1}">[이전]</c:if> <c:if
-										test="${pageNum > 1 }">
-										<a href="ownerList?pageNum=${pageNum-1}">[이전]</a>
-									</c:if> <c:forEach var="a" begin="${startpage}" end="${endpage}">
-										<c:if test="${a==pageNum}">[${a}]</c:if>
-										<c:if test="${a != pageNum }">
-											<a href="ownerList?pageNum=${a}">[${a}]</a>
-										</c:if>
-									</c:forEach> <c:if test="${pageNum >= maxpage}">[다음]</c:if> <c:if
-										test="${pageNum < maxpage}">
-										<a href="ownerList?pageNum=${pageNum+1}">[다음]</a>
-									</c:if></td>
+								<td width="30%"><input type="hidden" name="pageNum"
+									value="1"> <c:if test="${listcount == 0}">
+										<td colspan="5" align="right">등록된 예약이 없습니다.</td>
+									</c:if> <c:if test="${listcount != 0}">
+										<td colspan="7" class="w3-center"><c:if
+												test="${pageNum > 1}">
+												<a href="javascript:listpage('${pageNum -1}')">[이전]</a>
+											</c:if> <c:if test="${pageNum <= 1}">[이전]</c:if> <c:forEach var="a"
+												begin="${startpage}" end="${endpage}">
+												<c:if test="${a == pageNum}">[${a}]</c:if>
+												<c:if test="${a != pageNum}">
+													<a href="javascript:listpage('${a}')">[${a}]</a>
+												</c:if>
+											</c:forEach> <c:if test="${pageNum < maxpage}">
+												<a href="javascript:listpage('${pageNum +1}')">[다음]</a>
+											</c:if> <c:if test="${pageNum >= maxpage}">[다음]</c:if></td></c:if>
 							</tr>
-
-							<c:if test="${listcount == 0}">
-								<tr>
-									<td colspan="5">등록된 예약이 없습니다.</td>
-
-								</tr>
-
-							</c:if>
 						</table>
 					</div>
 				</div>
