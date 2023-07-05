@@ -66,10 +66,10 @@ public interface BoardMapper {
 	List<Board> boardlist(Map<String, Object> param);
 
 
-
+/*
 	@Select("select * from board where user_id=#{userId}")
 	List<Board> myblist(String userId);
-
+*/
 
 
 	@Select("select count(*) from board where user_id=#{userId}")
@@ -79,5 +79,15 @@ public interface BoardMapper {
 
 	@Update ("update board set grp_step=grp_step+1 where grp=#{grp} and grp_step>#{grpStep} ")
 	void updateGrpStep(Map<String, Object> param);
+
+
+
+	@Select({"<script>",
+		select,
+		"<if test='num != null'> where num = #{num} </if>",
+		"<if test='userId != null'> where user_id = #{userId} </if>",
+		"<if test='limit != null'> order by grp desc, grp_step asc limit #{startrow}, #{limit} </if>",
+		"</script>"})
+	List<Board> myblist(Map<String, Object> param);
 
 }

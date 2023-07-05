@@ -70,11 +70,11 @@ public int boardcount(String boardId, String type, String searchcontent) {
 	param.put("searchcontent", searchcontent);
 	return template.getMapper(cls).boardcount(param);
 }
-
+/*
 public List<Board> myblist(String userId) {
 	return template.getMapper(cls).myblist(userId);
 }
-
+*/
 public int myblistcount(String userId) {
 	return template.getMapper(cls).myblistcount(userId);
 }
@@ -87,6 +87,14 @@ public void updateGrpStep(@Valid Board board) {
 	param.put("grpstep", board.getGrpStep());
 	template.getMapper(cls).updateGrpStep(param);
 	
+}
+
+public List<Board> myblist(String userId, int limit, Integer pageNum) {
+	param.clear();
+	param.put("userId", userId);
+	param.put("limit", limit);
+	param.put("startrow",(pageNum-1) * limit);
+	return template.getMapper(cls).myblist(param);
 } 
 
 

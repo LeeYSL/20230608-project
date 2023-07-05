@@ -34,6 +34,10 @@
 		$("#" + id).show()
 		$("#" + tab).addClass("select")
 	}
+	function mypage(page){
+		document.pageNum.value=page;
+		document.submit();
+	}
 </script>
 <style type="text/css">
 .page {
@@ -62,9 +66,6 @@ a {
 			style="display: block; margin: auto; width: 1300px; height: 533px;">
 			<div class="w3-padding-32">
 				<div class="side">
-
-
-
 					<!-- Page Container -->
 					<div class="w3-container w3-content"
 						style="max-width: 1200px; margin-top: 80px">
@@ -172,14 +173,15 @@ a {
 
 
 								<%--board --%>
-								<div
-									class="info w3-container w3-card w3-white w3-round w3-margin-left"
-									id="binfo" style="display: none;">
+								<div class="info w3-container w3-card w3-white w3-round w3-margin-left" id="binfo" style="display: none;">
 									<br>
-									<h4>내가 쓴 글</h4>
+									<div class="page">
+										<h4>내가 쓴 글</h4>
+													<input type="hidden" name="pageNum" value="1"> 
+									</div>
 									<br>
 									<hr class="w3-clear">
-									<table class="w3-table-all">
+									<table class="w3-table-all" >
 										<tr>
 											<th width="10%"></th>
 											<th align="center" width="70%">제목</th>
@@ -187,30 +189,34 @@ a {
 										</tr>
 										<c:forEach items="${myblist}" var="board">
 											<tr>
-												<td width="10%"><input type="hidden" name="pageNum"
-													value="1"> <input type="checkbox"></td>
-												<td align="center" width="70%"><a
-													href="../board/detail?num=${board.num}">${board.title}</a>
+												<td width="10%">
+													<input type="checkbox">
 												</td>
-												<td align="center" width="20%"><fmt:formatDate
-														value="${board.regDate}" pattern="yyyy-MM-dd" /></td>
+												<td align="center" width="70%">
+													<a href="../board/detail?num=${board.num}">${board.title}</a>
+												</td>
+												<td align="center" width="20%">
+													<fmt:formatDate value="${board.regDate}" pattern="yyyy-MM-dd" />
+												</td>
 											</tr>
 										</c:forEach>
 										<tr>
 											<td colspan="6" class="w3-center"><c:if
 													test="${pageNum > 1}">
-													<a href="javascript:listpage('${pageNum -1}')">[이전]</a>
+													<a href="javascript:mypage('${pageNum -1}')">[이전]</a>
 												</c:if> <c:if test="${pageNum <= 1}">[이전]</c:if> <c:forEach var="a"
 													begin="${startpage}" end="${endpage}">
 													<c:if test="${a == pageNum}">[${a}]</c:if>
 													<c:if test="${a != pageNum}">
-														<a href="javascript:listpage('${a}')">[${a}]</a>
+														<a href="javascript:mypage('${a}')">[${a}]</a>
 													</c:if>
 												</c:forEach> <c:if test="${pageNum < maxpage}">
-													<a href="javascript:listpage('${pageNum +1}')">[다음]</a>
-												</c:if> <c:if test="${pageNum >= maxpage}">[다음]</c:if></td>
+													<a href="javascript:mypage('${pageNum +1}')">[다음]</a>
+												</c:if> <c:if test="${pageNum >= maxpage}">[다음]</c:if>
+											</td>
 										</tr>
 									</table>
+									
 									<br>
 								</div>
 

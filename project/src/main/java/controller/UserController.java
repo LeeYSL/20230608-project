@@ -174,7 +174,7 @@ public class UserController {
 	}   
 	
 	
-	@GetMapping("login")  	
+	@GetMapping({"login","intro"})  	
 	public ModelAndView loginForm(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		String clientId = "nIAFMm2abcBu8GYgkVrO";
@@ -477,12 +477,35 @@ public class UserController {
 	@RequestMapping("mypage")
 	public ModelAndView idCheckMypage(@RequestParam Map<String, String> param, String userId, HttpSession session,String delYn) {
 		ModelAndView mav = new ModelAndView();
+		Integer pageNum =null;
+		if(param.get("pageNum") != null) {
+			pageNum = Integer.parseInt(param.get("pageNum"));
+		}
+		if (pageNum == null || pageNum.toString().equals("")) {
+			pageNum = 1;
+		}
+		int limit = 10; //한페이지에 10개
+		int myblistcount = userservice.myblistcount(userId); //리스트개수
+		int maxpage = (int)((double)myblistcount/limit + 0.95); 
+		int startpage = (int) ((pageNum/10.0+0.9)-1)*10+1; //조회하는페이지
+		int endpage = startpage + 9;
+		if (endpage > maxpage) {
+			endpage =maxpage;
+		}
+		int boardno = myblistcount - (pageNum -1) * limit;
+		
+		mav.addObject("pageNum",pageNum);
+		mav.addObject("maxpage", maxpage);
+		mav.addObject("startpage", startpage);
+		mav.addObject("endpage", endpage);
+		mav.addObject("myblistcount", myblistcount);
+		mav.addObject("boardno", boardno);
 				
 		List<User> myulist = userservice.myulist(userId);
 		mav.addObject("myulist",myulist);
 				
 				
-		List<Board> myblist = userservice.myblist(userId);
+		List<Board> myblist = userservice.myblist(userId, limit, pageNum);
 		mav.addObject("myblist",myblist);
 		
 		List<Comment> myclist =userservice.myclist(userId);
@@ -497,29 +520,6 @@ public class UserController {
 		
 		System.out.println(Myrsrvt);
 		
-		Integer pageNum =null;
-		if(param.get("pageNum") != null) {
-			pageNum = Integer.parseInt(param.get("pageNum"));
-		}
-		if (pageNum == null || pageNum.toString().equals("")) {
-			pageNum = 1;
-		}
-		int limit = 10;
-		int myblistcount = userservice.myblistcount(userId);
-		int maxpage = (int)((double)myblistcount/limit + 0.95);
-		int startpage = (int) ((pageNum/10.0+0.9)-1)*10+1;
-		int endpage = startpage + 9;
-		if (endpage > maxpage) {
-			endpage =maxpage;
-		}
-		int boardno = myblistcount - (pageNum -1) * limit;
-		
-		mav.addObject("pageNum",pageNum);
-		mav.addObject("maxpage", maxpage);
-		mav.addObject("startpage", startpage);
-		mav.addObject("endpage", endpage);
-		mav.addObject("myulistcount", myblistcount);
-		mav.addObject("boardno", boardno);
 		
 		
 		return mav;		

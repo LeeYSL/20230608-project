@@ -29,7 +29,13 @@ a {text-decoration: none;}
   class="w3-bar-item w3-button">Close Menu</a>
   <a href="/project/restaurant/restaurantList" onclick="w3_close()" class="w3-bar-item w3-button">Restaurant</a>
   <a href="/project/reservation/myList?userId=${sessionScope.loginUser.userId}" onclick="w3_close()" class="w3-bar-item w3-button">예약 관리</a>
-  <a href="/project/user/mypage?userId=${sessionScope.loginUser.userId}" onclick="w3_close()" class="w3-bar-item w3-button">MyPage</a>
+  <c:if test="${sessionScope.loginUser != null}">
+  	<a href="/project/user/mypage?userId=${sessionScope.loginUser.userId}" onclick="w3_close()" class="w3-bar-item w3-button">MyPage</a>
+  </c:if>
+  <c:if test="${sessionScope.loginUser == null}">
+  	<a href="/project/user/login" onclick="w3_close()" class="w3-bar-item w3-button">MyPage</a>
+  </c:if>
+  
   <a href="/project/board/list?boardId=1" onclick="w3_close()" class="w3-bar-item w3-button">공지사항</a>
   <a href="/project/board/list?boardId=2" onclick="w3_close()" class="w3-bar-item w3-button">QNA</a>
   	<c:if test="${sessionScope.loginUser.batch ==2 }">
