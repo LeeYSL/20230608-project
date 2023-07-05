@@ -8,16 +8,19 @@
 <script type="text/javascript"
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
-	function chk(checkbox){
-		const button_elem =
-			document.getElementById("button");
-		button_elem.disabled = checkbox.checked? false:true;
-		if(button_elem.disabled){
-			button_elem.value=null;
-		}else{
-			button_elem.focus();
-		}	
-	}
+
+	$(document).ready(function() {
+		$('.chkbox').click(function() {
+			let chk = $(".chkbox:checked").length;
+			if (chk > 1) {
+				console.log("체크");
+				$("#button").prop("disabled", false);
+			} else {
+				console.log("언체크");
+				$("#button").prop("disabled", true);
+			}
+		})
+	});
 </script>
 <style type="text/css">
 .page {
@@ -69,7 +72,7 @@ li {
   textarea {
     width: 100%;
     height: 14em;
-    border:  0.1px strong;
+    border:  0.1px solid #ff8400;
     resize: none;
   }
 </style>
@@ -96,7 +99,7 @@ li {
 								<textarea readonly>수정수정</textarea>
 							</div>
 							<div class="agree_check">
-								<label> <input type="checkbox" id="checkbox1" onclick="chk(this)">
+								<label> <input type="checkbox" id="checkbox1" class="chkbox">
 									" 위 내용에 동의합니다."
 								</label>
 							</div>
@@ -106,7 +109,7 @@ li {
 								<textarea readonly>수정수정</textarea>
 							</div>
 							<div class="agree_check">
-								<label> <input type="checkbox" id="checkbox2" onclick="chk(this)">
+								<label> <input type="checkbox" id="checkbox2" class="chkbox">
 									" 위 내용에 동의합니다."
 								</label>
 							</div>
@@ -115,7 +118,7 @@ li {
 					<br>
 					<div>
 						<a href="join?batch=${param.batch}">
-							<button class="w3-button w3-white w3-border w3-border-orange w3-round-large" id="button" disabled>다음단계</button>
+							<button class="w3-button w3-white w3-border w3-border-orange w3-round-large" id="button" class="button" disabled="disabled">다음단계</button>
 						</a>
 					</div>
 			</div>

@@ -119,6 +119,13 @@ li {
 					<!-- Profile -->
 					<div class="w3-card w3-white">
 						<div class="w3-container">
+						
+									<%-- 네이버로그인 부분 다시옮겨야함 --%>
+							<h4 class="w3-center">네이버 회원가입</h4>
+							<p>
+								<a href="${apiURL}">
+									<img height="30" src="http://static.nid.naver.com/oauth/small_g_in.PNG">
+								</a>
 							<h4 class="w3-center">일반 회원</h4>
 							<p class="w3-center">
 								<a href="agree?batch=3">
