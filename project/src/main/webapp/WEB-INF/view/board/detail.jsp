@@ -60,6 +60,11 @@ a {
 					<td>${board.title}</td>
 				</tr>
 				<tr>
+					<th class="w3-center">작성자</th>
+					<td>${board.nickname}</td>
+				</tr>
+				
+				<tr>
 					<th class="w3-center">내용</th>
 					<td height="500px;">${board.content}</td>
 				</tr>
@@ -98,6 +103,7 @@ a {
 				</div>
 			</div>
 			<hr>
+				<c:if test="${loginUser != null }">
 			<form:form modelAttribute="comment" method="post" action="comment">
 				<div>
 					<table>
@@ -118,6 +124,7 @@ a {
 				</div>
 			</form:form>
 			<hr>
+				</c:if>
 			<div>
 			<form action="commdelete" method="post" name="c">
 					<input type="hidden" name="pageNum" value="1"> 
@@ -127,12 +134,12 @@ a {
 						<c:if test="${commcount > 0}">
 							<c:forEach var="comm" items="${commlist}">
 								<tr>
-									<td width="5%" style="line-height: 50px;">${commno}</td>
+									<td width="2%" style="line-height: 50px;">${commno}</td>
 									<c:set var="commno" value="${commno-1}" />
 									<td>
-									<td width="10%" style="line-height: 50px;">${comm.userId}
+									<td width="10%" style="line-height: 50px;">${comm.nickname}
 									</td>
-									<td width="60%" style="line-height: 50px;">
+									<td width="63%" style="line-height: 50px;">
 										${comm.content}</td>
 									<td width="10%" style="line-height: 50px;"><fmt:formatDate
 											value="${comm.date}" pattern="yyyyMMdd" var="cdate" /> <c:if
@@ -159,15 +166,15 @@ a {
 															<td colspan="6" style="text-align: center;"><c:if
 										test="${pageNum <= 1}">[이전]</c:if> <c:if
 										test="${pageNum > 1 }">
-										<a href="detail?num=${board.num}&&pageNum=${pageNum-1}">[이전]</a>
+										<a href="detail?num=${board.num}&pageNum=${pageNum-1}">[이전]</a>
 									</c:if> <c:forEach var="a" begin="${startpage}" end="${endpage}">
 										<c:if test="${a==pageNum}">[${a}]</c:if>
 										<c:if test="${a != pageNum }">
-											<a href="detail?num=${board.num}&&pageNum=${a}">[${a}]</a>
+											<a href="detail?num=${board.num}&pageNum=${a}">[${a}]</a>
 										</c:if>
 									</c:forEach> <c:if test="${pageNum >= maxpage}">[다음]</c:if> <c:if
 										test="${pageNum < maxpage}">
-										<a href="detail?num=${board.num}&&pageNum=${pageNum+1}">[다음]</a>
+										<a href="detail?num=${board.num}&pageNum=${pageNum+1}">[다음]</a>
 									</c:if></td>
 							
 							

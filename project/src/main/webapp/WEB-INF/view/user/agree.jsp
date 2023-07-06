@@ -96,7 +96,10 @@ li {
 					<div class="w3-col w3-center w3-padding-32 ">
 						<div class="agree w3-padding-32">
 							<div class="agree_txt">
-								<textarea readonly>수정수정</textarea>
+								<textarea readonly>
+								
+							
+								</textarea>
 							</div>
 							<div class="agree_check">
 								<label> <input type="checkbox" id="checkbox1" class="chkbox">

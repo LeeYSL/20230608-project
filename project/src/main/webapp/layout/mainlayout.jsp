@@ -57,7 +57,7 @@ a {text-decoration: none;}
 			</c:if>
 			<c:if test="${!empty sessionScope.loginUser && sessionScope.loginUser.batch != 1}">
 				<a href="/project/user/logout"  class="w3-right">Logout</a>
-				<a href="/project/user/mypage?userId=${sessionScope.loginUser.userId}" class="w3-right">${sessionScope.loginUser.nickname}님</a>
+				<a href="/project/user/mypage?userId=${sessionScope.loginUser.userId}&info=binfo" class="w3-right">${sessionScope.loginUser.nickname}님</a>
 			</c:if>
 			<c:if test="${sessionScope.loginUser.batch == 1}">
 				<a href="/project/user/logout"  class="w3-right">Logout</a>

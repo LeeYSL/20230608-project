@@ -26,7 +26,7 @@ public interface BoardMapper {
 	@Select("select ifnull(max(num),0) from board")
 	int maxNum();
 
-	@Select("select num, user_id, title, content, file1 fileurl, reg_date, read_cnt, board_id, grp, grp_level, grp_step, comm_cnt, secret from board where num=#{num}")
+	@Select("select b.num, b.user_id, b.title, b.content, b.file1 fileurl, b.reg_date, b.read_cnt, b.board_id, b.grp, b.grp_level, b.grp_step, b.comm_cnt, b.secret,u.nickname from board b join user u on b.user_id=u.user_id where b.num=#{num}")
 	Board detail(Integer num);
 
 	@Update ("update board set read_cnt= read_cnt+1 where num=#{num}")
@@ -47,7 +47,7 @@ public interface BoardMapper {
 
 
 	@Select({"<script>",
-				"select count(*) from board where board_id=#{boardId}",
+				"select count(*) from board b left join user u on b.user_id=u.user_id where board_id=#{boardId}",
 				"<if test='type != null'> and ${type} like '%${searchcontent}%'</if>",
 			"</script>"})
 	int boardcount(Map<String, Object> param);
@@ -57,7 +57,7 @@ public interface BoardMapper {
 			+ " reg_date, read_cnt, grp, grp_level, grp_step, board_id, secret from board";
 
 	@Select({"<script>",
-		select,
+		"select num, b.user_id, title, content, b.file1 fileurl,b.reg_date, read_cnt, board_id, grp, grp_level, grp_step, comm_cnt, secret,nickname from board b join user u on b.user_id=u.user_id",
 		"<if test='num != null'> where num = #{num} </if>",
 		"<if test='boardId != null'> where board_id = #{boardId} </if>",
 		" <if test='searchcontent != null'> and ${type} like '%${searchcontent}%'</if>",

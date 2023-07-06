@@ -39,7 +39,7 @@ public class BoardController {
 	}
 
 	@PostMapping("write")
-	public ModelAndView write(@Valid Board board, BindingResult bresult, HttpSession session) {
+	public ModelAndView loginCheckWrite(@Valid Board board, BindingResult bresult, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		if (bresult.hasErrors()) {
 			mav.getModel().putAll(bresult.getModel());
@@ -48,8 +48,9 @@ public class BoardController {
 		String boardId = (String) session.getAttribute("boardId"); // 형변환 왜 해줘야하는지
 		System.out.println("boardId write=" + boardId);
 		if (boardId == null) {
-			boardId = "1";
+			boardId = "2";
 		}
+
 		System.out.println("boardId write null=" + boardId);
 		board.setBoardId(boardId);
 		try {

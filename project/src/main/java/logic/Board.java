@@ -30,4 +30,5 @@ public class Board {
 	private int commCnt;
 	private String nickname;
 	private String secret;
+
 }
