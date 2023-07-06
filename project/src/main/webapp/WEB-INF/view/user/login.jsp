@@ -41,7 +41,7 @@ td {
 
 .table_div {
  margin: 0% 30% 0% 30%;
- padding-bottom: 3%;
+ border: 1% solid;
 }
 
 

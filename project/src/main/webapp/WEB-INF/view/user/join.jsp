@@ -30,27 +30,32 @@ function sendEmail() {
 				
 			},
 			error: function () {
-				alert("f");
+				alert("이메일 전송에 오류가 생겼습니다.");
 			}
 		});
 		
-	}
-	
+	}	
 }
 
-$("#codeInput").blur(function() {
-	
-	console.log(code);
-	if(code == $("#codeInput").val()) { //인증번호 같다면
-		$("#codecheck_blank").css("color", "blue");
-		$("#codecheck_blank").text("인증되었습니다.");
-		email = true;
-	}else {
-		$("#codecheck_blank").css("color", "red");
-		$("#codecheck_blank").text("인증번호를 다시 입력해주세요.");
-		email = false;
-	}
+$(document).ready(function() {
+	$("#codeInput").blur(function() {	
+		console.log(code);
+		if(code == $("#codeInput").val()) { //인증번호 같다면
+			$("#codecheck_blank").css("color", "blue");
+			$("#codecheck_blank").text("인증되었습니다.");
+			$("#button").prop("disabled", false);
+		//	email = true;
+		}else {
+			$("#codecheck_blank").css("color", "red");
+			$("#codecheck_blank").text("인증번호를 다시 입력해주세요.");			
+		//	email = false;
+			$("#button").prop("disabled", true);
+		}
+	});
 });
+
+
+
 </script>
 
 <style type="text/css">
@@ -102,7 +107,7 @@ li {
 </style>
 </head>
 <body>
-		<div style="display: block; margin: auto; width: 1100px; height: 100%; padding-top:100px;" class="w3-center">
+		<div style="display: block; margin: auto; width: 1100px; height: auto; padding-top:100px;" class="w3-center">
 			<div class="w3-padding-32" style="height: 100%;">
 					<header class="l_member_header">
 						<div >
@@ -244,7 +249,7 @@ li {
 							<div class="bottom_btn">
 								<div>
 									<button type="submit"
-										class="w3-button w3-white w3-border w3-border-orange w3-round-large">가입</button>
+										class="w3-button w3-white w3-border w3-border-orange w3-round-large" id="button" class="button" disabled="disabled">가입</button>
 								</div>
 							</div>
 						</form:form>

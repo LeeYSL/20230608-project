@@ -57,8 +57,15 @@ a {
 				<span class="txt">비밀번호 수정</span>
 			</div>
 
-						<form:form modelAttribute="user" enctype="multipart/form-data"  name="f" action="pwchange">
-						<input type="hidden" name="userId" value="${user.userId}">
+						<form:form modelAttribute="user" method="post" action="pwchange">
+						<input type="hidden" name="userId" value="${loginUser.userId}">
+						<input type="hidden" name="nickname" value="유효성검증을위한데이터">
+						<input type="hidden" name="name" value="유효성검증을위한데이터">
+						<input type="hidden" name="tel" value="010-1111-1111">
+						<input type="hidden" name="email" value="a@a.aaa">
+						
+						
+						
 							<spring:hasBindErrors name="user">
 								<font color="red"> 
 									<c:forEach items="${errors.globalErrors}" var="error">

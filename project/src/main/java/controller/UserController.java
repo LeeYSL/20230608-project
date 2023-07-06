@@ -109,7 +109,7 @@ public class UserController {
 	}
 	
 	@PostMapping("join")
-	public ModelAndView userAdd(@Valid User user, BindingResult bresult, HttpSession session) {
+	public ModelAndView userAdd(@Valid User user, BindingResult bresult,  HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		
 		if(bresult.hasErrors()) {
@@ -150,6 +150,7 @@ public class UserController {
 				user.setPw1(null);
 				return mav;
 			}
+
 			user.setPw(pwHash(user.getPw()));
 			mav.addObject("user",user);
 			userservice.userInsert(user,session);
@@ -397,7 +398,7 @@ public class UserController {
 		}		
 		return mav;
 	}
-	@GetMapping({"update","delete","pwchange"})
+	@GetMapping({"update","delete"})
 	public ModelAndView idCheckUserupdate (String userId, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		User user =userservice.selectOne(userId);
@@ -407,36 +408,38 @@ public class UserController {
 		return mav;
 	}
 	@PostMapping("pwchange")
-	public ModelAndView idCheckPwchange(@Valid User user, BindingResult bresult, String userId, HttpSession session) {
+	public ModelAndView loginCheckPwchange(@Valid User user, BindingResult bresult,String pw,String pw1, String pw2, String userId, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		if(bresult.hasErrors()) {
 			mav.getModel().putAll(bresult.getModel());
 			return mav;
 		}		
 		User loginUser = (User)session.getAttribute("loginUser");
+		System.out.println("1.loginUser.getPw=========="+loginUser.getPw());
+		System.out.println("2.pwHash(user.getPw())======"+pwHash(user.getPw()));
+		System.out.println("3.userId"+userId);
+		System.out.println("4.pw======="+pw);
+		System.out.println("5.pw1===="+pw1);
+		
+		System.out.println("6.pw1==="+pw2);
+		
+		if(!pwHash(pw).equals(loginUser.getPw())) {
+			mav.getModel().putAll(bresult.getModel());
+			bresult.reject("error.input.pw");
+			user.setPw(null);
+			return mav;
+			}				
+		if(!pw1.equals(pw2)) {
+			mav.getModel().putAll(bresult.getModel());
+			bresult.reject("error.pw.check");
+			user.setPw2(null);					
+			return mav;
+		}
 		try {
-			System.out.println("1.loginUser.getPw"+loginUser.getPw());
-			System.out.println("2.pwHash(user.getPw())"+pwHash(user.getPw()));
-			System.out.println("3.userId"+userId);
-				if(!pwHash(user.getPw()).equals(loginUser.getPw())) {
-					mav.getModel().putAll(bresult.getModel());
-					bresult.reject("error.input.pw");
-					user.setPw(null);
-					return mav;
-				}
-				if(!user.getPw1().equals(user.getPw2())) {
-					mav.getModel().putAll(bresult.getModel());
-					bresult.reject("error.pw.check");
-					user.setPw2(null);					
-					return mav;
-				}				
-		//		user.setPw(pwHash(user.getPw1()));
-				mav.addObject("user",user);
-				userservice.userChgpass(loginUser.getUserId(),pwHash(user.getPw1()));
-				if(user.getUserId().equals(loginUser.getUserId())) {
-					session.setAttribute("loginUser", user);
-				}				
-		//		loginUser.setPw(pwHash(user.getPw1()));
+
+				userservice.userChgpass(loginUser.getUserId(),pwHash(pw1));
+				loginUser.setPw(pwHash(pw1));
+			
 				mav.setViewName("redirect:userinfo?userId="+loginUser.getUserId());
 			
 		} catch (Exception e) {

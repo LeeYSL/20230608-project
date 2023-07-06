@@ -49,5 +49,4 @@ public class User {
 	private String email;
     private String delYn;
     private Date delDate;
-	
 }

@@ -9,11 +9,19 @@
 <title>Insert title here</title>
 <script type="text/javascript">
 	$(function() {
+
 		$("#binfo").show()
 		$("#cinfo").hide()
 		$("#rinfo").hide()
 
 		$("#tab1").addClass("select")
+		if('${param.info}'=='cinfo'){
+			disp_div('cinfo','tab2')	
+		}
+		if('${param.info}'=='rinfo'){
+			disp_div('rinfo','tab3')
+		}
+		
 	})
 	function disp_div(id, tab) {
 		$(".info").each(function() {
@@ -24,16 +32,17 @@
 		})
 		$("#" + id).show()
 		$("#" + tab).addClass("select")
+
 	}
-	function mypage(page){
+	function bmypage(page){
 		document.b.pageNum.value=page;
 		document.b.submit();
 	}
-	function mypage(page){
+	function cmypage(page){
 		document.c.pageNum.value=page;
 		document.c.submit();
 	}
-	function mypage(page){
+	function rmypage(page){
 		document.r.pageNum.value=page;
 		document.r.submit();
 	}
@@ -103,17 +112,17 @@ a {
 								<div class="w3-card w3-round">
 									<div class="w3-white">
 										<a href="javascript:disp_div('binfo','tab1')">
-											<button  id="tab1" class="w3-button w3-block w3-theme-l1  w3-center">
+											<button  id="tab1" class="w3-button w3-block w3-theme-l1  w3-center" class="tab">
 												게시글
 											</button>
 										</a> 
 										<a href="javascript:disp_div('cinfo','tab2')">
-											<button id="tab2" class="w3-button w3-block w3-theme-l1  w3-center">
+											<button id="tab2" class="w3-button w3-block w3-theme-l1  w3-center" class="tab">
 												댓글
 											</button>
 										</a> 
 										<a href="javascript:disp_div('rinfo','tab3')">
-											<button id="tab3" class="w3-button w3-block w3-theme-l1  w3-center">
+											<button id="tab3" class="w3-button w3-block w3-theme-l1  w3-center" class="tab">
 												예약
 											</button>
 										</a>
@@ -126,14 +135,14 @@ a {
 							<!-- Middle Column -->
 							<div class="w3-col m9">
 								<%--board --%>
-								<div class="info w3-container w3-card w3-white w3-round w3-margin-left" id="binfo" style="display: none;">
+								<div class="info w3-container w3-card w3-white w3-round w3-margin-left " id="binfo" style="display: none;">
 									<br>									
 									<form name="b">	
 										<div class="page">
 											<h4>게시글 목록</h4>
 											<input type="hidden" name="pageNum" value="1"> 
 											<input type="hidden" name="userId" value="${param.userId}">
-											<input type="hidden" value="${myblist}">
+											
 										</div>
 									</form>							
 									<br>
@@ -161,17 +170,17 @@ a {
 											<tr>
 												<td colspan="3" class="w3-center">
 													<c:if test="${pageNum > 1}">
-														<a href="javascript:mypage('${pageNum -1}')">[이전]</a>
+														<a href="javascript:bmypage('${pageNum -1}')">[이전]</a>
 													</c:if>
 													<c:if test="${pageNum <= 1}">[이전]</c:if> 
 													<c:forEach var="a" begin="${startpage}" end="${endpage}">
 														<c:if test="${a == pageNum}">[${a}]</c:if>
 														<c:if test="${a != pageNum}">
-															<a href="javascript:mypage('${a}')">[${a}]</a>
+															<a href="javascript:bmypage('${a}')">[${a}]</a>
 														</c:if>
 													</c:forEach> 
 													<c:if test="${pageNum < maxpage}">
-														<a href="javascript:mypage('${pageNum +1}')">[다음]</a>
+														<a href="javascript:bmypage('${pageNum +1}')">[다음]</a>
 													</c:if> 
 													<c:if test="${pageNum >= maxpage}">[다음]</c:if>
 												</td>
@@ -184,17 +193,18 @@ a {
 										</c:if>
 									</table>									
 									<br>
+									
 								</div>
 
 								<%--comment --%>
-								<div class="info w3-container w3-card w3-white w3-round w3-margin-left" id="cinfo" style="display: none;">
+								<div class="info w3-container w3-card w3-white w3-round w3-margin-left " id="cinfo" style="display: none;">
 									<br>
 									<form name="c">	
 										<div class="page">					
 											<h4>댓글 목록</h4>
 											<input type="hidden" name="pageNum" value="1"> 
-											<input type="hidden" name="userId" value="${param.userId}">
-											<input type="hidden" value="${myclist}">
+											<input type="hidden" name="userId" value="${param.userId}">											
+											<input type="hidden" name="info" value="cinfo">
 										</div>
 									</form>								
 									<br>
@@ -218,17 +228,17 @@ a {
 											<tr>
 												<td colspan="3" class="w3-center">
 													<c:if test="${pageNum > 1}">
-														<a href="javascript:mypage('${pageNum -1}')">[이전]</a>
+														<a href="javascript:cmypage('${pageNum -1}')">[이전]</a>
 													</c:if> 
 													<c:if test="${pageNum <= 1}">[이전]</c:if> 
 													<c:forEach var="a" begin="${startpage}" end="${cendpage}">
 														<c:if test="${a == pageNum}">[${a}]</c:if>
 														<c:if test="${a != pageNum}">
-															<a href="javascript:mypage('${a}')">[${a}]</a>
+															<a href="javascript:cmypage('${a}')">[${a}]</a>
 														</c:if>
 													</c:forEach> 
 													<c:if test="${pageNum < cmaxpage}">
-														<a href="javascript:mypage('${pageNum +1}')">[다음]</a>
+														<a href="javascript:cmypage('${pageNum +1}')">[다음]</a>
 													</c:if>
 													<c:if test="${pageNum >= cmaxpage}">[다음]</c:if>
 												</td>
@@ -248,9 +258,10 @@ a {
 									<br>
 									<form name="r">	
 										<div class="page">					
-											<h4>댓글 목록</h4>
+											<h4>예약 목록</h4>
 											<input type="hidden" name="pageNum" value="1"> 
 											<input type="hidden" name="userId" value="${param.userId}">
+											<input type="hidden" name="info" value="rinfo">
 										</div>
 									</form>										
 									<br>
@@ -278,17 +289,17 @@ a {
 											<tr>
 												<td colspan="3" class="w3-center">
 													<c:if test="${pageNum > 1}">
-														<a href="javascript:mypage('${pageNum -1}')">[이전]</a>
+														<a href="javascript:rmypage('${pageNum -1}')">[이전]</a>
 													</c:if> 
 													<c:if test="${pageNum <= 1}">[이전]</c:if> 
 													<c:forEach var="a" begin="${startpage}" end="${rendpage}">
 														<c:if test="${a == pageNum}">[${a}]</c:if>
 														<c:if test="${a != pageNum}">
-															<a href="javascript:mypage('${a}')">[${a}]</a>
+															<a href="javascript:rmypage('${a}')">[${a}]</a>
 														</c:if>
 													</c:forEach> 
 													<c:if test="${pageNum < rmaxpage}">
-														<a href="javascript:mypage('${pageNum +1}')">[다음]</a>
+														<a href="javascript:rmypage('${pageNum +1}')">[다음]</a>
 													</c:if> 
 													<c:if test="${pageNum >= rmaxpage}">[다음]</c:if>
 												</td>
