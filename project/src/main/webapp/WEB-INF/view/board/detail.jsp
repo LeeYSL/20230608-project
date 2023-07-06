@@ -156,6 +156,22 @@ a {
 								</tr>
 							</c:forEach>
 							<tr>
+															<td colspan="6" style="text-align: center;"><c:if
+										test="${pageNum <= 1}">[이전]</c:if> <c:if
+										test="${pageNum > 1 }">
+										<a href="detail?num=${board.num}&&pageNum=${pageNum-1}">[이전]</a>
+									</c:if> <c:forEach var="a" begin="${startpage}" end="${endpage}">
+										<c:if test="${a==pageNum}">[${a}]</c:if>
+										<c:if test="${a != pageNum }">
+											<a href="detail?num=${board.num}&&pageNum=${a}">[${a}]</a>
+										</c:if>
+									</c:forEach> <c:if test="${pageNum >= maxpage}">[다음]</c:if> <c:if
+										test="${pageNum < maxpage}">
+										<a href="detail?num=${board.num}&&pageNum=${pageNum+1}">[다음]</a>
+									</c:if></td>
+							
+							
+							<%--
 								<td colspan="6" class="w3-center"><c:if
 										test="${pageNum > 1}">
 										<a href="javascript:detail('${pageNum -1}')">[이전]</a>
@@ -168,6 +184,8 @@ a {
 									</c:forEach> <c:if test="${pageNum < maxpage}">
 										<a href="javascript:detail('${pageNum +1}')">[다음]</a>
 									</c:if> <c:if test="${pageNum >= maxpage}">[다음]</c:if></td>
+									 --%>
+									
 							</tr>
 						</c:if>
 						<c:if test="${commcount ==  0}">

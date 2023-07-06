@@ -49,8 +49,8 @@ public interface UserMapper {
 	List<User> emailList(String email);
 
 	@Select({"<script>",
-				"select count(*) from user ",
-				"<if test='type != null'> where ${type} like '%${searchcontent}%'</if>",
+				"select count(*) from user where delYn ='N' ",
+				"<if test='type != null'> and ${type} like '%${searchcontent}%'</if>",
 				"</script>"})
 	int usercount(Map<String, Object> param);
 

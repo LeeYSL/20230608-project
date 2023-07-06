@@ -165,7 +165,7 @@ public class AdminController {
 	@PostMapping("restaurantlist")
 	public ModelAndView restaurantlist(Restaurant restaurant, String delYn, int num) {
 		ModelAndView mav = new ModelAndView();
-
+		
 		service.deleteRest(delYn, num);
 		System.out.println(num);
 
@@ -175,6 +175,7 @@ public class AdminController {
 		return mav;
 
 	}
+/*	
 	@RequestMapping("maileForm")
 	public ModelAndView mailForm(String[] idchks, HttpSession session) {
 		ModelAndView mav = new ModelAndView("admin/mail");
@@ -296,4 +297,5 @@ public class AdminController {
 		}
 		
 	}
+	*/
 }

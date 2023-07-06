@@ -55,11 +55,14 @@ a {text-decoration: none;}
     		<c:if test="${empty sessionScope.loginUser}">    			
     			<a href="/project/user/login"  class="w3-right">Login</a>
 			</c:if>
-			<c:if test="${!empty sessionScope.loginUser}">
+			<c:if test="${!empty sessionScope.loginUser && sessionScope.loginUser.batch != 1}">
 				<a href="/project/user/logout"  class="w3-right">Logout</a>
-				 
 				<a href="/project/user/mypage?userId=${sessionScope.loginUser.userId}" class="w3-right">${sessionScope.loginUser.nickname}님</a>
-			</c:if>	
+			</c:if>
+			<c:if test="${sessionScope.loginUser.batch == 1}">
+				<a href="/project/user/logout"  class="w3-right">Logout</a>
+				<a href="/project/admin/list" class="w3-right">${sessionScope.loginUser.nickname}님</a>
+			</c:if>		
 		</div>
   	</div>
 </div>
