@@ -69,8 +69,10 @@ public class RestaurantController {
 				menu.setRestNum(num); // restNum 세팅해줌.
 				service.menuInsert(menu); // 메뉴 개수만큼 insert해줌.
 			}
+			
 			mav.addObject("restaurant", restaurant);
 
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 
@@ -173,7 +175,7 @@ public class RestaurantController {
 		Restaurant restInfo = service.restInfo(num);
 		List<Menu> memuList = service.menuList(num);
 		Dayoff dayoff = service.dayoffList(num);
-		Integer pointNum = service.PointAvg(num);
+		double pointNum = service.PointAvg(num);
 
 		restaurant.setRestNum(num);
 

@@ -72,7 +72,7 @@
 					<div class="page">
 						<header class="l_member_header">
 							<h1 class="tit">
-								<span>예약 목록</span>
+								<span>내 가게 예약 목록</span>
 							</h1>
 						</header>
 					</div>

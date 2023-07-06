@@ -105,7 +105,7 @@
 											class="w3-btn w3-white w3-border w3-border-orange w3-round-xlarge"
 											onclick="update(this)">√Îº“</button>
 									</c:if>
-								<td name="${rsrvt.num}">
+								<td name="${rsrvt.num}" style="text-align:center;">
 									<c:if test="${rsrvt.confirm == 4 && rsrvt.point == '0'}">
 										<button type="button" name="${rsrvt.num}"
 											class="w3-btn w3-white w3-border w3-border-orange w3-round-xlarge"

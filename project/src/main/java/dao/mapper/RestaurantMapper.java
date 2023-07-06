@@ -96,8 +96,8 @@ public interface RestaurantMapper {
 	@Delete("delete from menu where rest_num=#{num}")
 	void deleteMenu(int num);
 
-	@Select("select ifnull(avg(POINT),0) from reservation where rest_num=#{num}")
-	Integer pointAvg(@Param("num") int num);
+	@Select("select round(ifnull(avg(POINT),0),1) from reservation where rest_num=#{num}")
+	double pointAvg(@Param("num") int num);
 
 //	@Select("select * from restaurant where user_id=#{userId} and delYn IS NULL ")
 //	List<Restaurant> MyRest(String userId, String delYn);

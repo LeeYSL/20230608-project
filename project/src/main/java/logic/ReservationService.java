@@ -153,7 +153,7 @@ public class ReservationService {
 		
 	}
 
-	public Integer PointAvg(int num) {
+	public double PointAvg(int num) {
 	   return restaurantDao.pointAvg(num);
 	}
 	
