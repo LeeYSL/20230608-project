@@ -26,7 +26,7 @@ public interface ReservationMapper {
 			" SELECT LEFT(A.rsrvt_date,8) AS rsrvt_date, RIGHT(A.rsrvt_date,2) AS rsrvt_time, A.num, A.rsrvt_name,A.rest_num,A.phone_no,A.people,A.point,B.name,B.delYn, ",
 			" case when A.rsrvt_date  <![CDATA[ < ]]> to_char(NOW(),'YYYYMMDDHH') then '4' ELSE A.confirm END confirm",
 			" FROM reservation A ", " JOIN restaurant B ", " ON A.rest_num = B.rest_num ",
-			" WHERE A.user_id =#{userId} and B.delYn IS NULL ", " ORDER BY reg_date",
+			" WHERE A.user_id =#{userId} and B.delYn IS NULL ", " ORDER BY rsrvt_date desc",
 			" <if test='limit != null'> limit #{pageNum}, #{limit} </if> ", " </script>" })
 	List<Reservation> myListSelect(Map<String, Object> param);
 
@@ -54,7 +54,7 @@ public interface ReservationMapper {
 			"	  A.phone_no,A.people,B.rest_num, B.name, B.delYn,",
 			" case when A.rsrvt_date  <![CDATA[ < ]]> to_char(NOW(),'YYYYMMDDHH') then '4' ELSE A.confirm END confirm",
 			"	  FROM reservation A ", "	  JOIN restaurant B ", "	  ON A.rest_num = B.rest_num ",
-			"	  WHERE B.user_id = #{userId} and A.rest_num=#{num} and B.delYn IS NULL", "	  ORDER BY reg_date",
+			"	  WHERE B.user_id = #{userId} and A.rest_num=#{num} and B.delYn IS NULL", "	  ORDER BY A.num",
 			"    <if test='limit != null'> limit #{pageNum}, #{limit} </if> ", "    </script>" })
 	List<Reservation> ownerListSelect(Map<String, Object> param);
 

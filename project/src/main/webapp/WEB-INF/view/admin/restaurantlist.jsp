@@ -18,8 +18,11 @@
 	function deleteRest(btn) {
 		if (confirm('삭제 시 가게를 복구할 수 없습니다. 삭제 하시겠습니까?')) {
 
-			let num = parseInt($("#restchks").attr('value'))
+		//	let num = $(btn).children().children().parseInt(
+			//		$("#restchks").attr('value'))
 			//	parseInt($(btn).attr('id'))
+			
+			let num = $(btn).attr('name');
 
 			$.ajax({
 				type : 'POST',
@@ -111,7 +114,6 @@ a {
 						<th><input type="checkbox" name="allchk"
 							onchange="allchkbox(this)"></th>
 					</tr>
-
 					<c:forEach var="rest" items="${restList}">
 						<input type="hidden" ${rest.delYn}>
 						<input type="hidden" ${rest.restNum}>
@@ -128,6 +130,7 @@ a {
 								href="../restaurant/restaurantInfo?num=${rest.restNum}">${rest.licenseNum}</a></td>
 							<td><input type="checkbox" name="restchks" id="restchks"
 								value="${rest.restNum}"></td>
+								<td><button></button></td>
 						</tr>
 					</c:forEach>
 					<tr>
@@ -147,9 +150,10 @@ a {
 
 			</div>
 			<div>
-				<br> <input type="button"
+				<br> 
+				<button type="button"  name="${rest.restNum}"
 					class="w3-button w3-white w3-border w3-border-orange w3-round-large w3-right"
-					value="가게 삭제" onclick="deleteRest(this)">
+					onclick="deleteRest(this)">삭제</button>
 			</div>
 		</div>
 	</div>

@@ -67,6 +67,7 @@ public class ReservationController {
 			mav.getModel().putAll(bresult.getModel());
 			bresult.reject("error.input.reservation");
 			bresult.reject("error.input.check");
+			mav.setViewName("redirect:reservationadd?num=" + reservation.getRestNum());
 			return mav;
 		}
 
@@ -298,10 +299,10 @@ public class ReservationController {
 		String space = " ";
 		String newLine = "\n";
 		String method = "POST";
-		String url = "/sms/v2/services/ncp:sms:kr:311072611756:lys/messages";
+		String url = "/sms/v2/services/ncp:sms:kr:311114760630:lys/messages";
 		String timestamp = time.toString();
-		String accessKey = "OsxUlMxn78m4DMcprwak";
-		String secretKey = "hVfQpMFimfHas7hQsxLuGLy3fPwQDZ9Ez5kYeG4E";
+		String accessKey = "yArE3iulwxdhQaag9GZ5";
+		String secretKey = "OX1ahujA87mBJbIFJYX9CprRsMjPDkHr2ScGSaz7";
 
 		String message = new StringBuilder() // StringBuilder : 위 내용들을 하나의 문자열로 합치겠다.
 				.append(method).append(space).append(url).append(newLine).append(timestamp).append(newLine)
@@ -324,14 +325,14 @@ public class ReservationController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.set("x-ncp-apigw-timestamp", time.toString());
-		headers.set("x-ncp-iam-access-key", "OsxUlMxn78m4DMcprwak");
+		headers.set("x-ncp-iam-access-key", "yArE3iulwxdhQaag9GZ5");
 		headers.set("x-ncp-apigw-signature-v2", makeSignature(time));
 
 		List<MessageDao> messages = new ArrayList<>();
 		messages.add(messageDao);
 
 		SmsRequestDao request = SmsRequestDao.builder().type("SMS").contentType("COMM").countryCode("82")
-				.from("01022308370").content(messageDao.getContent()).messages(messages).build();
+				.from("01033252804").content(messageDao.getContent()).messages(messages).build();
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		String body = objectMapper.writeValueAsString(request);
@@ -340,7 +341,7 @@ public class ReservationController {
 		RestTemplate restTemplate = new RestTemplate();
 		restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
 		SmsResponseDao response = restTemplate.postForObject(
-				new URI("https://sens.apigw.ntruss.com/sms/v2/services/" + "ncp:sms:kr:311072611756:lys" + "/messages"),
+				new URI("https://sens.apigw.ntruss.com/sms/v2/services/" + "ncp:sms:kr:311114760630:lys" + "/messages"),
 				httpBody, SmsResponseDao.class);
 
 		return response;

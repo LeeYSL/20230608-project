@@ -45,32 +45,63 @@
 			}
 		});
 	})
+	$(function() {
+
+		$('.starRev span').click(function() {
+			$(this).parent().children('span').removeClass('on');
+			$(this).addClass('on').prevAll('span').addClass('on');
+			return false;
+		});
+	});
 </script>
 <style type="text/css">
 th {
-	width:20%;
+	width: 20%;
+}
+
+.starR {
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	color: transparent;
+	text-shadow: 0 0 0 #f0f0f0;
+	font-size: 1.8em;
+	box-sizing: border-box;
+	cursor: pointer;
+}
+
+/* 별 이모지에 마우스 오버 시 */
+.starR:hover {
+	text-shadow: 0 0 0 #ccc;
+}
+
+/* 별 이모지를 클릭 후 class="on"이 되었을 경우 */
+.starR.on {
+	text-shadow: 0 0 0 #ffbc00;
 }
 </style>
 </head>
 <body>
 
 	<div class="w3-container w3-padding-32 w3-center">
-		<div
-			style="display: block; margin: auto; width: 1100px;">
+		<div style="display: block; margin: auto; width: 1100px;">
 			<div class="w3-padding-32">
 				<div class="side">
 					<div class="page">
-					<br>
+						<br>
 						<c:if test="${restInfo.fileurl != null}">
-							<img class="w3-border w3-padding" width="400" height="200" src="file/${restInfo.fileurl}">
-						</c:if> <c:if test="${restInfo.fileurl == null}">
-							<img class="w3-border w3-padding" width="400" height="200" src="${path}\image\Zxc.jpg">
+							<img class="w3-border w3-padding" width="400" height="200"
+								src="file/${restInfo.fileurl}">
+						</c:if>
+						<c:if test="${restInfo.fileurl == null}">
+							<img class="w3-border w3-padding" width="400" height="200"
+								src="${path}\image\basic.png">
 						</c:if>
 						<header class="l_member_header">
 							<h1 class="tit">
 								<span>${restInfo.name}</span>
 							</h1>
-							평균 별점 : ${pointNum} 점
+							<span class="starR=on">⭐</span>  ${pointNum} 점
 						</header>
 					</div>
 					<br>
@@ -79,7 +110,7 @@ th {
 							<th>식당 위치</th>
 							<td>
 								<p id="address">${restInfo.address}</p>
-								<div id="map" style="width: 100%; height: 300px;"></div>
+								<div a id="map" style="width: 100%; height: 300px; z-index:0;"></div>
 							</td>
 						</tr>
 						<tr>
@@ -88,27 +119,33 @@ th {
 						</tr>
 						<tr>
 							<th>open</th>
-							<td>${restInfo.open} : 00</td>
+							<td>${restInfo.open}:00</td>
 						</tr>
 						<tr>
 							<th>close</th>
-							<td>${restInfo.close} : 00</td>
+							<td>${restInfo.close}:00</td>
 						</tr>
 						<tr>
 							<th>휴무일</th>
-							<td ><input type="checkbox" id="mon" class="w3-check"
+							<td><input type="checkbox" id="mon" class="w3-check"
 								<c:if test="${dayoff.mon eq 'Y'}">checked</c:if>
-								onclick="return false;" />월요일 <input type="checkbox" id="tue" class="w3-check"
-								<c:if test="${dayoff.tue eq 'Y'}">checked</c:if> 
-								onclick="return false;" />화요일 <input type="checkbox" id="wed" class="w3-check"
+								onclick="return false;" />월요일 <input type="checkbox" id="tue"
+								class="w3-check"
+								<c:if test="${dayoff.tue eq 'Y'}">checked</c:if>
+								onclick="return false;" />화요일 <input type="checkbox" id="wed"
+								class="w3-check"
 								<c:if test="${dayoff.wed eq 'Y'}">checked</c:if>
-								onclick="return false;" />수요일 <input type="checkbox" id="thur" class="w3-check"
+								onclick="return false;" />수요일 <input type="checkbox" id="thur"
+								class="w3-check"
 								<c:if test="${dayoff.thur eq 'Y'}">checked</c:if>
-								onclick="return false;" />목요일 <input type="checkbox" id="fri" class="w3-check"
+								onclick="return false;" />목요일 <input type="checkbox" id="fri"
+								class="w3-check"
 								<c:if test="${dayoff.fri eq 'Y'}">checked</c:if>
-								onclick="return false;" />금요일 <input type="checkbox" id="sat" class="w3-check"
+								onclick="return false;" />금요일 <input type="checkbox" id="sat"
+								class="w3-check"
 								<c:if test="${dayoff.sat eq 'Y'}">checked</c:if>
-								onclick="return false;" />토요일 <input type="checkbox" id="sun" class="w3-check"
+								onclick="return false;" />토요일 <input type="checkbox" id="sun"
+								class="w3-check"
 								<c:if test="${dayoff.sun eq 'Y'}">checked</c:if>
 								onclick="return false;" />일요일</td>
 						</tr>
@@ -119,33 +156,36 @@ th {
 							<td colspan="3" style="text-align: center;">메뉴</td>
 						</tr>
 						<tr>
-							<th style="text-align: center; vertical-align:middle; width: 180;">메뉴 이름</th>
-							<th style="text-align: center; vertical-align:middle; width: 100;">가격</th>
+							<th
+								style="text-align: center; vertical-align: middle; width: 180;">메뉴
+								이름</th>
+							<th
+								style="text-align: center; vertical-align: middle; width: 100;">가격</th>
 						</tr>
 						<tbody>
 							<c:forEach items="${memuList}" var="menu" varStatus="status">
 								<tr name="menuTr">
-									<td style="text-align: center;"><input name="menuList[${status.index}].menuName"
-										 class="w3-input" placeholder="메뉴 이름"
-										value="${menu.menuName}" /></td>
-									<td style="text-align: center;"><input name="menuList[${status.index}].price"
-										 placeholder="가격" class="w3-input" value="${menu.price} 원" /></td>
+									<td style="text-align: center;"><input
+										name="menuList[${status.index}].menuName" class="w3-input"
+										placeholder="메뉴 이름" value="${menu.menuName}" readonly="readonly" /></td>
+									<td style="text-align: center;"><input
+										name="menuList[${status.index}].price" placeholder="가격"
+										class="w3-input" value="${menu.price} 원"  readonly="readonly"/></td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
 					<br>
 					<c:if test="${!empty sessionScope.loginUser }">
-							<button type="button"
-								onclick="location.href='/project/reservation/reservationadd?num=${restInfo.restNum}'"
-								class="w3-btn w3-white w3-border w3-border-orange w3-round-xlarge">예약
-							</button>
+						<button type="button"
+							onclick="location.href='/project/reservation/reservationadd?num=${restInfo.restNum}'"
+							class="w3-btn w3-white w3-border w3-border-orange w3-round-xlarge">예약
+						</button>
 					</c:if>
-					<input type="hidden" ${menu.restNum}> 
-					<input type="hidden" ${restInfo.restNum}> 
-					<input type="hidden" ${dayoff}>
-					<input type="hidden" ${memuList}> 
-					<input type="hidden" ${restInfo}>
+					<input type="hidden" ${menu.restNum}> <input type="hidden"
+						${restInfo.restNum}> <input type="hidden" ${dayoff}>
+					<input type="hidden" ${memuList}> <input type="hidden"
+						${restInfo}>
 				</div>
 			</div>
 		</div>

@@ -39,8 +39,10 @@ th {
 							</tr>
 							<tr>
 								<th>가게 전화번호</th>
-								<td align="center"><form:input path="restPhoneNo" class="w3-input"
-										value="${rsrvt.restPhoneNo}" disabled="true" /></td>
+								<td align="center">
+									<form:input path="restPhoneNo" class="w3-input"
+										value="${rsrvt.restPhoneNo}" disabled="true" />
+								</td>
 							</tr>
 							<tr>
 								<th>예약자 이름</th>

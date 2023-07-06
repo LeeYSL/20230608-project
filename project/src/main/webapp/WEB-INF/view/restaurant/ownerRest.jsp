@@ -37,7 +37,8 @@ th {
 						'delYn' : 'Y'
 					},
 					success : function(result) {
-						console.log("success");
+						alert('삭제되었습니다.');
+						location.reload();
 					},
 					complete : function(result) {
 						console.log("complete");
@@ -60,12 +61,21 @@ th {
 							<h2 class="tit">
 								<span>가게 관리</span>
 							</h2>
+
 						</header>
 					</div>
 					<form action="ownerRest" method="post" name="owrestList">
+						<div class="w3-right" style="padding: 0 0 12 0;">
+							<a href="${path}/restaurant/restaurantadd"> <input
+								type="button" size="15"
+								class="w3-btn w3-white w3-border w3-border-orange w3-round-xlarge"
+								value="가게 등록">
+							</a>
+						</div>
+						
 						<table class="w3-table-all">
 							<tr>
-								<th width="150" >식당 이름</th>
+								<th width="150">식당 이름</th>
 								<th>식당 위치</th>
 								<th width="150">식당 전화번호</th>
 								<th colspan="10"></th>
@@ -93,10 +103,9 @@ th {
 								</tr>
 							</c:forEach>
 						</table>
-						<input type="hidden" ${orsrvt.restNum}>
-						<input type="hidden" ${orsrvt.userId}>
-						<input type="hidden" ${orsrvt.delYn}>
-						<input type="hidden" ${orsrvt.restNum}>
+						<input type="hidden" ${orsrvt.restNum}> <input
+							type="hidden" ${orsrvt.userId}> <input type="hidden"
+							${orsrvt.delYn}> <input type="hidden" ${orsrvt.restNum}>
 					</form>
 				</div>
 			</div>

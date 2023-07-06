@@ -78,9 +78,9 @@
 					</div>
 						<table class="w3-table-all">
 							<tr>
-								<th style="text-align: center;">예약 번호</th>
-								<th style="text-align: center;">가게 이름</th>
-								<th style="text-align: center;">예약자 성함</th>
+						<!-- 	<th style="text-align: center;">예약 번호</th>  -->	
+								<th style="text-align: center: ;">가게 이름</th>
+								<th style="text-align: left: ;">예약자 성함</th>
 								<th style="text-align: center;">예약자 전화번호</th>
 								<th style="text-align: center;">예약 날짜</th>
 								<th style="text-align: center;">예약 시간</th>
@@ -92,13 +92,15 @@
 							<c:forEach items="${rsrvtList}" var="rsrvt">
 								<!--reservation 객체를 만들어서 rstvt라는 이름에 넣고 필요한 요소들을 뽑아온다.  -->
 								<tr>
-									<td align="center" style=" vertical-align:middle;">${rsrvt.num}</td>
-									<td name="restName" style=" vertical-align:middle;">${rsrvt.name}</td>
+								<!--  <td align="center" style=" vertical-align:middle;">${rsrvt.num}</td> -->	
+								    <td name="restName" style=" vertical-align:middle;">${rsrvt.name}</td>
 									<td name="rsrvtName" style=" vertical-align:middle;">${rsrvt.rsrvtName}</td>
 									<td name="phoneNo" style="text-align: center; vertical-align:middle;">${rsrvt.phoneNo}</td>
 									<td name="rsrvtDate" style="text-align: center; vertical-align:middle;">${rsrvt.rsrvtDate}</td>
 									<td name="rsrvtTime" style="text-align: center; vertical-align:middle;">${rsrvt.rsrvtTime}</td>
-									<td name="people" style=" vertical-align:middle;">${rsrvt.people}</td>
+									<td name="people" style="text-align: center ; vertical-align:middle;">${rsrvt.people}</td>
+ 								<%-- <td name="people" style=" vertical-align:middle;">${rsrvt.people}</td>  --%>
+									
 									<td><select class="w3-select" name="confirm${rsrvt.num}" style=" vertical-align:middle;">
 											<option value="0"
 												${rsrvt.confirm == '0' ? 'selected="selected"' : '' }>승인
@@ -147,10 +149,10 @@
 							</tr>
 						</table>
 						<input type="hidden" name="pageNum" value="1">
+					   <input type="hidden" ${rsrvt.num}>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 </body>
 </html>

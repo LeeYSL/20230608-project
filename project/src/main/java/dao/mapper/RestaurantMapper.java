@@ -38,10 +38,17 @@ public interface RestaurantMapper {
 
 	@Select({ "<script>",
 			" select rest_num, user_id, license_num, name, address, picture fileurl, maxpeople,open,close, rest_phoneNo  from restaurant ",
-			" where delYn IS NULL ", " <if test='searchcontent != null'>", " <choose>",
+			" where delYn IS NULL ", 
+			" <if test='searchcontent != null'>", 
+			" <choose>",
 			" <when test=\"type.equalsIgnoreCase('menu')\">",
-			"and rest_num IN (select rest_num from menu where menu_name like '%${searchcontent}%')", " </when>",
-			" <otherwise>", "and ${type} like '%${searchcontent}%'", " </otherwise>", " </choose>", "</if>",
+			"and rest_num IN (select rest_num from menu where menu_name like '%${searchcontent}%')", 
+			" </when>",
+			" <otherwise>", 
+			"and ${type} like '%${searchcontent}%'", 
+			" </otherwise>", 
+			" </choose>", 
+			"</if>",
 			" <if test='limit != null'> order by rest_num desc limit #{pageNum}, #{limit} </if>", "</script>" })
 	List<Restaurant> restList(Map<String, Object> param);
 
@@ -49,7 +56,18 @@ public interface RestaurantMapper {
 	List<Restaurant> ownerRest(@Param("userId") String userId, @Param("delYn") String delYn);
 
 	@Select({ "<script>", "select count(*) from restaurant",
-			"<if test='type != null'> where ${type} like '%${searchcontent}%'</if>", "</script>" })
+			" where delYn IS NULL ", 
+			" <if test='searchcontent != null'>", 
+			" <choose>",
+			" <when test=\"type.equalsIgnoreCase('menu')\">",
+			"and rest_num IN (select rest_num from menu where menu_name like '%${searchcontent}%')", 
+			" </when>",
+			" <otherwise>", 
+			"and ${type} like '%${searchcontent}%'", 
+			" </otherwise>", 
+			" </choose>", 
+			"</if>",
+			"</script>" })
 	int restListcount(Map<String, Object> param);
 
 	@Select("select rest_num, user_id, license_num, name, address, picture fileurl, maxpeople,open,close, rest_phoneNo from restaurant where rest_num=#{num}")

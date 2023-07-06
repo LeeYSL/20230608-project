@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import logic.ReservationService;
@@ -80,7 +82,8 @@ public class RestaurantController {
 	}
 
 	@RequestMapping("restaurantList")
-	ModelAndView restList(@RequestParam Map<String, String> param, HttpSession session, String delYn,Restaurant restaurant,Reservation reservation) {
+	ModelAndView restList(@RequestParam Map<String, String> param, HttpSession session, String delYn,
+			Restaurant restaurant, Reservation reservation) {
 		ModelAndView mav = new ModelAndView();
 
 		Integer pageNum = null;
@@ -99,13 +102,13 @@ public class RestaurantController {
 
 		int limit = 10;
 		int restListcount = service.restListcount(type, searchcontent);
-		
-	    int num = restaurant.getRestNum();
-	    
-		//Integer pointNum = service.PointAvg(num);
-		
+
+		int num = restaurant.getRestNum();
+
+		// Integer pointNum = service.PointAvg(num);
+
 		List<Restaurant> restList = service.restList(pageNum, limit, type, searchcontent, delYn);
-		for(Restaurant rest : restList) {
+		for (Restaurant rest : restList) {
 			rest.setPoint(service.PointAvg(rest.getRestNum()));
 		}
 //		for(int i = 0; i < restList.size(); i++) {
@@ -132,7 +135,7 @@ public class RestaurantController {
 		mav.addObject("startpage", startpage);
 		mav.addObject("endpage", endpage);
 		mav.addObject("endpage", endpage);
-		//mav.addObject("pointNum", pointNum);
+		// mav.addObject("pointNum", pointNum);
 
 		return mav;
 	}
@@ -151,17 +154,15 @@ public class RestaurantController {
 	}
 
 	@PostMapping("ownerRest")
-	public ModelAndView ownerRest(Restaurant restaurant, String delYn, int num) {
-		ModelAndView mav = new ModelAndView();
+	@ResponseBody
+	public Map<String,String> ownerRest(Restaurant restaurant, String delYn, int num) {
+		Map<String,String> map = new HashMap<String,String>();
 
 		service.deleteRest(delYn, num);
 		System.out.println(num);
-
-		mav.addObject("deleteRest", num);
-		System.out.println(num);
-
-		return mav;
-
+		map.put("success", "success");
+	
+		return map;
 	}
 
 	@GetMapping("restaurantInfo")
@@ -227,10 +228,12 @@ public class RestaurantController {
 		// 가게정보 업데이트
 		service.restUpdate(restaurant, session);
 
-		// 휴무일 삭제하고 insert
-		service.deleteDayoff(num);
-		restaurant.getDayoff().setRestNum(num);
-		service.dayoffInsert(restaurant.getDayoff());
+		// 휴무일이 있는 경우 삭제하고 insert
+		if(restaurant.getDayoff() != null) {
+			service.deleteDayoff(num);
+			restaurant.getDayoff().setRestNum(num);
+			service.dayoffInsert(restaurant.getDayoff());
+		}
 
 		// 메뉴 삭제하고 insert
 		service.deleteMenu(num);

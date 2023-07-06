@@ -67,7 +67,7 @@
 										<img width="100" height="100" src="file/${rest.fileurl}">
 									</c:if> 
 									<c:if test="${rest.fileurl == null}">
-										<img width="100" height="100" src="${path}\image\Zxc.jpg">
+										<img width="100" height="100" src="${path}\image\basic.png">
 									</c:if>
 								</td>
 								<td align="center">이름 : ${rest.name}</td>
