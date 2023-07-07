@@ -162,7 +162,7 @@ th {
 							</tr>
 						</table>
 						<br>
-							 <input type="submit" class="w3-btn w3-white w3-border w3-border-orange w3-round-xlarge" value="예약 및 예약금 결제" name="add">
+							 <input type="submit" class="w3-btn w3-white w3-border w3-border-orange w3-round-xlarge" value="예약" name="add">
 						<!-- 예약 완료 시 예약 상세 페이지로 이동하기 -->
 <!-- 						<input type="button" class="w3-btn w3-white w3-border w3-border-orange w3-round-xlarge" 
 								name="add" value="예약 및 예약금 결제" onclick="javascript:iamPay()"> -->
