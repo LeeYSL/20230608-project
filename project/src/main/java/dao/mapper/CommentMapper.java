@@ -40,11 +40,11 @@ public interface CommentMapper {
 		"</script>"})	
 	List<Comment> myclist(Map<String, Object> param);
 
-	@Select("select count(*) from comment where num=#{num}")	
+	@Select("select count(*) from comment c left join user u on c.user_id=u.user_id where num=#{num}")	
 	int commcount(Integer num);
 
 	@Select({"<script>",
-		"select num, seq, user_id, date, content from comment",
+		"select num, seq, c.user_id, date, content, nickname from comment c join user u on c.user_id=u.user_id  ",
 		"<if test='num != null'> where num = #{num} </if>",
 		"<if test='limit != null'> order by date desc limit #{startrow}, #{limit} </if>",
 		"</script>"})	

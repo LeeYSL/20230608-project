@@ -126,8 +126,7 @@ public class AdminController {
 
 		int limit = 10;
 		int restListcount = service.restListcount(type, searchcontent);
-		
-	    int num = restaurant.getRestNum();
+	
 	    
 		//Integer pointNum = service.PointAvg(num);
 		

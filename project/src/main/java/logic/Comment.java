@@ -15,4 +15,5 @@ public class Comment {
 	private String userId;
 	private Date date;
 	private String content;	
+	private String nickname;
 }

@@ -303,14 +303,14 @@ public class UserController {
 			user.setUserId(userId);
 			user.setName(jsondetail.get("name").toString());
 			user.setEmail(jsondetail.get("email").toString());
-			user.setPw(pwHash(jsondetail.get("name").toString()));
+			user.setNickname(jsondetail.get("name").toString());
 			user.setChannel("naver");
 			userservice.userInsert(user,session);
 			session.setAttribute("loginUser", user);
-			return "redirect:update?userId="+user.getUserId();
+			return "redirect:../restaurant/restaurantList";
 		}
 		session.setAttribute("loginUser", user);
-		return "redirect:mypage?userId="+user.getUserId();
+		return "redirect:../restaurant/restaurantList";
 	}
 	
 	
@@ -328,7 +328,7 @@ public class UserController {
 		if(pwHash(user.getPw()).equals(dbUser.getPw())) {
 			session.setAttribute("loginUser", dbUser);
 			System.out.println("loginuser : " +session.getAttribute("loginUser"));
-			mav.setViewName("redirect:userinfo?userId="+user.getUserId());
+			mav.setViewName("redirect:../restaurant/restaurantList");
 		} else {
 			throw new LoginException("회원정보가 없습니다.", "login");
 		}
@@ -415,6 +415,7 @@ public class UserController {
 			return mav;
 		}		
 		User loginUser = (User)session.getAttribute("loginUser");
+		
 		System.out.println("1.loginUser.getPw=========="+loginUser.getPw());
 		System.out.println("2.pwHash(user.getPw())======"+pwHash(user.getPw()));
 		System.out.println("3.userId"+userId);

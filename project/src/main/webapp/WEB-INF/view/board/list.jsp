@@ -58,7 +58,7 @@ a {
 									<select name="type" class="w3-input">
 										<option value="">전체</option>
 										<option value="title">제목</option>
-										<option value="user_id">작성자</option>
+										<option value="nickname">작성자</option>
 										<option value="content">글내용</option>
 									</select>
 								</div>
@@ -82,26 +82,48 @@ a {
 				<div>
 					<table class="w3-table-all">
 						<tr height="10%">
-							<th width="10%"></th>
-							<th width="55%">제목</th>
-							<th width="15%">작성자</th>
-							<th width="10%">작성일</th>
-							<th width="10%">조회수</th>
+							<th width="10%"  class="w3-center">글번호</th>
+							<th width="55%"  class="w3-center">제목</th>
+							<th width="15%"  class="w3-center">작성자</th>
+							<th width="10%"  class="w3-center">작성일</th>
+							<th width="10%"  class="w3-center">조회수</th>
 						</tr>
 
 						<c:forEach var="board" items="${boardlist}">
 							<tr height="10%">
-								<td>${boardno}</td>
+								<td  class="w3-center">${boardno}</td>
 									<c:set var="boardno" value="${boardno-1}" />
 								<td>
 								
+									<c:if test="${board.secret!=null && !board.secret.trim().equals('')}"><%--비밀글일때 --%>
+										<c:choose>										
+											<c:when test="${board.userId==sessionScope.loginUser.userId || sessionScope.loginUser.batch == 1 }"> <%--운영자이거나, 작성자일때 --%>
+												<c:if test="${! empty board.fileurl}">
+													<a href="file/${board.fileurl}">@</a>
+												</c:if>										
+											</c:when>
+											<c:otherwise>												
+											</c:otherwise>
+										</c:choose>
+									</c:if>
+									
+									<c:if test="${board.secret ==null || board.secret.trim().equals('')}"><%--비밀글 아닐때 --%>
+												<c:if test="${! empty board.fileurl}">
+													<a href="file/${board.fileurl}">@</a>
+												</c:if>										
+										
+									</c:if>																		
+								
+								
+								
+							<%-- 	
 								
 									<c:if test="${! empty board.fileurl}">
 										<a href="file/${board.fileurl}">@</a>
 									</c:if>	
 									
-										
-									<c:if test="${! empty board.fileurl}">&nbsp;&nbsp;&nbsp;</c:if>
+								
+									<c:if test="${! empty board.fileurl}">&nbsp;&nbsp;&nbsp;</c:if>	--%>	
 									<c:forEach begin="1" end="${board.grpLevel}">&nbsp;&nbsp;&nbsp;&nbsp;</c:forEach>
 									<c:if test="${board.grpLevel > 0}">┖</c:if>															
 									<c:if test="${board.secret==null || board.secret.trim().equals('')}"><%--비밀글아닐때 --%>
@@ -125,9 +147,9 @@ a {
 	
 								
 								</td>
-								<td>${board.userId}</td>
+								<td  class="w3-center">${board.nickname}</td>
 								
-								<td>
+								<td  class="w3-center">
 									<fmt:formatDate value="${board.regDate}" pattern="yyyyMMdd" var="rdate" />
 										<c:if test="${today == rdate}">
 											<fmt:formatDate value="${board.regDate}" pattern="HH:mm:ss" />
@@ -136,7 +158,7 @@ a {
 											<fmt:formatDate value="${board.regDate}" pattern="yyyy-MM-dd" />
 										</c:if>
 								</td>
-								<td>${board.readCnt}</td>
+								<td class="w3-center">${board.readCnt}</td>
 							</tr>
 						</c:forEach>
 						<tr>
