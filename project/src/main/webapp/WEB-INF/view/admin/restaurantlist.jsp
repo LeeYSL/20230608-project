@@ -22,7 +22,7 @@
 			//		$("#restchks").attr('value'))
 			//	parseInt($(btn).attr('id'))
 			
-			let num = $(btn).attr('name');
+			let num = $("#restchks").attr('value');
 
 			$.ajax({
 				type : 'POST',
@@ -128,9 +128,9 @@ a {
 
 							<td><a
 								href="../restaurant/restaurantInfo?num=${rest.restNum}">${rest.licenseNum}</a></td>
-							<td><input type="checkbox" name="restchks" id="restchks"
+							<td><input type="checkbox" name="restchks" id="restchks" class="restchks"
 								value="${rest.restNum}"></td>
-								<td><button></button></td>
+							
 						</tr>
 					</c:forEach>
 					<tr>
@@ -152,7 +152,7 @@ a {
 			<div>
 				<br> 
 				<button type="button"  name="${rest.restNum}"
-					class="w3-button w3-white w3-border w3-border-orange w3-round-large w3-right"
+					class="w3-button w3-white w3-border w3-border-orange w3-round-large w3-right btn"
 					onclick="deleteRest(this)">삭제</button>
 			</div>
 		</div>
