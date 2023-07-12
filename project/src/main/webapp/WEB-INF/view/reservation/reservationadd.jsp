@@ -149,7 +149,7 @@ th {
 										<form:errors path="rsrvtDate" />
 								</font></td>
 							</tr>
-							<tr>
+							<tr>  
 								<th>예약 시간</th>
 								<td><form:select id="rsrvtTime" path="rsrvtTime" class="w3-select">
 										<option value="">예약 시간</option>
