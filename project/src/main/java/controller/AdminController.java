@@ -1,44 +1,33 @@
 package controller;
 
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Date;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
+import java.util.Random;
 
-import javax.mail.Authenticator;
-import javax.mail.BodyPart;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import exception.LoginException;
-import logic.Mail;
-import logic.Reservation;
 import logic.ReservationService;
 import logic.Restaurant;
 import logic.User;
 import logic.UserService;
+import util.CipherUtil;
 
 
 @Controller
@@ -48,7 +37,10 @@ public class AdminController {
 	private UserService userservice;
 	@Autowired
 	private ReservationService service;
-
+	@Autowired
+	private CipherUtil util;
+	@Autowired
+	private JavaMailSender mailSender;
 	
 	@RequestMapping("*")
 	public ModelAndView list() {
@@ -57,7 +49,7 @@ public class AdminController {
 		return mav;
 	}
 	@RequestMapping("list")
-	public ModelAndView list (@RequestParam Map<String,String> param,HttpSession session) {
+	public ModelAndView idCheckList (@RequestParam Map<String,String> param,HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		Integer pageNum = null;
 		if(param.get("pageNum") != null)
@@ -91,6 +83,158 @@ public class AdminController {
 		mav.addObject("boardno", boardno);
 		return mav;
 	}
+	
+	
+	@RequestMapping("adminlist")
+	public ModelAndView idCheckAdminlist (@RequestParam Map<String,String> param,HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		Integer pageNum = null;
+		if(param.get("pageNum") != null)
+			pageNum = Integer.parseInt(param.get("pageNum"));
+		String type = param.get("type");
+		String searchcontent = param.get("searchcontent");
+		
+		if(pageNum == null || pageNum.toString().equals("")) {
+			pageNum = 1;
+		}
+		if(type == null || type.trim().equals("") ||searchcontent == null|| searchcontent.trim().equals("")) {
+			type = null;
+			searchcontent = null;
+		}
+		int limit = 10;
+		int listcount = userservice.admincount(type,searchcontent);
+		int maxpage = (int)((double)listcount/limit +0.95);
+		int startpage = (int)((pageNum/10.0+0.9)-1)*10 +1;
+		int endpage = startpage +9;
+		if(endpage > maxpage) {
+			endpage = maxpage;
+		}
+		int boardno = listcount - (pageNum-1) *limit;	
+		List<User> adminlist = userservice.adminlist(limit,pageNum,type,searchcontent);  
+		mav.addObject("adminlist",adminlist);
+		mav.addObject("pageNum",pageNum);
+		mav.addObject("maxpage",maxpage);
+		mav.addObject("startpage", startpage);
+		mav.addObject("endpage",endpage);
+		mav.addObject("listcount",listcount);
+		mav.addObject("boardno", boardno);
+		return mav;
+	}
+	
+	
+	
+	// mailSending 코드
+	@RequestMapping("mailSender.do")
+	@ResponseBody
+	public String mailSending(String email) {
+
+		//뷰에서 넘어왔는지 확인
+		System.out.println("이메일 전송");		
+		//난수 생성(인증번호)
+		Random r = new Random();
+		int num = r.nextInt(888888) + 111111;  //111111 ~ 999999
+		System.out.println("인증번호:" + num);
+		
+		/* 이메일 보내기 */
+        String setFrom = "g2ve_jeong@naver.com"; //보내는 이메일
+        String toMail = email; //받는 사람 이메일
+        String title = "회원가입 인증 이메일 입니다.";
+        String content = 
+                "밥티켓 홈페이지를 방문해주셔서 감사합니다." +
+                "<br><br>" + 
+                "인증 번호는 " + num + "입니다." + 
+                "<br>" + 
+                "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+        
+        try {
+            
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+            helper.setFrom(setFrom);
+            helper.setTo(toMail);
+            helper.setSubject(title);
+            helper.setText(content,true);
+            mailSender.send(message);
+            
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        String rnum = Integer.toString(num);  //view로 다시 반환할 때 String만 가능
+        
+        return rnum;
+ 
+		
+	}
+	
+	@PostMapping("add")
+	public ModelAndView add(@Valid User user, BindingResult bresult,  HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		
+		if(bresult.hasErrors()) {
+			mav.getModel().putAll(bresult.getModel());
+			//reject 메서드 : global error에 추가
+			return mav;
+		}
+		User dbId = userservice.selectOne(user.getUserId());
+		User dbEmail = userservice.selectOneEmail(user.getEmail());
+		User dbTel = userservice.selectOneTel(user.getTel());
+		User dbNickname = userservice.selectOneNickname(user.getNickname());
+		
+		try {
+			if(dbId != null) {
+				mav.getModel().putAll(bresult.getModel());
+				bresult.reject("error.duplicate.user");
+				return mav;
+			}
+			if(dbEmail != null) {
+				mav.getModel().putAll(bresult.getModel());
+				bresult.reject("error.duplicate.email"); 
+				return mav;
+			}
+			if(dbTel != null) {
+				mav.getModel().putAll(bresult.getModel());
+				bresult.reject("error.duplicate.tel"); 
+				return mav;
+			}
+			if(dbNickname != null) {
+				mav.getModel().putAll(bresult.getModel());
+				bresult.reject("error.duplicate.nickname"); 
+				return mav;
+			}
+			if(!user.getPw().equals(user.getPw1())) {
+				mav.getModel().putAll(bresult.getModel());
+				bresult.reject("error.pw.check"); 
+				user.setPw(null);
+				user.setPw1(null);
+				return mav;
+			}
+
+			user.setPw(pwHash(user.getPw()));
+			mav.addObject("user",user);
+			userservice.userInsert(user,session);
+			mav.setViewName("redirect:adminlist");
+			return mav;
+		}catch(DataIntegrityViolationException e) {
+	//DataIntegrityViolationException : db에서 중복 key 오류시 발생되는 예외 객체
+			e.printStackTrace();
+			bresult.reject("error.pw.check"); //global 오류 등록
+			mav.getModel().putAll(bresult.getModel());
+			return mav;
+		}
+
+		
+	}
+	private String pwHash(String pw) {
+		try {
+			return util.makehash(pw, "SHA-512");
+		} catch(NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}   
+	
+	
 	/*
 	@PostMapping("list")
 	public ModelAndView list(User user, String delYn, String userId) {
@@ -107,6 +251,75 @@ public class AdminController {
 	}
 	*/
 	@RequestMapping("restaurantlist")
+	public ModelAndView idCheckRestaurantlist (@RequestParam Map<String,String> param,HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		Integer pageNum = null;
+		if(param.get("pageNum") != null)
+			pageNum = Integer.parseInt(param.get("pageNum"));
+		String type = param.get("type");
+		String searchcontent = param.get("searchcontent");
+		
+		if(pageNum == null || pageNum.toString().equals("")) {
+			pageNum = 1;
+		}
+		if(type == null || type.trim().equals("") ||searchcontent == null|| searchcontent.trim().equals("")) {
+			type = null;
+			searchcontent = null;
+		} 
+		int limit = 10;
+		int listcount = userservice.restcount(type,searchcontent);
+		int maxpage = (int)((double)listcount/limit +0.95);
+		int startpage = (int)((pageNum/10.0+0.9)-1)*10 +1;
+		int endpage = startpage +9;
+		if(endpage > maxpage) {
+			endpage = maxpage;
+		}
+		int boardno = listcount - (pageNum-1) *limit;	
+		List<Restaurant> restlist = userservice.restaurantlist(limit,pageNum,type,searchcontent);  
+		mav.addObject("restlist",restlist);   
+		mav.addObject("pageNum",pageNum);
+		mav.addObject("maxpage",maxpage);
+		mav.addObject("startpage", startpage);
+		mav.addObject("endpage",endpage);
+		mav.addObject("listcount",listcount);
+		mav.addObject("boardno", boardno);
+		return mav;
+	}	
+	@RequestMapping("userdelete")
+	public ModelAndView userdelete(String userId, HttpSession session) {
+		ModelAndView mav = new ModelAndView("admin/list");
+		System.out.println(userId);
+				userservice.delete(userId);
+				mav.setViewName("redirect:list");
+				return mav;
+			
+	}
+	@RequestMapping("restdelete")
+	public ModelAndView restdelete(String restNum, HttpSession session) {
+		ModelAndView mav = new ModelAndView("admin/restaurantlist");
+		System.out.println(restNum);
+				userservice.restdelete(restNum);
+				mav.setViewName("redirect:restaurantlist");
+				return mav;
+			
+	}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+/*
 	ModelAndView restist(@RequestParam Map<String, String> param, HttpSession session, String delYn,Restaurant restaurant,Reservation reservation) {
 		ModelAndView mav = new ModelAndView();
 
@@ -160,7 +373,9 @@ public class AdminController {
 		//mav.addObject("pointNum", pointNum);
 
 		return mav;
-	}	
+*/
+	
+/*
 	@PostMapping("restaurantlist")
 	public ModelAndView restaurantlist(Restaurant restaurant, String delYn, int num) {
 		ModelAndView mav = new ModelAndView();
@@ -172,8 +387,8 @@ public class AdminController {
 		System.out.println(num);
 
 		return mav;
-
 	}
+	 */
 /*	
 	@RequestMapping("maileForm")
 	public ModelAndView mailForm(String[] idchks, HttpSession session) {

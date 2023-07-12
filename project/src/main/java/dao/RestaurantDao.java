@@ -107,4 +107,28 @@ public class RestaurantDao {
 //		return template.getMapper(cls).MyRest(userId, delYn);
 	}
 
+	public int restcount(String type, String searchcontent) {
+		param.clear();
+		param.put("type", type);
+		param.put("searchcontent", searchcontent);
+		return template.getMapper(cls).restcount(param);
+	}
+
+
+	public List<Restaurant> restaurantlist(int limit, Integer pageNum, String type, String searchcontent) {
+		param.clear();
+		param.put("limit", limit);
+		param.put("startrow",(pageNum-1)*limit);
+		param.put("type",type);
+		param.put("searchcontent", searchcontent);
+		return template.getMapper(cls).restaurantlist(param);
+	}
+
+	public void restdelete(String restNum) {
+		template.getMapper(cls).restdelete(restNum);
+		
+	}
+
+
+
 }

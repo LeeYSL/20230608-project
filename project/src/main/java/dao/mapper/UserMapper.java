@@ -94,6 +94,19 @@ public interface UserMapper {
 	@Update("update user set delYn=#{delYn} where user_id=#{userId}")
 	void deleteUser(@Param("delYn")String delYn,@Param("userId") String userId);
 
+	@Select({"<script>",
+		"select count(*) from user where batch = 1 ",
+		"<if test='type != null'> and ${type} like '%${searchcontent}%'</if>",
+		"</script>"})
+	int admincount(Map<String, Object> param);
+
+	@Select({"<script>",
+		"select * from user where batch = 1",
+		"<if test='searchcontent != null'> and ${type} like '%${searchcontent}%' </if>",
+		"<if test='limit != null'> order by user_id asc limit #{startrow},#{limit} </if>",
+		"</script>"})
+	List<User> adminlist(Map<String, Object> param);
+
 
 
 

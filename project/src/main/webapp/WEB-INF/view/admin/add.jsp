@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>관리자 추가</title>
 <script type="text/javascript"
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -108,29 +108,31 @@ li {
 .w3-input {
 	border: none;
 }
+
+a {
+	text-decoration: none;
+	color : black;
+}
 </style>
 </head>
 <body>
-		<div style="display: block; margin: auto; width: 1100px; height: auto; padding-top:100px;" class="w3-center">
-			<div class="w3-padding-32" style="height: 100%;">
-					<header class="l_member_header">
-						<div >
+	<div class="w3-container w3-padding-32 w3-center">
+		<div style="display: block; margin: auto; width: 1100px; height: 100%">
+			<div class="w3-padding-32">
+				<header class="l_member_header">
+					<div>
 						<h1 class="tit" >
-							<span>회원가입</span>
+						<span>관리자 추가</span>
 						</h1>
-						</div>
-							<li class="step1"><span class="number">01</span> 회원선택</li>
-							<li class="step2"><span class="number">02</span> 약관동의</li>
-							<li class="step3 now"><span class="number">03</span> 정보입력</li>
-							<li class="step4"><span class="number">04</span> 가입완료</li>					
-					</header>	
-					<br>
-					<br>
-					<br>
+					</div>				
+				</header>	
+				<br>
+				<br>
+				<br>
 					<div>
 						<p class="w3-right" style="color:red;"> * 는 필수 입력사항입니다.</p>
 					</div>
-						<form:form modelAttribute="user" enctype="multipart/form-data"  name="f" action="join">
+						<form:form modelAttribute="user" enctype="multipart/form-data"  name="f" action="add">
 						<spring:hasBindErrors name="user">
 							<font color="red"> 
 								<c:forEach items="${errors.globalErrors}" var="error">
@@ -255,7 +257,7 @@ li {
 								
 								</tr>
 							</table>
-							<input type="hidden" name="batch" value="${param.batch}">
+							<input type="hidden" name="batch" value="1">
 
 							
 													
@@ -268,7 +270,7 @@ li {
 							</div>
 						</form:form>
 				</div>
-	
+	</div>
 </div>
 
 </body>

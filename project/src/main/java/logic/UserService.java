@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import dao.BoardDao;
 import dao.CommentDao;
+import dao.RestaurantDao;
 import dao.UserDao;
 
 @Service
@@ -22,6 +23,8 @@ public class UserService {
 	private BoardDao boardDao;
 	@Autowired
 	private CommentDao commDao;
+	@Autowired
+	private RestaurantDao restDao;
 	
 
 	public void userInsert(@Valid User user, HttpSession session) {
@@ -279,6 +282,32 @@ public class UserService {
 
 	public List<Comment> commlist(Integer num, int limit, Integer pageNum) {
 		return commDao.commlist(num, limit, pageNum);
+	}
+
+
+	public int restcount(String type, String searchcontent) {
+		return restDao.restcount(type,searchcontent);
+	}
+
+
+	public List<Restaurant> restaurantlist(int limit, Integer pageNum, String type, String searchcontent) {
+		return restDao.restaurantlist(limit, pageNum, type, searchcontent); 
+	}
+
+
+	public int admincount(String type, String searchcontent) {
+		return userDao.admincount(type,searchcontent);
+	}
+
+
+	public List<User> adminlist(int limit, Integer pageNum, String type, String searchcontent) {
+		return userDao.adminlist(limit, pageNum, type, searchcontent); 
+	}
+
+
+	public void restdelete(String restNum) {
+		restDao.restdelete(restNum);
+		
 	}
 
 

@@ -78,7 +78,7 @@ a {
 					<table class="w3-table-all" id="table">
 								<tr>									
 									<td>
-										<form:input path="pw" class="w3-input" placeholder="비밀번호"/> 
+										<form:input type="password" path="pw" class="w3-input" placeholder="비밀번호"/> 
 										<font color="red"> 
 											<form:errors path="pw" />
 										</font>
@@ -86,7 +86,7 @@ a {
 								</tr>
 								<tr>									
 									<td>
-										<form:input path="pw1" class="w3-input" placeholder="변경할 비밀번호" /> 
+										<form:input type="password" path="pw1" class="w3-input" placeholder="변경할 비밀번호" /> 
 										<font color="red"> 
 											<form:errors path="pw1" />
 										</font>
@@ -94,7 +94,7 @@ a {
 								</tr>
 								<tr>									
 									<td>
-										<form:input path="pw2"  class="w3-input"  placeholder="변경할 비밀번호 재확인" /> 
+										<form:input  type="password" path="pw2"  class="w3-input"  placeholder="변경할 비밀번호 재확인" /> 
 										<font color="red"> 
 											<form:errors path="pw2" />
 										</font>

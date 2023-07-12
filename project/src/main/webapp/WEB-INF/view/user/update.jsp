@@ -84,7 +84,7 @@ a {
 								<tr>
 									<th>비밀번호</th>
 									<td>
-										<form:input path="pw" class="w3-input" placeholder="비밀번호" /> 
+										<form:input type="password" path="pw" class="w3-input" placeholder="비밀번호" /> 
 										<font color="red"> 
 											<form:errors path="pw" />
 										</font>

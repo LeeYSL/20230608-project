@@ -154,7 +154,7 @@ public class UserController {
 			user.setPw(pwHash(user.getPw()));
 			mav.addObject("user",user);
 			userservice.userInsert(user,session);
-			mav.setViewName("redirect:login");
+			mav.setViewName("redirect:joinlast");
 		}catch(DataIntegrityViolationException e) {
 	//DataIntegrityViolationException : db에서 중복 key 오류시 발생되는 예외 객체
 			e.printStackTrace();
@@ -303,7 +303,8 @@ public class UserController {
 			user.setUserId(userId);
 			user.setName(jsondetail.get("name").toString());
 			user.setEmail(jsondetail.get("email").toString());
-			user.setNickname(jsondetail.get("name").toString());
+			user.setNickname(jsondetail.get("nickname").toString());
+			user.setTel(jsondetail.get("mobile").toString());
 			user.setChannel("naver");
 			userservice.userInsert(user,session);
 			session.setAttribute("loginUser", user);
@@ -388,7 +389,7 @@ public class UserController {
 			if(user.getUserId().equals(loginUser.getUserId())) {
 				session.setAttribute("loginUser", user);
 			}
-			mav.setViewName("redirect:mypage?userId="+user.getUserId()); 
+			mav.setViewName("redirect:mypage?userId="+user.getUserId()+"&info=binfo"); 
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -458,7 +459,7 @@ public class UserController {
 	public ModelAndView delete (String pw, String pw1,String userId,HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		User loginUser = (User)session.getAttribute("loginUser");		
-		if(!pw.equals(pw1) && (loginUser.getPw() != pwHash(pw))) {
+		if(!pw.equals(pw1) && (loginUser.getPw() != pwHash(pw))) { 
 			System.out.println("1번통과");
 			System.out.println("pwHash(pw)="+pwHash(pw));
 			System.out.println("loginUser.getPw()="+loginUser.getPw());

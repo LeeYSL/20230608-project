@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/view/jspHeader.jsp"%>	
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>약관동의</title>
 <script type="text/javascript"
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -128,7 +129,7 @@ li {
 							</div>
 							<div class="agree_check">
 								<label> <input type="checkbox" id="checkbox1" class="chkbox">
-									" 위 내용에 동의합니다."
+									" 위 내용에 동의합니다." <span style="color:red;">(필수)</span>
 								</label>
 							</div>
 						</div>
@@ -244,7 +245,7 @@ KCP (NHN한국사이버결제 주식회사)	본인 확인
 							</div>
 							<div class="agree_check">
 								<label> <input type="checkbox" id="checkbox2" class="chkbox">
-									" 위 내용에 동의합니다."
+									" 위 내용에 동의합니다." <span style="color:red;">(필수)</span>
 								</label>
 							</div>
 						</div>

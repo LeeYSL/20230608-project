@@ -48,7 +48,7 @@ a {
 				<div class="side">
 					<div class="page">
 						<div class="join_top">
-							<span class="txt">${boardName} 글쓰기</span>
+							<span class="txt">${boardName} 답변</span>
 						</div>
 					</div>
 						<form:form modelAttribute="board" action="reply" enctype="multipart/form-data" name="f">							
@@ -57,7 +57,7 @@ a {
 							<form:hidden path="grp" />
 							<form:hidden path="grpLevel" />
 							<form:hidden path="grpStep" />	
-							<form:hidden path="secret" />	
+							<input type="hidden" name="secret" value="" />	
 							
 							<table class="w3-table-all">
 								<tr>
@@ -72,10 +72,11 @@ a {
 								<tr>
 									<th>내용</th>
 									<td>
-										<form:textarea path="content" cols="20" rows="20" class="w3-input"/> 
+										<textarea name="content" cols="20" rows="20" class="w3-input"></textarea> 
 										<font color="red"> 
 											<form:errors path="content" />
 										</font>
+										
 									</td>
 								</tr>
 						<%--	<script>CKEDITOR.replace("content",{filebrowserImageUploadUrl : "imgupload"})</script>  --%>

@@ -156,15 +156,11 @@ a {
 									<table class="w3-table-all" >
 										<c:if test="${myblistcount > 0}">
 											<tr>
-												<th width="10%"></th>
 												<th align="center" width="70%">제목</th>
 												<th align="center" width="20%">작성일</th>
 											</tr>
 											<c:forEach items="${myblist}" var="board">
 												<tr>
-													<td width="10%">
-														<input type="checkbox">
-													</td>
 													<td align="center" width="70%">
 														<a href="../board/detail?num=${board.num}">${board.title}</a>
 													</td>

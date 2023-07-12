@@ -5,12 +5,22 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>아이디찾기</title> 
+<title>비밀번호찾기</title> 
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style type="text/css">
+table {
+	border: 0.1% solid gray;
+}
+
+.w3-input {
+	border: none;
+}
+</style>
 </head>
 <body>
+	<div style="padding-top: 30px;">
 	<h5 class="w3-center">비밀번호 찾기</h5>
-	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	<div class="w3-container">
+	<div class="w3-container" style="padding-top: 20px;">
 		<form:form modelAttribute="user" action="pwsearch" method="post">
 			<spring:hasBindErrors name="user">
 				<font color="red">
@@ -20,41 +30,40 @@
 				</font>
 			</spring:hasBindErrors>
 			
-			<table class="w3-table">
+			<table class="w3-table-all">
 				<tr>
-					<th>아이디</th>
+					<th style="text-align: center;">아이디</th>
 					<td>
-						<input type="text" name="userId" class="w3-input">
+						<input type="text" name="userId" class="w3-input w3-center">
 						<font color="red">
 							<form:errors path="userId"/>
 						</font>
 					</td>
 				</tr>
 				<tr>
-					<th>이름</th>
+					<th style="text-align: center;">이름</th>
 					<td>
-						<input type="text" name="name" class="w3-input">
+						<input type="text" name="name" class="w3-input w3-center">
 						<font color="red">
 							<form:errors path="name"/>
 						</font>
 					</td>
 				</tr>
 				<tr>
-					<th>이메일</th>
+					<th style="text-align: center;">이메일</th>
 					<td>
-						<input type="text" name="email" class="w3-input">
+						<input type="text" name="email" class="w3-input w3-center">
 						<font color="red">
 							<form:errors path="email"/>
 						</font>
 					</td>				
 				</tr>
-				<tr>
-					<td colspan="2" class="w3-center">
-						<button type="submit" class="w3-button w3-white w3-border w3-border-orange w3-round-large">비밀번호 찾기</button>
-					</td>
-				</tr>
 			</table>
+			<div class="w3-center" style="padding-top:20px;">					
+				<button type="submit" class="w3-button w3-white w3-border w3-border-orange w3-round-large">비밀번호 찾기</button>					
+			</div>	
 		</form:form>
+	</div>
 	</div>
 </body>
 </html>

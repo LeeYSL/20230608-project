@@ -99,6 +99,25 @@ public interface RestaurantMapper {
 	@Select("select round(ifnull(avg(POINT),0),1) from reservation where rest_num=#{num}")
 	double pointAvg(@Param("num") int num);
 
+	//정주리
+	@Select({"<script>",
+		"select count(*) from restaurant ",
+		"<if test='type != null'> where ${type} like '%${searchcontent}%'</if>",
+		"</script>"})
+	int restcount(Map<String, Object> param);
+
+
+	//정주리
+	@Select({"<script>",
+		"select * from restaurant ",
+		"<if test='searchcontent != null'> where ${type} like '%${searchcontent}%' </if>",
+		"<if test='limit != null'> order by name limit #{startrow},#{limit} </if>",
+		"</script>"})
+	List<Restaurant> restaurantlist(Map<String, Object> param);
+
+	@Update("update restaurant set delYn='Y' where rest_num=#{restNum}")
+	void restdelete(String restNum);
+
 //	@Select("select * from restaurant where user_id=#{userId} and delYn IS NULL ")
 //	List<Restaurant> MyRest(String userId, String delYn);
 }

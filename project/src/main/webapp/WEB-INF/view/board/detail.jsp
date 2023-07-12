@@ -139,7 +139,7 @@ a {
 									<td>
 									<td width="10%" style="line-height: 50px;">${comm.nickname}
 									</td>
-									<td width="63%" style="line-height: 50px;">
+									<td width="78%" style="line-height: 50px;">
 										${comm.content}</td>
 									<td width="10%" style="line-height: 50px;"><fmt:formatDate
 											value="${comm.date}" pattern="yyyyMMdd" var="cdate" /> <c:if
@@ -155,9 +155,7 @@ a {
 												<button type="button"
 													class="w3-button w3-white w3-border w3-border-orange w3-round-large">삭제</button>
 										</a>
-											<button type="button"
-												onclick="javascript:update_comment(this)"
-												class="w3-button w3-white w3-border w3-border-orange w3-round-large">수정</button>
+							
 										</td>
 									</c:if>
 								</tr>
