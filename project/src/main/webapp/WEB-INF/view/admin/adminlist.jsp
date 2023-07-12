@@ -66,17 +66,17 @@ a {
 						<input type="hidden" name="pageNum" value="1">
 							<div>
 								<select name="type" class="w3-input">
-									<option value="">전체</option>
-									<option value="user_id">아이디</option>
-									<option value="nickname">닉네임</option>
-									<option value="email">이메일</option>
-									<option value="tel">휴대전화번호</option>
+									<option value="" ${type == null ? 'selected="selected"' : '' }>전체</option>
+									<option value="user_id" ${type == 'user_id' ? 'selected="selected"' : '' }>아이디</option>
+									<option value="nickname" ${type == 'nickname' ? 'selected="selected"' : '' }>닉네임</option>
+									<option value="email" ${type == 'email' ? 'selected="selected"' : '' }>이메일</option>
+									<option value="tel" ${type == 'tel' ? 'selected="selected"' : '' }>휴대전화번호</option>
 								</select>
 							</div>
 						</td>
 						<td width="60%">
 							<div>
-								<input type="text" name="searchcontent" class="w3-input">
+								<input type="text" name="searchcontent" value="${searchcontent}" class="w3-input">
 							</div>
 						</td>
 						<td width="10%">

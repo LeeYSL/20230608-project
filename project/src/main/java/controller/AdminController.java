@@ -74,6 +74,9 @@ public class AdminController {
 		}
 		int boardno = listcount - (pageNum-1) *limit;	
 		List<User> userlist = userservice.userlist(limit,pageNum,type,searchcontent);  
+		
+		mav.addObject("type",type);
+		mav.addObject("searchcontent",searchcontent);
 		mav.addObject("userlist",userlist);
 		mav.addObject("pageNum",pageNum);
 		mav.addObject("maxpage",maxpage);
@@ -111,6 +114,9 @@ public class AdminController {
 		}
 		int boardno = listcount - (pageNum-1) *limit;	
 		List<User> adminlist = userservice.adminlist(limit,pageNum,type,searchcontent);  
+		
+		mav.addObject("type",type);
+		mav.addObject("searchcontent",searchcontent);
 		mav.addObject("adminlist",adminlist);
 		mav.addObject("pageNum",pageNum);
 		mav.addObject("maxpage",maxpage);
@@ -275,7 +281,10 @@ public class AdminController {
 			endpage = maxpage;
 		}
 		int boardno = listcount - (pageNum-1) *limit;	
-		List<Restaurant> restlist = userservice.restaurantlist(limit,pageNum,type,searchcontent);  
+		List<Restaurant> restlist = userservice.restaurantlist(limit,pageNum,type,searchcontent);
+		
+		mav.addObject("type",type);
+		mav.addObject("searchcontent",searchcontent);
 		mav.addObject("restlist",restlist);   
 		mav.addObject("pageNum",pageNum);
 		mav.addObject("maxpage",maxpage);
@@ -303,21 +312,6 @@ public class AdminController {
 				return mav;
 			
 	}	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 /*
 	ModelAndView restist(@RequestParam Map<String, String> param, HttpSession session, String delYn,Restaurant restaurant,Reservation reservation) {
