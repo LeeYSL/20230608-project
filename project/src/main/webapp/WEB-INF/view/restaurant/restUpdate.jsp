@@ -227,7 +227,7 @@ th {
 						<input type="hidden" name="restInfo" value="${memuList}">
 						<input type="submit" class="w3-btn w3-white w3-border w3-border-orange w3-round-xlarge" value="수정" name="update">
 						&nbsp;
-						<button type="button" onclick="location.href='/project/restaurant/ownerRest'" class="w3-btn w3-white w3-border w3-border-orange w3-round-xlarge" >취소
+						<button type="button" onclick="location.href='/project/restaurant/ownerRest'" class="w3-btn w3-white w3-border w3-border-orange w3-round-xlarge" >가게 목록
 						</button>
 						<%-- <a href="/project/restaurant/ownerRest?num=${restInfo.userId}"></a> --%>
 					</form:form>
