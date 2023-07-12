@@ -89,8 +89,9 @@ public class RestaurantController {
 		ModelAndView mav = new ModelAndView();
 
 		Integer pageNum = null;
-		if (param.get("pageNum") != null)
+		if (param.get("pageNum") != null) {
 			pageNum = Integer.parseInt(param.get("pageNum"));
+		}
 		String type = param.get("type");
 		String searchcontent = param.get("searchcontent");
 
@@ -127,8 +128,9 @@ public class RestaurantController {
 		// System.out.print("3"+restList);
 		// System.out.println("4"+maxpage);
 		// System.out.println("5"+startpage);
-		// System.out.println("6"+endpage);
-
+		
+		mav.addObject("type", type);
+		mav.addObject("searchcontent", searchcontent);
 		mav.addObject("pageNum", pageNum);
 		mav.addObject("restList", restList);
 		mav.addObject("restListcount", restListcount);

@@ -29,15 +29,15 @@
 									value="1">
 									<div>
 										<select name="type" class="w3-input">
-											<option value="">전체</option>
-											<option value="name">가게 이름</option>
-											<option value="address">지역</option>
-											<option value="menu">메뉴</option>
+											<option value="" ${type == null ? 'selected="selected"' : '' }>전체</option>
+											<option value="name" ${type == 'name' ? 'selected="selected"' : '' }>가게 이름</option>
+											<option value="address" ${type == 'address' ? 'selected="selected"' : '' }>지역</option>
+											<option value="menu" ${type == 'menu' ? 'selected="selected"' : '' }>메뉴</option>
 										</select>
 									</div></td>
 								<td width="60%">
 									<div>
-										<input type="text" name="searchcontent" class="w3-input">
+										<input type="text" name="searchcontent" value="${searchcontent}" class="w3-input">
 									</div>
 								</td>
 								<td width="10%">

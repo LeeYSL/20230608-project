@@ -53,14 +53,14 @@
 							.text()
 				},
 				success : function(result) {
-					console.log("success");
+					$(btn).hide();
 				},
 				complete : function(result) {
 					console.log("complete");
+					$(btn).hide();
 				},
 				error : function(result) {
 					console.log("err");
-					console.log(result);
 				}
 			})
 		}
