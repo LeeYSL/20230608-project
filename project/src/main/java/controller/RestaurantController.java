@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import exception.ReservationException;
 import logic.ReservationService;
 import logic.Restaurant;
 import logic.Dayoff;
@@ -218,7 +219,8 @@ public class RestaurantController {
 	}
 
 	@PostMapping("restUpdate")
-	public ModelAndView restUpdate(@Valid Restaurant restaurant, BindingResult bresult, HttpSession session) {
+	public ModelAndView restUpdate(@Valid Restaurant restaurant, BindingResult bresult, HttpSession session)
+		throws Exception {
 		ModelAndView mav = new ModelAndView();
 
 		if (bresult.hasErrors()) {
@@ -229,6 +231,18 @@ public class RestaurantController {
 
 		}
 		int num = restaurant.getRestNum();
+		
+		// 메뉴 삭제하고 insert
+		service.deleteMenu(num);
+		for (Menu menu : restaurant.getMenuList()) {
+			if(menu.getMenuName() != null && menu.getPrice() != 0) {
+				//삭제안된 메뉴들만 저장해줌
+				menu.setRestNum(num); // restNum 세팅해줌.
+				service.menuInsert(menu); // 메뉴 개수만큼 insert해줌.
+			}
+		}
+		
+		
 		// 가게정보 업데이트
 		service.restUpdate(restaurant, session);
 
@@ -237,13 +251,6 @@ public class RestaurantController {
 			service.deleteDayoff(num);
 			restaurant.getDayoff().setRestNum(num);
 			service.dayoffInsert(restaurant.getDayoff());
-		}
-
-		// 메뉴 삭제하고 insert
-		service.deleteMenu(num);
-		for (Menu menu : restaurant.getMenuList()) {
-			menu.setRestNum(num); // restNum 세팅해줌.
-			service.menuInsert(menu); // 메뉴 개수만큼 insert해줌.
 		}
 
 		mav.setViewName("redirect:restUpdate?num=" + num);
