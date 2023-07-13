@@ -107,7 +107,7 @@ a {
 							<td class="w3-center">${user.email}</td>
 							<td class="w3-center">${user.tel}</td>
 							<td class="w3-center">
-								<form action="userdelete" method="post">
+								<form action="admindelete" method="post">
 								<button name="userId" class="w3-button w3-white w3-border w3-border-orange w3-round-large w3-right" value="${user.userId}">
 									<i class="glyphicon glyphicon-remove"></i>
 								</button>

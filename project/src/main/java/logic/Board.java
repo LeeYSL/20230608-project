@@ -30,5 +30,6 @@ public class Board {
 	private int commCnt;
 	private String nickname;
 	private String secret;
-
+	private String secret2;
+	private String delYn;
 }

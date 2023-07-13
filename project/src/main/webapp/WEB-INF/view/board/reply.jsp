@@ -57,7 +57,8 @@ a {
 							<form:hidden path="grp" />
 							<form:hidden path="grpLevel" />
 							<form:hidden path="grpStep" />	
-							<input type="hidden" name="secret" value="" />	
+							<form:hidden path="secret" />
+							<form:hidden path="secret2" />
 							
 							<table class="w3-table-all">
 								<tr>

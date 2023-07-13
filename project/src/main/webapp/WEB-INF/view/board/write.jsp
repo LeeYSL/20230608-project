@@ -86,7 +86,8 @@ a {
 									</td>
 								</tr>
 						</table>
-						<input type="hidden" name="userId" value="${sessionScope.loginUser.userId}">			
+						<input type="hidden" name="userId" value="${sessionScope.loginUser.userId}">	
+						<input type="hidden" name="secret2" value="${sessionScope.loginUser.userId}">		
 							<hr>
 							<div>
 								<div>
