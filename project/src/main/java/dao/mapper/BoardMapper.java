@@ -46,7 +46,7 @@ public interface BoardMapper {
 
 
 	@Select({"<script>",
-				"select count(*) from board b left join user u on b.user_id=u.user_id where board_id=#{boardId}",
+				"select count(*) from board b left join user u on b.user_id=u.user_id where board_id=#{boardId} and b.delYn IS NULL",
 				"<if test='type != null'> and ${type} like '%${searchcontent}%'</if>",
 			"</script>"})
 	int boardcount(Map<String, Object> param);
