@@ -303,6 +303,15 @@ public class AdminController {
 				return mav;
 			
 	}
+	@RequestMapping("admindelete")
+	public ModelAndView admindelete(String userId, HttpSession session) {
+		ModelAndView mav = new ModelAndView("admin/list");
+		System.out.println(userId);
+				userservice.delete(userId);
+				mav.setViewName("redirect:adminlist");
+				return mav;
+			
+	}
 	@RequestMapping("restdelete")
 	public ModelAndView restdelete(String restNum, HttpSession session) {
 		ModelAndView mav = new ModelAndView("admin/restaurantlist");

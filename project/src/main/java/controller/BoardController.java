@@ -209,10 +209,13 @@ public class BoardController {
 	}
 
 	@RequestMapping("delete")
-	public String delete(Integer num) {
+	public ModelAndView delete(Integer num, Board board, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		String boardId = (String) session.getAttribute("boardId");
 		try {
 			userservice.delete(num);
-			return "redirect:list";
+			mav.setViewName("redirect:list?boardId="+boardId);
+			return mav;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new LoginException("삭제 실패", "detail?num=" + num);

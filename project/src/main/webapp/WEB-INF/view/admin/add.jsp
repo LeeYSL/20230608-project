@@ -107,8 +107,8 @@ li {
 }
 .w3-input {
 	border: none;
-}
-
+}    
+ 
 a {
 	text-decoration: none;
 	color : black;

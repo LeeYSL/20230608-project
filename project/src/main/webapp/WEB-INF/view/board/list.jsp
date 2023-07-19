@@ -108,10 +108,9 @@ a {
 									</c:if>
 									
 									<c:if test="${board.secret ==null || board.secret.trim().equals('')}"><%--비밀글 아닐때 --%>
-												<c:if test="${! empty board.fileurl}">
-													<a href="file/${board.fileurl}">@</a>
-												</c:if>										
-										
+										<c:if test="${! empty board.fileurl}">
+											<a href="file/${board.fileurl}">@</a>
+										</c:if>																				
 									</c:if>																		
 								
 								
@@ -134,7 +133,7 @@ a {
 								
 									<c:if test="${board.secret!=null && !board.secret.trim().equals('')}"><%--비밀글일때 --%>
 										<c:choose>										
-											<c:when test="${board.userId==sessionScope.loginUser.userId || sessionScope.loginUser.batch == 1 }"> <%--운영자이거나, 작성자일때 --%>
+											<c:when test="${board.secret2==sessionScope.loginUser.userId || sessionScope.loginUser.batch == 1 }"> <%--운영자이거나, 작성자일때 --%>
 												<a href="detail?num=${board.num}">
 													${board.title}
 												</a>										
