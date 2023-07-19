@@ -64,7 +64,7 @@ th {
 	function iamPay() {
 		 
 		let IMP = window.IMP
-		IMP.init("imp01555276") //가맹점 식별코드
+		IMP.init("imp17733040") //가맹점 식별코드
 		IMP.request_pay({
 			pg : "kakaopay", // 상점구분. 카카오페이
 			pay_method : "card", //결제 방식 : 카드
@@ -162,10 +162,10 @@ th {
 							</tr>
 						</table>
 						<br>
-							 <input type="submit" class="w3-btn w3-white w3-border w3-border-orange w3-round-xlarge" value="예약" name="add">
+						<!--	 <input type="submit" class="w3-btn w3-white w3-border w3-border-orange w3-round-xlarge" value="예약" name="add"> -->
 						<!-- 예약 완료 시 예약 상세 페이지로 이동하기 -->
-<!-- 						<input type="button" class="w3-btn w3-white w3-border w3-border-orange w3-round-xlarge" 
-								name="add" value="예약 및 예약금 결제" onclick="javascript:iamPay()"> -->
+ 						<input type="button" class="w3-btn w3-white w3-border w3-border-orange w3-round-xlarge" 
+								name="add" value="예약 및 예약금 결제" onclick="javascript:iamPay()"> 
 								&nbsp;
 						<input type="button" class="w3-btn w3-white w3-border w3-border-orange w3-round-xlarge" value="취소" onclick="javascript:history.back()">
 					</form:form>
