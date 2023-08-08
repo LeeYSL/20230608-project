@@ -24,7 +24,7 @@ public class Board {
 	private Date regDate;
 	private int readCnt;
 	private String boardId;
-	private int grp;
+	private int grp; 
 	private int grpLevel;
 	private int grpStep;
 	private int commCnt;

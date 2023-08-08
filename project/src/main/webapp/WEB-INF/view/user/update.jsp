@@ -6,12 +6,22 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원정보 수정</title>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script type="text/javascript">
 		function file_delete() {
 			document.f.fileurl.value = ""
 			file_desc.style.display = "none";
 		}
+		function searchAddress() {
+			new daum.Postcode({
+				oncomplete : function(data) { // oncomplete : 콜백함수
+					$("#address").val(data.address);
+				}
+			}).open();
+		}
+
 	</script>
 <style type="text/css">
 .page {
@@ -127,39 +137,10 @@ a {
 									</td>
 								</tr>									
 								<tr>
+								<tr>
 									<th>주소</th>
 									<td>
-										<select name="address" class="w3-select">
-											<c:if test="${user.address != null && user.address != ''}">
-												<option>${user.address}</option>
-											</c:if>
-											<option value="">===주소===</option>
-											<option>강남구</option>
-											<option>강동구</option>
-											<option>강북구</option>
-											<option>강서구</option>
-											<option>관악구</option>
-											<option>광진구</option>
-											<option>구로구</option>
-											<option>금천구</option>
-											<option>노원구</option>
-											<option>도봉구</option>
-											<option>동대문구</option>
-											<option>동작구</option>
-											<option>마포구</option>
-											<option>서대문구</option>
-											<option>서초구</option>
-											<option>성동구</option>
-											<option>성북구</option>
-											<option>송파구</option>
-											<option>양천구</option>
-											<option>영등포구</option>
-											<option>용산구</option>
-											<option>은평구</option>
-											<option>종로구</option>
-											<option>중구</option>
-											<option>중랑구</option>
-										</select>
+										<form:input path="address" name="address" class="w3-input" id="address" onclick="searchAddress();" />						
 									</td>
 								</tr>
 								<tr>

@@ -118,6 +118,10 @@ public interface RestaurantMapper {
 	@Update("update restaurant set delYn='Y' where rest_num=#{restNum}")
 	void restdelete(String restNum);
 
+	//정주리
+	@Select("select count(*) from restaurant where delYn IS NULL")
+	int delrestcount();
+
 //	@Select("select * from restaurant where user_id=#{userId} and delYn IS NULL ")
 //	List<Restaurant> MyRest(String userId, String delYn);
 }

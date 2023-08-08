@@ -79,20 +79,7 @@ public class CipherUtil {
 		byte[] hash = md.digest(plain);
 		return byteToHex(hash);
 	}
-//내가한거
-//	public static String encrypt(String email, String key) {
-//		byte[] cipherMsg = new byte[1024];
-//		try {
-//										// 	byte[]      알고리즘
-//			Key genKey = new SecretKeySpec(makeKey(key),"AES");	//128 비트 크기
-//			AlgorithmParameterSpec paramSpec = new IvParameterSpec(iv);
-//			cipher.init(Cipher.ENCRYPT_MODE, genKey, paramSpec);
-//			cipherMsg = cipher.doFinal(email.getBytes()); //암호문
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//		return byteToHex(cipherMsg);
-//	}
+
 	
 	public static String encrypt(String plain, String key) {
 		byte[] cipherMsg = new byte[1024];

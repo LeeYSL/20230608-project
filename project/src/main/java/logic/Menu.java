@@ -13,3 +13,4 @@ public class Menu {
 	private String menuName;
 	private int price;
 }
+ 

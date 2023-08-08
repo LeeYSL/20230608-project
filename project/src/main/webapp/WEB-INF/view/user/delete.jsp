@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원탈퇴</title>
 
-<style type="text/css">
+<style type="text/css"> 
 .page {
 
 	height: 10%;

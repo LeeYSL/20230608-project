@@ -48,10 +48,10 @@ public void update(@Valid Board board) {
 	 template.getMapper(cls).update(board);	
 }
 
-public void delete(Integer num) {
-	template.getMapper(cls).delete(num);
-	
-}
+//public void delete(Integer num) {
+//	template.getMapper(cls).delete(num);
+//	
+//}
 
 public List<Board> boardlist(String boardId, int limit, Integer pageNum, String type, String searchcontent) {
 	param.clear();
@@ -95,6 +95,30 @@ public List<Board> myblist(String userId, int limit, Integer pageNum) {
 	param.put("limit", limit);
 	param.put("startrow",(pageNum-1) * limit);
 	return template.getMapper(cls).myblist(param);
+}
+
+public void updateCommCnt(Board board) {
+	param.clear();
+	param.put("commCnt", board.getCommCnt());
+	param.put("num", board.getNum());
+	template.getMapper(cls).updateCommCnt(param);
+	
+}
+
+public void delete(Board board) {
+	param.clear();
+	param.put("commCnt", board.getCommCnt());
+	param.put("num", board.getNum());
+	template.getMapper(cls).delete(param);
+	
+}
+
+public void commDeleteCommCnt(Board board) {
+	param.clear();
+	param.put("commCnt", board.getCommCnt());
+	param.put("num", board.getNum());
+	template.getMapper(cls).commDeleteCommCnt(param);
+	
 } 
 
 

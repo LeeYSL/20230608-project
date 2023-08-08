@@ -41,7 +41,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
     </div>
     <div class="w3-col s8 w3-bar">
-    <a href="userinfo?userId=${user.userId}"  class="w3-bar-item w3-button">
+    <a href="../user/userinfo?userId=${sessionScope.loginUser.userId}"  class="w3-bar-item w3-button">
       <span>관리자, <strong>${sessionScope.loginUser.nickname }</strong></span>
 
       <i class="fa fa-cog"></i></a>
@@ -78,8 +78,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   
   <!-- Footer -->
   <footer class="w3-container w3-padding-16 w3-light-grey">
-    	<p><b>문의</b> 이영선&lt;dudtjs960630@naver.com&gt;&nbsp;정주리&lt;jjeongjuri@naver.com&gt;</p>
-      <p>구디아카데미</p>
+
   </footer>
 
   <!-- End page content -->

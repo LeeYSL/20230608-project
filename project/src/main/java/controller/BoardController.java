@@ -5,16 +5,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import exception.LoginException;
@@ -64,6 +67,7 @@ public class BoardController {
 		return mav;
 	}
 
+
 	@RequestMapping("list")
 	public ModelAndView list(@RequestParam Map<String, String> param, HttpSession session) {
 		Integer pageNum = null; // 왜 ...int 가 아니고 Integer...
@@ -95,6 +99,9 @@ public class BoardController {
 		case "2":
 			boardName = "QnA";
 			break;
+		case "3":
+			boardName = "자유게시판";
+			break;	
 		}
 		int limit = 10;
 		int listcount = userservice.boardcount(boardId, type, searchcontent);
@@ -130,6 +137,8 @@ public class BoardController {
 			mav.addObject("boardName", "Notice");
 		else if (board.getBoardId().equals("2"))
 			mav.addObject("boardName", "QnA");
+		else if (board.getBoardId().equals("3"))
+			mav.addObject("boardName", "자유게시판");
 
 //comment 리스트		
 		Integer pageNum =null;
@@ -213,8 +222,9 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView();
 		String boardId = (String) session.getAttribute("boardId");
 		try {
-			userservice.delete(num);
-			mav.setViewName("redirect:list?boardId="+boardId);
+			//userservice.delete(num);
+			userservice.delete(board);
+			mav.setViewName("redirect:list?boardId="+boardId);			
 			return mav;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -224,7 +234,7 @@ public class BoardController {
 	}
 
 	@RequestMapping("comment")
-	public ModelAndView comment(@Valid Comment comm, BindingResult bresult) {
+	public ModelAndView comment(@Valid Comment comm, BindingResult bresult,Board board) {
 		ModelAndView mav = new ModelAndView("board/detail");
 
 		if (bresult.hasErrors()) {
@@ -235,13 +245,15 @@ public class BoardController {
 		int seq = userservice.commmaxseq(comm.getNum());
 		comm.setSeq(++seq);
 		userservice.commInsert(comm);
+		userservice.boardCommCnt(board);
 		mav.setViewName("redirect:detail?num=" + comm.getNum());
 		return mav;
 	}
 
 	@RequestMapping("commdelete")
-	public String commdelete(Comment comm) {
+	public String commdelete(Comment comm, Board board) {
 		userservice.commdelete(comm.getNum(), comm.getSeq());
+		userservice.commDeleteCommCnt(board);
 		return "redirect:detail?num=" + comm.getNum();
 
 	}
@@ -265,7 +277,29 @@ public class BoardController {
 		}
 			return mav;
 	}
-	
+	@RequestMapping("imgupload")
+	public String imgupload (MultipartFile upload, String CKEditorFuncNum,
+			HttpServletRequest request,Model model) {
+		/*
+		 * upload : CKEditor 모듈에서 업로드되는 이미지의 이름.
+		 *          업로드되는 이미지파일의 내용. 이미지값
+		 * CKEditorFuncNum :  CKEditor 모듈에서 파라미터로 전달되는 값. 리턴해야되는 값
+		 * model : ModelAndView 중 Model에 해당하는 객체.
+		 *         뷰에 전달할 데이터정보 저장할 객체
+		 * return 타입 String : 뷰의 이름        
+		 */
+		//업로드 되는 위치 폴더
+		//request.getServletContext().getRealPath("/") : 웹어플리케이션의 절대 경로 값.
+		String path = request.getServletContext().getRealPath("/") + "board/imgfile/";
+		userservice.uploadFileCreate(upload,path); //upload (파일의내용),path(업로드되는 폴더)
+		//request.getContextPath() : 프로젝트명(웹어플리케이션서버이름). shop1/ 
+		// http://localhost:8080/shop1/board/imgfile/cat2.jpg
+		String fileName = request.getContextPath() //웹어플리케이션 경로. 웹 url 정보
+				        + "/board/imgfile/" + upload.getOriginalFilename();
+		model.addAttribute("fileName",fileName);
+	    return "ckedit";//view 이름. /WEB-INF/view/ckedit.jsp
+	}
+		
 	
 
 }

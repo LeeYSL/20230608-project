@@ -143,7 +143,31 @@ public class UserDao {
 		return template.getMapper(cls).adminlist(param); 
 	}
 
+	public int nicknameCount(String nickname) {
+		return template.getMapper(cls).nicknameCount(nickname);
+	}
 
+	public int userIdCount(String userId) {
+		return template.getMapper(cls).userIdCount(userId);
+	}
 
+	public int telCount(String tel) {
+		return template.getMapper(cls).telCount(tel);
+	}
 
+	public int emailCount(String email) {
+		return template.getMapper(cls).emailCount(email);
+	}
+
+	public int deladmincount() {
+		return template.getMapper(cls).deladmincount();
+	}
+
+	public int delusercount() {
+		return template.getMapper(cls).delusercount();
+	}
+
+	public String dbpw(String userId) {
+		return template.getMapper(cls).dbpw(userId);
+	}
 }

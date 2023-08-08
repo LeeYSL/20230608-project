@@ -11,6 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+<script type="text/javascript" src="http://cdn.ckeditor.com/4.5.7/standard/ckeditor.js"></script>
 <script type="text/javascript" src= 
 "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
 </script>
@@ -36,7 +37,8 @@ a {text-decoration: none;}
 
   
   <a href="/project/board/list?boardId=1" onclick="w3_close()" class="w3-bar-item w3-button">＊Notice</a>
-  <a href="/project/board/list?boardId=2" onclick="w3_close()" class="w3-bar-item w3-button">＊QNA</a>
+  <a href="/project/board/list?boardId=2" onclick="w3_close()" class="w3-bar-item w3-button">＊QnA</a>
+  <a href="/project/board/list?boardId=3" onclick="w3_close()" class="w3-bar-item w3-button">＊자유게시판</a>
   	<c:if test="${sessionScope.loginUser.batch ==2 }">
   	- - - - - - - - - -	- - - - - - - - - -	- 
   	<!-- 	<a href="/project/reservation/ownerList?userId=${sessionScope.loginUser.userId}" onclick="w3_close()" class="w3-bar-item w3-button">식당 예약 관리</a>  -->

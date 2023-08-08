@@ -29,13 +29,13 @@ public interface CommentMapper {
 	@Select("select * from comment c join board b  on c.num = b.num where c.user_id=#{userId} ")
 	List<Comment> myclist(String userId);
 */
-	@Select("select count(*) from comment where user_id=#{userId}")
+	@Select("select count(*) from comment where user_id=#{userId} and delYn IS NULL")
 	int myclistcount(String userId);
 
 	@Select({"<script>",
-		"select num, seq, user_id, date, content from comment",
-		"<if test='num != null'> where num = #{num} </if>",
-		"<if test='userId != null'> where user_id = #{userId} </if>",
+		"select num, seq, user_id, date, content from comment where delYn IS NULL",
+		"<if test='num != null'> and num = #{num} </if>",
+		"<if test='userId != null'> and user_id = #{userId} </if>",
 		"<if test='limit != null'> order by date desc limit #{startrow}, #{limit} </if>",
 		"</script>"})	
 	List<Comment> myclist(Map<String, Object> param);

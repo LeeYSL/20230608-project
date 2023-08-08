@@ -10,6 +10,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -103,67 +104,50 @@ public class UserController {
         
         String rnum = Integer.toString(num);  //view로 다시 반환할 때 String만 가능
         
-        return rnum;
- 
-		
+        return rnum;		
 	}
-	
+	@RequestMapping("userIdChk")
+	@ResponseBody
+	public int userIdChk(String userId) {// 받을 데이터타입이 텍스트라 스트링으로함 반드시 리퀘스트바디를 붙힐것! ajax 통신시
+		int cnt = userservice.userIdCount(userId);
+		return cnt;	
+	}	
+	@RequestMapping("nicknameChk")
+	@ResponseBody
+	public int nicknameChk(String nickname) {// 받을 데이터타입이 텍스트라 스트링으로함 반드시 리퀘스트바디를 붙힐것! ajax 통신시	
+		int cnt = userservice.nicknameCount(nickname);
+		return cnt;	
+	}
+	@RequestMapping("telChk")
+	@ResponseBody
+	public int telChk(String tel) {// 받을 데이터타입이 텍스트라 스트링으로함 반드시 리퀘스트바디를 붙힐것! ajax 통신시	
+		int cnt = userservice.telCount(tel);
+		return cnt;	
+	}
+	@RequestMapping("emailChk")
+	@ResponseBody
+	public int emailChk(String email) {// 받을 데이터타입이 텍스트라 스트링으로함 반드시 리퀘스트바디를 붙힐것! ajax 통신시	
+		int cnt = userservice.emailCount(email);
+		return cnt;	
+	}	
+	@RequestMapping("pwChk")
+	@ResponseBody
+	public boolean pwChk(String pw, String userId) {// 받을 데이터타입이 텍스트라 스트링으로함 반드시 리퀘스트바디를 붙힐것! ajax 통신시	
+		String dbpw = userservice.dbpw(userId);
+		boolean result = dbpw.equals(pwHash(pw));
+		return result;		
+	}
 	@PostMapping("join")
-	public ModelAndView userAdd(@Valid User user, BindingResult bresult,  HttpSession session) {
+	public ModelAndView userAdd(User user,  HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		
-		if(bresult.hasErrors()) {
-			mav.getModel().putAll(bresult.getModel());
-			//reject 메서드 : global error에 추가
-			return mav;
-		}
-		User dbId = userservice.selectOne(user.getUserId());
-		User dbEmail = userservice.selectOneEmail(user.getEmail());
-		User dbTel = userservice.selectOneTel(user.getTel());
-		User dbNickname = userservice.selectOneNickname(user.getNickname());
-		
-		try {
-			if(dbId != null) {
-				mav.getModel().putAll(bresult.getModel());
-				bresult.reject("error.duplicate.user");
-				return mav;
-			}
-			if(dbEmail != null) {
-				mav.getModel().putAll(bresult.getModel());
-				bresult.reject("error.duplicate.email"); 
-				return mav;
-			}
-			if(dbTel != null) {
-				mav.getModel().putAll(bresult.getModel());
-				bresult.reject("error.duplicate.tel"); 
-				return mav;
-			}
-			if(dbNickname != null) {
-				mav.getModel().putAll(bresult.getModel());
-				bresult.reject("error.duplicate.nickname"); 
-				return mav;
-			}
-			if(!user.getPw().equals(user.getPw1())) {
-				mav.getModel().putAll(bresult.getModel());
-				bresult.reject("error.pw.check"); 
-				user.setPw(null);
-				user.setPw1(null);
-				return mav;
-			}
-
+	
 			user.setPw(pwHash(user.getPw()));
 			mav.addObject("user",user);
 			userservice.userInsert(user,session);
 			mav.setViewName("redirect:joinlast");
-		}catch(DataIntegrityViolationException e) {
-	//DataIntegrityViolationException : db에서 중복 key 오류시 발생되는 예외 객체
-			e.printStackTrace();
-			bresult.reject("error.pw.check"); //global 오류 등록
-			mav.getModel().putAll(bresult.getModel());
-			return mav;
-		}
-		return mav;
 		
+		return mav;	
 	}
 	private String pwHash(String pw) {
 		try {
@@ -338,14 +322,6 @@ public class UserController {
 	@RequestMapping("userinfo")
 	public ModelAndView idCheckUserinfo(String userId, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-
-//		user = (User)session.getAttribute("loginUser");	
-//		System.out.println("loginuser info : " +session.getAttribute("loginUser"));
-//		System.out.println(user);
-//		mav.addObject("user",user);
-//		System.out.println(user);
-//		mav.setViewName("redirect:userintro?userId="+user.getUserId());
-//		return mav;
 		
 		System.out.println(userId);
 		User user = userservice.selectOne(userId);
@@ -409,21 +385,16 @@ public class UserController {
 		return mav;
 	}
 	@PostMapping("pwchange")
-	public ModelAndView loginCheckPwchange(@Valid User user, BindingResult bresult,String pw,String pw1, String pw2, String userId, HttpSession session) {
+	public ModelAndView idCheckPwchange(User user, BindingResult bresult,String pw,String pw1, String pw2, String userId, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		if(bresult.hasErrors()) {
 			mav.getModel().putAll(bresult.getModel());
 			return mav;
-		}		
+		}
+		
 		User loginUser = (User)session.getAttribute("loginUser");
-		
-		System.out.println("1.loginUser.getPw=========="+loginUser.getPw());
-		System.out.println("2.pwHash(user.getPw())======"+pwHash(user.getPw()));
-		System.out.println("3.userId"+userId);
-		System.out.println("4.pw======="+pw);
-		System.out.println("5.pw1===="+pw1);
-		
-		System.out.println("6.pw1==="+pw2);
+		System.out.println("loginUser===" + loginUser.getUserId());
+		System.out.println("loginUser===" + loginUser.getPw());
 		
 		if(!pwHash(pw).equals(loginUser.getPw())) {
 			mav.getModel().putAll(bresult.getModel());
@@ -500,7 +471,7 @@ public class UserController {
 	}
 
 	@RequestMapping("mypage")
-	public ModelAndView idCheckMypage(@RequestParam Map<String, String> param, String userId, HttpSession session,String delYn) {
+	public ModelAndView idCheckMypage(@RequestParam Map<String, String> param,String delYn, String userId, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		Integer pageNum =null;
 		if(param.get("pageNum") != null) {
@@ -571,8 +542,6 @@ public class UserController {
 		List<Reservation> Myrsrvt = reservationService.Myrsrvt(userId,limit, pageNum);
 		mav.addObject("Myrsrvt",Myrsrvt);
 		
-//		List<Restaurant> MyRest = reservationService.MyRest(userId, delYn);
-//		mav.addObject("MyRest",MyRest);
 		
 		
 		System.out.println(Myrsrvt);
@@ -647,50 +616,4 @@ public class UserController {
 	}
 	
 
-	
-    /* 이메일 인증 */
-//    @GetMapping("/userIdCheck")
-//    @ResponseBody
-//	public String userIdCheck(String userId){
-//		
-//		/* 뷰(View)로부터 넘어온 데이터 확인 */
-//    	System.out.println("이메일 데이터 전송 확인");
-//    	System.out.println("이메일 : " + userId);
-//				
-//		return mailService.joinEmail(userId);
-//	}
-	
-//	@PostMapping("idsearch")
-//	public ModelAndView idsearch(User user, BindingResult bresult) {
-//		ModelAndView mav = new ModelAndView();
-//		if(user.getTel()==null || user.getTel().trim().equals("")) {
-//			bresult.rejectValue("tel", "error.required");
-//		}
-//		if(user.getName()==null || user.getName().trim().equals("")) {			
-//			bresult.rejectValue("name", "error.required");
-//		}
-//		if(bresult.hasErrors()) {
-//			mav.getModel().putAll(bresult.getModel());
-//			return mav;
-//		}
-//		
-//		String dbUserId = userservice.idsearch(user.getTel(),user.getName());
-//		System.out.println(dbUserId);
-//		
-//		if(dbUserId != null) {
-//			
-//			mav.addObject("dbUserId",dbUserId);
-//			mav.setViewName("idsearch");
-//			
-//
-//		}
-//		if(dbUserId == null) {
-//			mav.getModel().putAll(bresult.getModel());
-//			bresult.reject("error.userId.search");
-//			return mav;
-//		}
-//		
-//		
-//		return mav;
-//	}
 }

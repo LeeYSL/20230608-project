@@ -39,9 +39,13 @@ public interface BoardMapper {
 	@Update("update board set title=#{title},content=#{content},file1=#{fileurl} where num=#{num}")
 	void update(@Valid Board board);
 
-
-	@Update("update board set delYn='Y', del_date=now() where num=#{num}")
-	void delete(Integer num);
+//	@Update({"<script>",
+//			"update board ",
+//		//	"<if test='comm_cnt != 0'> b join comment c set b.delYn='Y', b.del_date=now(), c.delYn='Y' where b.num=#{num}  and c.num=#{num} </if> ",
+//			"<if test='comm_cnt == 0'> set delYn=Y, del_date=now() where num=#{num} </if>",			
+//			"</script>"}) 
+//	void delete(Integer num);
+//	@Update("update board set delYn='Y', del_date=now() where num=#{num} ")	
 
 
 
@@ -72,7 +76,7 @@ public interface BoardMapper {
 
 
 
-	@Select("select count(*) from board where user_id=#{userId}")
+	@Select("select count(*) from board where user_id=#{userId} and delYn IS NULL")
 	int myblistcount(String userId);
 
 
@@ -83,11 +87,31 @@ public interface BoardMapper {
 
 
 	@Select({"<script>",
-		select,
-		"<if test='num != null'> where num = #{num} </if>",
-		"<if test='userId != null'> where user_id = #{userId} </if>",
+		select ,
+		" where delYn IS NULL",
+		"<if test='num != null'> and num = #{num} </if>",
+		"<if test='userId != null'> and user_id = #{userId} </if>",
 		"<if test='limit != null'> order by grp desc, grp_step asc limit #{startrow}, #{limit} </if>",
 		"</script>"})
 	List<Board> myblist(Map<String, Object> param);
+
+
+
+	@Update ("update board set comm_cnt=comm_cnt+1 where num=#{num} ")
+	void updateCommCnt(Map<String, Object> param);
+
+
+
+	@Update({"<script>",
+		"update board ",
+		"<if test='commCnt != 0'> b join comment c set b.delYn='Y', b.del_date=now(), c.delYn='Y' where b.num=#{num}  and c.num=#{num} </if> ",
+		"<if test='commCnt == 0'> set delYn='Y', del_date=now() where num=#{num} </if>",			
+		"</script>"}) 
+	void delete(Map<String, Object> param);
+
+
+
+	@Update ("update board set comm_cnt=comm_cnt-1 where num=#{num} ")
+	void commDeleteCommCnt(Map<String, Object> param);
 
 }

@@ -44,7 +44,7 @@ a {
 </head>
 <body>
 	<div class="w3-container w3-padding-32 w3-center">
-		<div style="display: block; margin: auto; width: 1100px; height: 100%">
+		<div style="display: block; margin: auto; width: 1100px; height: 110%">
 			<div class="w3-padding-32">
 				<header class="l_member_header">
 					<div>
@@ -68,7 +68,6 @@ a {
 									<option value="license_num" ${type == 'license_num' ? 'selected="selected"' : '' }>사업자번호</option>
 									<option value="address" ${type == 'address' ? 'selected="selected"' : '' }>가게주소</option>
 									<option value="user_id" ${type == 'user_id' ? 'selected="selected"' : '' }>아이디</option>
-									<option value="menu" ${type == 'menu' ? 'selected="selected"' : '' }>메뉴</option>
 									
 								</select>
 							</div>
@@ -89,13 +88,17 @@ a {
 			</div>
 			<br>
 			<div>
+				<div style="text-align: right; font-size: 20px;">총 가게수 : ${dellistcount} 개</div>
+			</div>
+			<br>			
+			<div>
 				<table class="w3-table-all">
 					<tr>
-						<th width="30%" class="w3-center">가게이름</th>
+						<th width="20%" class="w3-center">가게이름</th>
 						<th width="20%" class="w3-center">사업자번호</th>
 						<th width="35%" class="w3-center">가게주소</th>
 						<th width="10%" class="w3-center">아이디</th>
-						<th width="5%"></th>
+						<th width="15%"></th>
 					</tr>
 					<c:forEach var="rest" items="${restlist}">
 						<tr>
@@ -113,9 +116,12 @@ a {
 							</td>
 							<td class="w3-center">
 								<form action="restdelete" method="post">
-								<button name="restNum" class="w3-button w3-white w3-border w3-border-orange w3-round-large w3-right" value="${rest.restNum}">
+								<c:if test="${rest.delYn != 'Y'}">
+								<button name="restNum" class="w3-button w3-centert" value="${rest.restNum}">
 									<i class="glyphicon glyphicon-remove"></i>
 								</button>
+								</c:if>
+								<c:if test="${rest.delYn == 'Y' }">삭제된 가게</c:if>									
 								</form>							
 							</td>
 							

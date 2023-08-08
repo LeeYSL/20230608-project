@@ -19,3 +19,4 @@ public class Dayoff {
 	private String sun;
 	private String holiday;
 }
+ 

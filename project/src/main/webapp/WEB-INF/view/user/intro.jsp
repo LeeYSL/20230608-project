@@ -27,7 +27,7 @@ $(function() {
 	 			 }),
 	 		success:function(response)  {
 	 			for(let i=0; i<response.data.length;i++) {
-	 	//			$('#result').append(response.data[i].b_stt_cd);
+	 	//			$('#result').append(response.data[i].b_stt_cd);s
 	 	//			$('#result').append(response.data[i].tax_type);
 	 				if((response.data[i].b_stt_cd) == 01) {
 	 					alert("가입이 가능합니다.");
@@ -39,7 +39,7 @@ $(function() {
 	 			}
 	 		},
 	 		error:function() {
-	 			alert("error error error에러")
+	 			alert("관리자에게 문의 주시기 바랍니다.")
 	 		}
 			})
 	})
@@ -119,27 +119,32 @@ li {
 					<!-- Profile -->
 					<div class="w3-card w3-white">
 						<div class="w3-container">
-						
-									<%-- 네이버로그인 부분 다시옮겨야함 --%>
-							<h4 class="w3-center">네이버 회원가입</h4>
-							<p>
-								<a href="${apiURL}">
-									<img height="30" src="http://static.nid.naver.com/oauth/small_g_in.PNG">
-								</a>
 							<h4 class="w3-center">일반 회원</h4>
+							<br>
 							<p class="w3-center">
 								<a href="agree?batch=3">
 									<button type="button"
 										class="w3-button w3-white w3-border w3-border-orange w3-round-large">가입하기</button>
 								</a>
+							</p>						
+							<br>
+							<hr>									
+							<h4 class="w3-center">네이버 회원가입</h4>
+							<br>
+							<p>
+								<a href="${apiURL}">
+									<img height="42" src="http://static.nid.naver.com/oauth/small_g_in.PNG">
+								</a>
 							</p>
+							<br>		
+
 						</div>
 					</div>
 				</div>
 
 				<div class="w3-col m5 w3-right">
 					<!-- Profile -->
-					<div class="w3-card w3-round">
+					<div class="w3-card w3-white">
 						<div class="w3-container">
 							<h4 class="w3-center">사업자 회원</h4>
 							<div class="w3-container w3-padding-32 w3-center">

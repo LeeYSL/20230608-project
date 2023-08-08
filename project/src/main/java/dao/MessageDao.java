@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-@Builder
+@Builder 
 public class MessageDao {
 	String to;
 	String content;

@@ -47,7 +47,7 @@ a {
 </head>
 <body>
 	<div class="w3-container w3-padding-32 w3-center">
-		<div style="display: block; margin: auto; width: 1100px; height: 100%">
+		<div style="display: block; margin: auto; width: 1100px; height: 110%">
 			<div class="w3-padding-32">
 				<header class="l_member_header">
 					<div>
@@ -90,33 +90,51 @@ a {
 			</div>
 			<br>
 			<div>
+				<div style="text-align: right; font-size: 20px;">총 회원 : ${delListcount} 명</div>
+			</div>
+			<br>
+			<div>
 				<table class="w3-table-all">
+
 					<tr>
-						<th width="45%" class="w3-center">아이디</th>
-						<th width="20%" class="w3-center">닉네임</th>
-						<th width="15%" class="w3-center">이메일</th>
+						<th width="15%" class="w3-center">아이디</th>
+						<th width="25%" class="w3-center">닉네임</th>
+						<th width="20%" class="w3-center">이메일</th>
 						<th width="15%" class="w3-center">휴대전화번호</th>
-						<th width="5%"></th>
+						<th width="15%" class="w3-center">유형</th>
+						<th width="20%" class="w3-center">탈퇴일/탈퇴</th>
+											
 					</tr>
 
 					<c:forEach var="user" items="${userlist}">
 						<tr>
-							<td ><a href="../user/userinfo?userId=${user.userId}">${user.userId}</a>
+							<td>
+								<a href="../user/userinfo?userId=${user.userId}">${user.userId}</a>
 							</td>
 							<td class="w3-center">${user.nickname}</td>
 							<td class="w3-center">${user.email}</td>
-							<td class="w3-center">${user.tel}</td>							
+							<td class="w3-center">${user.tel}</td>
+							<td class="w3-center">
+								<c:if test="${user.batch == 1}">관리자</c:if>
+								<c:if test="${user.batch == 2}">사업자</c:if>
+								<c:if test="${user.batch == 3}">일반회원</c:if>
+							</td>							
 							<td class="w3-center">
 								<form action="userdelete" method="post">
-								<button name="userId" class="w3-button w3-white w3-border w3-border-orange w3-round-large w3-right" value="${user.userId}">
+								<c:if test="${user.delYn == 'N'}">
+								<button name="userId" class="w3-button w3-center" value="${user.userId}">
 									<i class="glyphicon glyphicon-remove"></i>
 								</button>
+								</c:if>
+								<c:if test="${user.delYn == 'Y' }">
+									<fmt:formatDate value="${user.delDate}" pattern="yyyy-MM-dd" />
+								</c:if>								
 								</form>
 							</td>
 						</tr>
 					</c:forEach> 
 						<tr>
-							<td colspan="5" class="w3-center">
+							<td colspan="6" class="w3-center">
 								<c:if test="${pageNum > 1}">
 									<a href="javascript:listpage('${pageNum -1}')">[이전]</a>
 								</c:if>

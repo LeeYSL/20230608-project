@@ -129,6 +129,10 @@ public class RestaurantDao {
 		
 	}
 
+	public int delrestcount() {
+		return template.getMapper(cls).delrestcount();
+	}
+
 
 
 }

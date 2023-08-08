@@ -81,6 +81,11 @@ a {
 				<br>
 				<div>
 					<table class="w3-table-all">
+					<c:if test="${listcount == 0}">
+					등록된 게시물이 없습니다.
+					</c:if>
+					
+					<c:if test="${listcount > 0}">
 						<tr height="10%">
 							<th width="10%"  class="w3-center">글번호</th>
 							<th width="55%"  class="w3-center">제목</th>
@@ -88,7 +93,7 @@ a {
 							<th width="10%"  class="w3-center">작성일</th>
 							<th width="10%"  class="w3-center">조회수</th>
 						</tr>
-
+						
 						<c:forEach var="board" items="${boardlist}">
 							<tr height="10%">
 								<td  class="w3-center">${boardno}</td>
@@ -114,29 +119,26 @@ a {
 									</c:if>																		
 								
 								
-								
-							<%-- 	
-								
-									<c:if test="${! empty board.fileurl}">
-										<a href="file/${board.fileurl}">@</a>
-									</c:if>	
-									
-								
-									<c:if test="${! empty board.fileurl}">&nbsp;&nbsp;&nbsp;</c:if>	--%>	
 									<c:forEach begin="1" end="${board.grpLevel}">&nbsp;&nbsp;&nbsp;&nbsp;</c:forEach>
 									<c:if test="${board.grpLevel > 0}">┖</c:if>															
 									<c:if test="${board.secret==null || board.secret.trim().equals('')}"><%--비밀글아닐때 --%>
 												<a href="detail?num=${board.num}">
 													${board.title}
-												</a>												
+												</a>
+												<c:if test="${board.commCnt >0 }">
+												[${board.commCnt}]
+												</c:if>	 											
 									</c:if>	
 								
 									<c:if test="${board.secret!=null && !board.secret.trim().equals('')}"><%--비밀글일때 --%>
 										<c:choose>										
 											<c:when test="${board.secret2==sessionScope.loginUser.userId || sessionScope.loginUser.batch == 1 }"> <%--운영자이거나, 작성자일때 --%>
-												<a href="detail?num=${board.num}">
+												<a href="detail?num=${board.num}">													
 													${board.title}
-												</a>										
+												</a>
+												<c:if test="${board.commCnt >0 }">
+												[${board.commCnt}]
+												</c:if>																							
 											</c:when>
 											<c:otherwise>
 												비밀글은 작성자와 관리자만 볼 수 있습니다.
@@ -160,6 +162,7 @@ a {
 								<td class="w3-center">${board.readCnt}</td>
 							</tr>
 						</c:forEach>
+
 						<tr>
 							<td colspan="6" class="w3-center">
 								<c:if test="${pageNum > 1}">
@@ -178,6 +181,7 @@ a {
 								<c:if test="${pageNum >= maxpage}">[다음]</c:if>
 							</td>
 						</tr>
+						</c:if>
 					</table>
 					
 				</div>
@@ -188,7 +192,7 @@ a {
 							<button class="w3-button w3-white w3-border w3-border-orange w3-round-large w3-right">글쓰기</button>
 						</a>
 					</c:if>
-					<c:if test="${boardId == 2 && sessionScope.loginUser != null}">
+					<c:if test="${(boardId == 2 || boardId == 3) && sessionScope.loginUser != null}">
 						<a href="write">
 							<button class="w3-button w3-white w3-border w3-border-orange w3-round-large w3-right">글쓰기</button>
 						</a>

@@ -41,15 +41,15 @@ a {
 </style>
 </head>
 <body>
-	<div class="w3-container w3-padding-32 w3-center">
-		<div style="display: block; margin: auto; width: 1100px; height: 100%;">
+		<div style="display: block; margin: auto; width: 1100px; height: 100%; padding-top:100px;" class="w3-center">
 			<div class="w3-padding-32">
 
-				<div class="side">
 					<div class="page">
-						<div class="join_top">
-							<span class="txt">${boardName} 답변</span>
-						</div>
+						<span class="txt">
+							<c:if test="${boardId ==1}">Notice 답변</c:if>
+							<c:if test="${boardId ==2}">QnA 답변</c:if>
+							<c:if test="${boardId ==3}">자유게시판 답변</c:if>
+						</span>						
 					</div>
 						<form:form modelAttribute="board" action="reply" enctype="multipart/form-data" name="f">							
 							<form:hidden path="num" />
@@ -74,13 +74,14 @@ a {
 									<th>내용</th>
 									<td>
 										<textarea name="content" cols="20" rows="20" class="w3-input"></textarea> 
+										<script>CKEDITOR.replace("content",{filebrowserImageUploadUrl : "imgupload"})</script>
 										<font color="red"> 
 											<form:errors path="content" />
 										</font>
 										
 									</td>
 								</tr>
-						<%--	<script>CKEDITOR.replace("content",{filebrowserImageUploadUrl : "imgupload"})</script>  --%>
+
 								<tr>
 									<th>첨부파일</th>
 									<td>
@@ -92,7 +93,7 @@ a {
 							<hr>
 							<div>
 								<div>
-									<a href="list?boardId=${board.boardId}">
+									<a href="detail?num=${board.num}">
 										<button type="button" class="w3-button w3-white w3-border w3-border-orange w3-round-large">취소</button>
 									</a>
 									&nbsp;	&nbsp;	&nbsp;	&nbsp;

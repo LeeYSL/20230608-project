@@ -65,6 +65,7 @@ public class AdminController {
 			searchcontent = null;
 		}
 		int limit = 10;
+		int delListcount = userservice.delusercount();
 		int listcount = userservice.usercount(type,searchcontent);
 		int maxpage = (int)((double)listcount/limit +0.95);
 		int startpage = (int)((pageNum/10.0+0.9)-1)*10 +1;
@@ -83,6 +84,7 @@ public class AdminController {
 		mav.addObject("startpage", startpage);
 		mav.addObject("endpage",endpage);
 		mav.addObject("listcount",listcount);
+		mav.addObject("delListcount",delListcount);
 		mav.addObject("boardno", boardno);
 		return mav;
 	}
@@ -105,6 +107,7 @@ public class AdminController {
 			searchcontent = null;
 		}
 		int limit = 10;
+		int delListcount = userservice.deladmincount();
 		int listcount = userservice.admincount(type,searchcontent);
 		int maxpage = (int)((double)listcount/limit +0.95);
 		int startpage = (int)((pageNum/10.0+0.9)-1)*10 +1;
@@ -122,6 +125,7 @@ public class AdminController {
 		mav.addObject("maxpage",maxpage);
 		mav.addObject("startpage", startpage);
 		mav.addObject("endpage",endpage);
+		mav.addObject("delListcount",delListcount);
 		mav.addObject("listcount",listcount);
 		mav.addObject("boardno", boardno);
 		return mav;
@@ -172,65 +176,42 @@ public class AdminController {
  
 		
 	}
-	
-	@PostMapping("add")
-	public ModelAndView add(@Valid User user, BindingResult bresult,  HttpSession session) {
-		ModelAndView mav = new ModelAndView();
-		
-		if(bresult.hasErrors()) {
-			mav.getModel().putAll(bresult.getModel());
-			//reject 메서드 : global error에 추가
-			return mav;
-		}
-		User dbId = userservice.selectOne(user.getUserId());
-		User dbEmail = userservice.selectOneEmail(user.getEmail());
-		User dbTel = userservice.selectOneTel(user.getTel());
-		User dbNickname = userservice.selectOneNickname(user.getNickname());
-		
-		try {
-			if(dbId != null) {
-				mav.getModel().putAll(bresult.getModel());
-				bresult.reject("error.duplicate.user");
-				return mav;
-			}
-			if(dbEmail != null) {
-				mav.getModel().putAll(bresult.getModel());
-				bresult.reject("error.duplicate.email"); 
-				return mav;
-			}
-			if(dbTel != null) {
-				mav.getModel().putAll(bresult.getModel());
-				bresult.reject("error.duplicate.tel"); 
-				return mav;
-			}
-			if(dbNickname != null) {
-				mav.getModel().putAll(bresult.getModel());
-				bresult.reject("error.duplicate.nickname"); 
-				return mav;
-			}
-			if(!user.getPw().equals(user.getPw1())) {
-				mav.getModel().putAll(bresult.getModel());
-				bresult.reject("error.pw.check"); 
-				user.setPw(null);
-				user.setPw1(null);
-				return mav;
-			}
 
+	@RequestMapping("userIdChk")
+	@ResponseBody
+	public int userIdChk(String userId) {// 받을 데이터타입이 텍스트라 스트링으로함 반드시 리퀘스트바디를 붙힐것! ajax 통신시
+		int cnt = userservice.userIdCount(userId);
+		return cnt;	
+	}	
+	@RequestMapping("nicknameChk")
+	@ResponseBody
+	public int nicknameChk(String nickname) {// 받을 데이터타입이 텍스트라 스트링으로함 반드시 리퀘스트바디를 붙힐것! ajax 통신시	
+		int cnt = userservice.nicknameCount(nickname);
+		return cnt;	
+	}
+	@RequestMapping("telChk")
+	@ResponseBody
+	public int telChk(String tel) {// 받을 데이터타입이 텍스트라 스트링으로함 반드시 리퀘스트바디를 붙힐것! ajax 통신시	
+		int cnt = userservice.telCount(tel);
+		return cnt;	
+	}
+	@RequestMapping("emailChk")
+	@ResponseBody
+	public int emailChk(String email) {// 받을 데이터타입이 텍스트라 스트링으로함 반드시 리퀘스트바디를 붙힐것! ajax 통신시	
+		int cnt = userservice.emailCount(email);
+		return cnt;	
+	}	
+	@PostMapping("add")
+	public ModelAndView userAdd(User user,  HttpSession session) {
+		ModelAndView mav = new ModelAndView();
 			user.setPw(pwHash(user.getPw()));
 			mav.addObject("user",user);
 			userservice.userInsert(user,session);
 			mav.setViewName("redirect:adminlist");
-			return mav;
-		}catch(DataIntegrityViolationException e) {
-	//DataIntegrityViolationException : db에서 중복 key 오류시 발생되는 예외 객체
-			e.printStackTrace();
-			bresult.reject("error.pw.check"); //global 오류 등록
-			mav.getModel().putAll(bresult.getModel());
-			return mav;
-		}
-
 		
+		return mav;	
 	}
+
 	private String pwHash(String pw) {
 		try {
 			return util.makehash(pw, "SHA-512");
@@ -241,21 +222,7 @@ public class AdminController {
 	}   
 	
 	
-	/*
-	@PostMapping("list")
-	public ModelAndView list(User user, String delYn, String userId) {
-		ModelAndView mav = new ModelAndView();
 
-		userservice.deleteUser(delYn, userId);
-		System.out.println(userId);
-
-		mav.addObject("deleteUser", userId);
-		System.out.println(userId);
-
-		return mav;
-
-	}
-	*/
 	@RequestMapping("restaurantlist")
 	public ModelAndView idCheckRestaurantlist (@RequestParam Map<String,String> param,HttpSession session) {
 		ModelAndView mav = new ModelAndView();
@@ -273,6 +240,7 @@ public class AdminController {
 			searchcontent = null;
 		} 
 		int limit = 10;
+		int dellistcount = userservice.delrestcount();
 		int listcount = userservice.restcount(type,searchcontent);
 		int maxpage = (int)((double)listcount/limit +0.95);
 		int startpage = (int)((pageNum/10.0+0.9)-1)*10 +1;
@@ -291,6 +259,7 @@ public class AdminController {
 		mav.addObject("startpage", startpage);
 		mav.addObject("endpage",endpage);
 		mav.addObject("listcount",listcount);
+		mav.addObject("dellistcount",dellistcount);
 		mav.addObject("boardno", boardno);
 		return mav;
 	}	
@@ -298,9 +267,9 @@ public class AdminController {
 	public ModelAndView userdelete(String userId, HttpSession session) {
 		ModelAndView mav = new ModelAndView("admin/list");
 		System.out.println(userId);
-				userservice.delete(userId);
-				mav.setViewName("redirect:list");
-				return mav;
+		userservice.delete(userId);
+		mav.setViewName("redirect:list");
+		return mav;
 			
 	}
 	@RequestMapping("admindelete")

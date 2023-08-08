@@ -24,3 +24,4 @@ public class Mail {
 	//file1이 2개라 List 처리 해줘야함 : 메일 전송시 첨부파일 2개 가능
 	private String contents;
 }
+ 

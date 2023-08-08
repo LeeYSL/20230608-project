@@ -57,11 +57,17 @@ td {
 						</tr>
 						<tr>
 							<th>비밀번호</th>
+						<c:if test="${user.channel == null}">
 							<td>
 								<a href="pwchange?userId=${user.userId}">
 									<input type="button" class="w3-button w3-white w3-border w3-border-orange w3-round-large" value="비밀번호 수정">
 								</a>
 							</td>	
+						</c:if>
+						<c:if test="${user.channel == null}">
+							<td/>
+						</c:if>
+						
 						</tr>
 						<tr>
 							<th>닉네임</th>
@@ -89,21 +95,18 @@ td {
 				</div>
 					<br>
 					<div>
-						
+							<c:if test="${user.channel == null}">
 							<a href="update?userId=${user.userId}">
 								<button type="button" class="w3-button w3-white w3-border w3-border-orange w3-round-large">회원정보 수정</button>
 							</a>
 						&nbsp;	&nbsp;	&nbsp;	&nbsp;
 							<a href="delete?userId=${user.userId}">
-								<button type="button"
-									class="w3-button w3-white w3-border w3-border-orange w3-round-large">회원탈퇴</button>
+								<button type="button" class="w3-button w3-white w3-border w3-border-orange w3-round-large">회원탈퇴</button>
 							</a>
-						
+							</c:if>			
 					</div>
 				</div>
 			</div>
-
-
 </body>
 
 </html>

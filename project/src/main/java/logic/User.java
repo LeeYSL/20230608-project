@@ -11,28 +11,30 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
+ 
 
 @Setter
 @Getter
 @ToString
 public class User {
 	@NotEmpty(message="아이디는 필수입니다.")
-	@Pattern(regexp="[a-z]+[a-z0-9]{5,11}",
-	message="영어로 시작, 숫자 포함 가능, 6~12자 ")
+	@Pattern(regexp="[a-z]+[a-z0-9]{4,11}",
+	message="영어로 시작, 숫자 포함 가능, 5~12자 ")
 	private String userId;
-	@Pattern(regexp="(?=.*\\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}",
+	@Pattern(regexp="(?=.*?[a-z])(?=.*?[0-9]).{8,16}",
 			message="영문과 숫자 1개 이상씩 포함 8~16자")
 	private String pw;
-	@Pattern(regexp="(?=.*\\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}",
+	@Pattern(regexp="(?=.*?[a-z])(?=.*?[0-9]).{8,16}",
 			message="영문과 숫자 1개 이상씩 포함 8~16자")
 	private String pw1;
-	@Pattern(regexp="(?=.*\\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}",
+	@Pattern(regexp="(?=.*?[a-z])(?=.*?[0-9]).{8,16}",
 			message="영문과 숫자 1개 이상씩 포함 8~16자")
 	private String pw2;
-	@NotEmpty(message="별명을 입력해주세요.")
+	@Pattern(regexp="([a-zA-Z0-9|가-힣]){2,12}",
+			message="한글,영어,숫자 2~12자")
+	@NotEmpty(message="닉네임을 입력해주세요.")
 	private String nickname;
-	@Pattern(regexp="[가-힣]+$",message="이름을 입력해주세요.")
+	@Pattern(regexp="[가-힣]{2,10}$",message="한글만 가능합니다.")
 	private String name;
 	private String address;
 	@Pattern(regexp="01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}",

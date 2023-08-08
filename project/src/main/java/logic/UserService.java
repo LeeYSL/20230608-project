@@ -51,17 +51,18 @@ public class UserService {
 	}
 	
 
-	private void uploadFileCreate(MultipartFile file, String path) {
-		String orgFile=file.getOriginalFilename();
-		File f= new File(path);
-		if(!f.exists()) {
-			f.mkdirs();
-		}
-		try  {
+	public void uploadFileCreate(MultipartFile file, String path) {
+		//file : 파일의 내용
+		//path : 업로드할 폴더
+		String orgFile = file.getOriginalFilename(); //파일이름
+		File f = new File(path);
+		if(!f.exists()) f.mkdirs();
+		try {
+			//transferTo : file에 저장된 내용을 파일로 저장
 			file.transferTo(new File(path+orgFile));
-		} catch (Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
-		}		
+		}
 	}
 
 
@@ -114,17 +115,11 @@ public class UserService {
 	}
 
 
-	public void delete(Integer num) {
-		boardDao.delete(num);
-		
-	}
+//	public void delete(Integer num) {
+//		boardDao.delete(num); 
+//		
+//	}
 
-/*
-	public List<Comment> commlist(Integer num) {
-		
-		return commDao.commlist(num);
-	}
-*/
 
 	public void commInsert(@Valid Comment comm) {
 		commDao.commInsert(comm);
@@ -309,6 +304,67 @@ public class UserService {
 		restDao.restdelete(restNum);
 		
 	}
+
+
+	public int nicknameCount(String nickname) {
+		return userDao.nicknameCount(nickname);
+	}
+
+
+	public int userIdCount(String userId) {
+		return userDao.userIdCount(userId);
+	}
+
+
+	public int telCount(String tel) {
+		return userDao.telCount(tel);
+	}
+
+
+	public int emailCount(String email) {
+		return userDao.emailCount(email);
+	}
+
+
+	public int deladmincount() {
+		return userDao.deladmincount();
+	}
+
+
+	public int delusercount() {
+		return userDao.delusercount();
+	}
+
+
+	public int delrestcount() {
+		return restDao.delrestcount();
+	}
+
+
+	public String dbpw(String userId) {
+		return userDao.dbpw(userId); 
+	}
+
+
+	public void boardCommCnt(Board board) {
+		boardDao.updateCommCnt(board);
+		
+		
+	}
+
+
+	public void delete(Board board) {
+		boardDao.delete(board);
+		
+	}
+
+
+	public void commDeleteCommCnt(Board board) {
+		boardDao.commDeleteCommCnt(board);
+		
+	}
+
+
 
 
 

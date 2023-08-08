@@ -16,4 +16,6 @@ public class Comment {
 	private Date date;
 	private String content;	
 	private String nickname;
+	private String delYn;
 }
+ 

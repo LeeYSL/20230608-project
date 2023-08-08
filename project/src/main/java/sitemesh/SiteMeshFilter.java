@@ -40,11 +40,8 @@ public class SiteMeshFilter extends ConfigurableSiteMeshFilter {
 		builder.addDecoratorPath("/admin/*", "/layout/adminlayout.jsp");
 		
 		builder.addDecoratorPath("/*", "/layout/mainlayout.jsp")
-	//	.addExcludedPath("/reservation/myList*")
 		.addExcludedPath("/user/*search*")
-	//	.addExcludedPath("/admin/*")
 		.addExcludedPath("/ajax/*")
-		//.addExcludedPath("/restaurant/restaurantList*")
 		.addExcludedPath("/reservation/point*");
 	
 		

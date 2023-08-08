@@ -45,7 +45,7 @@ import logic.ReservationService;
 import logic.Restaurant;
 import logic.User;
 
-@Controller
+@Controller 
 @RequestMapping("reservation")
 public class ReservationController {
 	@Autowired
@@ -177,7 +177,7 @@ public class ReservationController {
 		
 			MessageDao messageDao = new MessageDao();
 
-			messageDao.setTo(phoneNo);
+			messageDao.setTo(phoneNo); 
 			messageDao.setContent(restName + "\n" +rsrvtName + "님 예약 취소 되었습니다.");
 
 			try {

@@ -35,6 +35,7 @@ th {
 }
 td {
 	background-color :white;
+	height: 40px;
 }
 
 a {
@@ -47,7 +48,7 @@ a {
 </head>
 <body>
 	<div class="w3-container w3-padding-32 w3-center">
-		<div style="display: block; margin: auto; width: 1100px; height: 100%">
+		<div style="display: block; margin: auto; width: 1100px; height: 110%">
 			<div class="w3-padding-32">
 				<header class="l_member_header">
 					<div>
@@ -90,27 +91,37 @@ a {
 			</div>
 			<br>
 			<div>
+				<div style="text-align: right; font-size: 20px;">총 관리자수 : ${delListcount} 명</div>
+			</div>
+			<br>			
+			<div>
 				<table class="w3-table-all">
 					<tr>
-						<th width="45%" class="w3-center">아이디</th>
+						<th width="20%" class="w3-center">아이디</th>
 						<th width="20%" class="w3-center">닉네임</th>
-						<th width="15%" class="w3-center">이메일</th>
+						<th width="20%" class="w3-center">이메일</th>
 						<th width="15%" class="w3-center">휴대전화번호</th>
-						<th width="5%" class="w3-center"></th>
+						<th width="25%" class="w3-center"></th>
 					</tr>
 
 					<c:forEach var="user" items="${adminlist}">
-						<tr>
-							<td ><a href="../user/userinfo?userId=${user.userId}">${user.userId}</a>
+						<tr >
+							<td height="40px;"><a href="../user/userinfo?userId=${user.userId}">${user.userId}</a>
 							</td>
 							<td class="w3-center">${user.nickname}</td>
 							<td class="w3-center">${user.email}</td>
 							<td class="w3-center">${user.tel}</td>
 							<td class="w3-center">
 								<form action="admindelete" method="post">
-								<button name="userId" class="w3-button w3-white w3-border w3-border-orange w3-round-large w3-right" value="${user.userId}">
+								<c:if test="${user.delYn == 'N'}">
+								<button name="userId" class="w3-button w3-center" value="${user.userId}">
 									<i class="glyphicon glyphicon-remove"></i>
 								</button>
+								</c:if>
+								<c:if test="${user.delYn == 'Y' }">
+								탈퇴일 : <fmt:formatDate value="${user.delDate}" pattern="yyyy-MM-dd" />
+								</c:if>
+								
 								</form>
 							</td>
 						</tr>
