@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>밥티켓</title>
 <script type="text/javascript">
 	$(function() {
 		disp_div('${param.info}');

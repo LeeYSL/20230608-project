@@ -280,22 +280,36 @@ public class UserController {
 		System.out.println(jsondetail.get("email"));
 		//=======================================================
 		String userId = jsondetail.get("id").toString();
+		String tel = jsondetail.get("mobile").toString();
+		String email = jsondetail.get("email").toString();
+		String nickname = jsondetail.get("nickname").toString();
 		User user = userservice.selectOne(userId);
-		if(user == null) {
-			user = new User();
-			user.setBatch(3);
-			user.setUserId(userId);
-			user.setName(jsondetail.get("name").toString());
-			user.setEmail(jsondetail.get("email").toString());
-			user.setNickname(jsondetail.get("nickname").toString());
-			user.setTel(jsondetail.get("mobile").toString());
-			user.setChannel("naver");
-			userservice.userInsert(user,session);
-			session.setAttribute("loginUser", user);
-			return "redirect:../restaurant/restaurantList";
+		int nicknamecnt = userservice.nicknameCount(nickname);
+		int emailcnt = userservice.emailCount(email);
+		int telcnt = userservice.telCount(tel);
+		try {
+			if(user == null && nicknamecnt == 0 && emailcnt == 0 && telcnt == 0) {
+				user = new User();
+				user.setBatch(3);
+				user.setUserId(userId);
+				user.setName(jsondetail.get("name").toString());
+				user.setEmail(jsondetail.get("email").toString());
+				user.setNickname(jsondetail.get("nickname").toString());
+				user.setTel(jsondetail.get("mobile").toString());
+				user.setChannel("naver");
+				userservice.userInsert(user,session);
+				session.setAttribute("loginUser", user);
+				return "redirect:../restaurant/restaurantList";
+			} else {
+				throw new LoginException("중복된 아이디, 닉네임, 휴대전화번호, 이메일이 존재합니다.", "login");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new LoginException("중복된 아이디, 닉네임, 휴대전화번호, 이메일이 존재합니다.", "login");
 		}
-		session.setAttribute("loginUser", user);
-		return "redirect:../restaurant/restaurantList";
+		
+	//	session.setAttribute("loginUser", user);
+	//	return "redirect:../restaurant/restaurantList";
 	}
 	
 	

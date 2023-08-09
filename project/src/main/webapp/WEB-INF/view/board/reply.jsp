@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>답글</title>
+<title>밥티켓</title>
 <style type="text/css">
 .page {
 

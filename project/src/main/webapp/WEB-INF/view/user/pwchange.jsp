@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>밥티켓</title>
 <script type="text/javascript">
 $(document).ready(function() {
 	

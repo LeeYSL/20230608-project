@@ -33,7 +33,7 @@ table {
 			<table class="w3-table-all">
 				<tr>
 					<th style="text-align: center;">이름</th>
-					<td>
+					<td class="w3-center">
 						<input type="text" name="name" class="w3-input w3-center">
 						<font color="red">
 							<form:errors path="name"/>

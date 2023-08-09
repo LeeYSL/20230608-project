@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>밥티켓</title>
 <script type="text/javascript">
 	function win_open(page){
 		var op ="width=500, height=350, left=50, top=150";

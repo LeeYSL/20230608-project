@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>밥티켓</title>
 </head>
 <body>
 <img src="${path}\image\bobticket.png" height="80%" width="100%">

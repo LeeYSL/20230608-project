@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>밥티켓</title>
 <script type="text/javascript">
 	function update_comment(btn) {
 		$('input[name="content"]').attr('value',
@@ -78,12 +78,22 @@ a {
 			<br>
 			<div>
 				<div>
-					<c:if test="${loginUser.batch ==  1}">
-						<a href="reply?num=${board.num}">
-							<button type="button"
-								class="w3-button w3-white w3-border w3-border-orange w3-round-large">답변</button>
-						</a>
+					<c:if test="${board.boardId ==2 || board.boardId ==1}">
+						<c:if test="${loginUser.batch ==  1}">
+							<a href="reply?num=${board.num}">
+								<button type="button"
+									class="w3-button w3-white w3-border w3-border-orange w3-round-large">답변</button>
+							</a>
+						</c:if>
 					</c:if>
+					<c:if test="${board.boardId ==3}">
+						<c:if test="${loginUser.batch == 1 || loginUser.batch == 2 ||loginUser.batch == 3 }">
+							<a href="reply?num=${board.num}">
+								<button type="button"
+									class="w3-button w3-white w3-border w3-border-orange w3-round-large">답변</button>
+							</a>
+						</c:if>
+					</c:if>					
 					<c:if test="${sessionScope.loginUser.userId == board.userId }">
 							&nbsp;	&nbsp;	&nbsp;	&nbsp;
 							<a href="update?num=${board.num}">
