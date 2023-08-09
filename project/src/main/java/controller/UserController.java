@@ -24,6 +24,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
@@ -280,15 +281,11 @@ public class UserController {
 		System.out.println(jsondetail.get("email"));
 		//=======================================================
 		String userId = jsondetail.get("id").toString();
-		String tel = jsondetail.get("mobile").toString();
-		String email = jsondetail.get("email").toString();
-		String nickname = jsondetail.get("nickname").toString();
+
 		User user = userservice.selectOne(userId);
-		int nicknamecnt = userservice.nicknameCount(nickname);
-		int emailcnt = userservice.emailCount(email);
-		int telcnt = userservice.telCount(tel);
+
 		try {
-			if(user == null && nicknamecnt == 0 && emailcnt == 0 && telcnt == 0) {
+			if(user == null) {
 				user = new User();
 				user.setBatch(3);
 				user.setUserId(userId);
@@ -300,16 +297,18 @@ public class UserController {
 				userservice.userInsert(user,session);
 				session.setAttribute("loginUser", user);
 				return "redirect:../restaurant/restaurantList";
-			} else {
-				throw new LoginException("중복된 아이디, 닉네임, 휴대전화번호, 이메일이 존재합니다.", "login");
-			}
-		} catch (Exception e) {
+			} 
+			
+			
+		} catch (DuplicateKeyException e) {
+
 			e.printStackTrace();
-			throw new LoginException("중복된 아이디, 닉네임, 휴대전화번호, 이메일이 존재합니다.", "login");
+			throw new LoginException("관리자에게 문의하세요.", "login");
 		}
+		 
 		
-	//	session.setAttribute("loginUser", user);
-	//	return "redirect:../restaurant/restaurantList";
+		session.setAttribute("loginUser", user);
+		return "redirect:../restaurant/restaurantList";
 	}
 	
 	
