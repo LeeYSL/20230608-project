@@ -54,7 +54,7 @@ function sendEmail() {
 $(document).ready(function() {
 	
 	$("#pw").keyup(function() {	
-		let pwCheck = /^(?=.*?[a-z])(?=.*?[0-9]).{8,16}$/;
+		let pwCheck = /^(?=.*?[a-zA-Z])(?=.*?[0-9]).{8,16}$/;
 		if($("#pw").val() == ""){			
 			$("#pwcheck").text("");
 			$("#checkbox2").prop("checked", false);
@@ -93,7 +93,7 @@ $(document).ready(function() {
 		}	
 	});
 	$("#pw1").keyup(function() {	
-		let pw1Check = /^(?=.*?[a-z])(?=.*?[0-9]).{8,16}$/;
+		let pw1Check = /^(?=.*?[a-zA-Z])(?=.*?[0-9]).{8,16}$/;
 		if($("#pw1").val() == ""){			
 			$("#pw1check").text("");
 			$("#checkbox3").prop("checked", false);

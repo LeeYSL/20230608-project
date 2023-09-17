@@ -45,7 +45,7 @@ function sendEmail() {
 	            }
 	        },
 			error: function () {
-				alert("휴대전화번호 전송에 오류가 생겼습니다.");
+				alert("휴대전화번호 전송에 오류가 생겼습니다."); 
 			}
 		});	
 	}	
@@ -54,7 +54,7 @@ function sendEmail() {
 $(document).ready(function() {
 	
 	$("#pw").keyup(function() {	
-		let pwCheck = /^(?=.*?[a-z])(?=.*?[0-9]).{8,16}$/;
+		let pwCheck = /^(?=.*?[a-zA-Z])(?=.*?[0-9]).{8,16}$/;
 		if($("#pw").val() == ""){			
 			$("#pwcheck").text("");
 			$("#checkbox2").prop("checked", false);
